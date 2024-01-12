@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/skillaccess/static/css/main.d1f1b591.css",
+    "main.js": "/skillaccess/static/js/main.5004c8bc.js",
+    "static/media/loginBg.jpg": "/skillaccess/static/media/loginBg.fe48d24d3eab0004777a.jpg",
+    "static/media/slick.svg": "/skillaccess/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/skillaccess/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/skillaccess/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/skillaccess/static/media/slick.295183786cd8a1389865.woff",
+    "index.html": "/skillaccess/index.html",
+    "main.d1f1b591.css.map": "/skillaccess/static/css/main.d1f1b591.css.map",
+    "main.5004c8bc.js.map": "/skillaccess/static/js/main.5004c8bc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d1f1b591.css",
+    "static/js/main.5004c8bc.js"
+  ]
+}
