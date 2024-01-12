@@ -13,7 +13,7 @@ const CollageLayout = ({ children }) => {
   const arr = [
     {
       name: "dashboard",
-      path: "/collage/dashboard",
+      path: "skillaccess/collage/dashboard",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "test",
-      path: "/collage/test",
+      path: "skillaccess/collage/test",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "companies",
-      path: "/collage/companies",
+      path: "skillaccess/collage/companies",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "students",
-      path: "/collage/students",
+      path: "skillaccess/collage/students",
       icon: (
         <svg
           width="20"
@@ -93,7 +93,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "results",
-      path: "/collage/results",
+      path: "skillaccess/collage/results",
       icon: (
         <svg
           width="25"
@@ -113,7 +113,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "question bank",
-      path: "/collage/quesBank",
+      path: "skillaccess/collage/quesBank",
       icon: (
         <svg
           width="24"
@@ -134,7 +134,7 @@ const CollageLayout = ({ children }) => {
     { name: "notifications", path: "" },
     {
       name: "profile",
-      path: "/collage/profile",
+      path: "skillaccess/collage/profile",
       icon: (
         <svg
           width="18"
@@ -154,7 +154,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "inbox",
-      path: "/collage/inbox",
+      path: "skillaccess/collage/inbox",
       icon: (
         <svg
           width="22"
@@ -174,7 +174,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "teams",
-      path: "/collage/teams",
+      path: "skillaccess/collage/teams",
       icon: (
         <svg
           width="21"
@@ -212,7 +212,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "accounting",
-      path: "/collage/accounting",
+      path: "skillaccess/collage/accounting",
       icon: (
         <svg
           width="26"
@@ -232,7 +232,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "settings",
-      path: "/collage/settings",
+      path: "skillaccess/collage/settings",
       icon: (
         <svg
           width="23"
@@ -254,57 +254,57 @@ const CollageLayout = ({ children }) => {
 
   useEffect(() => {
     switch (location.pathname) {
-      case "/collage/dashboard":
+      case "skillaccess/collage/dashboard":
         setSelected(0);
         setDown(0);
         break;
 
-      case "/collage/test":
+      case "skillaccess/collage/test":
         setSelected(1);
         setDown(1);
         break;
 
-      case "/collage/companies":
+      case "skillaccess/collage/companies":
         setSelected(2);
         setDown(2);
         break;
 
-      case "/collage/students":
+      case "skillaccess/collage/students":
         setSelected(3);
         setDown(3);
         break;
 
-      case "/collage/results":
+      case "skillaccess/collage/results":
         setSelected(4);
         setDown(4);
         break;
 
-      case "/collage/quesBank":
+      case "skillaccess/collage/quesBank":
         setSelected(5);
         setDown(5);
         break;
 
-      case "/collage/profile":
+      case "skillaccess/collage/profile":
         setSelected(7);
         setDown(7);
         break;
 
-      case "/collage/inbox":
+      case "skillaccess/collage/inbox":
         setSelected(8);
         setDown(8);
         break;
 
-      case "/collage/teams":
+      case "skillaccess/collage/teams":
         setSelected(9);
         setDown(9);
         break;
 
-      case "/collage/accounting":
+      case "skillaccess/collage/accounting":
         setSelected(10);
         setDown(10);
         break;
 
-      case "/collage/settings":
+      case "skillaccess/collage/settings":
         setSelected(11);
         setDown(11);
         break;

@@ -57,9 +57,5 @@ module.exports = {
       "cupcake",
     ],
   },
-  plugins: [
-    require("daisyui"),
-    require("@tailwindcss/line-clamp"),
-    require("@tailwindcss/forms"),
-  ],
+  plugins: [require("daisyui"), require("@tailwindcss/forms")],
 };
