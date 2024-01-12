@@ -42,15 +42,16 @@ function Root() {
   // component below are unchanged
   return (
     <Routes>
-      <Route path="/skillaccess/" element={<Home />} />
-      <Route path="skillaccess/collage/dashboard">
+      <Route path="collage" element={<Home />} />
+
+      <Route path="collage/dashboard">
         <Route path="" element={<Home />} />
         <Route path="companies" element={<CompanyPage />} />
         <Route path="jobs" element={<JobsPage />} />
         <Route path="students" element={<StudentsPage />} />
       </Route>
 
-      <Route path="skillaccess/collage/test">
+      <Route path="collage/test">
         <Route path="" element={<TestPage />} />
         <Route path="assessment" element={<AssessmentPage />} />
         <Route path="name" element={<NameAssessmentPage />} />
@@ -60,43 +61,43 @@ function Root() {
         <Route path="addMcq" element={<AddMcqPage />} />
       </Route>
 
-      <Route path="skillaccess/collage/accounting">
+      <Route path="collage/accounting">
         <Route path="" element={<AccountingPage />} />
       </Route>
 
-      <Route path="skillaccess/collage/companies">
+      <Route path="collage/companies">
         <Route path="" element={<CompaniesPage />} />
       </Route>
 
-      <Route path="skillaccess/collage/inbox">
+      <Route path="collage/inbox">
         <Route path="" element={<InboxPage />} />
       </Route>
 
-      <Route path="skillaccess/collage/profile">
+      <Route path="collage/profile">
         <Route path="" element={<ProfilePage />} />
       </Route>
 
-      <Route path="skillaccess/collage/quesBank">
+      <Route path="collage/quesBank">
         <Route path="" element={<QuesBankPage />} />
       </Route>
 
-      <Route path="skillaccess/collage/results">
+      <Route path="collage/results">
         <Route path="" element={<ResultsPage />} />
       </Route>
 
-      <Route path="skillaccess/collage/settings">
+      <Route path="collage/settings">
         <Route path="" element={<SettingsPage />} />
       </Route>
 
-      <Route path="skillaccess/collage/students">
+      <Route path="collage/students">
         <Route path="" element={<StudentsMainPage />} />
       </Route>
 
-      <Route path="skillaccess/collage/teams">
+      <Route path="collage/teams">
         <Route path="" element={<TeamsPage />} />
       </Route>
 
-      <Route path="skillaccess/login" element={<Login />} />
+      <Route path="login" element={<Login />} />
     </Routes>
   );
 }
