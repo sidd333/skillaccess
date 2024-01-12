@@ -25,10 +25,6 @@ import CompaniesPage from "./pages/collage/companies/CompaniesPage";
 import StudentsMainPage from "./pages/collage/students/StudentsMainPage";
 
 export default function App() {
-  return <RouterProvider router={router} />;
-}
-
-function Root() {
   // 2️⃣ `BrowserRouter` component removed, but the <Routes>/<Route>
   // component below are unchanged
   return (
