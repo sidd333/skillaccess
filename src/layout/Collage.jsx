@@ -13,7 +13,7 @@ const CollageLayout = ({ children }) => {
   const arr = [
     {
       name: "dashboard",
-      path: "collage/dashboard",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/dashboard",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "test",
-      path: "collage/test",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/test",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "companies",
-      path: "collage/companies",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/companies",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "students",
-      path: "collage/students",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/students",
       icon: (
         <svg
           width="20"
@@ -93,7 +93,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "results",
-      path: "collage/results",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/results",
       icon: (
         <svg
           width="25"
@@ -113,7 +113,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "question bank",
-      path: "collage/quesBank",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/quesBank",
       icon: (
         <svg
           width="24"
@@ -134,7 +134,7 @@ const CollageLayout = ({ children }) => {
     { name: "notifications", path: "" },
     {
       name: "profile",
-      path: "collage/profile",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/profile",
       icon: (
         <svg
           width="18"
@@ -154,7 +154,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "inbox",
-      path: "collage/inbox",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/inbox",
       icon: (
         <svg
           width="22"
@@ -174,7 +174,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "teams",
-      path: "collage/teams",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/teams",
       icon: (
         <svg
           width="21"
@@ -212,7 +212,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "accounting",
-      path: "collage/accounting",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/accounting",
       icon: (
         <svg
           width="26"
@@ -232,7 +232,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "settings",
-      path: "collage/settings",
+      path: "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/settings",
       icon: (
         <svg
           width="23"
@@ -254,57 +254,57 @@ const CollageLayout = ({ children }) => {
 
   useEffect(() => {
     switch (location.pathname) {
-      case "collage/dashboard":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/dashboard":
         setSelected(0);
         setDown(0);
         break;
 
-      case "collage/test":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/test":
         setSelected(1);
         setDown(1);
         break;
 
-      case "collage/companies":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/companies":
         setSelected(2);
         setDown(2);
         break;
 
-      case "collage/students":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/students":
         setSelected(3);
         setDown(3);
         break;
 
-      case "collage/results":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/results":
         setSelected(4);
         setDown(4);
         break;
 
-      case "collage/quesBank":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/quesBank":
         setSelected(5);
         setDown(5);
         break;
 
-      case "collage/profile":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/profile":
         setSelected(7);
         setDown(7);
         break;
 
-      case "collage/inbox":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/inbox":
         setSelected(8);
         setDown(8);
         break;
 
-      case "collage/teams":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/teams":
         setSelected(9);
         setDown(9);
         break;
 
-      case "collage/accounting":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/accounting":
         setSelected(10);
         setDown(10);
         break;
 
-      case "collage/settings":
+      case "https://65a10f7ed64c5700084c32dc--mellifluous-conkies-ba7b88.netlify.app/collage/settings":
         setSelected(11);
         setDown(11);
         break;
