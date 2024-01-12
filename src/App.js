@@ -1,7 +1,7 @@
 import "./App.css";
 
 import {
-  createBrowserRouter,
+  createHashRouter,
   Link,
   Route,
   RouterProvider,
@@ -31,7 +31,7 @@ import CompaniesPage from "./pages/collage/companies/CompaniesPage";
 import StudentsMainPage from "./pages/collage/students/StudentsMainPage";
 
 // 3️⃣ Router singleton created
-const router = createBrowserRouter([{ path: "*", Component: Root }]);
+const router = createHashRouter([{ path: "*", Component: Root }]);
 
 export default function App() {
   return <RouterProvider router={router} />;
@@ -42,7 +42,7 @@ function Root() {
   // component below are unchanged
   return (
     <Routes>
-      <Route path="skillaccess" element={<Home />} />
+      <Route path="/skillaccess/" element={<Home />} />
       <Route path="skillaccess/collage/dashboard">
         <Route path="" element={<Home />} />
         <Route path="companies" element={<CompanyPage />} />
