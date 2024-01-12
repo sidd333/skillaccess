@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 
 const CollageLayout = ({ children }) => {
@@ -8,10 +8,12 @@ const CollageLayout = ({ children }) => {
   const [selected, setSelected] = useState(0);
   const [down, setDown] = useState(0);
 
+  const location = useLocation();
+
   const arr = [
     {
       name: "dashboard",
-      path: "/collage/home/dashboard",
+      path: "/collage/dashboard",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +33,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "test",
-      path: "/collage/home/test",
+      path: "/collage/test",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +53,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "companies",
-      path: "/collage/home/companies",
+      path: "/collage/companies",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +73,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "students",
-      path: "/collage/home/students",
+      path: "/collage/students",
       icon: (
         <svg
           width="20"
@@ -91,7 +93,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "results",
-      path: "/collage/home/results",
+      path: "/collage/results",
       icon: (
         <svg
           width="25"
@@ -111,7 +113,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "question bank",
-      path: "/collage/home/questionB",
+      path: "/collage/quesBank",
       icon: (
         <svg
           width="24"
@@ -132,7 +134,7 @@ const CollageLayout = ({ children }) => {
     { name: "notifications", path: "" },
     {
       name: "profile",
-      path: "/collage/home/profile",
+      path: "/collage/profile",
       icon: (
         <svg
           width="18"
@@ -152,7 +154,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "inbox",
-      path: "/collage/home/inbox",
+      path: "/collage/inbox",
       icon: (
         <svg
           width="22"
@@ -172,7 +174,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "teams",
-      path: "/collage/home/teams",
+      path: "/collage/teams",
       icon: (
         <svg
           width="21"
@@ -210,7 +212,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "accounting",
-      path: "/collage/home/accounting",
+      path: "/collage/accounting",
       icon: (
         <svg
           width="26"
@@ -230,7 +232,7 @@ const CollageLayout = ({ children }) => {
     },
     {
       name: "settings",
-      path: "/collage/home/settings",
+      path: "/collage/settings",
       icon: (
         <svg
           width="23"
@@ -250,82 +252,129 @@ const CollageLayout = ({ children }) => {
     },
   ];
 
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/collage/dashboard":
+        setSelected(0);
+        setDown(0);
+        break;
+
+      case "/collage/test":
+        setSelected(1);
+        setDown(1);
+        break;
+
+      case "/collage/companies":
+        setSelected(2);
+        setDown(2);
+        break;
+
+      case "/collage/students":
+        setSelected(3);
+        setDown(3);
+        break;
+
+      case "/collage/results":
+        setSelected(4);
+        setDown(4);
+        break;
+
+      case "/collage/quesBank":
+        setSelected(5);
+        setDown(5);
+        break;
+
+      case "/collage/profile":
+        setSelected(7);
+        setDown(7);
+        break;
+
+      case "/collage/inbox":
+        setSelected(8);
+        setDown(8);
+        break;
+
+      case "/collage/teams":
+        setSelected(9);
+        setDown(9);
+        break;
+
+      case "/collage/accounting":
+        setSelected(10);
+        setDown(10);
+        break;
+
+      case "/collage/settings":
+        setSelected(11);
+        setDown(11);
+        break;
+      default:
+        break;
+    }
+  }, []);
+
   return (
-    <div className=" h-full bg-blued relative">
+    <>
       <Navbar open={open} setOpen={setOpen} />
-      <div className="flex justify-start pt-20 ">
-        <aside
-          className={` px-4 h-screen transition-width max-w-[15rem] overflow-x-hidden bg-secondary fixed left-0 z-30  scrollbar overflow-y-scroll ${
-            open ? "w-1/2" : "w-14 lg:w-full "
-          }`}
-        >
-          {" "}
-          <ul>
-            {arr.map((el, i) => {
-              return (
-                <li>
-                  <button
-                    key={i}
-                    className={` ml-[-10px] sm:ml-[-5px] flex gap-4 mb-10  h-fit  py-2 justify-start ${
-                      el.name === "notifications"
-                        ? "ml-[-20px] btn-disabled"
-                        : "btn "
-                    }
-                     ${
-                       open ? "w-full " : "w-1 sm:w-full"
-                     }   shadow-none text-white rounded-xl border-none  mt-2 focus:outline-none  max-w-xs hover:bg-white hover:text-black mx-auto 
-                     ${selected === i ? "bg-white !text-black" : "bg-blued"}
-                       `}
+      <div className=" h-full bg-blued relative">
+        <div className="flex justify-start pt-20 ">
+          <aside
+            className={` px-4 h-[90vh] transition-width max-w-[15rem] overflow-x-hidden bg-secondary fixed left-0 z-30  scrollbar overflow-y-scroll ${
+              open ? "w-1/2" : "w-14 lg:w-full "
+            }`}
+          >
+            {" "}
+            <ul>
+              {arr.map((el, i) => {
+                return (
+                  <li
                     onMouseOver={() => setSelected(i)}
                     onMouseOut={() => setSelected(down)}
-                    onClick={() => {
+                    onMouseDown={() => {
                       setSelected(i);
                       setOpen(false);
                       setDown(i);
                       return navigate(el.path);
                     }}
                   >
-                    <div
+                    <button
                       key={i}
-                      className="w-4 ml-[-10px] "
-                      onMouseOver={() => setSelected(i)}
-                      onMouseOut={() => setSelected(down)}
-                      onClick={() => {
-                        setSelected(i);
-                        setOpen(false);
-                        setDown(i);
-                        return navigate(el.path);
-                      }}
+                      className={` ml-[-10px] sm:ml-[-5px] flex gap-4 mb-10  h-fit  py-2 justify-start ${
+                        el.name === "notifications"
+                          ? "ml-[-20px] btn-disabled"
+                          : "btn "
+                      }
+                     ${
+                       open ? "w-full " : "w-1 sm:w-full"
+                     }   shadow-none text-white rounded-xl border-none  mt-2 focus:outline-none  max-w-xs hover:bg-white hover:text-black mx-auto 
+                     ${selected === i ? "bg-white !text-black" : "bg-blued"}
+                       `}
                     >
-                      {el.icon}
-                    </div>
+                      <div key={i} className="w-4 ml-[-10px] ">
+                        {el.icon}
+                      </div>
 
-                    <h3
-                      key={i}
-                      className={`${open ? "" : "lg:block hidden"} w-fit h-fit`}
-                      onMouseOver={() => setSelected(i)}
-                      onMouseOut={() => setSelected(down)}
-                      onClick={() => {
-                        setSelected(i);
-                        setOpen(false);
-                        setDown(i);
-                        return navigate(el.path);
-                      }}
-                    >
-                      {el.name}
-                    </h3>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </aside>
+                      <h3
+                        key={i}
+                        className={`${
+                          open ? "" : "lg:block hidden"
+                        } w-fit h-fit`}
+                      >
+                        {el.name}
+                      </h3>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </aside>
 
-        <div className="bg-white rounded-xl h-full min-h-[95vh] w-full mx-4 ml-14 lg:ml-60">
-          {children}
+          <div className="bg-white rounded-xl h-full min-h-[95vh] w-full mx-4 ml-14 lg:ml-60 ">
+            {children}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

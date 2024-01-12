@@ -24,6 +24,7 @@ module.exports = {
     extend: {
       transitionProperty: {
         width: "width",
+        height: "height",
       },
       backgroundImage: {
         login: "url('../public/images/loginBg.jpg')",
@@ -34,6 +35,7 @@ module.exports = {
         snow: "#F3F6F8",
         aqua: "#247ba0",
         blued: "#95ACFA",
+        "gray-100": "#F8F8F9",
       },
       fontFamily: {
         dmSans: ["DM Sans", "sans-serif"],
@@ -55,5 +57,9 @@ module.exports = {
       "cupcake",
     ],
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    require("@tailwindcss/line-clamp"),
+    require("@tailwindcss/forms"),
+  ],
 };

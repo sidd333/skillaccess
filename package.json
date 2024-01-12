@@ -3,12 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "@lexical/react": "^0.12.6",
     "@reduxjs/toolkit": "^2.0.1",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "apexcharts": "^3.45.1",
     "i": "^0.3.7",
+    "lexical": "^0.12.6",
     "npm": "^10.2.5",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
@@ -26,7 +31,7 @@
     "workbox-background-sync": "latest"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "latest",
+    "@babel/plugin-proposal-private-property-in-object": "",
     "@babel/plugin-transform-class-properties": "latest",
     "@babel/plugin-transform-nullish-coalescing-operator": "latest",
     "@babel/plugin-transform-numeric-separator": "latest",

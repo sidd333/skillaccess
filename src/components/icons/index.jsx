@@ -129,3 +129,35 @@ export const Flag = () => {
     </svg>
   );
 };
+
+export const Bin = () => (
+  <svg
+    width="21"
+    height="20"
+    viewBox="0 0 21 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M16.6227 7.8902C16.6227 7.8902 16.1702 13.5027 15.9077 15.8669C15.7827 16.996 15.0852 17.6577 13.9427 17.6785C11.7685 17.7177 9.59188 17.7202 7.41854 17.6744C6.31938 17.6519 5.63354 16.9819 5.51104 15.8727C5.24687 13.4877 4.79688 7.8902 4.79688 7.8902"
+      stroke="#95ACFA"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M17.7762 5.19975H3.64453"
+      stroke="#95ACFA"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M15.053 5.19974C14.3989 5.19974 13.8355 4.73724 13.7072 4.0964L13.5047 3.08307C13.3797 2.61557 12.9564 2.29224 12.4739 2.29224H8.94635C8.46385 2.29224 8.04052 2.61557 7.91552 3.08307L7.71302 4.0964C7.58469 4.73724 7.02135 5.19974 6.36719 5.19974"
+      stroke="#95ACFA"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);

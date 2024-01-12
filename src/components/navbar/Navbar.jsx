@@ -2,7 +2,7 @@ import React from "react";
 
 const Navbar = (props) => {
   return (
-    <div className="border border-gray-500 bg-white w-full z-40  fixed top-0">
+    <div className="border border-y-1 sorder border-gray-500 bg-white w-full z-40 m-0 fixed top-0">
       <div className="navbar ">
         <button
           className="btn btn-primary sm:hidden "
