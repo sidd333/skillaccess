@@ -42,7 +42,7 @@ function Root() {
   // component below are unchanged
   return (
     <Routes>
-      <Route path="" element={<Home />} />
+      <Route path="/" element={<Home />} />
 
       <Route path="collage/dashboard">
         <Route path="" element={<Home />} />
