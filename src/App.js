@@ -44,14 +44,14 @@ function Root() {
     <Routes>
       <Route path="" element={<Register />} />
 
-      <Route path="collage/dashboard">
+      <Route path="/collage/dashboard">
         <Route path="" element={<Home />} />
         <Route path="companies" element={<CompanyPage />} />
         <Route path="jobs" element={<JobsPage />} />
         <Route path="students" element={<StudentsPage />} />
       </Route>
 
-      <Route path="collage/test">
+      <Route path="/collage/test">
         <Route path="" element={<TestPage />} />
         <Route path="assessment" element={<AssessmentPage />} />
         <Route path="name" element={<NameAssessmentPage />} />
