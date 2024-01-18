@@ -9,7 +9,7 @@ const Search = () => {
         <FiPieChart className=" sm:h-16 sm:w-16 h-10 w-10 self-center" />
         <h2 className="text-xl font-bold self-center">Test</h2>
       </button>
-      <div className="bg-gray-100 rounded-xl mx-2   h-12 flex my-12">
+      <div className="bg-gray-100 rounded-xl mx-2   h-12 flex mt-12 mb-4 ">
         <FaSearch className="self-center ml-2  text-gray-400" />
         <input
           type="text"
