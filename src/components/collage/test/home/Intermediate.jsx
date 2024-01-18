@@ -6,10 +6,17 @@ import { PiPencilSimpleLine } from "react-icons/pi";
 
 // Import Swiper styles
 import "swiper/css";
-import { Bin } from "../../../icons";
+
+import Card from "./common/Card";
 
 const Intermediate = () => {
-  const arr = [1, 2, 3, 4, 5];
+  const arr = [
+    { attempts: 10, progress: 1 },
+    { attempts: 12, progress: 2 },
+    { attempts: 18, progress: 3 },
+    { attempts: 20, progress: 4 },
+    { attempts: 28, progress: 4 },
+  ];
   return (
     <div className="flex bg-[#F8F8F9] w-full gap-2">
       <div className=" min-w-max h-64 bg-[rgba(143,146,161,0.1)] my-3 ml-4 rounded-lg flex justify-center">
@@ -60,40 +67,14 @@ const Intermediate = () => {
       >
         {arr.map((item, i) => (
           <SwiperSlide className="w-full">
-            <div className="w-60 h-64 bg-white my-3 text-start font-bold text-black rounded sm:p-2 p-1 font-dmSans">
-              <h2 className="mb-2 line-clamp-2 ">
-                Create the first things for your platform
-              </h2>
-              <p className="font-normal text-gray-400  line-clamp-4 sm:mb-2 mb-1">
-                Your platform is made up of 4 main elements, and the importance
-                of your platform is unparalleled becau…
-              </p>
-              <h2 className="text-gray-400 font-medium text-base font-dmSans sm:mb-2">
-                ATTEMPTS
-              </h2>
-              <div className="grid grid-cols-4 w-full px-2 gap-2 mb-4">
-                <div className="bg-gray-100 w-full h-1 rounded"></div>
-                <div className="bg-gray-100 w-full h-1 rounded"></div>
-                <div className="bg-gray-100 w-full h-1 rounded"></div>
-                <div className="bg-gray-100 w-full h-1  rounded"></div>
-              </div>
-
-              <div className="flex justify-between">
-                <div className="flex ">
-                  <div className="w-8 h-8 bg-blue-500  rounded"></div>
-                  <div className="w-8 h-8 bg-blue-900 rounded -ml-3"></div>
-                  <div className="w-8 h-8 bg-blue-100 rounded -ml-3"></div>
-                  <div className="w-8  rounded  font-dmSans text-gray-400 font-normal self-center ">
-                    +18
-                  </div>
-                </div>
-
-                <div className="flex justify-between px-2">
-                  <Bin />
-                  <PiPencilSimpleLine className="w-6 h-5 text-blued" />
-                </div>
-              </div>
-            </div>
+            <Card
+              heading={"Create the first Things for Your Platform"}
+              desc={
+                "Your platform is made up of 4 main elements, and the importance of your platform is unparalleled because"
+              }
+              attempts={18}
+              progress={item.progress}
+            />
           </SwiperSlide>
         ))}
 

@@ -1,12 +1,17 @@
 import React from "react";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex w-[97%] mx-auto justify-between mb-2">
       <div>
         <button className="flex self-center ml-2 rounded-lg  gap-2">
-          <FaChevronLeft className=" p-3 rounded-lg h-10 w-10 self-center bg-gray-200" />
+          <button onClick={() => navigate(-1)}>
+            <FaChevronLeft className=" p-3 rounded-lg h-10 w-10 self-center bg-gray-200" />
+          </button>
+
           <div>
             <h2 className="sm:text-xl  font-bold self-center">
               Create Assessment

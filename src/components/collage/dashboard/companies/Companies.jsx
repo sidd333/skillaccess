@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa6";
 import { PiSlidersHorizontalLight } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 
 const Companies = () => {
   const [companies, setcompanies] = useState([1, 2, 3, 4, 5, 6, , 9, 6]);
+  const navigate = useNavigate();
   return (
     <div>
       <div className="flex w-[85%] mx-auto justify-between mb-2">
-        <button className="bg-gray-200  self-center ml-2 rounded-lg h-10 w-10 sm:h-12 sm:w-16">
+        <button
+          className="bg-gray-200  self-center ml-2 rounded-lg h-10 w-10 sm:h-12 sm:w-16"
+          onClick={() => navigate("/collage/dashboard")}
+        >
           <FaAngleLeft className="mx-auto sm:h-6 sm:w-6 h-4 w-4" />
         </button>
         <div className="bg-gray-100 rounded-xl mx-2  sm:h-12 h-10 flex my-2 ">
@@ -40,7 +45,7 @@ const Companies = () => {
               <div className="card-body">
                 <div className="w-14 h-14 bg-red-600 -mt-10"></div>
                 <h2 className="card-title">Nike</h2>
-                <p>If a dog chews asdh sakjd iosadh shad siaodh saodi h</p>
+                <p>If a dog chews asdh sakjd iosadh shad siaodh saodi h </p>
                 <div className="card-actions justify-end">
                   <button className="btn hover:bg-blue-900 bg-blue-800 rounded-2xl text-white">
                     View details

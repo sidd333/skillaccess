@@ -8,10 +8,10 @@ import {
   Routes,
 } from "react-router-dom";
 import Home from "./pages/collage/home/Home";
-import Login from "./pages/login/Login";
+
 import CompanyPage from "./pages/collage/home/CompanyPage";
 import JobsPage from "./pages/collage/home/JobsPage";
-
+import Register from "./pages/collage/auth/Register";
 import StudentsPage from "./pages/collage/home/StudentsPage";
 import TestPage from "./pages/collage/test/TestPage";
 import AssessmentPage from "./pages/collage/test/AssessmentPage";
@@ -42,7 +42,7 @@ function Root() {
   // component below are unchanged
   return (
     <Routes>
-      <Route path="" element={<Home />} />
+      <Route path="" element={<Register />} />
 
       <Route path="collage/dashboard">
         <Route path="" element={<Home />} />
@@ -96,8 +96,6 @@ function Root() {
       <Route path="collage/teams">
         <Route path="" element={<TeamsPage />} />
       </Route>
-
-      <Route path="login" element={<Login />} />
     </Routes>
   );
 }

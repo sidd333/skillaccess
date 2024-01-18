@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import collageAuthReducer from "../redux/features/auth/authSlice.js";
 
-export default configureStore({
+const store = configureStore({
   reducer: {
-    //   auth: authReducer,
+    collageAuth: collageAuthReducer,
   },
 });
+
+export default store;

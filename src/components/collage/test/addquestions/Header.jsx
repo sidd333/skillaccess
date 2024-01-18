@@ -1,13 +1,18 @@
 import React from "react";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex w-[97%] mx-auto justify-between mb-2">
       <div>
         <button className="flex self-center ml-2 rounded-lg  gap-2">
-          <FaChevronLeft className=" p-3 rounded-lg h-10 w-10 self-center bg-gray-200" />
+          <button onClick={() => navigate(-1)}>
+            <FaChevronLeft className=" p-3 rounded-lg h-10 w-10 self-center bg-gray-200 mt-2" />
+          </button>
+
           <div>
             <h2 className="sm:text-xl  font-bold self-center">
               Create Assessment
@@ -23,15 +28,18 @@ const Header = () => {
 
       <div className="bg-gray-100 rounded-xl mx-2  gap-2 h-12 flex my-2 ">
         <div className=" flex">
-          <button className="self-center justify-center flex bg-blue-400 p-2 rounded-lg text-xs gap-2">
+          <button
+            className="self-center justify-center flex bg-blue-700 p-2 rounded-lg text-xs gap-2 text-white"
+            onClick={() => navigate("/collage/test/review")}
+          >
             Next Step <FaArrowRightLong className="self-center" />
           </button>
         </div>
-        <div className=" flex">
-          <button className="self-center justify-center flex bg-blue-400 p-2 rounded-lg text-xs gap-2">
+        {/* <div className=" flex">
+          <button className="self-center justify-center flex bg-blue-700 p-2 rounded-lg text-xs gap-2 text-white">
             Add <FaPlus className="self-center" />
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -5,14 +5,19 @@ import { FaAngleLeft } from "react-icons/fa6";
 import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { CiLocationOn } from "react-icons/ci";
 import { FaArrowRight } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([1, 2, 3, 4, 5, 6, , 9, 6]);
+  const navigate = useNavigate();
   return (
     <div>
       <div className="flex w-[95%] mx-auto justify-between mb-2">
         <button className="bg-gray-200  self-center ml-2 rounded-lg h-10 w-10 sm:h-12 sm:w-16">
-          <FaAngleLeft className="mx-auto sm:h-6 sm:w-6 h-4 w-4" />
+          <FaAngleLeft
+            className="mx-auto sm:h-6 sm:w-6 h-4 w-4"
+            onClick={() => navigate("/collage/dashboard")}
+          />
         </button>
         <div className="bg-gray-100 rounded-xl mx-2  sm:h-12 h-10 flex my-2 ">
           <FaSearch className="self-center w-1/3 h-1/3 text-gray-400" />

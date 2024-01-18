@@ -11,7 +11,7 @@ export const Progress = () => {
               <div className="w-1/2 bg-blue-500 h-2 self-center rounded-e-lg -ml-2 z-10">
                 {" "}
               </div>
-              <div className="w-1/2 bg-blued h-2 self-center -ml-2 "> </div>
+              <div className="w-1/2 bg-blue-500 h-2 self-center -ml-2 "> </div>
             </div>
           </div>
           <h2 className="text-left -ml-10">Name Assessment</h2>
@@ -19,17 +19,17 @@ export const Progress = () => {
 
         <div className="-ml-4">
           <div className="flex ">
-            <div className="sm:w-8 sm:h-8 w-6 h-6 rounded-full p-2 bg-blued sm:p-4 z-20"></div>
+            <div className="sm:w-8 sm:h-8 w-6 h-6 rounded-full p-2 bg-blue-500 sm:p-4 z-20"></div>
             <div className="flex w-full">
-              <div className="w-1/2 bg-blued h-2 self-center -ml-2"> </div>
-              <div className="w-1/2 bg-blued h-2 self-center -ml-2 "> </div>
+              <div className="w-1/2 bg-blue-500 h-2 self-center -ml-2"> </div>
+              <div className="w-1/2 bg-blue-500 h-2 self-center -ml-2 "> </div>
             </div>
           </div>
           <h2>Select Tests</h2>
         </div>
         <div className="-ml-4">
           <div className="flex ">
-            <div className="sm:w-8 sm:h-8 w-6 h-6 rounded-full p-2 bg-blued sm:p-4 z-20"></div>
+            <div className="sm:w-8 sm:h-8 w-6 h-6 rounded-full p-2 bg-blue-500 sm:p-4 z-20"></div>
             <div className="flex w-full">
               <div className="w-1/2 bg-blued h-2 self-center -ml-2"> </div>
               <div className="w-1/2 bg-blued h-2 self-center -ml-2 "> </div>

@@ -1,7 +1,8 @@
 import React from "react";
+import Company from "../../dashboard/companies/Companies";
 
 const Companies = () => {
-  return <div>Companies</div>;
+  return <Company />;
 };
 
 export default Companies;

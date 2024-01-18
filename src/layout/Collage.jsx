@@ -12,7 +12,7 @@ const CollageLayout = ({ children }) => {
 
   const arr = [
     {
-      name: "dashboard",
+      name: "Dashboard",
       path: "/collage/dashboard",
       icon: (
         <svg
@@ -32,7 +32,7 @@ const CollageLayout = ({ children }) => {
       ),
     },
     {
-      name: "test",
+      name: "Test",
       path: "/collage/test",
       icon: (
         <svg
@@ -72,7 +72,7 @@ const CollageLayout = ({ children }) => {
       ),
     },
     {
-      name: "students",
+      name: "Students",
       path: "/collage/students",
       icon: (
         <svg
@@ -92,7 +92,7 @@ const CollageLayout = ({ children }) => {
       ),
     },
     {
-      name: "results",
+      name: "Results",
       path: "/collage/results",
       icon: (
         <svg
@@ -112,7 +112,7 @@ const CollageLayout = ({ children }) => {
       ),
     },
     {
-      name: "question bank",
+      name: "Question Bank",
       path: "/collage/quesBank",
       icon: (
         <svg
@@ -131,9 +131,9 @@ const CollageLayout = ({ children }) => {
         </svg>
       ),
     },
-    { name: "notifications", path: "" },
+    { name: "Notifications", path: "" },
     {
-      name: "profile",
+      name: "Profile",
       path: "/collage/profile",
       icon: (
         <svg
@@ -153,7 +153,7 @@ const CollageLayout = ({ children }) => {
       ),
     },
     {
-      name: "inbox",
+      name: "Inbox",
       path: "/collage/inbox",
       icon: (
         <svg
@@ -173,7 +173,7 @@ const CollageLayout = ({ children }) => {
       ),
     },
     {
-      name: "teams",
+      name: "Teams",
       path: "/collage/teams",
       icon: (
         <svg
@@ -211,7 +211,7 @@ const CollageLayout = ({ children }) => {
       ),
     },
     {
-      name: "accounting",
+      name: "Accounting",
       path: "/collage/accounting",
       icon: (
         <svg
@@ -231,7 +231,7 @@ const CollageLayout = ({ children }) => {
       ),
     },
     {
-      name: "settings",
+      name: "Settings",
       path: "/collage/settings",
       icon: (
         <svg
@@ -253,63 +253,59 @@ const CollageLayout = ({ children }) => {
   ];
 
   useEffect(() => {
-    switch (location.pathname) {
-      case "/collage/dashboard":
-        setSelected(0);
-        setDown(0);
-        break;
+    if (location.pathname.match(/\/collage\/dashboard*/)) {
+      setSelected(0);
+      setDown(0);
+    }
 
-      case "/collage/test":
-        setSelected(1);
-        setDown(1);
-        break;
+    if (location.pathname.match(/\/collage\/test*/)) {
+      setSelected(1);
+      setDown(1);
+    }
 
-      case "/collage/companies":
-        setSelected(2);
-        setDown(2);
-        break;
+    if (location.pathname.match(/\/collage\/companies*/)) {
+      setSelected(2);
+      setDown(2);
+    }
 
-      case "/collage/students":
-        setSelected(3);
-        setDown(3);
-        break;
+    if (location.pathname.match(/\/collage\/students*/)) {
+      setSelected(3);
+      setDown(3);
+    }
 
-      case "/collage/results":
-        setSelected(4);
-        setDown(4);
-        break;
+    if (location.pathname.match(/\/collage\/results*/)) {
+      setSelected(4);
+      setDown(4);
+    }
 
-      case "/collage/quesBank":
-        setSelected(5);
-        setDown(5);
-        break;
+    if (location.pathname.match(/\/collage\/quesBank*/)) {
+      setSelected(5);
+      setDown(5);
+    }
 
-      case "/collage/profile":
-        setSelected(7);
-        setDown(7);
-        break;
+    if (location.pathname.match(/\/collage\/profile*/)) {
+      setSelected(7);
+      setDown(7);
+    }
 
-      case "/collage/inbox":
-        setSelected(8);
-        setDown(8);
-        break;
+    if (location.pathname.match(/\/collage\/inbox*/)) {
+      setSelected(8);
+      setDown(8);
+    }
 
-      case "/collage/teams":
-        setSelected(9);
-        setDown(9);
-        break;
+    if (location.pathname.match(/\/collage\/teams*/)) {
+      setSelected(9);
+      setDown(9);
+    }
 
-      case "/collage/accounting":
-        setSelected(10);
-        setDown(10);
-        break;
+    if (location.pathname.match(/\/collage\/accounting*/)) {
+      setSelected(10);
+      setDown(10);
+    }
 
-      case "/collage/settings":
-        setSelected(11);
-        setDown(11);
-        break;
-      default:
-        break;
+    if (location.pathname.match(/\/collage\/settings*/)) {
+      setSelected(11);
+      setDown(11);
     }
   }, []);
 
@@ -366,6 +362,10 @@ const CollageLayout = ({ children }) => {
                   </li>
                 );
               })}
+
+              <li className="mb-5 pl-8 font-dmSans text-sm font-bold">
+                <h2>© 2022 skillassess</h2>
+              </li>
             </ul>
           </aside>
 

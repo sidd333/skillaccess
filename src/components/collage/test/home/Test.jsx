@@ -9,10 +9,11 @@ import { FaCaretDown } from "react-icons/fa";
 import { CgUnavailable } from "react-icons/cg";
 import Advanced from "./Advanced";
 import Intermediate from "./Intermediate";
+import { useNavigate } from "react-router-dom";
 
 export const Test = () => {
   const arr = [<Beginner />, <Intermediate />, <Advanced />];
-
+  const navigate = useNavigate();
   const asses = [1, 2, 3, 4, 5];
   return (
     <div className="">
@@ -24,7 +25,7 @@ export const Test = () => {
         <div className=" sm:w-3/4 w-full rounded-lg">
           <div className="w-full px-4 pt-8">
             <div className="mx-auto w-full  rounded-2xl bg-white p-2">
-              {arr.map((comp) => (
+              {arr.map((comp, i) => (
                 <Disclosure defaultOpen>
                   {({ open }) => (
                     <div className="mb-4">
@@ -33,11 +34,37 @@ export const Test = () => {
                           <FaCaretDown
                             className={`${
                               open ? "" : ""
-                            } h-5 w-5 text-gray-500`}
+                            } h-5 w-5 text-gray-300`}
                           />
-                          <h2>What is your refund policy?</h2>{" "}
+                          <h2>
+                            {i === 0 ? (
+                              <>
+                                Beginner level{" "}
+                                <p className="inline-block text-gray-400">
+                                  &#40;3&#41;
+                                </p>{" "}
+                              </>
+                            ) : i === 1 ? (
+                              <>
+                                For Intermediate{" "}
+                                <p className="inline-block text-gray-400">
+                                  &#40;83&#41;
+                                </p>{" "}
+                              </>
+                            ) : (
+                              <>
+                                For Advanced{" "}
+                                <p className="inline-block text-gray-400">
+                                  &#40;143&#41;
+                                </p>{" "}
+                              </>
+                            )}
+                          </h2>{" "}
                         </Disclosure.Button>
-                        <CiSettings className="w-5 h-5 text-gray-500" />
+                        <CiSettings
+                          className="w-5 h-5 text-gray-500 hover:cursor-pointer"
+                          onClick={() => navigate("/collage/test/assessment")}
+                        />
                       </div>
 
                       <Transition
@@ -71,22 +98,22 @@ export const Test = () => {
                 <>
                   <div className="flex gap-2 px-3 py-1 mt-2">
                     <div className="min-w-[2.5rem] h-10 bg-amber-500 self-center rounded-lg"></div>
-                    <div>
-                      <h2 className="text-sm  font-bold text-center pb-1">
+                    <div className="ml-1 mt-1">
+                      <h2 className="text-sm  font-bold  py-1 ">
                         Software Engineer
                       </h2>
-                      <h2 className="text-sm  font-normal text-center pb-2">
+                      <h2 className="text-sm  font-normal  pb-2">
                         Google{" "}
                         <p className="text-gray-400 inline">in Pune,India</p>
                       </h2>
                     </div>
                   </div>
-                  <div className="flex px-3 pb-3 justify-between">
-                    <div className="flex gap-2">
-                      <button className="rounded-lg bg-gray-200 p-1 text-sm">
+                  <div className="flex px-3 pb-3 mt-2 justify-between">
+                    <div className="flex gap-6">
+                      <button className="rounded-lg bg-gray-100 p-1 text-base font-dmSans font-base">
                         View
                       </button>
-                      <button className="rounded-lg bg-gray-200 p-1 self-center">
+                      <button className="rounded-lg p-1  bg-gray-100 self-center">
                         <CgUnavailable className="text-gray-400 text-lg" />
                       </button>
                     </div>

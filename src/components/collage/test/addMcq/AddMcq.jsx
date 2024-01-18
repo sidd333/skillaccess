@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./Header";
-import Editor from "./Editor";
+
 import { FaArrowLeftLong, FaArrowRightLong, FaX } from "react-icons/fa6";
 import { FaArrowLeft, FaChevronLeft, FaPlus } from "react-icons/fa";
 
@@ -19,7 +19,10 @@ const AddMcq = () => {
             <option value="">option</option>
           </select>
 
-          <Editor />
+          <textarea
+            className="resize-none w-full h-full bg-gray-100 border-none focus:outline-none rounded-lg focus:ring-0 placeholder-gray-400"
+            placeholder="Enter Question Here"
+          ></textarea>
         </span>
         <span className="w-[49%]">
           <h2>Test Description</h2>

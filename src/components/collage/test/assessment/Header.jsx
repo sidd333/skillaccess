@@ -1,11 +1,16 @@
 import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex w-[97%] mx-auto justify-between mb-2">
-      <button className="flex self-center ml-2 rounded-lg  gap-2">
+      <button
+        className="flex self-center ml-2 rounded-lg  gap-2"
+        onClick={() => navigate(-1)}
+      >
         <FaChevronLeft className=" p-3 rounded-lg h-10 w-10 self-center bg-gray-200" />
         <h2 className="sm:text-xl  font-bold self-center">Assessment</h2>
       </button>

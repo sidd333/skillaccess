@@ -23,5 +23,9 @@
   border: 3px solid var(--primary);
 }
 
+.apexcharts-grid-borders,
+.apexcharts-xaxis-tick {
+  display: none !important ;
+}
 @tailwind components;
 @tailwind utilities;
