@@ -206,11 +206,12 @@ const Register = () => {
           </label>
 
           {/* register button */}
+          <></>
           <button
             className="btn btn-accent rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
             onClick={() => navigate("/collage/dashboard")}
           >
-            Register
+            Regist
           </button>
           <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
           <button className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  ">
