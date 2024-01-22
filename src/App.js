@@ -23,6 +23,9 @@ import SettingsPage from "./pages/collage/settings/SettingsPage";
 import TeamsPage from "./pages/collage/teams/TeamsPage";
 import CompaniesPage from "./pages/collage/companies/CompaniesPage";
 import StudentsMainPage from "./pages/collage/students/StudentsMainPage";
+import CompanyProfilePage from "./pages/collage/companies/CompanyProfilePage";
+import CompanyJobOverviewPage from "./pages/collage/companies/CompanyJobOverviewPage";
+import StudentsProfilePage from "./pages/collage/students/StudentsProfilePage";
 
 export default function App() {
   return (
@@ -53,6 +56,8 @@ export default function App() {
 
         <Route path="collage/companies">
           <Route path="" element={<CompaniesPage />} />
+          <Route path="profile" element={<CompanyProfilePage />} />
+          <Route path="jobOverview" element={<CompanyJobOverviewPage />} />
         </Route>
 
         <Route path="collage/inbox">
@@ -77,6 +82,7 @@ export default function App() {
 
         <Route path="collage/students">
           <Route path="" element={<StudentsMainPage />} />
+          <Route path="profile" element={<StudentsProfilePage />} />
         </Route>
 
         <Route path="collage/teams">

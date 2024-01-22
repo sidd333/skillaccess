@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import collageAuthReducer from "../redux/features/auth/authSlice.js";
+import collageAuthReducer from "./collage/auth/authSlice.js";
 
 const store = configureStore({
   reducer: {

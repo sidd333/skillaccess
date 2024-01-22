@@ -3,53 +3,39 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerCollage } from "../../../redux/collage/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const Register = () => {
+const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [Credentials, setCredentials] = useState({
-    Email: "",
-    Password: "",
-    From: "",
-    To: "",
-    FirstName: "",
-    LastName: "",
-    Major: "",
-    University: "",
-  });
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [From, setFrom] = useState();
+  const [To, setTo] = useState();
   const [checked, setChecked] = useState(false);
-
-  const changeHandler = (e) => {
-    let cred = e.target.name;
-    let val = e.target.value;
-    setCredentials((prev) => {
-      return { ...prev, [cred]: val };
-    });
-  };
+  const [FirstName, setFirstName] = useState("");
+  const [LastName, setLastName] = useState("");
+  const [Major, setMajor] = useState("");
+  const [University, setUniversity] = useState("");
 
   const sel = useSelector((state) => state.collageAuth);
   useEffect(() => {
-    // console.log(sel);
+    console.log(sel);
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { Email, Password, FirstName, LastName, Major, University } =
-      Credentials;
-    const data = {
-      Email,
-      Password,
-      FirstName,
-      LastName,
-      Major,
-      CollegeName: University,
-    };
     try {
-      const ch = await dispatch(registerCollage(data));
-      if (ch.meta.requestStatus === "fulfilled") {
-        setCredentials({});
-        navigate("/collage/dashboard");
-      }
+      let data = {
+        Email,
+        Password,
+        FirstName,
+        LastName,
+        Major,
+        CollegeName: University,
+      };
+      dispatch(registerCollage(data)).then((response) => {
+        response.payload.success && navigate("/collage/dashboard");
+      });
     } catch (error) {}
   };
   return (
@@ -71,7 +57,7 @@ const Register = () => {
               fill="none"
             >
               <path
-                fillRule="evenodd"
+                fill-rule="evenodd"
                 clipRule="evenodd"
                 d="M16.4993 8.00009L16.4993 8.00012L12.4997 11.9997L21.4997 21.0006L30.4997 11.9997L26.4929 8.0001H16.4993V8.00009ZM21.4997 32.0004L21.499 31.9997L0.5 10.9998L12.5033 0H30.4997L42.5003 10.9998L21.5004 31.9997L21.4997 32.0004Z"
                 fill="#0052CC"
@@ -91,16 +77,14 @@ const Register = () => {
           <span className="max-w-xl w-full mx-auto flex gap-1">
             <input
               type="text"
-              value={Credentials.FirstName}
-              name="FirstName"
-              onChange={changeHandler}
+              value={FirstName}
+              onChange={(e) => setFirstName(e.target.value)}
               placeholder="First Name"
               className="input rounded-xl border-none  md:mt-6 mt-4 focus:outline-none input-md w-1/2 max-w-xl  mx-auto bg-snow "
             />
             <input
-              value={Credentials.LastName}
-              onChange={changeHandler}
-              name="LastName"
+              value={LastName}
+              onChange={(e) => setLastName(e.target.value)}
               type="text"
               placeholder="Last Name"
               className="input rounded-xl border-none  md:mt-6 mt-4 focus:outline-none input-md w-1/2 max-w-xl  mx-auto bg-snow "
@@ -109,9 +93,8 @@ const Register = () => {
 
           {/* email */}
           <input
-            onChange={changeHandler}
-            value={Credentials.Email}
-            name="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={Email}
             type="email"
             placeholder="Email Address"
             className="input rounded-xl border-none  md:mt-6 mt-4 focus:outline-none input-md w-full max-w-xl  mx-auto bg-snow "
@@ -119,9 +102,8 @@ const Register = () => {
 
           {/* university */}
           <input
-            name="University"
-            value={Credentials.University}
-            onChange={changeHandler}
+            value={University}
+            onChange={(e) => setUniversity(e.target.value)}
             type="text"
             placeholder="Your Institute/University"
             className="input rounded-xl border-none  md:mt-6 mt-4 focus:outline-none input-md w-full max-w-xl  mx-auto bg-snow "
@@ -131,27 +113,28 @@ const Register = () => {
           <div className="w-full max-w-xl  mx-auto flex md:mt-6 mt-4 ">
             {/* major */}
             <input
-              name="Major"
-              value={Credentials.Major}
-              onChange={changeHandler}
+              value={Major}
+              onChange={(e) => setMajor(e.target.value)}
               type="text"
               placeholder="Major"
               className="input rounded-xl border-none  focus:outline-none input-md w-1/2  mx-auto bg-snow  "
             />
             <span className="w-1/2 flex gap-4 ml-2">
               <input
-                name="From"
-                value={Credentials.From}
-                onChange={changeHandler}
+                value={From}
+                onChange={(e) => {
+                  setFrom(e.target.value);
+                }}
                 type="date"
                 placeholder="From"
                 className="input rounded-xl border-none  focus:outline-none input-md w-1/2  mx-auto bg-snow  "
               />
 
               <input
-                name="To"
-                value={Credentials.To}
-                onChange={changeHandler}
+                value={To}
+                onChange={(e) => {
+                  setTo(e.target.value);
+                }}
                 type="date"
                 placeholder="To"
                 className="input rounded-xl border-none  focus:outline-none input-md w-1/2  mx-auto bg-snow  "
@@ -162,9 +145,8 @@ const Register = () => {
           {/* password */}
           <div className="w-full max-w-xl  mx-auto flex md:mt-6 mt-4 ">
             <input
-              name="Password"
-              onChange={changeHandler}
-              value={Credentials.Password}
+              onChange={(e) => setPassword(e.target.value)}
+              value={Password}
               type="password"
               placeholder="Password"
               className=" rounded-s-lg border-none  focus:outline-none input-md w-full max-w-xl  mx-auto bg-snow  "
@@ -195,7 +177,6 @@ const Register = () => {
           <label className=" flex gap-2 cursor-pointer mx-auto w-full max-w-xl">
             <input
               type="checkbox"
-              onChange={(e) => setChecked(!checked)}
               checked={checked}
               className="checkbox checkbox-primary bg-secondary opacity-20 w-6 h-6"
             />
@@ -206,12 +187,11 @@ const Register = () => {
           </label>
 
           {/* register button */}
-          <></>
           <button
             className="btn btn-accent rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
-            onClick={() => navigate("/collage/dashboard")}
+            onClick={handleSubmit}
           >
-            Regist
+            Register
           </button>
           <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
           <button className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  ">
@@ -230,4 +210,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

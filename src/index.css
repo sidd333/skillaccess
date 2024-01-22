@@ -27,5 +27,6 @@
 .apexcharts-xaxis-tick {
   display: none !important ;
 }
+
 @tailwind components;
 @tailwind utilities;

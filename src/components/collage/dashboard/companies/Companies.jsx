@@ -47,7 +47,10 @@ const Companies = () => {
                 <h2 className="card-title">Nike</h2>
                 <p>If a dog chews asdh sakjd iosadh shad siaodh saodi h </p>
                 <div className="card-actions justify-end">
-                  <button className="btn hover:bg-blue-900 bg-blue-800 rounded-2xl text-white">
+                  <button
+                    className="btn hover:bg-blue-900 bg-blue-800 rounded-2xl text-white"
+                    onClick={() => navigate("/collage/companies/profile")}
+                  >
                     View details
                   </button>
                 </div>
