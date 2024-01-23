@@ -49,10 +49,10 @@ export default function Dashboard() {
           <h1 className="text-lg font-extrabold pt-3 px-6 md:px-8 basis-full">
             Overview
           </h1>
-          <div className="flex flex-wrap  gap-6  justify-center mb-12  px-4 mt-2 pb-6">
+          <div className="flex flex-wrap  gap-12  justify-center mb-4  px-4 mt-2 pb-6">
             {/* 1st card */}
-            <div className="card w-[13%] md:w-[16%] lg:w-[18%] bg-base-100 shadow-xl">
-              <div className="rounded-lg bg-gray-100 w-10 h-10 flex justify-center mx-auto mt-4">
+            <div className="card w-[13%] md:w-[16%] lg:w-[17%[ bg-base-100  py-4">
+              <div className="rounded-lg bg-gray-100 w-10 h-10 flex justify-center mx-auto mt-4 mb-2 ">
                 <CgClipboard className="text-[#5243AA] self-center w-6 h-6 " />
               </div>
               <h2 className="text-2xl text-center font-bold mt-2">1.2K</h2>
@@ -64,8 +64,8 @@ export default function Dashboard() {
               </h2>
             </div>
 
-            <div className="card w-[13%] md:w-[16%] lg:w-[18%] bg-base-100 shadow-xl">
-              <div className="rounded-lg bg-gray-100 w-10 h-10 flex justify-center mx-auto mt-4">
+            <div className="card w-[13%] md:w-[16%] lg:w-[17%[ bg-base-100  py-4">
+              <div className="rounded-lg bg-gray-100 w-10 h-10 flex justify-center mx-auto mt-4 mb-2">
                 <CgAwards className="text-green-600 self-center w-6 h-6 " />
               </div>
               <h2 className="text-2xl text-center font-bold mt-2">55</h2>
@@ -77,8 +77,8 @@ export default function Dashboard() {
               </h2>
             </div>
 
-            <div className="card w-[13%] md:w-[16%] lg:w-[18%] bg-base-100 shadow-xl">
-              <div className="rounded-lg bg-gray-100 w-10 h-10 flex justify-center mx-auto mt-4">
+            <div className="card w-[13%] md:w-[16%] lg:w-[17%[ bg-base-100  py-4">
+              <div className="rounded-lg bg-gray-100 w-10 h-10 flex justify-center mx-auto mt-4 mb-2">
                 <CgTrending className="text-[#FF991F] self-center w-6 h-6 " />
               </div>
               <h2 className="text-2xl text-center font-bold mt-2">10</h2>
@@ -90,8 +90,8 @@ export default function Dashboard() {
               </h2>
             </div>
 
-            <div className="card w-[13%] md:w-[16%] lg:w-[18%] bg-base-100 shadow-xl">
-              <div className="rounded-lg bg-gray-100 w-10 h-10 flex justify-center mx-auto mt-4">
+            <div className="card w-[13%] md:w-[16%] lg:w-[17%[ bg-base-100  py-4">
+              <div className="rounded-lg bg-gray-100 w-10 h-10 flex justify-center mx-auto mt-4 mb-2">
                 <TbBriefcase2 className="text-blued self-center w-6 h-6 " />
               </div>
               <h2 className="text-2xl text-center font-bold mt-2">120</h2>
@@ -106,8 +106,8 @@ export default function Dashboard() {
               </h2>
             </div>
 
-            <div className="card w-[13%] md:w-[16%] lg:w-[18%] bg-base-100 shadow-xl">
-              <div className="rounded-lg bg-gray-100 w-10 h-10 flex justify-center mx-auto mt-4">
+            <div className="card w-[13%] md:w-[16%] lg:w-[17%[ bg-base-100  py-4">
+              <div className="rounded-lg bg-gray-100 w-10 h-10 flex justify-center mx-auto mt-4 mb-2">
                 <MdOutlinedFlag className="text-blue-700 self-center w-6 h-6 " />
               </div>
               <h2 className="text-2xl text-center font-bold mt-2">10</h2>
@@ -116,7 +116,7 @@ export default function Dashboard() {
               </h2>
               <span
                 className="flex my-4 gap-2 justify-center hover:cursor-pointer"
-                onClick={() => navigate("/collage/test/assessment")}
+                onClick={() => navigate("/collage/test/name")}
               >
                 <h2 className="text-blue-700 font-medium text-center  text-base  ">
                   Create New
@@ -127,9 +127,9 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className=" gap-2  mx-auto  overflow-x-clip">
+        <div className=" gap-2  mx-auto  overflow-x-clip grid grid-cols-2">
           {/* 1st block */}
-          <div className="bg-gray-100 mt-3 sm:mt-8 rounded-lg  w-1/2  pb-4 mr-1 inline-block p-4">
+          <div className="bg-gray-100 mt-3 sm:mt-5 rounded-lg   pb-4 mr-1 inline-block p-4">
             <span className="flex justify-between">
               <div className="w-1/2">
                 <h1 className="text-base font-bold  basis-full py-2 ">
@@ -148,7 +148,7 @@ export default function Dashboard() {
             <SwiperSlideLeft />
           </div>
           {/* 2nd block */}
-          <div className="bg-gray-100 mt-3 sm:mt-8 rounded-lg  w-[48%]  pb-4 mr-1 inline-block p-4">
+          <div className="bg-gray-100 mt-3 sm:mt-5 rounded-lg    pb-4 mr-1 inline-block p-4">
             <span className="flex justify-between">
               <div className="w-1/2">
                 <h1 className="text-base font-bold  basis-full py-2 ">

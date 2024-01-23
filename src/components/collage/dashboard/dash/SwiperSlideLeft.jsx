@@ -35,9 +35,11 @@ const SwiperSlideLeft = () => {
               className="w-full h-full"
             />
           </figure>
-          <h3 className="text-sm text-gray-400 font-semibold text-center break-words h-full">
-            company name
-          </h3>
+          <span>
+            <h3 className="text-sm text-gray-400 font-semibold text-center break-words h-full">
+              company name
+            </h3>
+          </span>
         </div>
       </SwiperSlide>
       <SwiperSlide>

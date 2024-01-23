@@ -30,7 +30,6 @@ const ChartComp = () => {
         },
       ],
       chart: {
-        height: 300,
         id: "dash",
         toolbar: {
           show: false,
@@ -45,6 +44,7 @@ const ChartComp = () => {
       grid: {
         show: true,
         padding: {
+          left: 50,
           right: 20,
         },
         xaxis: {
@@ -54,6 +54,9 @@ const ChartComp = () => {
           },
         },
         yaxis: {
+          labels: {
+            show: false,
+          },
           lines: {
             show: false, //or just here to disable only y axis
           },
@@ -78,22 +81,22 @@ const ChartComp = () => {
     },
     series: [
       {
-        name: "Students",
+        name: "Placements",
         data: [30, 40, 45, 50, 49, 60, 70, 91, 19, 100, 55, 20],
       },
       {
-        name: "Placements",
+        name: "Students",
         data: [5, 15, 55, 50, 69, 70, 74, 96, 100, 55, 33, 77],
       },
     ],
   });
   return (
-    <div className="sm:flex  mt-6 bg-gray-100 w-[98.3%] rounded-lg gap-1 justify-center relative">
+    <div className="sm:flex  mt-6 bg-gray-100 w-full rounded-lg gap-1 justify-center relative">
       {/* chart component */}
       <div className=" w-3/4  rounded-s sm:px-6 mt-2">
         <div className="md:p-2 flex justify-between">
           <h2 className="font-extrabold text-lg ">RESULTS OVERVIEW</h2>{" "}
-          <span className="flex gap-4 text-sm font-bold">
+          <span className="flex gap-8 text-sm font-bold">
             <button
               className={`border-2 border-x-transparent border-transparent ${
                 toggle === 0 && " text-blue-600 border-b-blue-700"
@@ -129,7 +132,7 @@ const ChartComp = () => {
           </span>
         </div>
 
-        <div className="h-[25rem] w-[50vw]">
+        <div className="h-[25rem] w-[52vw] ml-2">
           <Chart
             id="dash"
             className="bg-white shadow-md mt-2 rounded-lg  "
@@ -149,17 +152,17 @@ const ChartComp = () => {
           <div className="flex gap-4 my-4">
             <span className="flex gap-1">
               <FaCircle className="text-blue-400" />{" "}
-              <h2 className="font-bold text-xs">Student</h2>
+              <h2 className="font-bold text-xs">Placements</h2>
             </span>
             <span className="flex gap-1">
               <FaCircle className="text-green-400" />{" "}
-              <h2 className="font-bold text-xs">Placements</h2>
+              <h2 className="font-bold text-xs">Students</h2>
             </span>
           </div>
         </div>
       </div>
       {/* placements */}
-      <div className=" sm:w-[23%]  bg-gray-100 rounded-e    font-dmSans">
+      <div className=" sm:w-[20%]  bg-gray-100 rounded-e  mr-2  font-dmSans">
         <span className="flex justify-between sm:px-2 mb-4 mt-4 ">
           <h1 className="font-extrabold text-lg ">Recent Placements</h1>
           <h1

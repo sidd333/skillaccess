@@ -23,6 +23,10 @@
   border: 3px solid var(--primary);
 }
 
+.apexcharts-yaxis-texts-g {
+  margin-right: 30px !important;
+}
+
 .apexcharts-grid-borders,
 .apexcharts-xaxis-tick {
   display: none !important ;

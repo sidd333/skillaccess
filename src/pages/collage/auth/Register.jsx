@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerCollage } from "../../../redux/collage/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { LuEye } from "react-icons/lu";
+import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const Register = () => {
     University: "",
   });
   const [checked, setChecked] = useState(false);
+  const [type, setType] = useState("password");
 
   const changeHandler = (e) => {
     let cred = e.target.name;
@@ -53,7 +56,7 @@ const Register = () => {
     } catch (error) {}
   };
   return (
-    <form action="" className="">
+    <form action="" className="font-dmSans">
       <div className=" bg-base-100 shadow-xl h-full   font-dmSans grid grid-cols-5 ">
         <figure className="w-full h-full bg-login bg-no-repeat bg-cover bg-center !hidden  lg:!block col-span-2 ">
           {/* <img src="./images/loginBg.jpg" alt="" className="w-full h-full" /> */}
@@ -80,11 +83,11 @@ const Register = () => {
             <h1 className="font-bold text-[22px]">Skill Access</h1>
           </div>
 
-          <h2 className="font-bold text-2xl text-center  md:mt-6 mt-4">
+          <h2 className="font-bold text-2xl text-center  md:mt-10 mt-4">
             Sign Up to Skill Access
           </h2>
           <h2 className="text-sm font-normal text-center text-lGray">
-            Create an account to continue
+            Create an account to continue!
           </h2>
 
           {/* name */}
@@ -143,7 +146,7 @@ const Register = () => {
                 name="From"
                 value={Credentials.From}
                 onChange={changeHandler}
-                type="date"
+                type="text"
                 placeholder="From"
                 className="input rounded-xl border-none  focus:outline-none input-md w-1/2  mx-auto bg-snow  "
               />
@@ -152,7 +155,7 @@ const Register = () => {
                 name="To"
                 value={Credentials.To}
                 onChange={changeHandler}
-                type="date"
+                type="text"
                 placeholder="To"
                 className="input rounded-xl border-none  focus:outline-none input-md w-1/2  mx-auto bg-snow  "
               />
@@ -165,12 +168,18 @@ const Register = () => {
               name="Password"
               onChange={changeHandler}
               value={Credentials.Password}
-              type="password"
+              type={type}
               placeholder="Password"
-              className=" rounded-s-lg border-none  focus:outline-none input-md w-full max-w-xl  mx-auto bg-snow  "
+              className=" rounded-s-lg border-none  focus:outline-none input-md w-full max-w-xl focus:ring-0 mx-auto bg-snow  "
             />
-            <button className="rounded-e-lg btn-primary bg-snow text-center p-2">
-              0
+            <button
+              className="rounded-e-lg btn-primary bg-snow text-center p-2"
+              onClick={(e) => {
+                e.preventDefault();
+                type === "text" ? setType("password") : setType("text");
+              }}
+            >
+              <LuEye className="text-gray-400 text-2xl" />
             </button>
           </div>
 
@@ -199,27 +208,34 @@ const Register = () => {
               checked={checked}
               className="checkbox checkbox-primary bg-secondary opacity-20 w-6 h-6"
             />
-            <span className="text-lGray">
+            <span className="text-lGray font-bold text-xs">
               By creating an account, you agree to our{" "}
-              <Link to="/"> Term and Conditions</Link>
+              <Link className="text-blue-600">
+                Privacy Policy, Term and Conditions{" "}
+              </Link>
+              and, <Link>Notification Settings</Link>
             </span>
           </label>
 
           {/* register button */}
           <></>
           <button
-            className="btn btn-accent rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
+            className="btn hover:bg-blue-700 bg-blue-600 rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto text-white"
             onClick={handleSubmit}
           >
-            Regist
+            Create Account
           </button>
           <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
-          <button className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  ">
-            <h3 className="opacity-100">Continue with google</h3>
+          <button
+            className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  "
+            onClick={() => navigate("/collage/dashboard")}
+          >
+            <FcGoogle className="text-lg mr-2" />
+            <h3 className="opacity-100">Click here to skip register</h3>
           </button>
-          <span className="text-lGray text-center">
+          <span className="text-lGray text-center text-sm font-semibold">
             Already have an account?{" "}
-            <Link to="/" className="text-secondary">
+            <Link to="/" className="text-blue-600 ">
               {" "}
               SignIn
             </Link>

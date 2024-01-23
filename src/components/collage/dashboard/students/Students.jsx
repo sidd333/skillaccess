@@ -5,36 +5,40 @@ import { FaAngleLeft } from "react-icons/fa6";
 import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { TbFileDownload } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import BackIcon from "../../../buttons/BackIcon";
+import { IoIosSearch } from "react-icons/io";
 
 const Students = () => {
   const [students, setStudents] = useState([1, 2, 3, 4, 5, 6, , 9, 6]);
   const navigate = useNavigate();
   const [items, setItems] = useState(true);
   return (
-    <div>
-      <div className="flex w-[85%] mx-auto justify-between mb-2">
+    <div className="w-11/12 mx-auto">
+      <div className="flex w-full mx-auto justify-between mb-4">
         <button
-          className="bg-gray-200  self-center ml-2 rounded-lg h-10 w-10 sm:h-12 sm:w-16"
-          onClick={() => navigate("/collage/dashboard")}
+          className="  self-center  rounded-lg h-10 w-10 "
+          onClick={() => navigate(-1)}
         >
-          <FaAngleLeft className="mx-auto sm:h-6 sm:w-6 h-4 w-4" />
+          <BackIcon />
         </button>
-        <div className="bg-gray-100 rounded-xl mx-2  sm:h-12 h-10 flex my-2 ">
-          <FaSearch className="self-center w-1/3 h-1/3 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search"
-            className="input border-none self-center bg-gray-100 focus:outline-none input-md w-full max-w-xs  mx-auto  "
-          />
+        <div className=" rounded-xl mx-2 w-full sm:h-12 h-10 flex my-2 ">
+          <span className="w-fit mx-auto flex self-center">
+            <IoIosSearch className="self-center w-10 h-10 bg-gray-100 rounded-s-lg text-gray-400 py-2 " />
+            <input
+              type="text"
+              placeholder="Search"
+              className="placeholder pl-0 border-none self-center bg-gray-100 focus:outline-none focus:ring-0 rounded-e-lg sm:w-80 w-fit"
+            />
+          </span>
         </div>
 
-        <button className="bg-gray-200  self-center mr-2 rounded-lg h-10 w-10 sm:h-12 sm:w-16">
-          <PiSlidersHorizontalLight className="mx-auto sm:h-8 sm:w-8 h-6 w-6" />
+        <button className="bg-gray-100  self-center  rounded-lg h-10 w-10 sm:h-12 sm:w-16">
+          <PiSlidersHorizontalLight className="mx-auto  h-6 w-6" />
         </button>
       </div>
 
       {/* legend */}
-      <div className=" grid-cols-6  text-center w-11/12 mx-auto  font-dmSans font-semibold text-base hidden md:grid">
+      <div className=" grid-cols-6  text-center  mx-auto  font-dmSans font-semibold text-base hidden md:grid">
         <div className="bg-[#0052cc1f] rounded-s-lg p-2 ">
           <h2>Name of the Student</h2>
         </div>
@@ -56,7 +60,7 @@ const Students = () => {
       </div>
 
       {/* list to be iterated */}
-      <div className=" grid-cols-6 rounded-lg my-2 py-2 pl-2 text-center w-11/12 mx-auto  font-dmSans font-semibold text-base hidden md:grid bg-gray-200">
+      <div className=" grid-cols-6 rounded-lg my-2 py-2 pl-2 text-center  mx-auto  font-dmSans font-semibold text-base hidden md:grid bg-gray-200">
         {" "}
         {/* row-2 */}
         <div className={` flex `}>

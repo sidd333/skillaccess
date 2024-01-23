@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { FaAngleLeft } from "react-icons/fa6";
+import BackIcon from "../../../buttons/BackIcon";
 import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 
@@ -8,13 +8,13 @@ const Companies = () => {
   const [companies, setcompanies] = useState([1, 2, 3, 4, 5, 6, , 9, 6]);
   const navigate = useNavigate();
   return (
-    <div>
-      <div className="flex w-[85%] mx-auto justify-between mb-2">
+    <div className="w-11/12 mx-auto">
+      <div className="flex w-full mx-auto justify-between mb-2">
         <button
-          className="bg-gray-200  self-center ml-2 rounded-lg h-10 w-10 sm:h-12 sm:w-16"
-          onClick={() => navigate("/collage/dashboard")}
+          className="  self-center  rounded-lg h-10 w-10 "
+          onClick={() => navigate(-1)}
         >
-          <FaAngleLeft className="mx-auto sm:h-6 sm:w-6 h-4 w-4" />
+          <BackIcon />
         </button>
         <div className=" rounded-xl mx-2 w-full sm:h-12 h-10 flex my-2 ">
           <span className="w-fit mx-auto flex self-center">
@@ -27,33 +27,43 @@ const Companies = () => {
           </span>
         </div>
 
-        <button className="bg-gray-200  self-center mr-2 rounded-lg h-10 w-10 sm:h-12 sm:w-16">
-          <PiSlidersHorizontalLight className="mx-auto sm:h-8 sm:w-8 h-6 w-6" />
+        <button className="bg-gray-100  self-center  rounded-lg h-10 w-10 sm:h-12 sm:w-16">
+          <PiSlidersHorizontalLight className="mx-auto  h-6 w-6" />
         </button>
       </div>
-      <div className="flex flex-wrap gap-4 w-fit justify-center">
+      <div className="flex flex-wrap mx-1 w-fit justify-between">
         {companies?.map((item, index) => {
           return (
             <div
-              className="card card-compact w-64 bg-base-100 shadow-xl"
+              className="card card-compact w-[17rem] mb-4 bg-gray-100 rounded-none"
               key={index}
             >
               <figure>
-                <img
-                  src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                  alt="Shoes"
-                />
+                <img src="../../images/CompanyBg.png" alt="Shoes" />
               </figure>
               <div className="card-body">
-                <div className="w-14 h-14 bg-red-600 -mt-10"></div>
-                <h2 className="card-title">Nike</h2>
-                <p>If a dog chews asdh sakjd iosadh shad siaodh saodi h </p>
+                <div className="w-14 h-14  -mt-10">
+                  <img
+                    src="../../images/companyLogo.png"
+                    alt=""
+                    className="object-scale-down rounded-2xl"
+                  />
+                </div>
+                <h2 className="card-title text-lg font-dmSans font-bold">
+                  Google Inc.
+                </h2>
+                <p className="line-clamp-5 text-sm opacity-[0.6024]">
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type…{" "}
+                </p>
                 <div className="card-actions justify-end">
                   <button
-                    className="btn hover:bg-blue-900 bg-blue-800 rounded-2xl text-white"
+                    className="px-4 py-2 hover:bg-blue-900 bg-[#0052CC] text-xs font-dmSans font-bold rounded-xl text-white"
                     onClick={() => navigate("/collage/companies/profile")}
                   >
-                    View details
+                    View Details
                   </button>
                 </div>
               </div>

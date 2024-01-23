@@ -53,5 +53,5 @@ const collageAuthSlice = createSlice({
   },
 });
 
-// export const { todoAdded, todoToggled } = todosSlice.actions;
+//
 export default collageAuthSlice.reducer;
