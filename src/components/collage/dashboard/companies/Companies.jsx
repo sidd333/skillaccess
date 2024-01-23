@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { IoIosSearch } from "react-icons/io";
 import { FaAngleLeft } from "react-icons/fa6";
 import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
@@ -16,13 +16,15 @@ const Companies = () => {
         >
           <FaAngleLeft className="mx-auto sm:h-6 sm:w-6 h-4 w-4" />
         </button>
-        <div className="bg-gray-100 rounded-xl mx-2  sm:h-12 h-10 flex my-2 ">
-          <FaSearch className="self-center w-1/3 h-1/3 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search"
-            className="input border-none self-center bg-gray-100 focus:outline-none input-md w-full max-w-xs  mx-auto  "
-          />
+        <div className=" rounded-xl mx-2 w-full sm:h-12 h-10 flex my-2 ">
+          <span className="w-fit mx-auto flex self-center">
+            <IoIosSearch className="self-center w-10 h-10 bg-gray-100 rounded-s-lg text-gray-400 py-2 " />
+            <input
+              type="text"
+              placeholder="Search"
+              className="placeholder pl-0 border-none self-center bg-gray-100 focus:outline-none focus:ring-0 rounded-e-lg sm:w-80 w-fit"
+            />
+          </span>
         </div>
 
         <button className="bg-gray-200  self-center mr-2 rounded-lg h-10 w-10 sm:h-12 sm:w-16">

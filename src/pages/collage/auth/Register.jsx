@@ -209,7 +209,7 @@ const Register = () => {
           <></>
           <button
             className="btn btn-accent rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
-            onClick={() => navigate("/collage/dashboard")}
+            onClick={handleSubmit}
           >
             Regist
           </button>
