@@ -3,11 +3,7 @@ import AddMcq from "../../../components/collage/test/addMcq/AddMcq";
 import CollageLayout from "../../../layout/Collage";
 
 const AddMcqPage = () => {
-  return (
-    <CollageLayout>
-      <AddMcq />
-    </CollageLayout>
-  );
+  return <AddMcq />;
 };
 
 export default AddMcqPage;

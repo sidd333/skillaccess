@@ -3,7 +3,7 @@ import React from "react";
 const Results = () => {
   return (
     <div className="px-4  ">
-      <div className=" grid grid-cols-5 text-center mt-3 bg-[#8F92A1] bg-opacity-10 rounded-lg">
+      <div className=" grid grid-cols-5 text-center mt-3 bg-[#8F92A1] bg-opacity-10 rounded-lg ">
         <span className="w-full   p-2 font-bold font-dmSans">Name of test</span>
         <span className="w-full   p-2 font-bold font-dmSans">Date</span>
         <span className="w-full   p-2 font-bold font-dmSans">Topics</span>
@@ -12,7 +12,7 @@ const Results = () => {
       </div>
 
       {/* iterable  */}
-      <div className=" grid grid-cols-5 text-center mt-3 bg-white rounded-lg">
+      <div className=" grid grid-cols-5 text-center mt-3 bg-white rounded-lg ">
         <span className="w-full   py-2 text-sm font-dmSans">
           Wipro web -Fresher -aug2021{" "}
         </span>

@@ -13,7 +13,7 @@ const Students = () => {
         {/* New students joined */}
         <div className="h-96 w-[48%] bg-gray-100 overflow-y-scroll scroll rounded-lg">
           <span className="flex justify-between font-bold text-sm px-4 py-2">
-            <h2>New Jobs Posted</h2>
+            <h2>New Students Joined</h2>
             <h2 className="text-gray-400">...</h2>
           </span>
           <div className=" grid-cols-3 rounded-lg my-2 py-2 pl-2 text-center w-11/12 mx-auto  font-dmSans font-semibold text-base hidden md:grid bg-white">
@@ -100,17 +100,8 @@ const Students = () => {
               </div>
             </div>
             <div className="flex justify-center">
-              <span className="flex justify-center h-fit self-center gap-2">
-                <h2
-                  className="font-dmSans text-xs font-bold text-white bg-blued p-2 rounded-lg cursor-pointer"
-                  onClick={() => navigate("/collage/students/profile")}
-                >
-                  View CV
-                </h2>
-
-                <h2 className="font-dmSans font-semibold text-sm sm:text-base self-center">
-                  <TbFileDownload className="text-gray-400 h-6 w-6" />
-                </h2>
+              <span className="flex justify-center h-fit self-center gap-2 bg-[#DE350B66] bg-opacity-40 text-white text-xs font-semibold px-4 py-2 rounded-xl hover:cursor-pointer">
+                Approve Request
               </span>
             </div>{" "}
           </div>
@@ -127,10 +118,10 @@ const Students = () => {
           <h2>Education</h2>
         </div>
         <div className="bg-[#0052cc1f] p-2">
-          <h2>Placed In</h2>{" "}
+          <h2>Latest Assessment</h2>{" "}
         </div>
         <div className="bg-[#0052cc1f] p-2">
-          <h2>Scored</h2>
+          <h2>Current Assessment</h2>
         </div>
         <div className="bg-[#0052cc1f] p-2">
           <h2>Performance</h2>

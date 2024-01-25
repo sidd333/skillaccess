@@ -88,9 +88,9 @@ export const Test = () => {
         </div>
 
         {/* right block */}
-        <div className=" sm:w-[23%] w-full ml-2 bg-gray-100 rounded-lg  mt-10  min-h-[50rem] basis-full font-dmSans sm:block sm:basis-auto  ">
-          <div className="w-11/12 mt-2 rounded-lg bg-white min-h-[99%] mx-auto">
-            <h2 className="text-base border-b-2 border-gray-200 font-bold text-center py-3">
+        <div className=" sm:w-[23%] w-full ml-2 bg-gray-100 rounded-3xl p-2  mt-10  min-h-[50rem] basis-full font-dmSans sm:block sm:basis-auto  ">
+          <div className="w-11/12 mt-2 rounded-3xl bg-white min-h-[99%] mx-auto">
+            <h2 className="text-base border-b-2 border-gray-200 font-bold text-center py-3  px-2">
               Recent Assessments Completed
             </h2>
             {asses.map(() => {

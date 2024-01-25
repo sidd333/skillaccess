@@ -125,11 +125,11 @@ const CompanyProfile = () => {
                 <h2 className="font-dmSans font-semibold text-sm sm:text-base">
                   Role
                 </h2>
-                <h2 className="font-dmSans font-medium text-[.6rem] sm:text-xs inline">
+                <h2 className="font-dmSans font-medium text-[.6rem] sm:text-xs inline mr-2">
                   {" "}
                   CompanyName
                 </h2>
-                <h2 className="font-dmSans text-gray-400  font-medium text-xs sm:text-xs inline">
+                <h2 className="font-dmSans text-gray-400  font-medium text-xs sm:text-xs inline mr-3">
                   {" "}
                   date
                 </h2>
@@ -140,7 +140,7 @@ const CompanyProfile = () => {
               </span>
             </div>
             <div className="flex sm:gap-6 gap-1">
-              <CiLocationOn className="mx-auto sm:h-6 sm:w-6 h-4 w-4 self-center" />
+              {/* <CiLocationOn className="mx-auto sm:h-6 sm:w-6 h-4 w-4 self-center" />
               <h2 className="font-dmSans text-gray-400  font-medium text-xs self-center sm:text-xs inline">
                 {" "}
                 location
@@ -148,12 +148,14 @@ const CompanyProfile = () => {
               <h2 className="font-dmSans text-green-500  font-medium text-xs self-center sm:text-xs inline">
                 {" "}
                 Remote
-              </h2>
+              </h2> */}
               <button
-                className=" h-8 p-1 w-20 hover:bg-blue-900 bg-blued rounded-lg text-white text-[.5rem] sm:text-sm self-center "
+                className=" h-8 p-1 w-20  hover:bg-blue-900 bg-[#0052CC]  rounded-lg bg-opacity-20 text-white text-[.5rem] sm:text-sm self-center "
                 onClick={() => navigate("/collage/companies/jobOverview")}
               >
-                full time
+                <p className="text-[#0052CC] -ml-8 font-dmSans text-sm font-medium  ">
+                  Full Time
+                </p>
               </button>
               <FaArrowRight className="text-gray-400 self-center" />
             </div>

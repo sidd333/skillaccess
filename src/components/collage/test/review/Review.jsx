@@ -8,7 +8,7 @@ const Review = () => {
     <div className="font-dmSans text-sm font-bold">
       <Header />
 
-      <div className="  w-[95.6%] mx-auto h-[90vh] my-2 rounded-lg   bg-gray-100 ">
+      <div className="  w-11/12 mx-auto h-[90vh] my-2 rounded-lg   bg-gray-100 ">
         <div className="flex justify-between p-4">
           <span className="flex gap-2 pl-2">
             <h2>Multiple Choice Questions</h2>
@@ -18,7 +18,11 @@ const Review = () => {
             </div>
           </span>
           <span className="flex">
-            <input type="checkbox" name="delete" className="self-center" />
+            <input
+              type="checkbox"
+              name="delete"
+              className="self-center bg-[#DEEBFF] border-none rounded-md"
+            />
             <label for="delete" className="pl-2">
               Delete Selected
             </label>

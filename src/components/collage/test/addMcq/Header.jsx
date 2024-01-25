@@ -1,39 +1,36 @@
 import React from "react";
-import { FaChevronLeft, FaPlus } from "react-icons/fa";
+import { FaChevronLeft } from "react-icons/fa";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex w-[97%] mx-auto justify-between mb-2">
+    <div className="flex w-[98%] mx-auto justify-between mb-2 mt-5">
       <div>
         <button className="flex self-center ml-2 rounded-lg  gap-2">
-          <button onClick={() => navigate(-1)}>
-            <FaChevronLeft className=" p-3 rounded-lg h-10 w-10 self-center bg-gray-200" />
+          <button
+            onClick={() => navigate(-1)}
+            className=" mr-3 self-center bg-white rounded-lg "
+          >
+            <FaChevronLeft className=" p-3  h-10 w-10 self-center " />
           </button>
 
-          <div>
-            <h2 className="sm:text-xl  font-bold self-center">
+          <div className="self-center">
+            <h2 className="sm:text-xl  text-left font-bold self-center text-3xl font-dmSans  text-white ">
               Create Assessment
             </h2>
-            <div className="flex gap-2">
-              <h3>1</h3>
-              <h3>2</h3>
-              <h3>3</h3>
-            </div>
           </div>
         </button>
       </div>
 
-      <div className="bg-gray-100 rounded-xl mx-2  gap-2 h-12 flex my-2 ">
-        <div className=" flex">
-          <button className="self-center justify-center flex bg-blue-400 p-2 rounded-lg text-xs gap-2">
-            Next Step <FaChevronLeft className="self-center" />
+      <div className=" rounded-xl mx-2   h-12 flex my-2 font-dmSans ">
+        <div className=" flex gap-2">
+          <button className="self-center w-24  justify-center flex text-blue-800 py-2 px-4 rounded-xl font-bold gap-2 bg-white">
+            Cancel
           </button>
-        </div>
-        <div className=" flex">
-          <button className="self-center justify-center flex bg-blue-400 p-2 rounded-lg text-xs gap-2">
-            Add <FaPlus className="self-center" />
+          <button className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white">
+            Save
           </button>
         </div>
       </div>

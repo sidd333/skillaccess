@@ -24,7 +24,7 @@ const Advanced = () => {
           <div className="bg-white sm:w-20 sm:h-20 w-10 h-10 rounded-lg mx-auto flex justify-center">
             <FaPlus className="self-center w-4 h-4 sm:h-8 sm:w-8 text-blue-500" />
           </div>
-          <h2 className="text-center text-black text-xs sm:text-medium font-bold my-2 w-20  md:w-60">
+          <h2 className="text-center text-black text-base  font-bold my-2 w-20  md:w-60">
             Add New Assessment
           </h2>
           <h2 className="text-center text-xs my-2 w-20 md:w-60">

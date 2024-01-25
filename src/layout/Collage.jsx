@@ -57,7 +57,7 @@ const CollageLayout = ({ children }) => {
       ),
     },
     {
-      name: "companies",
+      name: "Companies",
       path: "/collage/companies",
       icon: (
         <svg

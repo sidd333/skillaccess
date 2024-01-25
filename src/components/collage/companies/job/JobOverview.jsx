@@ -33,24 +33,6 @@ const JobOverview = () => {
               <h2 className="text-sm font-bold text-center mt-1">200+</h2>
             </div>
           </div>
-          {/* Role Overview */}
-          <div className="bg-gray-100 mt-2 px-6 ">
-            <span className="">
-              <h2 className="text-base font-bold pt-6 ">About Us</h2>
-              <p className=" mt-2 text-sm text-gray-400 pb-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem
-                consectetur, blanditiis, rerum temporibus magnam illum maxime
-                porro iste eum distinctio quisquam repudiandae assumenda atque
-                sed vitae adipisci, iure nemo culpa?Lorem ipsum, dolor sit amet
-                consectetur adipisicing elit. Molestias porro ratione saepe
-                voluptatem atque distinctio quo voluptatum eius, officiis odio
-                in et eaque excepturi ex repellat perferendis deserunt tempora
-                esse. voluptatem atque distinctio quo voluptatum eius, officiis
-                odio in et eaque excepturi ex repellat perferendis deserunt
-                tempora esse.
-              </p>
-            </span>
-          </div>
 
           {/* /Requirements */}
 
@@ -72,11 +54,31 @@ const JobOverview = () => {
               <h2>$90-100K</h2>
             </span>
           </div>
+          {/* Role Overview */}
+          <div className="bg-gray-100 mt-2 px-6 ">
+            <span className="">
+              <h2 className="text-base font-bold pt-6 ">Role Overview</h2>
+              <p className=" mt-2 text-sm text-gray-400 pb-6">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem
+                consectetur, blanditiis, rerum temporibus magnam illum maxime
+                porro iste eum distinctio quisquam repudiandae assumenda atque
+                sed vitae adipisci, iure nemo culpa?Lorem ipsum, dolor sit amet
+                consectetur adipisicing elit. Molestias porro ratione saepe
+                voluptatem atque distinctio quo voluptatum eius, officiis odio
+                in et eaque excepturi ex repellat perferendis deserunt tempora
+                esse. voluptatem atque distinctio quo voluptatum eius, officiis
+                odio in et eaque excepturi ex repellat perferendis deserunt
+                tempora esse.
+              </p>
+            </span>
+          </div>
 
           {/* bullets */}
           <div className="bg-gray-100 mt-2 px-6 pb-6 rounded-b-lg">
             <span className="">
-              <h2 className="text-base font-bold pt-6 mb-4">Achievements</h2>
+              <h2 className="text-base font-bold pt-6 mb-4">
+                Duties & Responsibilities
+              </h2>
               <span className=" mt-2 text-sm text-gray-400 pb-3 flex gap-2">
                 <VscCircleFilled className="text-white  border-4 w-fit h-fit rounded-full self-center border-blue-500 mr-2" />
                 <p>
@@ -135,7 +137,7 @@ const JobOverview = () => {
           </div>
 
           {/*  */}
-          <div className="flex justify-between mb-7">
+          <div className="flex justify-between mb-7 mt-4">
             <h2 className="font-bold">Similar jobs</h2>
             <h2 className="font-bold underline underline-offset-2 text-blued">
               See All

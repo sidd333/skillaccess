@@ -27,12 +27,12 @@ const Navbar = (props) => {
           {/* noifiaction */}
           <button className="border-2 border-gray-400  text-gray-400 rounded-lg p-2 relative">
             <FiBell className="text-lg" />{" "}
-            <div className="rounded-full h-2 w-2 bg-blued  absolute top-1 right-2"></div>
+            <div className="rounded-full h-2 w-2 bg-[#0090FF]  absolute top-1 right-2"></div>
           </button>
 
           {/* noifiaction */}
           <button className="border-2 border-gray-400  rounded-lg p-1 relative flex gap-2">
-            <img src="../images/user.jpg" alt="" className="h-7 w-7" />{" "}
+            <img src="../../images/user.jpg" alt="" className="h-7 w-7" />{" "}
             <h2 className="pr-2 text-sm font-bold self-center font-dmSans italic">
               Hello Ravi
             </h2>

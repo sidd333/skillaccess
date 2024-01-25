@@ -26,6 +26,7 @@ import StudentsMainPage from "./pages/collage/students/StudentsMainPage";
 import CompanyProfilePage from "./pages/collage/companies/CompanyProfilePage";
 import CompanyJobOverviewPage from "./pages/collage/companies/CompanyJobOverviewPage";
 import StudentsProfilePage from "./pages/collage/students/StudentsProfilePage";
+import AddQuestionsSelectPage from "./pages/collage/test/AddQuestionsSelectPage";
 
 export default function App() {
   return (
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="name" element={<NameAssessmentPage />} />
           <Route path="select" element={<SelectTestsPage />} />
           <Route path="questions" element={<AddQuestionsPage />} />
+          <Route path="questionsSelect" element={<AddQuestionsSelectPage />} />
           <Route path="review" element={<ReviewPage />} />
           <Route path="addMcq" element={<AddMcqPage />} />
         </Route>

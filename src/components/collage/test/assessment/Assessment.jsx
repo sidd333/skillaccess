@@ -13,27 +13,33 @@ const Assessment = () => {
       chart: {
         background: "",
       },
-
+      colors: ["#0052CC90", "#00875A90", "#DE350B90"],
       plotOptions: {
         pie: {
+          dataLabels: {
+            enabled: false,
+          },
           donut: {
             labels: {
-              show: true,
+              show: false,
               name: {
-                show: true,
+                show: false,
               },
               value: {
-                show: true,
+                show: false,
               },
               total: {
-                show: true,
+                show: false,
               },
             },
           },
         },
       },
-      series: [44, 55, 13, 33],
-      labels: ["Apple", "Mango", "Orange", "Watermelon"],
+      legend: {
+        show: false,
+      },
+      series: [44, 55, 13],
+      labels: ["Total Students Applied", "Shortlisted", "Attempted for Exam"],
       formatter: function (val) {
         return val + "%";
       },
@@ -51,7 +57,7 @@ const Assessment = () => {
         Create the first things for your platform
       </h2>
 
-      {/* small screen charts*/}
+      {/* small screen charts
       <div className="   md:hidden md:w-[40%] ">
         <div className=" !rounded-lg ">
           <Chart
@@ -111,11 +117,11 @@ const Assessment = () => {
             ]}
           />
         </div>
-      </div>
+      </div> */}
 
       {/* larger screens */}
-      <div className="  w-[95.6%] mx-auto  my-2 rounded-lg tracking-wide justify-between flex ">
-        <div className="md:w-[58%] grid grid-cols-6 row-span-2 gap-x-10 gap-y-3 p-3 bg-gray-100 rounded-lg border border-blued h-28">
+      <div className="  w-[95.6%] mx-auto rounded-lg tracking-wide justify-between flex font-dmSans  mt-8">
+        <div className="md:w-[58%] grid grid-cols-6 row-span-2 gap-x-10 gap-y-3 p-3 bg-gray-100 rounded-2xl border border-blued h-28">
           {" "}
           <div className="col-span-2 ">
             <h2 className="self-center text-xs sm:text-sm">UX-Test Basics</h2>
@@ -155,64 +161,118 @@ const Assessment = () => {
 
         <div className="  hidden md:block w-[40%] ">
           <div className=" !rounded-lg  ">
-            <Chart
-              className="bg-gray-100 rounded-lg"
-              options={settings.options}
-              series={settings.options.series}
-              type="donut"
-              height={400}
-              width={"100%"}
-              responsive={[
-                {
-                  breakpoint: 500,
-
-                  options: {},
-                },
-              ]}
-            />
-
-            <Chart
-              className="bg-gray-100 rounded-lg mt-2"
-              options={{
-                chart: {
-                  type: "bar",
-                },
-
-                series: [
-                  {
-                    data: [
+            {/* 
+            
+            */}
+            <div className="bg-gray-100 rounded-2xl p-2 mb-6">
+              <span className="flex justify-between px-2 font-bold text-base ">
+                <h2>Number of Students Placed</h2>{" "}
+                <h2 className="text-sm text-gray-400">Updated 5 min ago</h2>
+              </span>
+              <div className="flex">
+                <div className=" relative w-80 h-60">
+                  <Chart
+                    className="bg-gray-100 rounded-lg"
+                    options={settings.options}
+                    series={settings.options.series}
+                    type="donut"
+                    width={"100%"}
+                    responsive={[
                       {
-                        x: "category A",
-                        y: 10,
+                        breakpoint: 500,
+
+                        options: {},
                       },
-                      {
-                        x: "category B",
-                        y: 18,
+                    ]}
+                  />{" "}
+                  <h2 className="absolute top-[45%] left-[46%] font-bold text-xl">
+                    560
+                  </h2>
+                  <h2 className="absolute top-[55%] left-[46%] font-bold text-gray-400">
+                    Total
+                  </h2>
+                </div>
+                {/* labels */}
+                <div className="self-center">
+                  <div className="flex gap-1 ">
+                    <div className="w-4 h-4 rounded-full bg-[#0052CC] opacity-60"></div>{" "}
+                    <h2 className="text-xs font-bold text-[#7F7F7F]">
+                      Total Students Applied
+                    </h2>
+                  </div>
+                  <div className="flex gap-1 mt-2 ">
+                    <div className="w-4 h-4 rounded-full bg-[#00875A] opacity-60"></div>{" "}
+                    <h2 className="text-xs font-bold text-[#7F7F7F]">
+                      Shortlisted
+                    </h2>
+                  </div>
+                  <div className="flex gap-1 mt-2">
+                    <div className="w-4 h-4 rounded-full bg-[#DE350B] opacity-60"></div>{" "}
+                    <h2 className="text-xs font-bold text-[#7F7F7F]">
+                      Attempted for Exam
+                    </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gray-100 rounded-2xl p-2 mt-2">
+              <span className="flex justify-between px-2 font-bold text-base ">
+                <h2>Total Attempts</h2>{" "}
+                <input
+                  type="date"
+                  className="rounded-lg focus:outline-none  border-none text-blue-500 "
+                />
+              </span>
+              <div className="w-full h-60">
+                <Chart
+                  className="bg-gray-100 rounded-lg mt-2"
+                  options={{
+                    chart: {
+                      type: "bar",
+                      toolbar: {
+                        show: false,
                       },
+                    },
+
+                    series: [
                       {
-                        x: "category C",
-                        y: 13,
+                        data: [
+                          {
+                            x: "category A",
+                            y: 10,
+                          },
+                          {
+                            x: "category B",
+                            y: 18,
+                          },
+                          {
+                            x: "category C",
+                            y: 13,
+                          },
+                        ],
                       },
                     ],
-                  },
-                ],
-              }}
-              series={[
-                {
-                  data: [23, 34, 12, 54, 32, 43],
-                },
-              ]}
-              type="bar"
-              height={400}
-              width={"100%"}
-              responsive={[
-                {
-                  breakpoint: 500,
+                  }}
+                  series={[
+                    {
+                      data: [23, 34, 12, 54, 32, 43],
+                    },
+                  ]}
+                  type="bar"
+                  height={"100%"}
+                  width={"100%"}
+                  responsive={[
+                    {
+                      breakpoint: 500,
 
-                  options: {},
-                },
-              ]}
-            />
+                      options: {},
+                    },
+                  ]}
+                />
+              </div>
+            </div>
+            {/*  */}
           </div>
         </div>
       </div>

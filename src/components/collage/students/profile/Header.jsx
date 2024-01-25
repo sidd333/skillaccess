@@ -9,10 +9,10 @@ const Header = () => {
     <div className="flex w-[98%] mx-auto justify-between mt-2 font-dmSans">
       <span className="flex gap-4">
         <button
-          className="bg-gray-200  self-center ml-2 rounded-lg h-10 w-10 sm:h-12 sm:w-16"
+          className="bg-[#D9E1E7]  self-center ml-2 rounded-lg h-10 w-10 sm:h-12 sm:w-16"
           onClick={() => navigate(-1)}
         >
-          <FaAngleLeft className="mx-auto sm:h-6 sm:w-6 h-4 w-4" />
+          <FaAngleLeft className="mx-auto  h-4 w-4" />
         </button>
       </span>
     </div>

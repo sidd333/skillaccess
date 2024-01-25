@@ -1,6 +1,6 @@
 import React from "react";
 import { FiPieChart } from "react-icons/fi";
-
+import { IoSettingsOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 
 const Search = () => {
@@ -26,8 +26,16 @@ const Search = () => {
         <div className="rounded-full bg-blue-500 w-8 h-8 self-end"></div>
         <div className="rounded-full bg-blue-500 w-8 h-8 self-end"></div>
         <div className="rounded-full bg-blue-500 w-8 h-8 self-end"></div>
-        <div className="w-8 h-8"></div>
         <div className="rounded-full bg-blue-500 w-8 h-8 self-end"></div>
+        <div className="rounded-full bg-blue-500 w-8 h-8 self-end"></div>
+        <div className="rounded-full bg-blue-500 w-8 h-8 self-end"></div>
+        <div className="rounded-full bg-gray-200 w-8 h-8 self-end text-xs font-bold flex justify-center">
+          <p className="self-center text-gray-400">+99</p>
+        </div>
+        <div className="w-8 h-8"></div>
+        <div className="rounded-full w-8 h-8 self-end">
+          <IoSettingsOutline className="text-gray-400 w-full h-full" />
+        </div>
       </div>
     </div>
   );

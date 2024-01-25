@@ -19,6 +19,7 @@ const ChartComp = () => {
           show: false,
         },
       },
+      colors: ["#0052CC90", "#00875A90", "#DE350B90"],
 
       legend: {
         show: false,
@@ -62,17 +63,17 @@ const ChartComp = () => {
     },
     series: [
       {
-        name: "Students",
+        name: "Total Students Appeared",
         data: [30, 40, 45, 50, 49, 60, 70, 91, 19, 100, 55, 20],
       },
       {
-        name: "Placements",
+        name: "Total Students Selected",
         data: [5, 15, 55, 50, 69, 70, 74, 96, 100, 55, 33, 77],
       },
     ],
   });
   return (
-    <div className="sm:flex  mt-6 bg-gray-100 w-[98.3%] rounded-lg gap-6 font-dmSans  justify-center relative">
+    <div className="sm:flex  mt-6 bg-gray-100 w-full rounded-lg gap-6 font-dmSans  justify-center relative">
       {/* chart component */}
       <div className="w-full  rounded-s sm:px-6 mt-2">
         <div className="md:p-2 flex justify-between">
@@ -121,7 +122,7 @@ const ChartComp = () => {
           </span>
         </div>
 
-        <div className="h-80">
+        <div className="3xl:h-[507px] h-96">
           <Chart
             id="results"
             className="bg-white shadow-md mt-2 rounded-lg "
@@ -133,12 +134,12 @@ const ChartComp = () => {
           />
           <div className="flex gap-4 my-4">
             <span className="flex gap-1">
-              <FaCircle className="text-blue-400" />{" "}
-              <h2 className="font-bold text-xs">Student</h2>
+              <FaCircle className="text-[#0052CC90]" />{" "}
+              <h2 className="font-bold text-xs">Total Students Appeared</h2>
             </span>
             <span className="flex gap-1">
-              <FaCircle className="text-green-400" />{" "}
-              <h2 className="font-bold text-xs">Placements</h2>
+              <FaCircle className="text-[#00875A90]" />{" "}
+              <h2 className="font-bold text-xs">Total Students Selected</h2>
             </span>
           </div>
         </div>

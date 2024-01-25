@@ -44,7 +44,7 @@ const Education = () => {
           {/* End of location and date */}
         </div>
         {/*  */}
-        <p className="text-xs">
+        <p className="text-sm font-dmSans">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores
           ipsa quam vel quidem, perferendis ipsam. Deserunt cumque doloribus
           explicabo, distinctio tempore accusantium optio facilis non vitae

@@ -74,8 +74,8 @@ const Mcq = () => {
         <RxCross1 className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100" />
         <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
         <IoSwapVerticalSharp className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
-        <PiPencilSimpleLineBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
         <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
+        <PiPencilSimpleLineBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
       </div>
     </div>
   );
