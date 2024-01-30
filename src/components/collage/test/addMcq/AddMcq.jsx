@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "./Header";
 
-import { FaArrowLeftLong, FaArrowRightLong, FaX } from "react-icons/fa6";
-import { FaArrowLeft, FaChevronLeft, FaPlus } from "react-icons/fa";
+import { FaX } from "react-icons/fa6";
+import { FaChevronLeft, FaPlus } from "react-icons/fa";
 
 const AddMcq = () => {
   return (

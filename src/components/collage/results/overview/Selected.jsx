@@ -1,47 +1,52 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-const List = () => {
+const Selected = () => {
   const arr = [2, 1, 1, 1, 1];
-  const navigate = useNavigate();
   return (
     <div className="w-full mx-auto">
       {/* legend */}
       <div className=" grid-cols-5  text-center  mx-auto  font-dmSans font-bold text-base hidden md:grid">
         <div className="bg-[#0052CC] bg-opacity-5 rounded-s-lg p-2 ">
-          <h2>Test Name</h2>
+          <h2>Name and Profile</h2>
         </div>
         <div className="bg-[#0052CC] bg-opacity-5 p-2">
-          <h2>Total Students Appeared</h2>
+          <h2>Experience</h2>
         </div>
         <div className="bg-[#0052CC] bg-opacity-5 p-2">
-          <h2>Total Students Selected</h2>{" "}
+          <h2>Level</h2>{" "}
         </div>
         <div className="bg-[#0052CC]  bg-opacity-5 p-2">
-          <h2>Overall Performance</h2>
+          <h2>Assessment Performance</h2>
         </div>
         <div className="bg-[#0052CC] bg-opacity-5 p-2 rounded-e-lg">
-          <h2>Details</h2>
+          <h2>Review</h2>
         </div>
       </div>
 
       {/* list to be iterated */}
       {arr.map(() => (
-        <div className=" grid-cols-5 rounded-lg my-4 py-2 pl-2 text-center  mx-auto  font-dmSans  text-sm hidden md:grid w-11/12">
+        <div className=" grid-cols-5 rounded-lg my-4 py-2 pl-2   mx-auto  font-dmSans  text-sm hidden md:grid w-11/12">
           {" "}
           {/* row-2 */}
           <div className={` flex `}>
             <div className="flex self-center">
-              <span>
-                <h2 className="font-dmSans  sm:text-sm">Google Analytics</h2>
+              <div className=" min-w-[3rem]  h-12 self-center bg-red-600 mr-2  "></div>
+              <span className="break-words min-w-0 pt-1 ">
+                <h2 className="font-dmSans font-semibold text-sm sm:text-base  ">
+                  Role
+                </h2>
+                <h2 className="font-dmSans font-medium text-xs break-words text-gray-400">
+                  {" "}
+                  CompanyName
+                </h2>
               </span>
             </div>
           </div>
           {/*  */}
-          <div className="flex justify-center ">
-            <div className=" self-center h-fit">
+          <div className="flex justify-center mr-16 ">
+            <div className=" self-center h-fit ">
               <span>
-                <h2 className="font-dmSans  sm:text-sm">356</h2>
+                <h2 className="font-dmSans  sm:text-sm ">1 Year</h2>
               </span>
             </div>
           </div>
@@ -49,7 +54,7 @@ const List = () => {
           <div className="flex justify-center">
             <div className=" self-center h-fit">
               <span>
-                <h2 className="font-dmSans  sm:text-sm">256</h2>
+                <h2 className="font-dmSans  sm:text-sm">Senior</h2>
               </span>
             </div>
           </div>
@@ -69,12 +74,9 @@ const List = () => {
           </div>
           {/*  */}
           <div className="flex justify-end mr-3">
-            <span
-              className="self-center hover:cursor-pointer "
-              onClick={() => navigate("/collage/results/overview")}
-            >
-              <h2 className="font-dmSans  text-sm sm:text-base text-blue-500 ">
-                View Details
+            <span className="self-center ">
+              <h2 className="font-dmSans  text-sm sm:text-base text-blue-500   ">
+                Assessment Review
               </h2>
             </span>
           </div>
@@ -84,4 +86,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default Selected;
