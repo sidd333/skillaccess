@@ -32,6 +32,7 @@ const Register = () => {
   }, []);
 
   const handleSubmit = async (e) => {
+ 
     e.preventDefault();
 
     const { Email, Password, FirstName, LastName, Major, University } =
@@ -47,10 +48,14 @@ const Register = () => {
     try {
       const ch = await dispatch(registerCollage(data));
       if (ch.meta.requestStatus === "fulfilled") {
+   
         setCredentials({});
         navigate("/collage/dashboard");
       }
-    } catch (error) {}
+ 
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <form action="" className="">
@@ -209,9 +214,9 @@ const Register = () => {
           <></>
           <button
             className="btn btn-accent rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
-            onClick={() => navigate("/collage/dashboard")}
+            onClick={handleSubmit}
           >
-            Regist
+            Register
           </button>
           <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
           <button className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  ">
@@ -219,7 +224,7 @@ const Register = () => {
           </button>
           <span className="text-lGray text-center">
             Already have an account?{" "}
-            <Link to="/" className="text-secondary">
+            <Link to="/login" className="text-secondary">
               {" "}
               SignIn
             </Link>

@@ -1,11 +1,25 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaAngleLeft } from "react-icons/fa6";
 import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import { useSelector,useDispatch } from "react-redux";
+import { getCompany } from "../../../../redux/features/dashboard/dashboardSlice";
 
 const Companies = () => {
-  const [companies, setcompanies] = useState([1, 2, 3, 4, 5, 6, , 9, 6]);
+  // const [companies, setcompanies] = useState([1, 2, 3, 4, 5, 6, , 9, 6]);
+  const dispatch = useDispatch();
+  const {companies} = useSelector((state) => state.dashboard);
+
+  useEffect(() => {
+    dispatch(getCompany());
+  }, [dispatch])
+
+
+
+
+
+
   const navigate = useNavigate();
   return (
     <div>
@@ -30,7 +44,7 @@ const Companies = () => {
         </button>
       </div>
       <div className="flex flex-wrap gap-4 w-fit justify-center">
-        {companies?.map((item, index) => {
+        {companies && companies?.map((company, index) => {
           return (
             <div
               className="card card-compact w-64 bg-base-100 shadow-xl"
@@ -38,14 +52,22 @@ const Companies = () => {
             >
               <figure>
                 <img
-                  src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                  alt="Shoes"
+                  src={company.basic.coverPhoto}
+                  alt="cover photo"
                 />
               </figure>
               <div className="card-body">
-                <div className="w-14 h-14 bg-red-600 -mt-10"></div>
-                <h2 className="card-title">Nike</h2>
-                <p>If a dog chews asdh sakjd iosadh shad siaodh saodi h </p>
+                <div className="w-14 h-14 bg-red-600 -mt-10">
+                  <img
+                    src={company.basic.logo}
+                    alt="logo"
+                    className="w-full h-full"
+                  />
+                </div>
+                <h2 className="card-title">{company.basic.companyName}</h2>
+                <p>{
+                  company.about.companyDescription
+                  } </p>
                 <div className="card-actions justify-end">
                   <button className="btn hover:bg-blue-900 bg-blue-800 rounded-2xl text-white">
                     View details

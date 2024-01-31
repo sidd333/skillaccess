@@ -23,12 +23,14 @@ import SettingsPage from "./pages/collage/settings/SettingsPage";
 import TeamsPage from "./pages/collage/teams/TeamsPage";
 import CompaniesPage from "./pages/collage/companies/CompaniesPage";
 import StudentsMainPage from "./pages/collage/students/StudentsMainPage";
+import Login from "./pages/collage/auth/Login";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="" element={<Register />} />
+        <Route path="/login" element={<Login />} />
 
         <Route path="collage/dashboard">
           <Route path="" element={<Home />} />
