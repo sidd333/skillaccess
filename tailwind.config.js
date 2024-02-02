@@ -55,8 +55,6 @@ module.exports = {
           "base-100": "#FFFFFF",
         },
       },
-      "dark",
-      "cupcake",
     ],
   },
   plugins: [require("daisyui"), require("@tailwindcss/forms")],

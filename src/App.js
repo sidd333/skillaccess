@@ -28,6 +28,14 @@ import CompanyJobOverviewPage from "./pages/collage/companies/CompanyJobOverview
 import StudentsProfilePage from "./pages/collage/students/StudentsProfilePage";
 import AddQuestionsSelectPage from "./pages/collage/test/AddQuestionsSelectPage";
 import ResultsOverviewPage from "./pages/collage/results/ResultsOverviewPage";
+import RecentPage from "./pages/collage/quesBank/RecentPage";
+import TopicPage from "./pages/collage/quesBank/TopicPage";
+import UploadPage from "./pages/collage/quesBank/UploadPage";
+import AddCodePage from "./pages/collage/test/AddCodePage";
+import AddEssayPage from "./pages/collage/test/AddEssayPage";
+import AddParagraphPage from "./pages/collage/test/AddParagraphPage";
+import FinalizePage from "./pages/collage/test/FinalizePage";
+import InvitePage from "./pages/collage/test/InvitePage";
 
 export default function App() {
   return (
@@ -47,10 +55,17 @@ export default function App() {
           <Route path="assessment" element={<AssessmentPage />} />
           <Route path="name" element={<NameAssessmentPage />} />
           <Route path="select" element={<SelectTestsPage />} />
-          <Route path="questions" element={<AddQuestionsPage />} />
-          <Route path="questionsSelect" element={<AddQuestionsSelectPage />} />
+          {/* <Route path="questions" element={<AddQuestionsPage />} /> */}
+
+          <Route path="questions" element={<AddQuestionsSelectPage />} />
           <Route path="review" element={<ReviewPage />} />
           <Route path="addMcq" element={<AddMcqPage />} />
+          <Route path="addcode" element={<AddCodePage />} />
+          <Route path="addEssay" element={<AddEssayPage />} />
+          <Route path="addPara" element={<AddParagraphPage />} />
+          <Route path="final" element={<FinalizePage />} />
+
+          <Route path="invite" element={<InvitePage />} />
         </Route>
 
         <Route path="collage/accounting">
@@ -73,6 +88,9 @@ export default function App() {
 
         <Route path="collage/quesBank">
           <Route path="" element={<QuesBankPage />} />
+          <Route path="recent" element={<RecentPage />} />
+          <Route path="topic" element={<TopicPage />} />
+          <Route path="upload" element={<UploadPage />} />
         </Route>
 
         <Route path="collage/results">
