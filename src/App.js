@@ -6,6 +6,7 @@ import Home from "./pages/collage/home/Home";
 import CompanyPage from "./pages/collage/home/CompanyPage";
 import JobsPage from "./pages/collage/home/JobsPage";
 import Register from "./pages/collage/auth/Register";
+import Login from "./pages/collage/auth/Login";
 import StudentsPage from "./pages/collage/home/StudentsPage";
 import TestPage from "./pages/collage/test/TestPage";
 import AssessmentPage from "./pages/collage/test/AssessmentPage";

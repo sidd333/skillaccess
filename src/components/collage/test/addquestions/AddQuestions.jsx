@@ -6,16 +6,12 @@ import { RxCross1 } from "react-icons/rx";
 import { PiPencilSimpleLine } from "react-icons/pi";
 import { ImFileText } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
-import {setQuesions} from "../../../../redux/features/test/testSlice"
+import { setQuesions } from "../../../../redux/collage/test/testSlice";
 
 const AddQuestions = () => {
   // question of the section
-const {
-sections
-} = useSelector((state) => state.test);
-const dispatch = useDispatch();
-
-
+  const { sections } = useSelector((state) => state.test);
+  const dispatch = useDispatch();
 
   return (
     <div className="font-dmSans text-sm font-bold">

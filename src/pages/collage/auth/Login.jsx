@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { loginCollage } from "../../../redux/features/auth/authSlice";
+import { loginCollage } from "../../../redux/collage/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 
 const Login = () => {
   const navigate = useNavigate();
@@ -30,24 +29,20 @@ const Login = () => {
   }, []);
 
   const handleSubmit = async (e) => {
- 
     e.preventDefault();
 
-    const { Email, Password ,confirmPassword} =
-      Credentials;
+    const { Email, Password, confirmPassword } = Credentials;
     const data = {
       Email,
       Password,
-      confirmPassword
+      confirmPassword,
     };
     try {
       const ch = await dispatch(loginCollage(data));
       if (ch.meta.requestStatus === "fulfilled") {
-  
         setCredentials({});
         navigate("/collage/dashboard");
       }
- 
     } catch (error) {
       console.log(error);
     }
@@ -86,19 +81,19 @@ const Login = () => {
           </h2>
 
           <input
-           onChange={changeHandler}
-           value={Credentials.Email}
-           name="Email"
-           type="email"
+            onChange={changeHandler}
+            value={Credentials.Email}
+            name="Email"
+            type="email"
             placeholder="Email Address"
             className="input rounded-xl border-none  md:mt-6 mt-4 focus:outline-none input-md w-full max-w-xs  mx-auto bg-snow "
           />
           <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 ">
             <input
-            name="Password"
-            onChange={changeHandler}
-            value={Credentials.Password}
-            type="password"
+              name="Password"
+              onChange={changeHandler}
+              value={Credentials.Password}
+              type="password"
               placeholder="Password"
               className="input rounded-xl border-none  focus:outline-none input-md w-full max-w-xs  mx-auto bg-snow  "
             />
@@ -142,10 +137,11 @@ const Login = () => {
             </span>
           </label>
 
-          <button className="btn btn-accent rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
-          onClick={handleSubmit}
+          <button
+            className="btn btn-accent rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
+            onClick={handleSubmit}
           >
-           Login
+            Login
           </button>
           <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
           <button className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  ">

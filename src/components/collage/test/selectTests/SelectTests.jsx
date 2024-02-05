@@ -8,7 +8,7 @@ import {
   setTest,
   setSections,
   removeSections,
-} from "../../../../redux/features/test/testSlice";
+} from "../../../../redux/collage/test/testSlice";
 
 const SelectTests = () => {
   const dispatch = useDispatch();

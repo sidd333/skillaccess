@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { Progress } from "./Progress";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getAllTests,
-  setTest,
-} from "../../../../redux/features/test/testSlice";
+import { getAllTests, setTest } from "../../../../redux/collage/test/testSlice";
 
 const Name = () => {
   const dispatch = useDispatch();

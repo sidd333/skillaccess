@@ -1,21 +1,16 @@
 import React, { useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SlideNextButton from "../buttons";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { getNewJobs } from "../../../../redux/features/dashboard/dashboardSlice";
+import { getNewJobs } from "../../../../redux/collage/dashboard/dashboardSlice";
 
 const SwiperSlideRight = () => {
   const dispatch = useDispatch();
-const {newJobs ,loading} = useSelector((state) => state.dashboard);
+  const { newJobs, loading } = useSelector((state) => state.dashboard);
 
-useEffect(() => {
-  dispatch(getNewJobs());
-
-}
-, [dispatch]);
-
-
-
+  useEffect(() => {
+    dispatch(getNewJobs());
+  }, [dispatch]);
 
   return (
     <Swiper
@@ -121,46 +116,39 @@ useEffect(() => {
         </div>
       </SwiperSlide> */}
 
-      {newJobs && newJobs.map((job) => (
+      {newJobs &&
+        newJobs.map((job) => (
+          <SwiperSlide key={job._id}>
+            <div className=" bg-white  w-44 h-36 rounded-lg p-2">
+              <figure className="bg-white-500 w-28 h-24 mx-auto rounded-lg flex justify-center">
+                {job.CompanyLogo ? (
+                  <img
+                    src={job.CompanyLogo}
+                    alt="img not loaded"
+                    className="w-1/2 h-1/2 self-center rounded-lg"
+                  />
+                ) : (
+                  <img
+                    src="../intel.png"
+                    alt="img not loaded"
+                    className="w-1/2 h-1/2 self-center rounded-lg"
+                  />
+                )}
+              </figure>
 
-        <SwiperSlide  key={job._id}>
+              <h3 className="text-xs  font-semibold text-center break-words">
+                {job.JobTitle}
+              </h3>
 
-          <div className=" bg-white  w-44 h-36 rounded-lg p-2">
-
-            <figure className="bg-white-500 w-28 h-24 mx-auto rounded-lg flex justify-center">
-
-          {
-            job.CompanyLogo ? (
-              <img
-              src={job.CompanyLogo}
-              alt="img not loaded"
-              className="w-1/2 h-1/2 self-center rounded-lg"
-            />
-
-            ) : (
-              <img
-              src="../intel.png"
-              alt="img not loaded"
-              className="w-1/2 h-1/2 self-center rounded-lg"
-            />
-            )
-          }
-            </figure>
-
-            <h3 className="text-xs  font-semibold text-center break-words">
-              {job.JobTitle}
-            </h3>
-
-            <p className="text-xs  font-semibold text-center break-words  ">
-              {job.CompanyName}{" "}
-              <em className="not-italic text-gray-400">in, {job.JobLocation}</em>
-            </p>
-
-          </div>
-
-        </SwiperSlide>
-
-      ))}
+              <p className="text-xs  font-semibold text-center break-words  ">
+                {job.CompanyName}{" "}
+                <em className="not-italic text-gray-400">
+                  in, {job.JobLocation}
+                </em>
+              </p>
+            </div>
+          </SwiperSlide>
+        ))}
 
       <span className="absolute top-1/3 right-5 z-20 h-fit w-fit">
         <SlideNextButton />
