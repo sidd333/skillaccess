@@ -12,7 +12,7 @@ const AddParagraphPage = lazy(() => import("./AddParagraphPage"));
 const FinalizePage = lazy(() => import("./FinalizePage"));
 const InvitePage = lazy(() => import("./InvitePage"));
 const AddQuestionsSelectPage = lazy(() => import("./AddQuestionsSelectPage"));
-
+const SubmitPage = lazy(() => import("./SubmitPage"));
 const TestPage = lazy(() => import("./TestPage"));
 const AssessmentPage = lazy(() => import("./AssessmentPage"));
 
@@ -23,15 +23,15 @@ export default function () {
       <Route path="assessment" element={<AssessmentPage />} />
       <Route path="name" element={<NameAssessmentPage />} />
       <Route path="select" element={<SelectTestsPage />} />
-
+      <Route path="submit" element={<SubmitPage />} />
       <Route path="questions" element={<AddQuestionsSelectPage />} />
+      <Route path="preview" element={<AddQuestionsPage />} />
       <Route path="review" element={<ReviewPage />} />
       <Route path="addMcq" element={<AddMcqPage />} />
       <Route path="addcode" element={<AddCodePage />} />
       <Route path="addEssay" element={<AddEssayPage />} />
       <Route path="addPara" element={<AddParagraphPage />} />
       <Route path="final" element={<FinalizePage />} />
-
       <Route path="invite" element={<InvitePage />} />
     </Route>
   );

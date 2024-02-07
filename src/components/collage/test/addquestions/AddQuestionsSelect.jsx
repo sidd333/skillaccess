@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import Header from "./Header";
+import HeaderSelect from "./HeaderSelect";
 import { Progress } from "./Progress";
-import { LiaStopwatchSolid } from "react-icons/lia";
-import { RxCross1 } from "react-icons/rx";
-import { PiPencilSimpleLine } from "react-icons/pi";
-import { ImFileText } from "react-icons/im";
 
 const AddQuestionsSelect = () => {
+  const [Q, setQ] = useState("mcq");
   return (
     <div className="font-dmSans text-sm font-bold">
-      <Header />
-      <Progress />
+      <HeaderSelect Q={Q} />
+
+      <div className="w-4/5 mx-auto">
+        <Progress />
+      </div>
 
       <div className="w-11/12 mx-auto mt-20">
         {/* larger screens */}
@@ -23,14 +23,20 @@ const AddQuestionsSelect = () => {
 
         <div className="  sm:mt-5 rounded-lg tracking-wide  w-full ">
           {/* mcq */}
-          <div className="w-full flex justify-between bg-gray-100 rounded-lg border border-blued h-20 p-4 my-2">
+          <div
+            className={` ${
+              Q === "mcq" && "border-blued "
+            } w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2`}
+          >
             {" "}
             <div className="flex gap-5 font-dmSans w-1/3">
               <div className="w-5 h-5 self-center">
                 <input
                   type="radio"
                   name="ques"
+                  checked
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                  onClick={() => setQ("mcq")}
                 />
               </div>
 
@@ -55,7 +61,11 @@ const AddQuestionsSelect = () => {
           </div>
 
           {/* code */}
-          <div className="w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2">
+          <div
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+              Q === "code" && "border-blued "
+            }`}
+          >
             {" "}
             <div className="flex gap-5 font-dmSans w-1/3">
               <div className="w-5 h-5 self-center">
@@ -64,6 +74,7 @@ const AddQuestionsSelect = () => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                  onClick={() => setQ("code")}
                 />
               </div>
 
@@ -86,7 +97,11 @@ const AddQuestionsSelect = () => {
           </div>
 
           {/* Essay */}
-          <div className="w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2">
+          <div
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+              Q === "essay" && "border-blued "
+            }`}
+          >
             {" "}
             <div className="flex gap-5 font-dmSans w-1/3">
               <div className="w-5 h-5 self-center">
@@ -94,6 +109,7 @@ const AddQuestionsSelect = () => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                  onClick={() => setQ("essay")}
                 />
               </div>
               <img
@@ -116,7 +132,11 @@ const AddQuestionsSelect = () => {
           {/*  */}
 
           {/* Video*/}
-          <div className="w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2">
+          <div
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+              Q === "video" && "border-blued "
+            }`}
+          >
             {" "}
             <div className="flex gap-5 font-dmSans w-1/3">
               <div className="w-5 h-5 self-center">
@@ -124,6 +144,7 @@ const AddQuestionsSelect = () => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                  onClick={() => setQ("video")}
                 />
               </div>
               <img
@@ -146,7 +167,11 @@ const AddQuestionsSelect = () => {
           {/*  */}
 
           {/* Find Answer*/}
-          <div className="w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2">
+          <div
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+              Q === "comp" && "border-blued "
+            }`}
+          >
             {" "}
             <div className="flex gap-5 font-dmSans w-1/3">
               <div className="w-5 h-5 self-center">
@@ -154,6 +179,7 @@ const AddQuestionsSelect = () => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                  onClick={() => setQ("comp")}
                 />
               </div>
               <img

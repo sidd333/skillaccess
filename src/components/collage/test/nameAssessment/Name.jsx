@@ -19,7 +19,9 @@ const Name = () => {
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header />
-      <Progress />
+      <div className="w-4/5 mx-auto">
+        <Progress />
+      </div>
 
       {/* larger screens */}
       <div className="  w-11/12 mx-auto h-[90vh] my-2 rounded-lg tracking-wide justify-between  ">
