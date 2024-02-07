@@ -38,7 +38,7 @@ const Header = () => {
 
         <button
           className="self-center justify-center flex bg-blue-700 py-3  rounded-xl w-48 text-white  gap-2 "
-          onClick={() => navigate("/collage/test/addMcq")}
+          onClick={() => navigate("/collage/quesBank/upolad")}
         >
           <FiUpload className="self-center text-lg " /> Upload New
         </button>
