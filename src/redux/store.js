@@ -5,6 +5,9 @@ import dashboardReducer from "../redux/features/dashboard/dashboardSlice.js";
 import sideReducer from "../redux/collage/sidebar/sideSlice.js";
 import companyReducer from "../redux/features/company/companySlice.js";
 
+import testReducer from "../redux/collage/test/testSlice.js";
+import dashboardReducer from "../redux/collage/dashboard/dashboardSlice.js";
+import sideReducer from "../redux/collage/sidebar/sideSlice.js";
 import { thunk } from "redux-thunk";
 
 const store = configureStore({

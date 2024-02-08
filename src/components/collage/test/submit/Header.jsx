@@ -3,13 +3,12 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ Q }) => {
+const Header = () => {
   const navigate = useNavigate();
-
   return (
-    <div className="flex w-11/12 mx-auto justify-between mb-2 mt-5">
+    <div className="flex  mx-auto justify-between mb-2 mt-5">
       <div>
-        <button className="flex self-center ml-2 rounded-lg  gap-2">
+        <button className="flex self-center  rounded-lg  gap-2">
           <button onClick={() => navigate(-1)} className="mt-2 mr-3">
             <FaChevronLeft className=" p-3 rounded-lg h-10 w-10 self-center bg-gray-200" />
           </button>
@@ -45,7 +44,7 @@ const Header = ({ Q }) => {
         <div className=" flex">
           <button
             className="self-center justify-center flex bg-blue-800 py-3 px-4 rounded-lg text-xs gap-2 text-white"
-            onClick={() => navigate("/collage/test/submit")}
+            onClick={() => navigate("/collage/test/questions")}
           >
             Next Step{" "}
             <FaArrowRightLong className="self-center text-lg text-white ml-4" />

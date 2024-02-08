@@ -36,7 +36,10 @@ const Header = ({questions}) => {
           <button className="self-center w-24  justify-center flex text-blue-800 py-2 px-4 rounded-xl font-bold gap-2 bg-white">
             Cancel
           </button>
-          <button className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white">
+          <button
+            className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white"
+            onClick={() => navigate("/collage/test/preview")}
+          >
             Save
           </button>
         </div>

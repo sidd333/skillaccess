@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { Progress } from "./Progress";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getAllTests,
-  setTest,
-} from "../../../../redux/features/test/testSlice";
+import { getAllTests, setTest } from "../../../../redux/collage/test/testSlice";
 
 const Name = () => {
   const dispatch = useDispatch();
@@ -22,7 +19,9 @@ const Name = () => {
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header />
-      <Progress />
+      <div className="w-4/5 mx-auto">
+        <Progress />
+      </div>
 
       {/* larger screens */}
       <div className="  w-11/12 mx-auto h-[90vh] my-2 rounded-lg tracking-wide justify-between  ">

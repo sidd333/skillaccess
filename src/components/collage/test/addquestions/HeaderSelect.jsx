@@ -6,6 +6,33 @@ import { useNavigate } from "react-router-dom";
 const Header = ({ Q }) => {
   const navigate = useNavigate();
 
+  const NavHandler = () => {
+    switch (Q) {
+      case "mcq":
+        navigate("/collage/test/addMcq");
+        break;
+
+      case "code":
+        navigate("/collage/test/addcode");
+        break;
+
+      // case "video":
+      //   navigate("/collage/test/addVideo");
+      //   break;
+
+      case "comp":
+        navigate("/collage/test/addPara");
+        break;
+
+      case "essay":
+        navigate("/collage/test/addEssay");
+        break;
+
+      default:
+        window.alert("please select field");
+        break;
+    }
+  };
   return (
     <div className="flex w-11/12 mx-auto justify-between mb-2 mt-5">
       <div>
@@ -45,7 +72,7 @@ const Header = ({ Q }) => {
         <div className=" flex">
           <button
             className="self-center justify-center flex bg-blue-800 py-3 px-4 rounded-lg text-xs gap-2 text-white"
-            onClick={() => navigate("/collage/test/submit")}
+            onClick={NavHandler}
           >
             Next Step{" "}
             <FaArrowRightLong className="self-center text-lg text-white ml-4" />

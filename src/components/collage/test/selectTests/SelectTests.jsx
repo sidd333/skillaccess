@@ -8,7 +8,6 @@ import {
   setTest,
   setSections,
   removeSections,
-  // getSelectedSections,
 } from "../../../../redux/features/test/testSlice";
 
 const SelectTests = () => {
@@ -60,7 +59,9 @@ if (selectedSections.includes(section)) {
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header />
-      <Progress />
+      <div className="w-4/5 mx-auto">
+        <Progress />
+      </div>
 
       {/* larger screens */}
       <div className="  w-11/12 mx-auto min-h-[90vh] my-2 rounded-lg tracking-wide justify-between  ">
@@ -138,46 +139,58 @@ if (selectedSections.includes(section)) {
         <Inputs />
         <div className="flex flex-wrap gap-2 justify-center">
           {sections.map((section) => (
+            // <div className="card w-96 bg-base-100 shadow-xl">
+            //   <div className="card-body">
+            //     <h2 className="card-title">{section.name}</h2>
+            //     <p> {section.desription}</p>
+            //     <div className="card-actions justify-end">
+            //       <button
+            //         onClick={() => addSection(section)}
+            //         className="btn btn-primary"
+            //       >
+            //         Add
+            //       </button>
+            //       <button
+            //         onClick={() => removeSection(section)}
+            //         className="btn btn-primary"
+            //       >
+            //         Remove
+            //       </button>
+            //     </div>
+            //   </div>
+            // </div>
             <div className="card w-96 bg-base-100 shadow-xl">
               <div className="card-body">
-                <h2 className="card-title">{section.name}</h2>
-                <p>{section.desription}</p>
-                <div className="card-actions justify-end">
-                  <button
-                    onClick={() => addSection(section)}
-                    className="btn btn-primary"
-                  >
-                    Add
-                  </button>
-                  <button
-                    onClick={() => removeSection(section)}
-                    className="btn btn-primary"
-                  >
-                    Remove
-                  </button>
+                <h2 className="text-xl font-bold mb-4">{section.name}</h2>
+                <p className="text-sm leading-[26px] text-[#8F92A1]">
+                  {section.desription}
+                </p>
+
+                <div>
+                  <span className="flex gap-1">
+                    <img
+                      src="./../../images/icons/stopwatch.png"
+                      alt=""
+                      className="w-7 h-7"
+                    />{" "}
+                    <p className="text-gray-400 self-center">10 mins</p>
+                  </span>
+
+                  <div className="flex justify-between">
+                    <button className="w-[90px] h-[40px] bg-[#8F92A120] rounded-xl">
+                      Details
+                    </button>
+                    <button
+                      className=" bg-[#00875A85] h-[40px] w-[72px] rounded-xl text-white"
+                      onClick={() => addSection(section)}
+                    >
+                      Add
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-          ))}
-          {/* <div className="card w-96 bg-base-100 shadow-xl">
-            <div className="card-body">
-              <h2 className="text-xl font-bold mb-4">UX Test - Basics</h2>
-              <p className="text-sm leading-[26px] text-[#8F92A1]">
-                This UX/UI design test evaluates candidates' knowledge of the
-                overall UX/UI design process and their ability to turn feature
-                requirements into useful and intuitive designs for digital
-                products that provide a great experience to your users.
-              </p>
-              <div className="flex justify-between">
-                <button className="w-[90px] h-[40px] bg-[#8F92A120] rounded-xl">
-                  Details
-                </button>
-                <button className=" bg-[#00875A85] h-[40px] w-[72px] rounded-xl text-white">
-                  Add
-                </button>
-              </div>
-            </div>
-          </div>{" "} */}
+          ))}{" "}
         </div>
       </div>
     </div>

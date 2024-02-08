@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "./Header";
+import HeaderSelect from "./HeaderSelect";
 import { Progress } from "./Progress";
 import { LiaStopwatchSolid } from "react-icons/lia";
 import { RxCross1 } from "react-icons/rx";
@@ -23,8 +23,11 @@ useEffect(() => {
 
   return (
     <div className="font-dmSans text-sm font-bold">
-      <Header />
-      <Progress />
+      <HeaderSelect Q={Q} />
+
+      <div className="w-4/5 mx-auto">
+        <Progress />
+      </div>
 
       <div className="w-11/12 mx-auto mt-20">
         {/* larger screens */}
@@ -46,7 +49,9 @@ useEffect(() => {
                 <input
                   type="radio"
                   name="ques"
+                  checked
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                  onClick={() => setQ("mcq")}
                 />
               </div>
 
@@ -82,6 +87,7 @@ useEffect(() => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                  onClick={() => setQ("code")}
                 />
               </div>
 
@@ -104,8 +110,13 @@ useEffect(() => {
           </div>
 
           {/* Essay */}
-          <div className="w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2"
-          onClick={() => setSelectQuestionType("essay")}>
+    
+          <div
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+              questionType === "essay" && "border-blued "
+            }`}
+            onClick={() => setSelectQuestionType("essay")}
+          >
             {" "}
             <div className="flex gap-5 font-dmSans w-1/3">
               <div className="w-5 h-5 self-center">
@@ -113,6 +124,7 @@ useEffect(() => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                  onClick={() => setQ("essay")}
                 />
               </div>
               <img
@@ -134,9 +146,13 @@ useEffect(() => {
           </div>
           {/*  */}
 
-          {/* Video*/}
-          <div className="w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2"
-          onClick={() => setSelectQuestionType("video")}
+            
+         
+          <div
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+              questionType === "video" && "border-blued "
+            }`}
+            onClick={() => setSelectQuestionType("video")}
           >
             {" "}
             <div className="flex gap-5 font-dmSans w-1/3">
@@ -145,6 +161,7 @@ useEffect(() => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                  onClick={() => setQ("video")}
                 />
               </div>
               <img
@@ -167,8 +184,13 @@ useEffect(() => {
           {/*  */}
 
           {/* Find Answer*/}
-          <div className="w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2"
-          onClick={() => setSelectQuestionType("findAnswer")}
+
+         
+          <div
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+              questionType === "comp" && "border-blued "
+            }`}
+            onClick={() => setSelectQuestionType("findAnswer")}
           >
             {" "}
             <div className="flex gap-5 font-dmSans w-1/3">
@@ -177,6 +199,7 @@ useEffect(() => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                  onClick={() => setQ("comp")}
                 />
               </div>
               <img
