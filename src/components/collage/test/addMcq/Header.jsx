@@ -2,9 +2,16 @@ import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setTest } from "../../../../redux/features/test/testSlice";
 
-const Header = () => {
+const Header = ({questions}) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(setTest({questions}));
+  // }, [questions]);  
   return (
     <div className="flex w-[98%] mx-auto justify-between mb-2 mt-5">
       <div className="h-fit self-center">

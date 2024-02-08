@@ -6,6 +6,7 @@ import Home from "./pages/collage/home/Home";
 import CompanyPage from "./pages/collage/home/CompanyPage";
 import JobsPage from "./pages/collage/home/JobsPage";
 import Register from "./pages/collage/auth/Register";
+import Login from "./pages/collage/auth/Login";
 import StudentsPage from "./pages/collage/home/StudentsPage";
 import TestPage from "./pages/collage/test/TestPage";
 import AssessmentPage from "./pages/collage/test/AssessmentPage";
@@ -36,6 +37,7 @@ import AddEssayPage from "./pages/collage/test/AddEssayPage";
 import AddParagraphPage from "./pages/collage/test/AddParagraphPage";
 import FinalizePage from "./pages/collage/test/FinalizePage";
 import InvitePage from "./pages/collage/test/InvitePage";
+
 
 export default function App() {
   return (
@@ -75,7 +77,7 @@ export default function App() {
 
         <Route path="collage/companies">
           <Route path="" element={<CompaniesPage />} />
-          <Route path="profile" element={<CompanyProfilePage />} />
+          <Route path="profile/:id" element={<CompanyProfilePage />} />
           <Route path="jobOverview" element={<CompanyJobOverviewPage />} />
         </Route>
 

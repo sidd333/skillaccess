@@ -43,7 +43,7 @@ const testState = {
 ],
     test : {
         testName : "",
-        testType : "",
+        questionType : "",
         // testStatus : "",
         sections : [],
         questions : [],
@@ -132,23 +132,36 @@ const testSlice = createSlice({
             console.log(state.test, "test");
         },
         setSections: (state, action) => {
-            if (state.test.selectedSections) {
-                if (state.test.selectedSections.includes(action.payload) || state.test.sections.includes(action.payload)) {
-                    return;
-                }
-                state.test.selectedSections.push(action.payload);
-                state.test.sections.push(action.payload);
-            } else {
-                state.test.selectedSections = [action.payload];
+            const payload = action.payload;
+            const selectedSections = state.test.selectedSections || [];
+            const sections = state.test.sections || [];
+          
+            // Check if the payload is already included in selectedSections or sections
+            if (!selectedSections.includes(payload) && !sections.includes(payload)) {
+              return {
+                ...state,
+                test: {
+                  ...state.test,
+                  selectedSections: [...selectedSections, payload],
+                  sections: [...sections, payload],
+                },
+              };
             }
-            // console.log(state.test.selectedSections, "sections");
-        },
+          
+            // If the payload is already included, return the current state without changes
+            return state;
+          },
+          
           removeSections: (state, action) => {
             state.test.selectedSections = state.test.selectedSections.filter((section) => section !== action.payload);
           },
         setQuestions: (state, action) => {
             state.test.questions = action.payload;
-        }
+        },
+
+        getSelectedSections: (state, action) => {
+            return state.test.selectedSections;
+        },
      
     },
     extraReducers: (builder) => {
@@ -206,6 +219,6 @@ const testSlice = createSlice({
     },
 });
 
-export const { setTestName ,setTest,setSections,removeSections,setQuestions} = testSlice.actions;
+export const { setTestName ,setTest,setSections,removeSections,setQuestions,getSelectedSections} = testSlice.actions;
 
 export default testSlice.reducer;

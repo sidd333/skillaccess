@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { loginCollage } from "../../../redux/features/auth/authSlice";
+import { loginCollage } from "../../../redux/collage/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
