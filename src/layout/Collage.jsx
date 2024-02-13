@@ -386,7 +386,7 @@ const CollageLayout = ({ children }) => {
             </ul>
           </aside>
 
-          <div className="bg-white rounded-xl h-full min-h-[95vh] w-full mx-4 ml-14 lg:ml-60 ">
+          <div className="bg-white rounded-[3rem] h-full min-h-[95vh] w-full p-4 mx-4 ml-14 lg:ml-60 mt-9">
             {children}
           </div>
         </div>
