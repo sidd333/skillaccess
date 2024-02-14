@@ -29,7 +29,7 @@ const Header = ({ Q }) => {
         break;
 
       default:
-        window.alert("please select field");
+        // window.alert("please select field");
         break;
     }
   };

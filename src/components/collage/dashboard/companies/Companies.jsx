@@ -25,11 +25,11 @@ const Companies = () => {
           className="  self-center  rounded-lg h-10 w-10 "
           onClick={() => navigate(-1)}
         >
-          <BackIcon />
+          {/* <BackIcon /> */}
         </button>
         <div className=" rounded-xl mx-2 w-full sm:h-12 h-10 flex my-2 ">
           <span className="w-fit mx-auto flex self-center">
-            <IoIosSearch className="self-center w-10 h-10 bg-gray-100 rounded-s-lg text-gray-400 py-2 " />
+            {/* <IoIosSearch className="self-center w-10 h-10 bg-gray-100 rounded-s-lg text-gray-400 py-2 " /> */}
             <input
               type="text"
               placeholder="Search"

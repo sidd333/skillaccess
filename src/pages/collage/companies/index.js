@@ -9,7 +9,7 @@ export default function CompaniesRoute() {
   return (
     <Route path="collage/companies">
       <Route path="" element={<CompaniesPage />} />
-      <Route path="profile" element={<CompanyProfilePage />} />
+      <Route path="profile/:id" element={<CompanyProfilePage />} />
       <Route path="jobOverview" element={<CompanyJobOverviewPage />} />
     </Route>
   );
