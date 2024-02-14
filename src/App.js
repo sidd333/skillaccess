@@ -23,10 +23,13 @@ import QuesRoute from "./pages/collage/quesBank";
 
 //---------------------------------------------------------------students
 import StudentRoute from "./pages/collage/students";
+
+//---------------------------------------------------------------inbox
+import InboxRoute from "./pages/collage/inbox/index";
 //----------------------------------------------------------------------------------------------------------------------------------------//
 
 import AccountingPage from "./pages/collage/accounting/AccountingPage";
-import InboxPage from "./pages/collage/inbox/InboxPage";
+
 import ProfilePage from "./pages/collage/profile/ProfilePage";
 import SettingsPage from "./pages/collage/settings/SettingsPage";
 import TeamsPage from "./pages/collage/teams/TeamsPage";
@@ -51,13 +54,9 @@ export default function App() {
           {QuesRoute()}
           {CompaniesRoute()}
           {ResultsRoute()}
-
+          {InboxRoute()}
           <Route path="collage/accounting">
             <Route path="" element={<AccountingPage />} />
-          </Route>
-
-          <Route path="collage/inbox">
-            <Route path="" element={<InboxPage />} />
           </Route>
 
           <Route path="collage/profile">

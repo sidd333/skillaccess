@@ -257,7 +257,10 @@ const CollageLayout = ({ children }) => {
     },
   ];
 
+  const bottom = useRef(null);
+
   useEffect(() => {
+    bottom.current.scrollIntoView();
     if (location.pathname.match(/\/collage\/dashboard*/)) {
       dispatch(setSelected(0));
       setDown(0);
@@ -318,7 +321,7 @@ const CollageLayout = ({ children }) => {
     <>
       <Navbar open={open} setOpen={setOpen} />
       <div className=" h-full bg-blued relative">
-        <div className="flex justify-start pt-20 ">
+        <div className="flex  justify-start pt-20 ">
           <aside
             className={` px-4 h-[90vh] transition-width max-w-[15rem] overflow-x-hidden bg-secondary fixed left-0 z-30  scrollbar overflow-y-scroll ${
               open ? "w-1/2" : "w-14 lg:w-full "
@@ -329,6 +332,7 @@ const CollageLayout = ({ children }) => {
               {arr.map((el, i) => {
                 return (
                   <>
+                    {selection === i && <div className="" ref={bottom}></div>}
                     {el.name === "Notifications" && (
                       <div
                         className={`${
