@@ -5,7 +5,7 @@ import { LiaStopwatchSolid } from "react-icons/lia";
 import { RxCross1 } from "react-icons/rx";
 import { PiPencilSimpleLine } from "react-icons/pi";
 import { ImFileText } from "react-icons/im";
-import { setTest } from "../../../../redux/features/test/testSlice";
+import { setTest } from "../../../../redux/collage/test/testSlice";
 import { useDispatch } from "react-redux";
 
 const AddQuestionsSelect = () => {
@@ -23,7 +23,7 @@ useEffect(() => {
 
   return (
     <div className="font-dmSans text-sm font-bold">
-      <HeaderSelect Q={Q} />
+      <HeaderSelect Q={selectQuestionType} />
 
       <div className="w-4/5 mx-auto">
         <Progress />
@@ -40,18 +40,23 @@ useEffect(() => {
 
         <div className="  sm:mt-5 rounded-lg tracking-wide  w-full ">
           {/* mcq */}
-          <div className="w-full flex justify-between bg-gray-100 rounded-lg border border-blued h-20 p-4 my-2"
+          <div className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+              selectQuestionType === "mcq" && "border-blued "
+            }`}
           onClick={() => setSelectQuestionType("mcq")}>
+            
           
             {" "}
+
+
             <div className="flex gap-5 font-dmSans w-1/3">
               <div className="w-5 h-5 self-center">
                 <input
                   type="radio"
                   name="ques"
                   checked
-                  className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                  onClick={() => setQ("mcq")}
+                  className={`w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center `}
+                  onClick={() => setSelectQuestionType("mcq")}
                 />
               </div>
 
@@ -76,7 +81,9 @@ useEffect(() => {
           </div>
 
           {/* code */}
-          <div className="w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2"
+          <div className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+              selectQuestionType === "code" && "border-blued "
+            }`}
           onClick={() => setSelectQuestionType("code")}>
           
             {" "}
@@ -86,8 +93,8 @@ useEffect(() => {
                 <input
                   type="radio"
                   name="ques"
-                  className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                  onClick={() => setQ("code")}
+                  className={`w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center   border-blue-700`}
+                  onClick={() => setSelectQuestionType("code")}
                 />
               </div>
 
@@ -113,7 +120,7 @@ useEffect(() => {
     
           <div
             className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
-              questionType === "essay" && "border-blued "
+              selectQuestionType === "essay" && "border-blued "
             }`}
             onClick={() => setSelectQuestionType("essay")}
           >
@@ -124,7 +131,7 @@ useEffect(() => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                  onClick={() => setQ("essay")}
+                  onClick={() => setSelectQuestionType("essay")}
                 />
               </div>
               <img
@@ -150,7 +157,7 @@ useEffect(() => {
          
           <div
             className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
-              questionType === "video" && "border-blued "
+              selectQuestionType === "video" && "border-blued "
             }`}
             onClick={() => setSelectQuestionType("video")}
           >
@@ -161,7 +168,7 @@ useEffect(() => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                  onClick={() => setQ("video")}
+                  onClick={() => setSelectQuestionType("video")}
                 />
               </div>
               <img
@@ -188,7 +195,7 @@ useEffect(() => {
          
           <div
             className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
-              questionType === "comp" && "border-blued "
+              selectQuestionType === "findAnswer" && "border-blued "
             }`}
             onClick={() => setSelectQuestionType("findAnswer")}
           >
@@ -199,7 +206,7 @@ useEffect(() => {
                   type="radio"
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                  onClick={() => setQ("comp")}
+                  onClick={() => setSelectQuestionType("comp")}
                 />
               </div>
               <img

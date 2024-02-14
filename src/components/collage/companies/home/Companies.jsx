@@ -3,7 +3,7 @@ import React, { useState ,useEffect} from "react";
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getCompany } from "../../../../redux/features/dashboard/dashboardSlice";
+import { getCompany } from "../../../../redux/collage/dashboard/dashboardSlice";
 
 const Companies = () => {
   // const [companies, setcompanies] = useState([1, 2, 3, 4, 5, 6, , 9, 6]);

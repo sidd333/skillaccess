@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000/";
+const authToken = localStorage.getItem('auth-token');
 
 const testState = {
 
@@ -10,24 +11,45 @@ const testState = {
     testType : "",
     // testStatus : "",
   sections : [{
+    id : 0,
+    name : "section 0",
+    type : "mcq",
+    description : "this is section 0",
+     questions :[],
+  },{
+        id : 1,
         name : "section 1",
-        desription : "this is section 1"
+        type : "mcq",
+        description : "this is section 1",
+         questions :[],
       },
       {
+        id : 2,
         name : "section 2",
-        desription : "this is section 2"
+        type : "mcq",
+        description : "this is section 2",
+         questions :[],
       },
       {
+        id : 3,
         name : "section 3",
-        desription : "this is section 3"
+        type : "mcq",
+        description : "this is section 3",
+         questions :[],
       },
       {
+        id : 4,
         name : "section 4",
-        desription : "this is section 4"
+        type : "mcq",
+        description : "this is section 4",
+         questions :[],
       },
       {
+        id :5,
         name : "section 5",
-        desription : "this is section 5"
+        type : "mcq",
+        description : "this is section 5",
+         questions :[],
       }],
 
       selectedSections : [],
@@ -46,7 +68,13 @@ const testState = {
         questionType : "",
         // testStatus : "",
         sections : [],
-        questions : [],
+        questions : [{
+          Duration : 0,
+          QuestionType : "mcq",
+          Title: "",
+          Options: {},
+          AnswerIndex: 0,
+        }],
     },
     };
 
@@ -75,7 +103,7 @@ export const getAllTests = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
     
-      const authToken = localStorage.getItem('auth-token');
+  
       console.log(`${REACT_APP_API_URL}api/assessments`);
       const req = await axios.get(`${REACT_APP_API_URL}/api/assessments`, {
         headers: {
@@ -103,10 +131,14 @@ export const createTest = createAsyncThunk(
             const req = await axios.post(
                 `${process.env.REACT_APP_API_URL}/api/assessments/create`,
                 data,
-                { withCredentials: true }
+                { headers: {
+                  'Content-Type': 'application/json',
+                  'auth-token': authToken,
+                }, }
             );
             const res = req.data;
-            return res.data;
+            console.log("success",res)
+            return res.data.assessment;
         } catch (error) {
             console.log("catch");
             return rejectWithValue(error.response.data.message);
@@ -131,11 +163,31 @@ const testSlice = createSlice({
             state.test = { ...state.test, ...action.payload };
             console.log(state.test, "test");
         },
+
+        setMcq: (state, action) => {
+          const { sectionId, questions } = action.payload;
+          console.log(sectionId, "action.payload");
+          const id = sectionId.toString(); // Convert to string to use it as object key
+      
+          // Check if the section already exists in state
+          if (state.test.sections[id]) {
+              // If the section already exists, update its questions array
+              state.test.sections[id].questions=questions;
+          } else {
+              // If the section doesn't exist, create a new section object
+              state.test.sections[id] = {
+                  type: "mcq",
+                  questions: questions
+              };
+          }
+      },
+      
+
+
         setSections: (state, action) => {
             const payload = action.payload;
             const selectedSections = state.test.selectedSections || [];
             const sections = state.test.sections || [];
-          
             // Check if the payload is already included in selectedSections or sections
             if (!selectedSections.includes(payload) && !sections.includes(payload)) {
               return {
@@ -203,10 +255,10 @@ const testSlice = createSlice({
                 console.log("pending");
             })
             .addCase(createTest.fulfilled, (state, action) => {
+               console.log(action.payload)
+                state.testName = action.payload.name;
                
-                state.testName = action.payload.testName;
-               
-                state.testType = action.payload.testType;
+                state.testType = action.payload.level;
                 
                 console.log("fullfilled");
             })
@@ -219,6 +271,6 @@ const testSlice = createSlice({
     },
 });
 
-export const { setTestName ,setTest,setSections,removeSections,setQuestions,getSelectedSections} = testSlice.actions;
+export const { setTestName ,setTest,setSections,removeSections,setQuestions,getSelectedSections,setMcq} = testSlice.actions;
 
 export default testSlice.reducer;

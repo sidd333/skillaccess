@@ -9,7 +9,7 @@ const Submit = () => {
   const max = 16;
   return (
     <div className="w-11/12 mx-auto relative    min-h-[90vh]">
-      <Header />
+      <Header page={"final"} />
       <div className="w-4/5 mx-auto">
         <Progress />
       </div>

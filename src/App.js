@@ -30,21 +30,11 @@ import InboxPage from "./pages/collage/inbox/InboxPage";
 import ProfilePage from "./pages/collage/profile/ProfilePage";
 import SettingsPage from "./pages/collage/settings/SettingsPage";
 import TeamsPage from "./pages/collage/teams/TeamsPage";
-import CompaniesPage from "./pages/collage/companies/CompaniesPage";
-import StudentsMainPage from "./pages/collage/students/StudentsMainPage";
-import CompanyProfilePage from "./pages/collage/companies/CompanyProfilePage";
-import CompanyJobOverviewPage from "./pages/collage/companies/CompanyJobOverviewPage";
-import StudentsProfilePage from "./pages/collage/students/StudentsProfilePage";
-import AddQuestionsSelectPage from "./pages/collage/test/AddQuestionsSelectPage";
-import ResultsOverviewPage from "./pages/collage/results/ResultsOverviewPage";
-import RecentPage from "./pages/collage/quesBank/RecentPage";
-import TopicPage from "./pages/collage/quesBank/TopicPage";
-import UploadPage from "./pages/collage/quesBank/UploadPage";
-import AddCodePage from "./pages/collage/test/AddCodePage";
-import AddEssayPage from "./pages/collage/test/AddEssayPage";
-import AddParagraphPage from "./pages/collage/test/AddParagraphPage";
-import FinalizePage from "./pages/collage/test/FinalizePage";
-import InvitePage from "./pages/collage/test/InvitePage";
+import CompaniesRoute from "./pages/collage/companies";
+import ResultsRoute from "./pages/collage/results";
+
+const Register = lazy(() => import("./pages/collage/auth/Register"));
+const Login = lazy(() => import("./pages/collage/auth/Login"));
 
 export default function App() {
   return (
@@ -62,15 +52,9 @@ export default function App() {
           {CompaniesRoute()}
           {ResultsRoute()}
 
-        <Route path="collage/accounting">
-          <Route path="" element={<AccountingPage />} />
-        </Route>
-
-        <Route path="collage/companies">
-          <Route path="" element={<CompaniesPage />} />
-          <Route path="profile" element={<CompanyProfilePage />} />
-          <Route path="jobOverview" element={<CompanyJobOverviewPage />} />
-        </Route>
+          <Route path="collage/accounting">
+            <Route path="" element={<AccountingPage />} />
+          </Route>
 
           <Route path="collage/inbox">
             <Route path="" element={<InboxPage />} />

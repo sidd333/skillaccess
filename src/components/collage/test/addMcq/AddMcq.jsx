@@ -3,21 +3,46 @@ import Header from "./Header";
 
 import { FaX } from "react-icons/fa6";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { setTest } from "../../../../redux/features/test/testSlice";
+import { useDispatch ,useSelector} from "react-redux";
+import { setTest,setMcq } from "../../../../redux/collage/test/testSlice";
+import { useParams } from "react-router-dom";
+
 
 
 const AddMcq = () => {
 const dispatch = useDispatch();
+// section Id
+const { sectionId } = useParams();
+
 const [step , setStep] = useState(1);
-const [questions ,setQuestions ] = useState([]);
+const [click , setClick] = useState(false);
+
+const {test} = useSelector((state) => state.test);
+
+
+
 const [question, setQuestion] = useState({
   Duration : 0,
   QuestionType : "mcq",
   Title: "",
-  Options: [],
+  Options: {},
   AnswerIndex: 0,
 })
+const [questions ,setQuestions ] = useState(test.questions || [{ Duration : 0, QuestionType : "mcq", Title: "", Options: {}, AnswerIndex: 0 }]);
+
+useEffect(() => {
+setQuestion({
+  Duration : 0,
+  QuestionType : "mcq",
+  Title: "",
+  Options: {
+  },
+  AnswerIndex: 0,
+});
+
+
+setClick(false);
+}, [click]);
 
 useEffect(() => {
 if (step === 1) {
@@ -32,51 +57,83 @@ if (step === 1) {
 
 
 
-const addQuestion = (question) => {
 
 
-  if (question.Title === "" || question.Options.length < 4) {
-    console.log("empty");
-    return;
-  }
-  if(questions.Option1 === "" || questions.Option2 === "" || questions.Option3 === "" || questions.Option4 === "") {
-    console.log("empty");
-    return;
-  }
-  if (question.Duration === 0) {
-    console.log("empty");
+const addQuestion = () => {
+  // Ensure question title is not empty
+  if (!question.Title.trim()) {
+    alert("Please enter a question title.");
     return;
   }
 
+  // Ensure at least two options are provided
+  if (Object.keys(question.Options).filter(key => question.Options[key].trim() !== "").length < 2) {
+    alert("Please provide at least two options.");
+    return;
+  }
 
- setQuestions([...questions, question]);
-  dispatch(setTest({questions}));
+  // Ensure the correct answer index is within the range of options
+  if (question.AnswerIndex < 0 || question.AnswerIndex >= Object.keys(question.Options).length) {
+    alert("Invalid answer index.");
+    return;
+  }
+
+  // Create a new question object with the current state
+  const newQuestion = { ...question };
+
+  // Update the questions state by adding the new question
+  setQuestions([...questions, newQuestion]);
+
+  console.log("id",sectionId);
+
+  dispatch(setMcq({sectionId, questions : questions}));
+
+  // Dispatch the updated questions to the Redux store
+  // dispatch(setTest({ questions: [...questions, newQuestion] }));
+  // dispatch(setTest({sections : test.sections[id]}))
+
+  // Clear the question state for the next question
+  const clearedOptions = {
+    Options0: "",
+    Options1: "",
+    Options2: "",
+    Options3: "",
+  };
+
   setQuestion({
-    Duration : 0,
-    QuestionType : "mcq",
+    Duration: 0,
+    QuestionType: "mcq",
     Title: "",
-    Options: [{
-      Option1: "",
-      Option2: "",
-      Option3: "",
-      Option4: "",
-      
-    }],
+    Options: clearedOptions,
     AnswerIndex: 0,
   });
-  console.log(questions);
-  setStep(prev => prev + 1);
+  setClick(true);
 
-}
+  // Increment the step counter
+  setStep((prevStep) => prevStep + 1);
+};
+
 
 const handleChanges = (e) => {
   const { name, value } = e.target;
+
+  if(name.includes("Options")) {
+    setQuestion({
+      ...question,
+      Options: {
+        ...question.Options,
+        [name]: value, // Update the specific option based on the input name
+      },
+    });
+  } else {
+  
   setQuestion({
     ...question,
     [name]: value,
   });
+  }
 
-console.log(question);
+console.log(questions,"questions");
 
 }
 
@@ -148,14 +205,16 @@ const handlePrev = () => {
                   <input
                     type="text"
                     placeholder="option 1"
-                    name={`Options[${0}]`}
-                    value={question.Options[0]}
+                    name={`Options0`}
+                    value={question.Options.Options0}
                     onChange={handleChanges}
                     className="w-11/12 rounded-lg border-none outline-none focus:outline-none bg-gray-100"
                   />
 
                   {/*  */}
-                  <div className="bg-gray-100 flex justify-center rounded-lg ">
+                  <div className="bg-gray-100 flex justify-center rounded-lg "
+                  onClick = {() => setQuestion({...question, Options: {...question.Options, Options0: ""}})}
+                  >
                     <FaX className="self-center mx-2" />
                   </div>
                   </span>
@@ -177,14 +236,15 @@ const handlePrev = () => {
                   <input
                     type="text"
                     placeholder="option 2"
-                    name={`Options[${1}]`}
-                    value={question.Options[1]}
+                    name={`Options1`}
+                    value={question.Options.Options1}
                     onChange={handleChanges}
                     className="w-11/12 rounded-lg border-none outline-none focus:outline-none bg-gray-100"
                   />
 
                   {/*  */}
-                  <div className="bg-gray-100 flex justify-center rounded-lg ">
+                  <div className="bg-gray-100 flex justify-center rounded-lg "
+                     onClick = {() => setQuestion({...question, Options: {...question.Options, Options1: ""}})}>
                     <FaX className="self-center mx-2" />
                   </div>
                 </span>
@@ -206,14 +266,15 @@ const handlePrev = () => {
                   <input
                     type="text"
                     placeholder="option 3"
-                    name={`Options[${2}]`}
-                    value={question.Options[2]}
+                    name={`Options2`}
+                    value={question.Options.Options2}
                     onChange={handleChanges}
                     className="w-11/12 rounded-lg border-none outline-none focus:outline-none bg-gray-100"
                   />
 
                   {/*  */}
-                  <div className="bg-gray-100 flex justify-center rounded-lg ">
+                  <div className="bg-gray-100 flex justify-center rounded-lg "
+                     onClick = {() => setQuestion({...question, Options: {...question.Options, Options2: ""}})}>
                     <FaX className="self-center mx-2" />
                   </div>
                 </span>
@@ -235,14 +296,15 @@ const handlePrev = () => {
                   <input
                     type="text"
                     placeholder="option 4"
-                    name={`Options[${3}]`}
-                    value={question.Options[3]}
+                    name={`Options3`}
+                    value={question.Options.Options3}
                     onChange={handleChanges}
                     className="w-11/12 rounded-lg border-none outline-none focus:outline-none bg-gray-100"
                   />
 
                   {/*  */}
                   <div className="bg-gray-100 flex justify-center rounded-lg "
+                     onClick = {() => setQuestion({...question, Options: {...question.Options, Options3: ""}})}
        
                   >
                     <FaX className="self-center mx-2" />
@@ -266,15 +328,15 @@ const handlePrev = () => {
         <div className="absolute bottom-10 flex right-8 gap-2">
           {" "}
           <div className=" flex gap-2">
-            <button className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32"
+            <button className={`self-center justify-center flex ${step === 1 ? ' bg-gray-200' : ' bg-blue-200'} p-2 rounded-lg text-sm font-bold gap-2 w-32`}
             onClick={handlePrev}>
             
-              <FaChevronLeft className="self-center" /> Prev
+              <FaChevronLeft className="self-center"  /> Prev
             </button>
           </div>
           <div className=" flex">
             <button className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
-            onClick={() => addQuestion(question)}>
+            onClick={addQuestion}>
             
               <FaPlus className="self-center" /> Add Next Question
             </button>

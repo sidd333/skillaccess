@@ -2,12 +2,25 @@ import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setTest } from "../../../../redux/features/test/testSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { createTest } from "../../../../redux/collage/test/testSlice";
+
 
 const Header = ({questions}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {test} = useSelector((state)=>state.test);
+
+
+  const handleCreateTest =()=>{
+    console.log("test" , test)
+    dispatch(createTest({
+      name : test.testName,
+      level :test.testType,
+      testSections : test.sections
+    }))
+    navigate("/collage/test/final")
+  }
 
   // useEffect(() => {
   //   dispatch(setTest({questions}));
@@ -38,7 +51,7 @@ const Header = ({questions}) => {
           </button>
           <button
             className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white"
-            onClick={() => navigate("/collage/test/preview")}
+            onClick={handleCreateTest}
           >
             Save
           </button>

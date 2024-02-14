@@ -8,7 +8,7 @@ import {
   setTest,
   setSections,
   removeSections,
-} from "../../../../redux/features/test/testSlice";
+} from "../../../../redux/collage/test/testSlice";
 
 const SelectTests = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const SelectTests = () => {
   const addSection = (section) => {
     const updatedSections = [...selectedSections, section];
     // console.log(selectedSections,section);
-    dispatch(setSections(section));
+    // dispatch(setSections(section));
 
 
     if (selectedSections.length < 5) {
@@ -31,7 +31,7 @@ if (selectedSections.includes(section)) {
     setSelectedSections([...selectedSections, section]);
       dispatch(
         setTest({
-          sections: updatedSections,
+          sections: selectedSections,
         })
       );
     }
