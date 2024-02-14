@@ -354,7 +354,6 @@ const CollageLayout = ({ children }) => {
                       }}
                     >
                       <button
-                        key={i}
                         className={` ml-[-10px] sm:ml-[5px] flex gap-4 mb-10  h-fit  py-2 justify-start ${
                           el.name === "Notifications"
                             ? "ml-[-20px] hidden"
@@ -366,12 +365,9 @@ const CollageLayout = ({ children }) => {
                      ${selection === i ? "bg-white !text-black" : "bg-blued"}
                        `}
                       >
-                        <div key={i} className="w-4 ml-[-10px] ">
-                          {el.icon}
-                        </div>
+                        <div className="w-4 ml-[-10px] ">{el.icon}</div>
 
                         <h3
-                          key={i}
                           className={`text-xl font-dmSans ${
                             open ? "" : "lg:block hidden"
                           } w-fit h-fit`}

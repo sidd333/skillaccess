@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FaAngleLeft,
   FaChevronDown,
@@ -37,7 +37,12 @@ const Header = () => {
         </div>
       </span>
 
-      <button className="bg-blue-700 py-2 px-3 self-center mr-2 rounded-lg flex gap-2 text-white">
+      <button
+        className="bg-blue-700 py-2 px-3 self-center mr-2 rounded-lg flex gap-2 text-white"
+        onClick={() => {
+          navigate("/collage/inbox/mail/:compose");
+        }}
+      >
         <FaPlus className="self-center" />{" "}
         <p className="self-center text-sm font-bold">Compose</p>
       </button>
