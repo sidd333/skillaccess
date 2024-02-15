@@ -4,7 +4,7 @@ import List from "./List";
 import EditHeader from "./EditHeader";
 
 const Profile = () => {
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   return (
     <div className="px-8">
       {editable && <EditHeader editable={editable} setEditable={setEditable} />}

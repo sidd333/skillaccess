@@ -6,12 +6,19 @@ import { useParams } from "react-router-dom";
 import Compose from "./Compose";
 import { PiArrowCounterClockwiseBold } from "react-icons/pi";
 import { FaSortDown } from "react-icons/fa";
+import { FiTrash } from "react-icons/fi";
+import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
+import { FiCornerUpLeft, FiCornerUpRight } from "react-icons/fi";
+import { BsArrowsAngleExpand } from "react-icons/bs";
+import { RxCross1 } from "react-icons/rx";
+import ViewBar from "./ViewBar";
+import ComposeBar from "./ComposeBar";
 
 const Mail = () => {
   let { type } = useParams();
 
   return (
-    <div className="w-11/12 mx-auto ">
+    <div className="w-11/12 mx-auto font-dmSans">
       <Header />
 
       <div className="bg-lGray bg-opacity-5  p-4 rounded-lg ">
@@ -31,27 +38,12 @@ const Mail = () => {
           <div className="w-3/4 h-[4.5rem] flex px-3">
             {type === ":view" ? (
               <>
-                <div className="w-full flex justify-between self-center">
-                  <div className="flex gap-2">
-                    {/* photo */}
-                    <div className="h-10 w-10 rounded-lg bg-blued"></div>
-                    {/*  */}
-
-                    <div className="flex gap-1 self-center flex-col">
-                      <p className="text-sm font-bold self-center">Reply</p>
-                      <span className="flex gap-2">
-                        <p className="text-sm font-bold  text-gray-400">to</p>
-                        <FaSortDown className="text-gray-400" />
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* icons */}
-                  <div className="flex gap-3"></div>
-                </div>
+                <ViewBar />
               </>
             ) : (
-              <></>
+              <>
+                <ComposeBar />
+              </>
             )}
           </div>
         </div>

@@ -5,8 +5,10 @@ import { HiDotsVertical } from "react-icons/hi";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { TiStarFullOutline, TiStarOutline } from "react-icons/ti";
 import { TfiClip } from "react-icons/tfi";
+import { useNavigate } from "react-router-dom";
 
 const List = () => {
+  const navigate = useNavigate();
   const [arr, setArr] = useState([
     { id: 1, isChecked: false },
     { id: 2, isChecked: false },
@@ -82,10 +84,19 @@ const List = () => {
                 className={`border-none bg-[#DEEBFF] rounded self-center`}
               />
 
-              <TiStarOutline className="self-center" />
+              {el.isChecked ? (
+                <TiStarFullOutline className="self-center" />
+              ) : (
+                <TiStarOutline className="self-center" />
+              )}
 
               <div className="w-5 h-5 rounded-full bg-blued self-center"></div>
-              <p className="text-sm font-medium">Fanny Chapman</p>
+              <p
+                className="text-sm font-medium hover:cursor-pointer"
+                onClick={() => navigate("/collage/inbox/mail/:view")}
+              >
+                Fanny Chapman
+              </p>
               <p className="text-sm font-medium sm:max-w-[150px] line-clamp-1 max-h-6">
                 Product Review for UI8 asdsad
               </p>

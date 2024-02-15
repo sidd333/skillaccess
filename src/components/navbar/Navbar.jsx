@@ -4,7 +4,7 @@ import { FiBell } from "react-icons/fi";
 import { FaAngleDown } from "react-icons/fa";
 const Navbar = (props) => {
   return (
-    <div className="border border-y-1 sorder border-gray-500 bg-white w-full z-40 m-0 fixed top-0">
+    <div className="border border-y-1 sorder border-gray-500 bg-white w-full z-[9999] m-0 fixed top-0">
       <div className="navbar flex justify-between ">
         {/* left */}
         <div>
