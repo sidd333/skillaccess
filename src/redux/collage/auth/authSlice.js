@@ -2,8 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
-
+const REACT_APP_API_URL = window.process.env.REACT_APP_API_URL;
 //initial state
 
 const collageState = {
