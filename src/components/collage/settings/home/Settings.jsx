@@ -2,8 +2,25 @@ import React from "react";
 import Header from "./Header";
 import { FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutCollage } from "../../../../redux/collage/auth/authSlice";
 
 const Settings = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogOut = async (e) => {
+    e.preventDefault();
+
+    try {
+      const ch = await dispatch(logoutCollage());
+      if (ch.meta.requestStatus === "fulfilled") {
+        navigate("/collage");
+      }
+    } catch (error) {
+      navigate("/collage");
+    }
+  };
   const Navigate = useNavigate();
   return (
     <div className="w-11/12 mx-auto font-dmSans">
@@ -77,7 +94,10 @@ const Settings = () => {
 
         {/* Visibility*/}
         <div className="flex flex-col">
-          <div className="flex justify-between px-5 py-4 bg-[#DE350B] bg-opacity-5 rounded-2xl sm:w-1/2">
+          <div
+            className="flex justify-between px-5 py-4 bg-[#DE350B] bg-opacity-5 rounded-2xl sm:w-1/2"
+            onClick={handleLogOut}
+          >
             <div className="flex gap-6 ">
               <img src="../../images/icons/del.png" alt="" />
               <p className="text-lg text-[#DE350B]">Log Out</p>

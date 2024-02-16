@@ -12,8 +12,8 @@ const collageState = {
   status: "",
   error: "",
   isLoggedIn: false,
-  user : {}
-}
+  user: {},
+};
 
 const authToken = localStorage.getItem("auth-token");
 
@@ -56,46 +56,41 @@ export const loginCollage = createAsyncThunk(
   }
 );
 
-
-export const updateCollege =createAsyncThunk(
+export const updateCollege = createAsyncThunk(
   "collageAuth/updateCollege",
   async (data, { rejectWithValue }) => {
     try {
-      console.log("updating",authToken);
+      console.log("updating", authToken);
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/college/update`,
         data,
-     
-        {headers: {
-          'Content-Type': 'application/json',
-          'auth-token': authToken
-        }}
-        
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
       );
       const res = req.data;
       return res.data.college;
     } catch (error) {
-      console.log("catch",error.response.data);
+      console.log("catch", error.response.data);
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-
 export const getCollege = createAsyncThunk(
   "collageAuth/getCollege",
   async (_, { rejectWithValue }) => {
     try {
-  
-      const response = await axios.get(
-        `${REACT_APP_API_URL}/api/college/me`,
-        { 
-          withCredentials: true,
-          headers: {
-            'auth-token': authToken
-          }
-        }
-      );
+      const response = await axios.get(`${REACT_APP_API_URL}/api/college/me`, {
+        withCredentials: true,
+        headers: {
+          "auth-token": authToken,
+        },
+      });
       return response.data.college;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -103,41 +98,39 @@ export const getCollege = createAsyncThunk(
   }
 );
 
-
 export const updateAvatar = createAsyncThunk(
   "collageAuth/updateAvatar",
   async (data, { rejectWithValue }) => {
     try {
-      console.log("updating",authToken);
+      console.log("updating", authToken);
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/college/update/avatar`,
         data,
 
-        {headers: {
-          'Content-Type': 'application/json',
-          'auth-token': authToken
-        }}
-
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
       );
       const res = req.data;
       return res.data.college;
     } catch (error) {
-      console.log("catch",error.response.data);
+      console.log("catch", error.response.data);
       return rejectWithValue(error.response.data);
     }
   }
 );
-
 
 export const logoutCollage = createAsyncThunk(
   "collageAuth/logoutCollage",
   async (_, { rejectWithValue }) => {
     try {
       console.log("logout");
-      const req = await axios.get(
-        `${REACT_APP_API_URL}/api/college/logout`,
-        { withCredentials: true }
-      );
+      const req = await axios.get(`${REACT_APP_API_URL}/api/college/logout`, {
+        withCredentials: true,
+      });
       const res = req.data;
       localStorage.removeItem("auth-token");
       return res.data;
@@ -145,11 +138,8 @@ export const logoutCollage = createAsyncThunk(
       console.log("catch");
       return rejectWithValue(error.response.data);
     }
-
   }
 );
-
-
 
 const collageAuthSlice = createSlice({
   name: "collageAuth",
@@ -170,7 +160,6 @@ const collageAuthSlice = createSlice({
       })
       .addCase(registerCollage.rejected, (state, action) => {
         // console.log(action.payload);
-
         // window.alert(action.payload);
       })
       .addCase(loginCollage.pending, (state, action) => {
@@ -186,32 +175,26 @@ const collageAuthSlice = createSlice({
       })
       .addCase(loginCollage.rejected, (state, action) => {
         // console.log(action.payload);
-
-
         // window.alert(action.payload);
       })
       .addCase(updateCollege.pending, (state, action) => {
         state.status = "loading";
         console.log("pending");
-      }
-      )
+      })
       .addCase(updateCollege.fulfilled, (state, action) => {
         // state.status = action.payload
         state.user = action.payload;
-
 
         console.log("fullfilled");
       })
       .addCase(updateCollege.rejected, (state, action) => {
         // console.log(action.payload);
-
         // window.alert(action.payload);
       })
       .addCase(getCollege.pending, (state, action) => {
         state.status = "loading";
         console.log("pending");
-      }
-      )
+      })
       .addCase(getCollege.fulfilled, (state, action) => {
         // state.status = action.payload
         state.user = action.payload;
@@ -226,8 +209,7 @@ const collageAuthSlice = createSlice({
       .addCase(updateAvatar.pending, (state, action) => {
         state.status = "loading";
         console.log("pending");
-      }
-      )
+      })
       .addCase(updateAvatar.fulfilled, (state, action) => {
         // state.status = action.payload
         state.user = action.payload;
@@ -254,19 +236,7 @@ const collageAuthSlice = createSlice({
         console.log(action.payload);
 
         // window.alert(action.payload);
-      })
-
-
-
-
-
-
-      
-      
-
-        window.alert(action.payload);
       });
-
   },
 });
 

@@ -4,76 +4,77 @@ import { CgPinAlt } from "react-icons/cg";
 import { BsPhone } from "react-icons/bs";
 import { PiLinkSimple } from "react-icons/pi";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getCollege,
-  updateCollege,
-} from "../../../../redux/collage/auth/authSlice";
+// import { useSelector, useDispatch } from "react-redux";
+// import {
+//   getCollege,
+//   updateCollege,
+// } from "../../../../redux/collage/auth/authSlice";
 
 const Header = ({
   editable,
   setEditable,
-  college,
-  setCollege,
-  avatar,
-  setAvatar,
+  // college,
+  // setCollege,
+  // avatar,
+  // setAvatar,
 }) => {
-  const dispatch = useDispatch();
-  const [avatarPreview, setAvatarPreview] = useState(
-    "../../images/user.jpg"
-  );
-  // const {user} = useSelector((state) => state.collageAuth);
+  //   const dispatch = useDispatch();
+  //   const [avatarPreview, setAvatarPreview] = useState("../../images/user.jpg");
+  //   // const {user} = useSelector((state) => state.collageAuth);
 
-  useEffect(() => {
-    dispatch(getCollege());
-    console.log(college, "college");
-  }, [dispatch]);
+  //   useEffect(() => {
+  //     dispatch(getCollege());
+  //     console.log(college, "college");
+  //   }, [dispatch]);
 
-  const handleAvatarChange = (e) => {
-    console.log(e.target.files[0]);
-    const reader = new FileReader();
+  //   const handleAvatarChange = (e) => {
+  //     console.log(e.target.files[0]);
+  //     const reader = new FileReader();
 
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setAvatarPreview(reader.result);
-        setAvatar(reader.result);
-      }
-    };
+  //     reader.onload = () => {
+  //       if (reader.readyState === 2) {
+  //         setAvatarPreview(reader.result);
+  //         setAvatar(reader.result);
+  //       }
+  //     };
 
-    reader.readAsDataURL(e.target.files[0]);
-  };
+  //     reader.readAsDataURL(e.target.files[0]);
+  //   };
+
+  const [college, setCollege] = useState({
+    CollegeName: "Example College",
+    Description: "lorem ipsum asdkmsa ojoj osadj ihs dbisadh sad",
+    Email: "example@college.com",
+  });
 
   return (
-    // {/* profile container */}
     <section className="bg-gray-50 rounded-xl px-6">
       {/* first section */}
       <div className=" flex justify-between border-b  bg-gray-50 rounded-t-lg py-8">
         {/* profile photo */}
         <div className="flex gap-2 px-3 py-1 mt-2">
-// <<<<<<< AnkitaMalik22-ankita-dev
-//           {editable && college ? (
-//             <div className="w-14 h-14 bg-blued self-center rounded-lg">
-//               <img src={avatar} alt="" width='50px' />
-//               <input
-//                 type="file"
-//                 name="avatar"
-//                 id="file"
-//            className=""
-//                 accept="image/*"
-//                 onChange={handleAvatarChange}
-//               />
-//             </div>
-//           ) : (
-//             <div className="relative">
-//               <div className="w-14 h-14 bg-blued self-center rounded-lg"></div>
-//               <img src={avatar} alt="avatar"  width='50px'/>
-//               <div className="absolute bottom-2 -right-1 w-6 h-6 rounded-lg  p-[.35rem] bg-blue-700 bg-opacity-80">
-// =======
+          {/* {editable && college ? (
+           <div className="w-14 h-14 bg-blued self-center rounded-lg">
+             <img src={avatar} alt="" width='50px' />
+             <input
+               type="file"
+               name="avatar"
+               id="file"
+          className=""
+               accept="image/*"
+               onChange={handleAvatarChange}
+             />
+           </div>
+         ) : (
+           <div className="relative">
+             <div className="w-14 h-14 bg-blued self-center rounded-lg"></div>
+             <img src={avatar} alt="avatar"  width='50px'/>
+             <div className="absolute bottom-2 -right-1 w-6 h-6 rounded-lg  p-[.35rem] bg-blue-700 bg-opacity-80"> */}
+
           <div className="relative flex">
             <div className="w-14 h-14 bg-blued self-center rounded-lg"></div>
             {editable && (
               <div className="absolute bottom-0 -right-1 w-6 h-6 rounded-lg  p-[.35rem] bg-blue-700 bg-opacity-80">
-
                 <img src="../../images/icons/pen.png" alt="" />
               </div>
             )}
@@ -84,14 +85,14 @@ const Header = ({
               {editable && college ? (
                 <input
                   type="text"
-                  value={college.CollegeName}
-                  onChange={(e) =>
-                    setCollege({ ...college, CollegeName: e.target.value })
-                  }
+                  value={college.CollegeName || "Example Collage"}
+                  // onChange={(e) =>
+                  //   setCollege({ ...college, CollegeName: e.target.value })
+                  // }
                   className="bg-transparent border-none focus:outline-none"
                 />
               ) : (
-                college.CollegeName
+                college.CollegeName || "Example Collage"
               )}
             </h2>
             <h2 className="text-sm text-gray-400   pb-2">UPME00006369</h2>
@@ -114,56 +115,48 @@ const Header = ({
       {/* second section */}
       <div className="border-b px-6  py-8 bg-gray-50 font-dmSans">
         <h1 className="text-lg font-bold">Overview</h1>
-     {
-      college.Description ? (
-        <p className="text-sm  font-medium mt-2">
-          {editable && college ? (
-            <textarea
-              type="text"
-              value={college.Description}
-              onChange={(e) =>
-                setCollege({ ...college, Description: e.target.value })
-              }
-              className="bg-transparent border-none focus:outline-none"
-            />
-          ) : (
-            college.Description
-          )}
-        </p>
-      ) : (
-        <p className="text-sm  font-medium mt-2">
-          No Description Available
-        </p>
-      )
-     }
+        {college.Description ? (
+          <p className="text-sm  font-medium mt-2">
+            {editable && college ? (
+              <textarea
+                type="text"
+                value={college.Description}
+                // onChange={(e) =>
+                //   setCollege({ ...college, Description: e.target.value })
+                // }
+                className="bg-transparent border-none focus:outline-none"
+              />
+            ) : (
+              college.Description
+            )}
+          </p>
+        ) : (
+          <p className="text-sm  font-medium mt-2">No Description Available</p>
+        )}
       </div>
       <div className="px-6  py-8 bg-gray-50 font-dmSans flex sm:gap-32 text-sm font-medium">
         <div className="flex gap-2">
           <div className="w-10 h-10 rounded-lg bg-gray-200 flex justify-center">
             <MdOutlineEmail className="self-center text-2xl" />
           </div>
-          {
-            college.Email ? (
-              <p className="self-center">
+          {college.Email ? (
+            <p className="self-center">
               {editable && college ? (
                 <input
                   type="text"
                   value={college.Email}
-                  onChange={(e) =>
-                    setCollege({ ...college, Email: e.target.value })
-                  }
+                  // onChange={(e) =>
+                  //   setCollege({ ...college, Email: e.target.value })
+                  // }
                   className="bg-transparent border-none focus:outline-none"
                 />
               ) : (
                 college.Email
               )}
             </p>
-            ) : (
-              <p className=" font-medium self-center">
-              No Email Available
-            </p>
-            )
-          }
+          ) : (
+            <p className=" font-medium self-center">No Email Available</p>
+          )}
           {/* <p className="font-medium self-center">
           </p> */}
         </div>
