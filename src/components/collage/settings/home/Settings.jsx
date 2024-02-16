@@ -1,8 +1,10 @@
 import React from "react";
 import Header from "./Header";
 import { FaChevronRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
+  const Navigate = useNavigate();
   return (
     <div className="w-11/12 mx-auto font-dmSans">
       <Header />
@@ -10,7 +12,10 @@ const Settings = () => {
       <div className="w-full mt-16 flex-col gap-4 flex">
         {/* notis */}
         <div className="flex flex-col">
-          <div className="flex justify-between px-5 py-4 bg-lGray bg-opacity-5 rounded-2xl sm:w-1/2">
+          <div
+            className="flex justify-between px-5 py-4 bg-lGray bg-opacity-5 rounded-2xl sm:w-1/2"
+            onClick={() => Navigate("/collage/settings/notifications")}
+          >
             <div className="flex gap-6 ">
               <img src="../../images/icons/bellDot.png" alt="" srcset="" />
               <p className="text-lg">Notifications</p>
@@ -24,7 +29,10 @@ const Settings = () => {
 
         {/* security*/}
         <div className="flex flex-col">
-          <div className="flex justify-between px-5 py-4 bg-lGray bg-opacity-5 rounded-2xl sm:w-1/2">
+          <div
+            className="flex justify-between px-5 py-4 bg-lGray bg-opacity-5 rounded-2xl sm:w-1/2"
+            onClick={() => Navigate("/collage/settings/security")}
+          >
             <div className="flex gap-6 ">
               <img src="../../images/icons/lock.png" alt="" />
               <p className="text-lg">Privacy and Security</p>
@@ -38,7 +46,10 @@ const Settings = () => {
 
         {/* Login Activity*/}
         <div className="flex flex-col">
-          <div className="flex justify-between px-5 py-4 bg-lGray bg-opacity-5 rounded-2xl sm:w-1/2">
+          <div
+            className="flex justify-between px-5 py-4 bg-lGray bg-opacity-5 rounded-2xl sm:w-1/2"
+            onClick={() => Navigate("/collage/settings/activity")}
+          >
             <div className="flex gap-6 ">
               <img src="../../images/icons/location.png" alt="" />
               <p className="text-lg">Login Activity</p>
