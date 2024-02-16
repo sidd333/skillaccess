@@ -15,10 +15,11 @@ const Settings = () => {
     try {
       const ch = await dispatch(logoutCollage());
       if (ch.meta.requestStatus === "fulfilled") {
-        navigate("/collage");
+        navigate("/");
       }
     } catch (error) {
-      navigate("/collage");
+      window.alert("logging out");
+      navigate("/");
     }
   };
   const Navigate = useNavigate();
