@@ -50,27 +50,34 @@ const Header = ({
       <div className=" flex justify-between border-b  bg-gray-50 rounded-t-lg py-8">
         {/* profile photo */}
         <div className="flex gap-2 px-3 py-1 mt-2">
-          {editable && college ? (
-            <div className="w-14 h-14 bg-blued self-center rounded-lg">
-              <img src={avatar} alt="" width='50px' />
-              <input
-                type="file"
-                name="avatar"
-                id="file"
-           className=""
-                accept="image/*"
-                onChange={handleAvatarChange}
-              />
-            </div>
-          ) : (
-            <div className="relative">
-              <div className="w-14 h-14 bg-blued self-center rounded-lg"></div>
-              <img src={avatar} alt="avatar"  width='50px'/>
-              <div className="absolute bottom-2 -right-1 w-6 h-6 rounded-lg  p-[.35rem] bg-blue-700 bg-opacity-80">
+// <<<<<<< AnkitaMalik22-ankita-dev
+//           {editable && college ? (
+//             <div className="w-14 h-14 bg-blued self-center rounded-lg">
+//               <img src={avatar} alt="" width='50px' />
+//               <input
+//                 type="file"
+//                 name="avatar"
+//                 id="file"
+//            className=""
+//                 accept="image/*"
+//                 onChange={handleAvatarChange}
+//               />
+//             </div>
+//           ) : (
+//             <div className="relative">
+//               <div className="w-14 h-14 bg-blued self-center rounded-lg"></div>
+//               <img src={avatar} alt="avatar"  width='50px'/>
+//               <div className="absolute bottom-2 -right-1 w-6 h-6 rounded-lg  p-[.35rem] bg-blue-700 bg-opacity-80">
+// =======
+          <div className="relative flex">
+            <div className="w-14 h-14 bg-blued self-center rounded-lg"></div>
+            {editable && (
+              <div className="absolute bottom-0 -right-1 w-6 h-6 rounded-lg  p-[.35rem] bg-blue-700 bg-opacity-80">
+
                 <img src="../../images/icons/pen.png" alt="" />
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           <div className="ml-1 mt-1">
             <h2 className="text-2xl  font-bold  py-1  ">

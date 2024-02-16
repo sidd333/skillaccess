@@ -26,10 +26,17 @@ import QuesRoute from "./pages/collage/quesBank";
 
 //---------------------------------------------------------------students
 import StudentRoute from "./pages/collage/students";
+
+//---------------------------------------------------------------inbox
+import InboxRoute from "./pages/collage/inbox/index";
+
+//---------------------------------------------------------------settings
+
+import SettingsRoute from "./pages/collage/settings/index";
 //----------------------------------------------------------------------------------------------------------------------------------------//
 
 import AccountingPage from "./pages/collage/accounting/AccountingPage";
-import InboxPage from "./pages/collage/inbox/InboxPage";
+
 import ProfilePage from "./pages/collage/profile/ProfilePage";
 import SettingsPage from "./pages/collage/settings/SettingsPage";
 import TeamsPage from "./pages/collage/teams/TeamsPage";
@@ -62,28 +69,23 @@ const {user, isLoggedIn} = useSelector((state) => state.collageAuth);
           {QuesRoute()}
           {CompaniesRoute()}
           {ResultsRoute()}
-
+          {InboxRoute()}
+          {SettingsRoute()}
           <Route path="collage/accounting">
             <Route path="" element={<AccountingPage />} />
           </Route>
 
-          <Route path="collage/inbox">
-            <Route path="" element={<InboxPage />} />
+
+          <Route path="collage/profile">
+            <Route path="" element={<ProfilePage />} />
           </Route>
 
-            <Route path="collage/profile">
-              <Route path="" element={isLoggedIn ? <ProfilePage /> : null} />
-            </Route>
+          <Route path="collage/teams">
+            <Route path="" element={<TeamsPage />} />
+          </Route>
+          {/* .......................................................................................................................... */}
+        </Routes>
 
-            <Route path="collage/settings">
-              <Route path="" element={<SettingsPage />} />
-            </Route>
-
-            <Route path="collage/teams">
-              <Route path="" element={<TeamsPage />} />
-            </Route>
-            {/* .......................................................................................................................... */}
-          </Routes>
       </Suspense>
     </BrowserRouter>
   );

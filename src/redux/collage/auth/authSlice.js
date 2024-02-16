@@ -4,6 +4,8 @@ import axios from "axios";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
+console.log(process.env);
+
 //initial state
 
 const collageState = {
@@ -185,6 +187,7 @@ const collageAuthSlice = createSlice({
       .addCase(loginCollage.rejected, (state, action) => {
         // console.log(action.payload);
 
+
         // window.alert(action.payload);
       })
       .addCase(updateCollege.pending, (state, action) => {
@@ -260,6 +263,10 @@ const collageAuthSlice = createSlice({
 
       
       
+
+        window.alert(action.payload);
+      });
+
   },
 });
 
