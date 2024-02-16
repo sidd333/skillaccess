@@ -1,5 +1,8 @@
 import "./App.css";
 import React, { Suspense, lazy } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCollege,logoutCollage } from "./redux/collage/auth/authSlice";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 //----------------------------------------------collage pages----------------------------------------------------------------------------//
@@ -37,6 +40,14 @@ const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
 
 export default function App() {
+const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCollege());
+  }, [dispatch]);
+
+const {user, isLoggedIn} = useSelector((state) => state.collageAuth);
+
+
   return (
     <BrowserRouter>
       <Suspense fallback={<>loading</>}>
@@ -60,19 +71,19 @@ export default function App() {
             <Route path="" element={<InboxPage />} />
           </Route>
 
-          <Route path="collage/profile">
-            <Route path="" element={<ProfilePage />} />
-          </Route>
+            <Route path="collage/profile">
+              <Route path="" element={isLoggedIn ? <ProfilePage /> : null} />
+            </Route>
 
-          <Route path="collage/settings">
-            <Route path="" element={<SettingsPage />} />
-          </Route>
+            <Route path="collage/settings">
+              <Route path="" element={<SettingsPage />} />
+            </Route>
 
-          <Route path="collage/teams">
-            <Route path="" element={<TeamsPage />} />
-          </Route>
-          {/* .......................................................................................................................... */}
-        </Routes>
+            <Route path="collage/teams">
+              <Route path="" element={<TeamsPage />} />
+            </Route>
+            {/* .......................................................................................................................... */}
+          </Routes>
       </Suspense>
     </BrowserRouter>
   );
