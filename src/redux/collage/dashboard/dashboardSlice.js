@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { act } from "react-dom/test-utils";
+;
 
 
 const initialState = {
@@ -18,7 +18,7 @@ const initialState = {
  
 };
 
-const REACT_APP_API_URL = process.env.REACT_APP_API_URL || "http://localhost:4000/";
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 const authToken = localStorage.getItem('auth-token');
 
 // Get all students -- /api/student/college/all -- GET | College

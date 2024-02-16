@@ -12,46 +12,32 @@ import {
 
 const SelectTests = () => {
   const dispatch = useDispatch();
-  const { sections, selectedSections } = useSelector((state) => state.test);
+  const { sections} = useSelector((state) => state.test);
 
-  // const [selected, setselected] = useState([]);
+  const [selectedSections, setSelectedSections] = useState([]);
 
-  // const addSection = (section) => {
-  //   const updatedSections = [...selected, section];
-  //   setselected(updatedSections);
-  //   dispatch(setTest({
-  //     sections: updatedSections
-  //   }));
 
-  //   dispatch(setSections(sections.filter((s) => s !== section)));
-
-  //   console.log(updatedSections);
-  // }
-
-  // const removeSection = (section) => {
-  //   const updatedSections = selected.filter((s) => s !== section);
-  //   setselected(updatedSections);
-  //   dispatch(setTest({
-  //     sections: updatedSections
-  //   }));
-
-  //   // Don't let the user add the same section again
-  //   dispatch(setSections([...sections, section]));
-
-  //   console.log(updatedSections);
-  // }
 
   const addSection = (section) => {
     const updatedSections = [...selectedSections, section];
     // console.log(selectedSections,section);
-    dispatch(setSections(section));
-    console.log(selectedSections);
+    // dispatch(setSections(section));
 
-    dispatch(
-      setTest({
-        sections: selectedSections,
-      })
-    );
+
+    if (selectedSections.length < 5) {
+if (selectedSections.includes(section)) {
+      return;
+    }
+    setSelectedSections([...selectedSections, section]);
+      dispatch(
+        setTest({
+          sections: selectedSections,
+        })
+      );
+    }
+
+  
+
     // dispatch(setSections(sections.filter((s) => s !== section)));
     // console.log(updatedSections);
   };
@@ -59,10 +45,16 @@ const SelectTests = () => {
   const removeSection = (section) => {
     const updatedSections = selectedSections.filter((s) => s !== section);
     dispatch(setSections(updatedSections));
+    setSelectedSections(updatedSections);
     // Don't let the user add the same section again
     // dispatch(setSections([...sections, section]));
     // console.log(updatedSections);
   };
+
+  useEffect(() => {
+    // getSelectedSections();
+    console.log(selectedSections,"selected");
+  }, [addSection, removeSection, selectedSections]);
 
   return (
     <div className="font-dmSans text-sm font-bold">
@@ -81,59 +73,67 @@ const SelectTests = () => {
         </div>
 
         <div className=" mx-auto  my-2 rounded-lg grid sm:grid-cols-5 grid-cols-2 gap-6">
+        {
+        selectedSections?.map((section) => (
           <div className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center ">
-            <span className="self-center">
-              <h2 className="text-xl font-bold mb-4">UX Test - Basics</h2>
-              <div className="flex gap-2">
-                <img
-                  src="../../images/icons/menu-boxed.png"
-                  alt=""
-                  className="self-center"
-                />
-                <h2 className="font-bold text-xs text-gray-400 self-center">
-                  Multiple Choice Questions
-                </h2>
-              </div>
-              <div className="flex justify-between mt-1">
-                {" "}
-                <div className="flex gap-2 w-full">
-                  <img
-                    src="../../images/icons/stopwatch.png"
-                    alt=""
-                    className="w-6 h-6 self-center"
-                  />
-                  <h2 className="font-bold text-xs text-gray-400 self-center">
-                    10 mins
-                  </h2>
-                </div>
-                <img src="../../images/icons/cross.png" alt="" />
-              </div>
-            </span>
+   {console.log(section,"section")}
+          <span className="self-center">
+          <h2 className="text-xl font-bold mb-4">{section?.name}</h2>
+          <div className="flex gap-2">
+            <img
+              src="../../images/icons/menu-boxed.png"
+              alt=""
+              className="self-center"
+            />
+            <h2 className="font-bold text-xs text-gray-400 self-center">
+          {section?.description}
+            </h2>
           </div>
-          <div className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center ">
+          <div className="flex justify-between mt-1">
+            {" "}
+            <div className="flex gap-2 w-full">
+              <img
+                src="../../images/icons/stopwatch.png"
+                alt=""
+                className="w-6 h-6 self-center"
+              />
+              <h2 className="font-bold text-xs text-gray-400 self-center">
+               {section?.Time}
+              </h2>
+            </div>
+            <img src="../../images/icons/cross.png" alt=""    onClick={() => removeSection(section)}/>
+          </div>
+        </span>
+       
+          </div>
+           ))
+      }
+
+          {
+       
+            
+          selectedSections?.length < 5 ? (
+                Array.from({ length: 5 - selectedSections.length }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center "
+                  >
+                    <span className="self-center">
+                      <FiPlusCircle className="mx-auto sm:w-8 sm:h-8 text-gray-200" />
+                      <h2 className="font-semibold mt-1">Add section {index + 1} </h2>
+                    </span>
+                  </div>
+                ))
+              ) : null
+            
+          }
+          {/* <div className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center ">
             <span className="self-center">
               <FiPlusCircle className="mx-auto sm:w-8 sm:h-8 text-gray-200" />
               <h2 className="font-semibold mt-1">Add section 2 </h2>
             </span>
-          </div>
-          <div className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center ">
-            <span className="self-center">
-              <FiPlusCircle className="mx-auto sm:w-8 sm:h-8 text-gray-200" />
-              <h2 className="font-semibold mt-1">Add section 3 </h2>
-            </span>
-          </div>
-          <div className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center ">
-            <span className="self-center">
-              <FiPlusCircle className="mx-auto sm:w-8 sm:h-8 text-gray-200" />
-              <h2 className="font-semibold mt-1">Add section 4 </h2>
-            </span>
-          </div>
-          <div className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center ">
-            <span className="self-center">
-              <FiPlusCircle className="mx-auto sm:w-8 sm:h-8 text-gray-200" />
-              <h2 className="font-semibold mt-1">Add section 5 </h2>
-            </span>
-          </div>
+          </div> */}
+      
         </div>
 
         <Inputs />

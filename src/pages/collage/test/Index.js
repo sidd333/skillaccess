@@ -24,13 +24,15 @@ export default function () {
       <Route path="name" element={<NameAssessmentPage />} />
       <Route path="select" element={<SelectTestsPage />} />
       <Route path="submit" element={<SubmitPage />} />
-      <Route path="questions" element={<AddQuestionsSelectPage />} />
-      <Route path="preview" element={<AddQuestionsPage />} />
+      {/* <Route path="preview" element={<AddQuestionsSelectPage />} /> */}
+      <Route path="questions" element={<AddQuestionsPage />} />
+      {/* <Route path="questions" element={<AddQuestionsSelectPage />} /> */}
+      {/* <Route path="preview" element={<AddQuestionsPage />} /> */}
       <Route path="review" element={<ReviewPage />} />
-      <Route path="addMcq" element={<AddMcqPage />} />
-      <Route path="addcode" element={<AddCodePage />} />
-      <Route path="addEssay" element={<AddEssayPage />} />
-      <Route path="addPara" element={<AddParagraphPage />} />
+      <Route path="mcq/:sectionId" element={<AddMcqPage />} />
+      <Route path="code/:sectionId" element={<AddCodePage />} />
+      <Route path="essay/:sectionId" element={<AddEssayPage />} />
+      <Route path="parav" element={<AddParagraphPage />} />
       <Route path="final" element={<FinalizePage />} />
       <Route path="invite" element={<InvitePage />} />
     </Route>
