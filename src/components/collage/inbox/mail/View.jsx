@@ -5,6 +5,7 @@ import { FiDownload } from "react-icons/fi";
 import { GrExpand } from "react-icons/gr";
 import { TfiClip } from "react-icons/tfi";
 import { BsEmojiSmile } from "react-icons/bs";
+import { FiTrash } from "react-icons/fi";
 
 const View = () => {
   return (

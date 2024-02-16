@@ -26,6 +26,10 @@ import StudentRoute from "./pages/collage/students";
 
 //---------------------------------------------------------------inbox
 import InboxRoute from "./pages/collage/inbox/index";
+
+//---------------------------------------------------------------settings
+
+import SettingsRoute from "./pages/collage/settings/index";
 //----------------------------------------------------------------------------------------------------------------------------------------//
 
 import AccountingPage from "./pages/collage/accounting/AccountingPage";
@@ -55,16 +59,13 @@ export default function App() {
           {CompaniesRoute()}
           {ResultsRoute()}
           {InboxRoute()}
+          {SettingsRoute()}
           <Route path="collage/accounting">
             <Route path="" element={<AccountingPage />} />
           </Route>
 
           <Route path="collage/profile">
             <Route path="" element={<ProfilePage />} />
-          </Route>
-
-          <Route path="collage/settings">
-            <Route path="" element={<SettingsPage />} />
           </Route>
 
           <Route path="collage/teams">
