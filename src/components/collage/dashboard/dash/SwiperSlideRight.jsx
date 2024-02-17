@@ -34,7 +34,7 @@ const SwiperSlideRight = () => {
         },
       }}
     >
-      {/* <SwiperSlide>
+      <SwiperSlide>
         <div className=" bg-white  w-44 h-36 rounded-lg p-2">
           <figure className="bg-white-500 w-28 h-24 mx-auto rounded-lg flex justify-center">
             <img
@@ -114,9 +114,9 @@ const SwiperSlideRight = () => {
             </p>
           </span>
         </div>
-      </SwiperSlide> */}
+      </SwiperSlide>
 
-      {newJobs &&
+      {/* {newJobs &&
         newJobs.map((job) => (
           <SwiperSlide key={job._id}>
             <div className=" bg-white  w-44 h-36 rounded-lg p-2">
@@ -148,7 +148,7 @@ const SwiperSlideRight = () => {
               </p>
             </div>
           </SwiperSlide>
-        ))}
+        ))} */}
 
       <span className="absolute top-1/3 right-5 z-20 h-fit w-fit">
         <SlideNextButton />

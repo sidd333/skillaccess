@@ -9,9 +9,9 @@ import { IoIosSearch } from "react-icons/io";
 import BackIcon from "../../../buttons/BackIcon";
 
 const Companies = () => {
-  // const [companies, setcompanies] = useState([1, 2, 3, 4, 5, 6, , 9, 6]);
+  const [companies, setcompanies] = useState([1, 2, 3, 4, 5, 6, , 9, 6]);
   const dispatch = useDispatch();
-  const { companies } = useSelector((state) => state.dashboard);
+  // const { companies } = useSelector((state) => state.dashboard);
 
   useEffect(() => {
     dispatch(getCompany());
@@ -25,11 +25,11 @@ const Companies = () => {
           className="  self-center  rounded-lg h-10 w-10 "
           onClick={() => navigate(-1)}
         >
-          {/* <BackIcon /> */}
+          <BackIcon />
         </button>
         <div className=" rounded-xl mx-2 w-full sm:h-12 h-10 flex my-2 ">
           <span className="w-fit mx-auto flex self-center">
-            {/* <IoIosSearch className="self-center w-10 h-10 bg-gray-100 rounded-s-lg text-gray-400 py-2 " /> */}
+            <IoIosSearch className="self-center w-10 h-10 bg-gray-100 rounded-s-lg text-gray-400 py-2 " />
             <input
               type="text"
               placeholder="Search"
@@ -51,18 +51,27 @@ const Companies = () => {
                 key={index}
               >
                 <figure>
-                  <img src={company.basic.coverPhoto} alt="cover photo" />
+                  <img
+                    src={
+                      company.basic?.coverPhoto || "../../images/CompanyBg.png"
+                    }
+                    alt="cover photo"
+                  />
                 </figure>
                 <div className="card-body">
                   <div className="w-14 h-14 bg-red-600 -mt-10">
                     <img
-                      src={company.basic.logo}
+                      src={company.basic?.logo || ""}
                       alt="logo"
                       className="w-full h-full"
                     />
                   </div>
-                  <h2 className="card-title">{company.basic.companyName}</h2>
-                  <p>{company.about.companyDescription} </p>
+                  <h2 className="card-title">
+                    {company.basic?.companyName || "Name"}
+                  </h2>
+                  <p className="min-h-[5rem]">
+                    {company.about?.companyDescription || "description"}{" "}
+                  </p>
                   <div className="card-actions justify-end">
                     <button
                       className="px-4 py-2 hover:bg-blue-900 bg-[#0052CC] text-xs font-dmSans font-bold rounded-xl text-white"

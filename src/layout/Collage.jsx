@@ -257,7 +257,10 @@ const CollageLayout = ({ children }) => {
     },
   ];
 
+  const bottom = useRef(null);
+
   useEffect(() => {
+    bottom.current.scrollIntoView();
     if (location.pathname.match(/\/collage\/dashboard*/)) {
       dispatch(setSelected(0));
       setDown(0);
@@ -318,7 +321,7 @@ const CollageLayout = ({ children }) => {
     <>
       <Navbar open={open} setOpen={setOpen} />
       <div className=" h-full bg-blued relative">
-        <div className="flex justify-start pt-20 ">
+        <div className="flex  justify-start pt-20 ">
           <aside
             className={` px-4 h-[90vh] transition-width max-w-[15rem] overflow-x-hidden bg-secondary fixed left-0 z-30  scrollbar overflow-y-scroll ${
               open ? "w-1/2" : "w-14 lg:w-full "
@@ -329,6 +332,7 @@ const CollageLayout = ({ children }) => {
               {arr.map((el, i) => {
                 return (
                   <>
+                    {selection === i && <div className="" ref={bottom}></div>}
                     {el.name === "Notifications" && (
                       <div
                         className={`${
@@ -350,7 +354,6 @@ const CollageLayout = ({ children }) => {
                       }}
                     >
                       <button
-                        key={i}
                         className={` ml-[-10px] sm:ml-[5px] flex gap-4 mb-10  h-fit  py-2 justify-start ${
                           el.name === "Notifications"
                             ? "ml-[-20px] hidden"
@@ -362,12 +365,9 @@ const CollageLayout = ({ children }) => {
                      ${selection === i ? "bg-white !text-black" : "bg-blued"}
                        `}
                       >
-                        <div key={i} className="w-4 ml-[-10px] ">
-                          {el.icon}
-                        </div>
+                        <div className="w-4 ml-[-10px] ">{el.icon}</div>
 
                         <h3
-                          key={i}
                           className={`text-xl font-dmSans ${
                             open ? "" : "lg:block hidden"
                           } w-fit h-fit`}
@@ -386,7 +386,7 @@ const CollageLayout = ({ children }) => {
             </ul>
           </aside>
 
-          <div className="bg-white rounded-[3rem] h-full min-h-[95vh] w-full p-4 mx-4 ml-14 lg:ml-60 mt-9">
+          <div className="bg-white rounded-3xl h-full min-h-[95vh] w-full p-4 mx-4 ml-14 lg:ml-60 mt-9">
             {children}
           </div>
         </div>
