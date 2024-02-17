@@ -65,7 +65,7 @@ const Header = ({
           ) : (
             <div className="relative">
               <div className="w-14 h-14 bg-blued self-center rounded-lg"></div>
-              <img src={avatar} alt="avatar"  width='50px'/>
+              <img src={college.avatar} alt="avatar"  width='50px'/>
               <div className="absolute bottom-2 -right-1 w-6 h-6 rounded-lg  p-[.35rem] bg-blue-700 bg-opacity-80">
                 <img src="../../images/icons/pen.png" alt="" />
               </div>
