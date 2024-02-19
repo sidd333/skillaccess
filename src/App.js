@@ -48,11 +48,15 @@ const Login = lazy(() => import("./pages/collage/auth/Login"));
 
 export default function App() {
 const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getCollege());
-  }, [dispatch]);
+
 
 const {user, isLoggedIn} = useSelector((state) => state.collageAuth);
+
+
+
+useEffect(() => {
+  dispatch(getCollege());
+}, [dispatch ]);
 
 
   return (
@@ -63,14 +67,27 @@ const {user, isLoggedIn} = useSelector((state) => state.collageAuth);
           <Route path="" element={<Register />} />
           <Route path="/login" element={<Login />} />
 
-          {Rote()}
-          {TestRoute()}
-          {StudentRoute()}
-          {QuesRoute()}
-          {CompaniesRoute()}
-          {ResultsRoute()}
-          {InboxRoute()}
-          {SettingsRoute()}
+          
+
+          {isLoggedIn ? (
+            <>
+              {Rote()}
+              {TestRoute()}
+              {StudentRoute()}
+              {QuesRoute()}
+              {CompaniesRoute()}
+              {ResultsRoute()}
+              {InboxRoute()}
+              {SettingsRoute()}
+            </>
+          )
+        :(
+          <Route path="*" element={<h1>
+            You are not logged in 
+            click here to <a href="/login">login</a>
+          </h1>} />
+        )
+        }
           <Route path="collage/accounting">
             <Route path="" element={<AccountingPage />} />
           </Route>
