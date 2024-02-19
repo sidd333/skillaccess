@@ -7,12 +7,13 @@ import {
   getCollege,
   updateCollege,
   updateAvatar,
+  setUploadImg,
 } from "../../../../redux/collage/auth/authSlice";
 
 const Profile = () => {
   // <<<<<<< AnkitaMalik22-ankita-dev
     const dispatch = useDispatch();
-    const { user,isLoggedIn } = useSelector((state) => state.collageAuth);
+    const { user,isLoggedIn ,uploadImg} = useSelector((state) => state.collageAuth);
     const [editable, setEditable] = useState(false);
 
     const [avatar, setAvatar] = useState("");
@@ -23,9 +24,10 @@ const Profile = () => {
       Phone: user ? user.Phone : "",
       Address: user ? user.Address : "",
       Website: user ? user.Website : "",
+      Phone : user ? user.Phone : "",
       avatar:{
-        public_id: user ? user.avatar.public_id : "",
-        url: user ? user.avatar.url : "",
+        public_id: user  && user.avatar ? user.avatar.public_id : "",
+        url: user && user.avatar ? user.avatar.url : "",
 
       },
       Description: user ? user.Description : "",
@@ -34,6 +36,8 @@ const Profile = () => {
       State: user ? user.State : "",
       City: user ? user.City : "",
     });
+
+
 
     const handleUpdate = (college) => {
       console.log("update");
@@ -51,7 +55,7 @@ const Profile = () => {
           Website: user.Website,
           avatar: {
             public_id: user.avatar.public_id,
-            url: user.avatar.url,
+            url:  user.avatar.url,
           },
           
           Description: user.Description,
@@ -65,6 +69,11 @@ const Profile = () => {
     }, [dispatch,isLoggedIn]);
 
     useEffect(() => {
+      dispatch(getCollege());
+      // console.log(college, "college");
+    }, [dispatch]);
+
+    useEffect(() => {
 
      
       if (user && user.avatar && user.avatar.url) {
@@ -73,10 +82,19 @@ const Profile = () => {
       if (avatar) {
         dispatch(updateAvatar({ avatar }));
         dispatch(getCollege());
+        // setCollege({ ...college, avatar: { url:user.avatar.url} });
       }
       dispatch(updateCollege(college));
+          dispatch(getCollege());
+  ;
     }, [editable]);
 
+
+
+    // useEffect(() => {
+    //   dispatch(getCollege());
+    //   dispatch(setUploadImg(false))
+    // }, [uploadImg]);
   // =======
   // const [editable, setEditable] = useState(false);
 

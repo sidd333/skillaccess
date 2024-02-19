@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getCollege,
+  setUploadImg,
   updateCollege,
 } from "../../../../redux/collage/auth/authSlice";
 
@@ -22,12 +23,21 @@ const Header = ({
   const [avatarPreview, setAvatarPreview] = useState(
     "../../images/user.jpg"
   );
-  // const {user} = useSelector((state) => state.collageAuth);
+  const {uploadImg} = useSelector((state) => state.collageAuth);
 
   useEffect(() => {
     dispatch(getCollege());
-    // console.log(college, "college");
+
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getCollege());
+if(uploadImg){
+  dispatch(setUploadImg(false))
+
+}
+console.log(uploadImg);
+  }, [uploadImg]);
 
   const handleAvatarChange = (e) => {
     console.log(e.target.files[0]);
@@ -176,7 +186,33 @@ const Header = ({
           <div className="w-10 h-10 rounded-lg bg-gray-200 flex justify-center">
             <BsPhone className="self-center text-2xl" />
           </div>
-          <p className="self-center">011 - 250 847 26, 011 - 456 398 26</p>
+
+          {
+            !college.Phone ?? (
+              <p className="self-center">
+              No Phone Available
+            </p>
+            )
+          }
+
+        
+        
+            <p className="self-center">
+            {editable && college ? (
+              <input
+                type="text"
+                value={college.Phone}
+                onChange={(e) =>
+                  setCollege({ ...college, Phone: e.target.value })
+                }
+                className="bg-transparent border-none focus:outline-none"
+              />
+            ) : (
+              college.Phone
+            )}
+          </p>
+         
+        
         </div>
 
         <div className="flex gap-2 font-dmSans">
@@ -184,7 +220,39 @@ const Header = ({
             {" "}
             <PiLinkSimple className="self-center text-2xl" />
           </div>
-          <p className="text-blue-700 self-center">http://www.vetindia.in/</p>
+          {/* <p className="text-blue-700 self-center">http://www.vetindia.in/</p> */}
+
+          { !college.Website ?? <p className="  self-center">
+              No Website Available
+            </p>}
+
+          {
+            college ? (
+              <>
+             
+              {editable && college ? (
+                <input
+                  type="text"
+                  value={college.Website}
+                  onChange={(e) =>
+                    setCollege({ ...college, Website: e.target.value })
+                  }
+                  className="bg-transparent border-none focus:outline-none"
+                />
+              ) : (
+                <a className="self-center text-blue-400 underline" href={college.Website} target="_blank" rel="noreferrer">
+              {  college.Website}
+                </a>
+              ) }
+            </>  
+            ): (
+             <>
+             </>
+            )
+          }
+
+
+
         </div>
       </div>
 
@@ -193,10 +261,38 @@ const Header = ({
           {" "}
           <CgPinAlt className="self-center text-3xl" />
         </div>
-        <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
+        {/* <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
           G - 55-56, Street No.-1, Palam Extension, Near Sector - 7, Dwarka,
           Delhi, 110075
-        </p>
+        </p> */}
+        {!college.Address ??  <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
+            No Address Available
+          </p>}
+
+        {
+          college  ?(
+            <>
+            {editable && college ? (
+              <input
+                type="text"
+                value={college.Address}
+                onChange={(e) =>
+                  setCollege({ ...college, Address: e.target.value })
+                }
+                className="bg-transparent border-none focus:outline-none"
+              />
+            ) : (
+              <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
+            { college.Address}
+            </p>
+            )}
+          </>
+          ) : (
+            <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
+            No Address Available
+          </p>
+          )
+        }
       </div>
     </section>
   );

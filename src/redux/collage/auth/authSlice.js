@@ -13,6 +13,7 @@ const collageState = {
   error: "",
   isLoggedIn: false,
   user: null,
+  uploadImg :false,
 };
 
 const authToken = localStorage.getItem("auth-token");
@@ -172,7 +173,11 @@ export const updatePassword = createAsyncThunk(
 const collageAuthSlice = createSlice({
   name: "collageAuth",
   initialState: collageState,
-  reducers: {},
+  reducers: {
+    setUploadImg: (state, action) => {
+      state.uploadImg = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(registerCollage.pending, (state, action) => {
@@ -241,7 +246,13 @@ const collageAuthSlice = createSlice({
       })
       .addCase(updateAvatar.fulfilled, (state, action) => {
         // state.status = action.payload
+
+        state.status="success"
         state.user = action.payload;
+        state.uploadImg = true;
+        // state.user = action.payload;
+
+        // getCollege();
         // Add any fetched posts to the array
         console.log("fullfilled");
       })
@@ -288,4 +299,5 @@ const collageAuthSlice = createSlice({
 });
 
 //
+export const { setUploadImg } = collageAuthSlice.actions;
 export default collageAuthSlice.reducer;
