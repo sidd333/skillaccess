@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { MdOutlineEmail } from "react-icons/md";
 import { CgPinAlt } from "react-icons/cg";
 import { BsPhone } from "react-icons/bs";
@@ -20,23 +20,19 @@ const Header = ({
   setAvatar,
 }) => {
   const dispatch = useDispatch();
-  const [avatarPreview, setAvatarPreview] = useState(
-    "../../images/user.jpg"
-  );
-  const {uploadImg} = useSelector((state) => state.collageAuth);
+  const [avatarPreview, setAvatarPreview] = useState("../../images/user.jpg");
+  const { uploadImg } = useSelector((state) => state.collageAuth);
 
   useEffect(() => {
     dispatch(getCollege());
-
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(getCollege());
-if(uploadImg){
-  dispatch(setUploadImg(false))
-
-}
-console.log(uploadImg);
+    if (uploadImg) {
+      dispatch(setUploadImg(false));
+    }
+    console.log(uploadImg);
   }, [uploadImg]);
 
   const handleAvatarChange = (e) => {
@@ -52,7 +48,7 @@ console.log(uploadImg);
 
     reader.readAsDataURL(e.target.files[0]);
   };
-
+  const imgRef = useRef(null);
   return (
     // {/* profile container */}
     <section className="bg-gray-50 rounded-xl px-6">
@@ -61,23 +57,43 @@ console.log(uploadImg);
         {/* profile photo */}
         <div className="flex gap-2 px-3 py-1 mt-2">
           {editable ? (
-            <div className="w-14 h-14 bg-blued self-center rounded-lg">
-              <img src={avatar} alt="" width='50px' />
+            <div className="w-14 h-14 bg-blued self-center rounded-lg relative">
+              <img src={avatar} alt="" width="50px" />
+
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-lg p-[.35rem] bg-blue-700 bg-opacity-80">
+                <img
+                  src="../../images/icons/pen.png"
+                  alt=""
+                  onClick={() => imgRef.current.click()}
+                />
+              </div>
               <input
+                ref={imgRef}
                 type="file"
                 name="avatar"
                 id="file"
-           className=""
+                className="hidden"
                 accept="image/*"
                 onChange={handleAvatarChange}
               />
             </div>
           ) : (
             <div className="relative w-14 h-14 bg-blued self-center rounded-lg flex items-center">
-              <img src={college.avatar.url} alt="avatar" width='50px' className="relative top[-50%]" />
-              <div className="absolute bottom-2 -right-1 w-6 h-6 rounded-lg p-[.35rem] bg-blue-700 bg-opacity-80">
-                <img src="../../images/icons/pen.png" alt="" onClick={() => setEditable(true)} />
-              </div>
+              <img
+                src={college.avatar.url}
+                alt="avatar"
+                width="50px"
+                className="relative top[-50%]"
+              />
+              {/* {editable && (
+                <div className="absolute bottom-2 -right-1 w-6 h-6 rounded-lg p-[.35rem] bg-blue-700 bg-opacity-80">
+                  <img
+                    src="../../images/icons/pen.png"
+                    alt=""
+                    onClick={() => setEditable(true)}
+                  />
+                </div>
+              )} */}
             </div>
           )}
 
@@ -116,49 +132,45 @@ console.log(uploadImg);
       {/* second section */}
       <div className="border-b px-6  py-8 bg-gray-50 font-dmSans">
         <h1 className="text-lg font-bold">Overview</h1>
-     {
-      college.Description ? (
-        <p className="text-sm  font-medium mt-2">
-          {editable && college ? (
-            <textarea
-              type="text"
-              value={college.Description}
-              onChange={(e) =>
-                setCollege({ ...college, Description: e.target.value })
-              }
-              className="bg-transparent border-none focus:outline-none"
-            />
-          ) : (
-            college.Description
-          )}
-        </p>
-      ) : (
-        <p className="text-sm  font-medium mt-2">
+        {college.Description ? (
+          <p className="text-sm  font-medium mt-2">
             {editable && college ? (
-            <textarea
-              type="text"
-              value={college.Description}
-              onChange={(e) =>
-                setCollege({ ...college, Description: e.target.value })
-              }
-              className="bg-transparent border-none focus:outline-none"
-            />
-          ) : (
-           'No Description Available'
-          )}
-      
-        </p>
-      )
-     }
+              <textarea
+                type="text"
+                value={college.Description}
+                onChange={(e) =>
+                  setCollege({ ...college, Description: e.target.value })
+                }
+                className="bg-transparent border-none focus:outline-none"
+              />
+            ) : (
+              college.Description
+            )}
+          </p>
+        ) : (
+          <p className="text-sm  font-medium mt-2">
+            {editable && college ? (
+              <textarea
+                type="text"
+                value={college.Description}
+                onChange={(e) =>
+                  setCollege({ ...college, Description: e.target.value })
+                }
+                className="bg-transparent border-none focus:outline-none"
+              />
+            ) : (
+              "No Description Available"
+            )}
+          </p>
+        )}
       </div>
       <div className="px-6  py-8 bg-gray-50 font-dmSans flex sm:gap-32 text-sm font-medium">
         <div className="flex gap-2">
           <div className="w-10 h-10 rounded-lg bg-gray-200 flex justify-center">
             <MdOutlineEmail className="self-center text-2xl" />
           </div>
-          {
-            college.Email ? (
-              <p className="self-center">
+          {college.Email ? (
+            <p className="self-center">
               {editable && college ? (
                 <input
                   type="text"
@@ -172,12 +184,9 @@ console.log(uploadImg);
                 college.Email
               )}
             </p>
-            ) : (
-              <p className=" font-medium self-center">
-              No Email Available
-            </p>
-            )
-          }
+          ) : (
+            <p className=" font-medium self-center">No Email Available</p>
+          )}
           {/* <p className="font-medium self-center">
           </p> */}
         </div>
@@ -187,17 +196,9 @@ console.log(uploadImg);
             <BsPhone className="self-center text-2xl" />
           </div>
 
-          {
-            !college.Phone ?? (
-              <p className="self-center">
-              No Phone Available
-            </p>
-            )
-          }
+          {!college.Phone ?? <p className="self-center">No Phone Available</p>}
 
-        
-        
-            <p className="self-center">
+          <p className="self-center">
             {editable && college ? (
               <input
                 type="text"
@@ -208,11 +209,9 @@ console.log(uploadImg);
                 className="bg-transparent border-none focus:outline-none"
               />
             ) : (
-              college.Phone
+              college.Phone || "not registered"
             )}
           </p>
-         
-        
         </div>
 
         <div className="flex gap-2 font-dmSans">
@@ -222,14 +221,12 @@ console.log(uploadImg);
           </div>
           {/* <p className="text-blue-700 self-center">http://www.vetindia.in/</p> */}
 
-          { !college.Website ?? <p className="  self-center">
-              No Website Available
-            </p>}
+          {!college.Website && (
+            <p className="  self-center">No Website Available</p>
+          )}
 
-          {
-            college ? (
-              <>
-             
+          {college ? (
+            <>
               {editable && college ? (
                 <input
                   type="text"
@@ -240,19 +237,19 @@ console.log(uploadImg);
                   className="bg-transparent border-none focus:outline-none"
                 />
               ) : (
-                <a className="self-center text-blue-400 underline" href={college.Website} target="_blank" rel="noreferrer">
-              {  college.Website}
+                <a
+                  className="self-center text-blue-400 underline"
+                  href={college.Website}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {college.Website}
                 </a>
-              ) }
-            </>  
-            ): (
-             <>
-             </>
-            )
-          }
-
-
-
+              )}
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
 
@@ -265,13 +262,14 @@ console.log(uploadImg);
           G - 55-56, Street No.-1, Palam Extension, Near Sector - 7, Dwarka,
           Delhi, 110075
         </p> */}
-        {!college.Address ??  <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
+        {!college.Address && (
+          <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
             No Address Available
-          </p>}
+          </p>
+        )}
 
-        {
-          college  ?(
-            <>
+        {college ? (
+          <>
             {editable && college ? (
               <input
                 type="text"
@@ -283,16 +281,15 @@ console.log(uploadImg);
               />
             ) : (
               <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
-            { college.Address}
-            </p>
+                {college.Address}
+              </p>
             )}
           </>
-          ) : (
-            <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
+        ) : (
+          <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
             No Address Available
           </p>
-          )
-        }
+        )}
       </div>
     </section>
   );
