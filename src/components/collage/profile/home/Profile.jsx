@@ -53,8 +53,8 @@ const Profile = () => {
         Address: user.Address || "address",
         Website: user.Website || "web",
         avatar: {
-          public_id: user.avatar.public_id || "",
-          url: user.avatar.url || "",
+          public_id: user.avatar?.public_id || "",
+          url: user.avatar?.url || "",
         },
 
         Description: user.Description || "desc",
