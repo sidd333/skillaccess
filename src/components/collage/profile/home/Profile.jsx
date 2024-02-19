@@ -7,80 +7,105 @@ import {
   getCollege,
   updateCollege,
   updateAvatar,
+  setUploadImg,
 } from "../../../../redux/collage/auth/authSlice";
 
 const Profile = () => {
   // <<<<<<< AnkitaMalik22-ankita-dev
-  //   const dispatch = useDispatch();
-  //   const { user } = useSelector((state) => state.collageAuth);
-  //   const [editable, setEditable] = useState(false);
+    const dispatch = useDispatch();
+    const { user,isLoggedIn ,uploadImg} = useSelector((state) => state.collageAuth);
+    const [editable, setEditable] = useState(false);
 
-  //   const [avatar, setAvatar] = useState("");
+    const [avatar, setAvatar] = useState("");
 
-  //   const [college, setCollege] = useState({
-  //     CollegeName: user ? user.CollegeName : "",
-  //     Email: user ? user.Email : "",
-  //     Phone: user ? user.Phone : "",
-  //     Address: user ? user.Address : "",
-  //     Website: user ? user.Website : "",
-  //     avatar: user && user.avatar && user.avatar.public_url ? user.avatar.public_url : "",
-  //     Description: user ? user.Description : "",
-  //     Code: user ? user.code : "",
-  //     Location: user ? user.Location : "",
-  //     State: user ? user.State : "",
-  //     City: user ? user.City : "",
-  //   });
+    const [college, setCollege] = useState({
+      CollegeName: user ? user.CollegeName : "",
+      Email: user ? user.Email : "",
+      Phone: user ? user.Phone : "",
+      Address: user ? user.Address : "",
+      Website: user ? user.Website : "",
+      Phone : user ? user.Phone : "",
+      avatar:{
+        public_id: user  && user.avatar ? user.avatar.public_id : "",
+        url: user && user.avatar ? user.avatar.url : "",
 
-  //   const handleUpdate = (college) => {
-  //     console.log("update");
-  //     dispatch(updateCollege(college));
-  //     setEditable(false);
-  //   }
+      },
+      Description: user ? user.Description : "",
+      Code: user ? user.code : "",
+      Location: user ? user.Location : "",
+      State: user ? user.State : "",
+      City: user ? user.City : "",
+    });
 
-  //   useEffect(() => {
 
-  // if (user) {
-  //   setCollege({
-  //     CollegeName: user.CollegeName,
-  //     Email: user.Email,
-  //     Phone: user.Phone,
-  //     Address: user.Address,
-  //     Website: user.Website,
-  //     avatar: user && user.avatar && user.avatar.public_url ? user.avatar.public_url : "",
-  //     Description: user.Description,
-  //     Code: user.code,
-  //     Location: user.Location,
-  //     State: user.State,
-  //     City: user.City,
-  //   });
-  // }
 
-  //     dispatch(getCollege());
-  //     console.log(user , "user")
-  //   }
-  //   , [dispatch]);
+    const handleUpdate = (college) => {
+      console.log("update");
+      dispatch(updateCollege(college));
+      setEditable(false);
+    }
 
-  //   useEffect(() => {
-  //     if (user && user.avatar && user.avatar.public_url) {
-  //       setAvatar(user.avatar.public_url);
-  //     }
-  //     if (avatar) {
-  //       dispatch(updateAvatar({ avatar }));
-  //     }
+    useEffect(() => {
+      if (user) {
+        setCollege({
+          CollegeName: user.CollegeName,
+          Email: user.Email,
+          Phone: user.Phone,
+          Address: user.Address,
+          Website: user.Website,
+          avatar: {
+            public_id: user.avatar.public_id,
+            url:  user.avatar.url,
+          },
+          
+          Description: user.Description,
+          Code: user.code,
+          Location: user.Location,
+          State: user.State,
+          City: user.City,
+        });
+        dispatch(getCollege());
+      }
+    }, [dispatch,isLoggedIn]);
 
-  //   }, [editable]);
+    useEffect(() => {
+      dispatch(getCollege());
+      // console.log(college, "college");
+    }, [dispatch]);
 
+    useEffect(() => {
+
+     
+      if (user && user.avatar && user.avatar.url) {
+        setAvatar(user.avatar.url);
+      }
+      if (avatar) {
+        dispatch(updateAvatar({ avatar }));
+        dispatch(getCollege());
+        // setCollege({ ...college, avatar: { url:user.avatar.url} });
+      }
+      dispatch(updateCollege(college));
+          dispatch(getCollege());
+  ;
+    }, [editable]);
+
+
+
+    // useEffect(() => {
+    //   dispatch(getCollege());
+    //   dispatch(setUploadImg(false))
+    // }, [uploadImg]);
   // =======
-  const [editable, setEditable] = useState(false);
+  // const [editable, setEditable] = useState(false);
 
   return (
     <div className="px-8">
-      {/* {editable && <EditHeader editable={editable} setEditable={setEditable}   handleUpdate={handleUpdate}
+      {editable && <EditHeader editable={editable} setEditable={setEditable}   handleUpdate={handleUpdate}
       college={college}
       setCollege={setCollege}
-      />} */}
-      {editable && <EditHeader editable={editable} setEditable={setEditable} />}
-      {/* <Header
+      />}
+      {/* {editable && <EditHeader editable={editable} setEditable={setEditable} />} */}
+      <Header
         editable={editable}
         setEditable={setEditable}
         handleUpdate={handleUpdate}
@@ -88,8 +113,8 @@ const Profile = () => {
         setCollege={setCollege}
         setAvatar={setAvatar}
         avatar={avatar}
-      /> */}
-      <Header editable={editable} setEditable={setEditable} />
+      />
+      {/* <Header editable={editable} setEditable={setEditable} /> */}
 
       <List editable={editable} setEditable={setEditable} />
     </div>

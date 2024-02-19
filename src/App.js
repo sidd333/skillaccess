@@ -49,12 +49,23 @@ const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
 
 export default function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getCollege());
-  }, [dispatch]);
+//  AnkitaMalik22-ankita-dev
+const dispatch = useDispatch();
+
+// =======
+//   const dispatch = useDispatch();
+//   useEffect(() => {
+//     dispatch(getCollege());
+//   }, [dispatch]);
+// >>>>>>> saveMain
 
   const { user, isLoggedIn } = useSelector((state) => state.collageAuth);
+
+
+useEffect(() => {
+  dispatch(getCollege());
+}, [dispatch ]);
+
 
   return (
     <BrowserRouter>
@@ -64,15 +75,40 @@ export default function App() {
           <Route path="" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {Rote()}
-          {TestRoute()}
-          {StudentRoute()}
-          {QuesRoute()}
-          {CompaniesRoute()}
-          {ResultsRoute()}
-          {InboxRoute()}
-          {SettingsRoute()}
-          {TeamsRoute()}
+
+          
+
+          {isLoggedIn ? (
+            <>
+              {Rote()}
+              {TestRoute()}
+              {StudentRoute()}
+              {QuesRoute()}
+              {CompaniesRoute()}
+              {ResultsRoute()}
+              {InboxRoute()}
+              {SettingsRoute()}
+            {TeamsRoute()}
+            </>
+          )
+        :(
+          <Route path="*" element={<h1>
+            You are not logged in 
+            click here to <a href="/login">login</a>
+          </h1>} />
+        )
+        }
+// =======
+//           {Rote()}
+//           {TestRoute()}
+//           {StudentRoute()}
+//           {QuesRoute()}
+//           {CompaniesRoute()}
+//           {ResultsRoute()}
+//           {InboxRoute()}
+//           {SettingsRoute()}
+//           {TeamsRoute()}
+// >>>>>>> saveMain
           <Route path="collage/accounting">
             <Route path="" element={<AccountingPage />} />
           </Route>

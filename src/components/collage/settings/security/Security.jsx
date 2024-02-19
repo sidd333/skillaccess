@@ -1,7 +1,40 @@
-import React from "react";
+import React,{useState} from "react";
 import Header from "./Header";
+import { useSelector ,useDispatch} from "react-redux";
+
+import { updatePassword } from "../../../../redux/collage/auth/authSlice";
+
 
 const Security = () => {
+const dispatch = useDispatch();
+const { user, isLoggedIn } = useSelector((state) => state.collageAuth);
+
+
+const [password, setPassword] = useState({
+  oldPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+});
+
+
+const handleChnage = (e) => {
+  setPassword({ ...password, [e.target.name]: e.target.value });
+};
+
+
+
+const handleUpdatePassword = (password) => {
+  console.log("update");
+
+  dispatch(updatePassword(password));
+
+};
+
+
+
+
+
+
   return (
     <div className="w-11/12 mx-auto pt-4">
       <Header />
@@ -61,7 +94,10 @@ const Security = () => {
           <div className="flex gap-2 flex-col mb-4">
             <h1 className="text-gray-400">Type your current password*</h1>
             <input
-              type="text"
+              type="password"
+              name = "oldPassword"
+              value={password.oldPassword}
+              onChange={handleChnage}
               className="py-3 rounded-xl border-none bg-lGray bg-opacity-5 w-96 placeholder:text-sm placeholder:text-gray-400 font-medium"
               placeholder="Current password"
             />
@@ -71,7 +107,10 @@ const Security = () => {
           <div className="flex gap-2 flex-col mb-4">
             <h1 className="text-gray-400">Type your new password*</h1>
             <input
-              type="text"
+              type="password"
+              name = "newPassword"
+              value={password.newPassword}
+              onChange={handleChnage}
               className="py-3 rounded-xl border-none bg-lGray bg-opacity-5 w-96 placeholder:text-sm placeholder:text-gray-400 font-medium"
               placeholder="New password"
             />
@@ -81,11 +120,23 @@ const Security = () => {
           <div className="flex gap-2 flex-col mb-4">
             <h1 className="text-gray-400">Retype your new password*</h1>
             <input
-              type="text"
+              type="password"
+              name = "confirmPassword"
+              value={password.confirmPassword}
+              onChange={handleChnage}
               className="py-3 rounded-xl border-none bg-lGray bg-opacity-5 w-96 placeholder:text-sm placeholder:text-gray-400 font-medium"
               placeholder="Retype password"
             />
           </div>
+
+          <button
+            onClick={() => handleUpdatePassword(password)}
+            className="bg-blue-600 text-white py-3 px-8 rounded-xl"
+          >
+            Update Password
+          </button>
+
+
         </div>
       </div>
     </div>
