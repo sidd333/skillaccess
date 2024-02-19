@@ -22,6 +22,7 @@ const Register = () => {
   const [type, setType] = useState("password");
 
   const changeHandler = (e) => {
+    e.preventDefault();
     let cred = e.target.name;
     let val = e.target.value;
     setCredentials((prev) => {
@@ -54,7 +55,7 @@ const Register = () => {
         navigate("/collage/dashboard");
       }
     } catch (error) {
-      console.log(error);
+      console.log("Reject" + error);
     }
   };
   return (
@@ -233,11 +234,11 @@ const Register = () => {
             onClick={() => navigate("/collage/dashboard")}
           >
             <FcGoogle className="text-lg mr-2" />
-            <h3 className="opacity-100">Click here to skip register</h3>
+            <h3 className="opacity-100">Continue with google</h3>
           </button>
           <span className="text-lGray text-center text-sm font-semibold">
             Already have an account?{" "}
-            <Link to="/login" className="text-blue-600 ">
+            <Link to="/" className="text-blue-600 ">
               {" "}
               SignIn
             </Link>
