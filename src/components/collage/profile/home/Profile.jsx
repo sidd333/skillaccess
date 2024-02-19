@@ -47,21 +47,21 @@ const Profile = () => {
   useEffect(() => {
     if (user) {
       setCollege({
-        CollegeName: user.CollegeName,
-        Email: user.Email,
-        Phone: user.Phone,
-        Address: user.Address,
-        Website: user.Website,
+        CollegeName: user.CollegeName || "college name ",
+        Email: user.Email || "email",
+        Phone: user.Phone || "phone",
+        Address: user.Address || "address",
+        Website: user.Website || "web",
         avatar: {
           public_id: user.avatar.public_id || "",
-          url: user.avatar.url,
+          url: user.avatar.url || "",
         },
 
-        Description: user.Description,
-        Code: user.code,
-        Location: user.Location,
-        State: user.State,
-        City: user.City,
+        Description: user.Description || "desc",
+        Code: user.code || "code",
+        Location: user.Location || "loc",
+        State: user.State || "state",
+        City: user.City || "city",
       });
       dispatch(getCollege());
     }
