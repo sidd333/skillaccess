@@ -12,7 +12,7 @@ const collageState = {
   status: "",
   error: "",
   isLoggedIn: false,
-  user: {},
+  user: null,
 };
 
 const authToken = localStorage.getItem("auth-token");
@@ -141,6 +141,34 @@ export const logoutCollage = createAsyncThunk(
   }
 );
 
+
+export const updatePassword = createAsyncThunk(
+  "collageAuth/updatePassword",
+
+  async (data, { rejectWithValue }) => {
+    try {
+      console.log("updating", authToken);
+      const req = await axios.put(
+        `${REACT_APP_API_URL}/api/college/password/update`,
+        data,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
+      );
+      const res = req.data;
+      return res.data;
+    } catch (error) {
+      console.log("catch", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
 const collageAuthSlice = createSlice({
   name: "collageAuth",
   initialState: collageState,
@@ -159,8 +187,8 @@ const collageAuthSlice = createSlice({
         console.log("fullfilled");
       })
       .addCase(registerCollage.rejected, (state, action) => {
-        // console.log(action.payload);
-        // window.alert(action.payload);
+        console.log(action.payload);
+  alert(action.payload);
       })
       .addCase(loginCollage.pending, (state, action) => {
         state.status = "loading";
@@ -174,8 +202,8 @@ const collageAuthSlice = createSlice({
         console.log("fullfilled");
       })
       .addCase(loginCollage.rejected, (state, action) => {
-        // console.log(action.payload);
-        // window.alert(action.payload);
+        console.log(action.payload);
+     alert(action.payload);
       })
       .addCase(updateCollege.pending, (state, action) => {
         state.status = "loading";
@@ -197,6 +225,7 @@ const collageAuthSlice = createSlice({
       })
       .addCase(getCollege.fulfilled, (state, action) => {
         // state.status = action.payload
+        state.isLoggedIn = true;
         state.user = action.payload;
         // Add any fetched posts to the array
         console.log("fullfilled");
@@ -236,6 +265,24 @@ const collageAuthSlice = createSlice({
         console.log(action.payload);
 
         // window.alert(action.payload);
+      })
+      .addCase(updatePassword.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(updatePassword.fulfilled, (state, action) => {
+        state.status = action.payload;
+        alert("Password Updated");
+        // state.status = action.payload
+        // state.isLoggedIn = false;
+        // state.user = action.payload.user;
+        // localStorage.removeItem("auth-token");
+
+        // getCollege();
+        // localStorage.setItem("auth-token", action.payload.token);
+      })
+      .addCase(updatePassword.rejected, (state, action) => {
+      alert(action.payload.message);
       });
   },
 });

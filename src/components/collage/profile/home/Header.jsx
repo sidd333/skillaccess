@@ -26,7 +26,7 @@ const Header = ({
 
   useEffect(() => {
     dispatch(getCollege());
-    console.log(college, "college");
+    // console.log(college, "college");
   }, [dispatch]);
 
   const handleAvatarChange = (e) => {
@@ -50,7 +50,7 @@ const Header = ({
       <div className=" flex justify-between border-b  bg-gray-50 rounded-t-lg py-8">
         {/* profile photo */}
         <div className="flex gap-2 px-3 py-1 mt-2">
-          {editable && college ? (
+          {editable ? (
             <div className="w-14 h-14 bg-blued self-center rounded-lg">
               <img src={avatar} alt="" width='50px' />
               <input
@@ -63,11 +63,10 @@ const Header = ({
               />
             </div>
           ) : (
-            <div className="relative">
-              <div className="w-14 h-14 bg-blued self-center rounded-lg"></div>
-              <img src={college.avatar} alt="avatar"  width='50px'/>
-              <div className="absolute bottom-2 -right-1 w-6 h-6 rounded-lg  p-[.35rem] bg-blue-700 bg-opacity-80">
-                <img src="../../images/icons/pen.png" alt="" />
+            <div className="relative w-14 h-14 bg-blued self-center rounded-lg flex items-center">
+              <img src={college.avatar.url} alt="avatar" width='50px' className="relative top[-50%]" />
+              <div className="absolute bottom-2 -right-1 w-6 h-6 rounded-lg p-[.35rem] bg-blue-700 bg-opacity-80">
+                <img src="../../images/icons/pen.png" alt="" onClick={() => setEditable(true)} />
               </div>
             </div>
           )}
@@ -125,7 +124,19 @@ const Header = ({
         </p>
       ) : (
         <p className="text-sm  font-medium mt-2">
-          No Description Available
+            {editable && college ? (
+            <textarea
+              type="text"
+              value={college.Description}
+              onChange={(e) =>
+                setCollege({ ...college, Description: e.target.value })
+              }
+              className="bg-transparent border-none focus:outline-none"
+            />
+          ) : (
+           'No Description Available'
+          )}
+      
         </p>
       )
      }
