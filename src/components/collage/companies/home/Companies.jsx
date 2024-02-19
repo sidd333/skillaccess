@@ -49,7 +49,7 @@ const Companies = () => {
                     className="px-4 py-2 hover:bg-blue-900 bg-[#0052CC] text-xs font-dmSans font-bold rounded-xl text-white"
                     onClick={() =>
                       // navigate(`/collage/companies/profile/${company._id}`)
-                      navigate(`/collage/companies/profile`)
+                      navigate(`/collage/companies/profile/:0`)
                     }
                   >
                     View Details

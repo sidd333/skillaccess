@@ -23,6 +23,7 @@ export const registerCollage = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       console.log("registering");
+      console.log(process.env);
       const req = await axios.post(
         `${REACT_APP_API_URL}/api/college/register`,
         data,
@@ -193,7 +194,11 @@ const collageAuthSlice = createSlice({
       })
       .addCase(registerCollage.rejected, (state, action) => {
         console.log(action.payload);
-  alert(action.payload);
+// <<<<<<< AnkitaMalik22-ankita-dev
+//   alert(action.payload);
+// =======
+        window.alert(action.payload || "invalid credentials");
+
       })
       .addCase(loginCollage.pending, (state, action) => {
         state.status = "loading";
