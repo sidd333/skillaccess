@@ -18,8 +18,7 @@ const Settings = () => {
         navigate("/");
       }
     } catch (error) {
-      window.alert("logging out");
-      navigate("/");
+      window.alert("logging out failed");
     }
   };
   const Navigate = useNavigate();

@@ -50,7 +50,8 @@ export const loginCollage = createAsyncThunk(
       );
       const res = req.data;
       localStorage.setItem("auth-token", res.token);
-      return res.data;
+      console.log(res);
+      return res;
     } catch (error) {
       console.log("catch");
       return rejectWithValue(error.response.data.message);
@@ -93,6 +94,7 @@ export const getCollege = createAsyncThunk(
           "auth-token": authToken,
         },
       });
+      // console.log(response.data.college);
       return response.data.college;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -203,13 +205,13 @@ const collageAuthSlice = createSlice({
       })
       .addCase(loginCollage.fulfilled, (state, action) => {
         // state.status = action.payload
-        state.isLoggedIn = true;
+        // state.isLoggedIn = true;
 
-        // Add any fetched posts to the array
-        console.log("fullfilled");
+        state.user = action.payload.user;
+        state.isLoggedIn = true;
+        console.log(state.user);
       })
       .addCase(loginCollage.rejected, (state, action) => {
-        console.log(action.payload);
         alert(action.payload);
       })
       .addCase(updateCollege.pending, (state, action) => {
@@ -220,7 +222,6 @@ const collageAuthSlice = createSlice({
         // state.status = action.payload
         state.user = action.payload;
         window.location.reload(true);
-        console.log("fullfilled reoad");
       })
       .addCase(updateCollege.rejected, (state, action) => {
         // console.log(action.payload);
@@ -235,7 +236,8 @@ const collageAuthSlice = createSlice({
       .addCase(getCollege.fulfilled, (state, action) => {
         // state.status = action.payload
         state.isLoggedIn = true;
-        state.user = action.payload;
+        // state.user = action.payload;
+
         // Add any fetched posts to the array
         console.log("fullfilled");
       })
@@ -271,6 +273,8 @@ const collageAuthSlice = createSlice({
       })
       .addCase(logoutCollage.fulfilled, (state, action) => {
         // state.status = action.payload
+
+        state.user = null;
         state.isLoggedIn = false;
 
         // Add any fetched posts to the array

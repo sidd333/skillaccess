@@ -24,6 +24,7 @@ import {
   getPlacedStudents,
 } from "../../../../redux/collage/dashboard/dashboardSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { getCollege } from "../../../../redux/collage/auth/authSlice";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -62,6 +63,10 @@ export default function Dashboard() {
   //   },
   // ]);
 
+  useEffect(() => {
+    dispatch(getCollege());
+    console.log("get collaeg");
+  }, []);
   const navigate = useNavigate();
   return (
     <>
