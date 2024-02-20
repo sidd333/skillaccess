@@ -81,7 +81,7 @@ const Profile = () => {
       dispatch(getCollege());
       // setCollege({ ...college, avatar: { url:user.avatar.url} });
     }
-    dispatch(updateCollege(college));
+    // dispatch(updateCollege(college));
     dispatch(getCollege());
   }, [editable]);
 
