@@ -64,7 +64,6 @@ export default function App() {
   useEffect(() => {
     dispatch(getCollege());
   }, []);
-  
 
   return (
     <BrowserRouter>
@@ -87,14 +86,7 @@ export default function App() {
               {TeamsRoute()}
             </>
           ) : (
-            <Route
-              path="*"
-              element={
-                <h1>
-                  You are not logged in click here to <a href="/">login</a>
-                </h1>
-              }
-            />
+            <Route path="*" element={<h1>loading...</h1>} />
           )}
           {/* 
           {Rote()}
@@ -111,12 +103,11 @@ export default function App() {
             <Route path="" element={<AccountingPage />} />
           </Route>
 
-         {
-       isLoggedIn && 
-           <Route path="collage/profile">
-            <Route path="" element={<ProfilePage />} />
-          </Route>
-         }
+          {isLoggedIn && (
+            <Route path="collage/profile">
+              <Route path="" element={<ProfilePage />} />
+            </Route>
+          )}
 
           {/* .......................................................................................................................... */}
         </Routes>
