@@ -80,7 +80,7 @@ const Header = ({
           ) : (
             <div className="relative w-14 h-14 bg-blued self-center rounded-lg flex items-center">
               <img
-                src={college.avatar.url}
+                src={(college && college.avatar &&  college.avatar.url) ? college.avatar.url : ""}
                 alt="avatar"
                 width="50px"
                 className="relative top[-50%]"
@@ -102,14 +102,14 @@ const Header = ({
               {editable && college ? (
                 <input
                   type="text"
-                  value={college.CollegeName}
+                  value={ (college && college.CollegeName) ? college.CollegeName : ""}
                   onChange={(e) =>
                     setCollege({ ...college, CollegeName: e.target.value })
                   }
                   className="bg-transparent border-none focus:outline-none"
                 />
               ) : (
-                college.CollegeName
+                (college && college.CollegeName) ? college.CollegeName : ""
               )}
             </h2>
             <h2 className="text-sm text-gray-400   pb-2">UPME00006369</h2>
@@ -132,12 +132,12 @@ const Header = ({
       {/* second section */}
       <div className="border-b px-6  py-8 bg-gray-50 font-dmSans">
         <h1 className="text-lg font-bold">Overview</h1>
-        {college.Description ? (
+        {college && college.Description ? (
           <p className="text-sm  font-medium mt-2">
             {editable && college ? (
               <textarea
                 type="text"
-                value={college.Description}
+                value={(college && college.Description) ? college.Description : ""}
                 onChange={(e) =>
                   setCollege({ ...college, Description: e.target.value })
                 }
@@ -152,7 +152,7 @@ const Header = ({
             {editable && college ? (
               <textarea
                 type="text"
-                value={college.Description}
+                value={(college && college.Description) ? college.Description : ""}
                 onChange={(e) =>
                   setCollege({ ...college, Description: e.target.value })
                 }
@@ -169,19 +169,19 @@ const Header = ({
           <div className="w-10 h-10 rounded-lg bg-gray-200 flex justify-center">
             <MdOutlineEmail className="self-center text-2xl" />
           </div>
-          {college.Email ? (
+          {college && college.Email ? (
             <p className="self-center">
               {editable && college ? (
                 <input
                   type="text"
-                  value={college.Email}
+                  value={  ( college && college.Email) ? college.Email : ""}
                   onChange={(e) =>
                     setCollege({ ...college, Email: e.target.value })
                   }
                   className="bg-transparent border-none focus:outline-none"
                 />
               ) : (
-                college.Email
+              ( college && college.Email) ? college.Email : ""
               )}
             </p>
           ) : (
@@ -196,20 +196,20 @@ const Header = ({
             <BsPhone className="self-center text-2xl" />
           </div>
 
-          {!college.Phone ?? <p className="self-center">No Phone Available</p>}
+          {/* {!college.Phone ?? <p className="self-center">No Phone Available</p>} */}
 
           <p className="self-center">
             {editable && college ? (
               <input
                 type="text"
-                value={college.Phone}
+                value={  ( college && college.Phone) ? college.Phone : ""}
                 onChange={(e) =>
                   setCollege({ ...college, Phone: e.target.value })
                 }
                 className="bg-transparent border-none focus:outline-none"
               />
             ) : (
-              college.Phone || "not registered"
+              ( college && college.Phone) ? college.Phone : ""
             )}
           </p>
         </div>
@@ -221,16 +221,16 @@ const Header = ({
           </div>
           {/* <p className="text-blue-700 self-center">http://www.vetindia.in/</p> */}
 
-          {!college.Website && (
+          {/* {!college.Website && (
             <p className="  self-center">No Website Available</p>
-          )}
+          )} */}
 
           {college ? (
             <>
               {editable && college ? (
                 <input
                   type="text"
-                  value={college.Website}
+                  value={ ( college && college.Website) ? college.Website : ""}
                   onChange={(e) =>
                     setCollege({ ...college, Website: e.target.value })
                   }
@@ -239,11 +239,11 @@ const Header = ({
               ) : (
                 <a
                   className="self-center text-blue-400 underline"
-                  href={college.Website}
+                  href={ ( college && college.Website) ? college.Website : ""}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {college.Website}
+               { ( college && college.Website) ? college.Website : ""}
                 </a>
               )}
             </>
@@ -262,18 +262,20 @@ const Header = ({
           G - 55-56, Street No.-1, Palam Extension, Near Sector - 7, Dwarka,
           Delhi, 110075
         </p> */}
-        {!college.Address && (
+        {/* {!college.Address && (
           <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
             No Address Available
           </p>
-        )}
+        )} */}
 
         {college ? (
           <>
-            {editable && college ? (
+            {editable && college && college.Address ? (
               <input
                 type="text"
-                value={college.Address}
+                value={
+                  college && college.Address ?  college.Address  : ""
+                }
                 onChange={(e) =>
                   setCollege({ ...college, Address: e.target.value })
                 }
@@ -281,7 +283,7 @@ const Header = ({
               />
             ) : (
               <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
-                {college.Address}
+                { college && college.Address ?  college.Address  : ""}
               </p>
             )}
           </>

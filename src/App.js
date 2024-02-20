@@ -63,7 +63,8 @@ export default function App() {
 
   useEffect(() => {
     dispatch(getCollege());
-  }, [dispatch]);
+  }, []);
+  
 
   return (
     <BrowserRouter>
@@ -110,9 +111,12 @@ export default function App() {
             <Route path="" element={<AccountingPage />} />
           </Route>
 
-          <Route path="collage/profile">
+         {
+       isLoggedIn && 
+           <Route path="collage/profile">
             <Route path="" element={<ProfilePage />} />
           </Route>
+         }
 
           {/* .......................................................................................................................... */}
         </Routes>

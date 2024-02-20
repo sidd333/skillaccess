@@ -90,7 +90,7 @@ export const getCollege = createAsyncThunk(
       const response = await axios.get(`${REACT_APP_API_URL}/api/college/me`, {
         withCredentials: true,
         headers: {
-          "auth-token": authToken,
+          "auth-token": localStorage.getItem('auth-token')
         },
       });
       return response.data.college;
@@ -188,12 +188,13 @@ const collageAuthSlice = createSlice({
       .addCase(registerCollage.fulfilled, (state, action) => {
         // state.status = action.payload
         state.isLoggedIn = true;
-
+        state.user = action.payload
         // Add any fetched posts to the array
         console.log("fullfilled");
       })
       .addCase(registerCollage.rejected, (state, action) => {
         console.log(action.payload);
+     
 // <<<<<<< AnkitaMalik22-ankita-dev
 //   alert(action.payload);
 // =======
@@ -207,6 +208,7 @@ const collageAuthSlice = createSlice({
       .addCase(loginCollage.fulfilled, (state, action) => {
         // state.status = action.payload
         state.isLoggedIn = true;
+        state.user = action.payload
 
         // Add any fetched posts to the array
         console.log("fullfilled");
