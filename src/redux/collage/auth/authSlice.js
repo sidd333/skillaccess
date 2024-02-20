@@ -91,7 +91,7 @@ export const getCollege = createAsyncThunk(
       const response = await axios.get(`${REACT_APP_API_URL}/api/college/me`, {
         withCredentials: true,
         headers: {
-          "auth-token": localStorage.getItem('auth-token')
+          "auth-token": localStorage.getItem("auth-token"),
         },
       });
       // console.log(response.data.college);
@@ -188,18 +188,16 @@ const collageAuthSlice = createSlice({
       .addCase(registerCollage.fulfilled, (state, action) => {
         // state.status = action.payload
         state.isLoggedIn = true;
-        state.user = action.payload
+        state.user = action.payload;
         // Add any fetched posts to the array
         console.log("fullfilled");
       })
       .addCase(registerCollage.rejected, (state, action) => {
         console.log(action.payload);
 
-     
-// <<<<<<< AnkitaMalik22-ankita-dev
-//   alert(action.payload);
-// =======
-
+        // <<<<<<< AnkitaMalik22-ankita-dev
+        //   alert(action.payload);
+        // =======
 
         window.alert(action.payload || "invalid credentials");
       })
@@ -211,9 +209,8 @@ const collageAuthSlice = createSlice({
         // state.status = action.payload
 
         state.isLoggedIn = true;
-        state.user = action.payload
+        state.user = action.payload;
 
-        state.isLoggedIn = true;
         console.log(state.user);
       })
       .addCase(loginCollage.rejected, (state, action) => {
@@ -241,7 +238,7 @@ const collageAuthSlice = createSlice({
       .addCase(getCollege.fulfilled, (state, action) => {
         // state.status = action.payload
         state.isLoggedIn = true;
-        // state.user = action.payload;
+        state.user = action.payload;
 
         // Add any fetched posts to the array
         console.log("fullfilled");

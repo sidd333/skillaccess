@@ -36,47 +36,43 @@ const Profile = () => {
   }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
+    // if (!user){
+    dispatch(getCollege());
 
-// if (!user){
-  dispatch(getCollege());
-
-  console.log(college)
-// }
+    console.log(college);
+    // }
     // console.log(college, "college");
- }, []);
- useEffect(()=>{
-if (user){
-  setCollege(user);
+  }, []);
+  useEffect(() => {
+    if (user) {
+      setCollege(user);
+    } else {
+      dispatch(getCollege());
+    }
+  }, [user]);
 
-}else
-{
-  dispatch(getCollege());
-}
- },[user])
+  //     dispatch(getCollege()).then((res) =>
+  //       setCollege({
+  //         CollegeName: res.payload.CollegeName || "college name ",
+  //         Email: res.payload.Email || "email",
+  //         Phone: res.payload.Phone || "phone",
+  //         Address: res.payload.Address || "address",
+  //         Website: res.payload.Website || "web",
+  //         avatar: {
+  //           public_id: res.payload.avatar?.public_id || "",
+  //           url: res.payload.avatar?.url || "",
+  //         },
 
-//     dispatch(getCollege()).then((res) =>
-//       setCollege({
-//         CollegeName: res.payload.CollegeName || "college name ",
-//         Email: res.payload.Email || "email",
-//         Phone: res.payload.Phone || "phone",
-//         Address: res.payload.Address || "address",
-//         Website: res.payload.Website || "web",
-//         avatar: {
-//           public_id: res.payload.avatar?.public_id || "",
-//           url: res.payload.avatar?.url || "",
-//         },
+  //         Description: res.payload.Description || "desc",
+  //         Code: res.payload.code || "code",
+  //         Location: res.payload.Location || "loc",
+  //         State: res.payload.State || "state",
+  //         City: res.payload.City || "city",
+  //       })
+  //     );
 
-//         Description: res.payload.Description || "desc",
-//         Code: res.payload.code || "code",
-//         Location: res.payload.Location || "loc",
-//         State: res.payload.State || "state",
-//         City: res.payload.City || "city",
-//       })
-//     );
-
-//     console.log(user);
-//   }, []);
-
+  //     console.log(user);
+  //   }, []);
 
   useEffect(() => {
     if (user && user.avatar && user.avatar.url) {
@@ -110,17 +106,18 @@ if (user){
         />
       )}
 
-{   user &&   <Header
-        editable={editable}
-        setEditable={setEditable}
-        handleUpdate={handleUpdate}
-        college={college}
-        setCollege={setCollege}
-        setAvatar={setAvatar}
-        avatar={avatar}
-      />
-   }
-   {!user && <h1> Loading ... </h1>}
+      {user && (
+        <Header
+          editable={editable}
+          setEditable={setEditable}
+          handleUpdate={handleUpdate}
+          college={college}
+          setCollege={setCollege}
+          setAvatar={setAvatar}
+          avatar={avatar}
+        />
+      )}
+      {!user && <h1> Loading ... </h1>}
 
       <List editable={editable} setEditable={setEditable} />
       {/* {window.location.reload(true)} */}
