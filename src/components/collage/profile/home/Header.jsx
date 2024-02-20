@@ -80,7 +80,11 @@ const Header = ({
           ) : (
             <div className="relative w-14 h-14 bg-blued self-center rounded-lg flex items-center">
               <img
-                src={(college && college.avatar &&  college.avatar.url) ? college.avatar.url : ""}
+                src={
+                  college && college.avatar && college.avatar.url
+                    ? college.avatar.url
+                    : ""
+                }
                 alt="avatar"
                 width="50px"
                 className="relative top[-50%]"
@@ -102,14 +106,18 @@ const Header = ({
               {editable && college ? (
                 <input
                   type="text"
-                  value={ (college && college.CollegeName) ? college.CollegeName : ""}
+                  value={
+                    college && college.CollegeName ? college.CollegeName : ""
+                  }
                   onChange={(e) =>
                     setCollege({ ...college, CollegeName: e.target.value })
                   }
                   className="bg-transparent border-none focus:outline-none"
                 />
+              ) : college && college.CollegeName ? (
+                college.CollegeName
               ) : (
-                (college && college.CollegeName) ? college.CollegeName : ""
+                ""
               )}
             </h2>
             <h2 className="text-sm text-gray-400   pb-2">UPME00006369</h2>
@@ -137,7 +145,9 @@ const Header = ({
             {editable && college ? (
               <textarea
                 type="text"
-                value={(college && college.Description) ? college.Description : ""}
+                value={
+                  college && college.Description ? college.Description : ""
+                }
                 onChange={(e) =>
                   setCollege({ ...college, Description: e.target.value })
                 }
@@ -152,7 +162,9 @@ const Header = ({
             {editable && college ? (
               <textarea
                 type="text"
-                value={(college && college.Description) ? college.Description : ""}
+                value={
+                  college && college.Description ? college.Description : ""
+                }
                 onChange={(e) =>
                   setCollege({ ...college, Description: e.target.value })
                 }
@@ -174,14 +186,16 @@ const Header = ({
               {editable && college ? (
                 <input
                   type="text"
-                  value={  ( college && college.Email) ? college.Email : ""}
+                  value={college && college.Email ? college.Email : ""}
                   onChange={(e) =>
                     setCollege({ ...college, Email: e.target.value })
                   }
                   className="bg-transparent border-none focus:outline-none"
                 />
+              ) : college && college.Email ? (
+                college.Email
               ) : (
-              ( college && college.Email) ? college.Email : ""
+                ""
               )}
             </p>
           ) : (
@@ -202,14 +216,16 @@ const Header = ({
             {editable && college ? (
               <input
                 type="text"
-                value={  ( college && college.Phone) ? college.Phone : ""}
+                value={college && college.Phone ? college.Phone : ""}
                 onChange={(e) =>
                   setCollege({ ...college, Phone: e.target.value })
                 }
                 className="bg-transparent border-none focus:outline-none"
               />
+            ) : college && college.Phone ? (
+              college.Phone
             ) : (
-              ( college && college.Phone) ? college.Phone : ""
+              ""
             )}
           </p>
         </div>
@@ -230,7 +246,7 @@ const Header = ({
               {editable && college ? (
                 <input
                   type="text"
-                  value={ ( college && college.Website) ? college.Website : ""}
+                  value={college && college.Website ? college.Website : ""}
                   onChange={(e) =>
                     setCollege({ ...college, Website: e.target.value })
                   }
@@ -239,11 +255,11 @@ const Header = ({
               ) : (
                 <a
                   className="self-center text-blue-400 underline"
-                  href={ ( college && college.Website) ? college.Website : ""}
+                  href={college && college.Website ? college.Website : ""}
                   target="_blank"
                   rel="noreferrer"
                 >
-               { ( college && college.Website) ? college.Website : ""}
+                  {college && college.Website ? college.Website : ""}
                 </a>
               )}
             </>
@@ -270,12 +286,10 @@ const Header = ({
 
         {college ? (
           <>
-            {editable && college && college.Address ? (
+            {editable && college ? (
               <input
                 type="text"
-                value={
-                  college && college.Address ?  college.Address  : ""
-                }
+                value={college && college.Address ? college.Address : ""}
                 onChange={(e) =>
                   setCollege({ ...college, Address: e.target.value })
                 }
@@ -283,7 +297,7 @@ const Header = ({
               />
             ) : (
               <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">
-                { college && college.Address ?  college.Address  : ""}
+                {college && college.Address ? college.Address : ""}
               </p>
             )}
           </>
