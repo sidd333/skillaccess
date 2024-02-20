@@ -20,23 +20,7 @@ const Profile = () => {
 
   const [avatar, setAvatar] = useState("");
 
-  const [college, setCollege] = useState({
-    CollegeName: user ? user.CollegeName : "",
-    Email: user ? user.Email : "",
-    Phone: user ? user.Phone : "",
-    Address: user ? user.Address : "",
-    Website: user ? user.Website : "",
-    Phone: user ? user.Phone : "",
-    avatar: {
-      public_id: user && user.avatar ? user.avatar.public_id || "" : "",
-      url: user && user.avatar ? user.avatar.url : "",
-    },
-    Description: user ? user.Description : "",
-    Code: user ? user.code : "",
-    Location: user ? user.Location : "",
-    State: user ? user.State : "",
-    City: user ? user.City : "",
-  });
+  const [college, setCollege] = useState(user);
 
   const handleUpdate = (college) => {
     console.log("update");
@@ -46,50 +30,53 @@ const Profile = () => {
 
   useEffect(() => {
     if (user) {
-      setCollege({
-        CollegeName: user.CollegeName || "college name ",
-        Email: user.Email || "email",
-        Phone: user.Phone || "phone",
-        Address: user.Address || "address",
-        Website: user.Website || "web",
-        avatar: {
-          public_id: user.avatar?.public_id || "",
-          url: user.avatar?.url || "",
-        },
-
-        Description: user.Description || "desc",
-        Code: user.code || "code",
-        Location: user.Location || "loc",
-        State: user.State || "state",
-        City: user.City || "city",
-      });
+      setCollege(user);
       dispatch(getCollege());
     }
   }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
-    dispatch(getCollege()).then((res) =>
-      setCollege({
-        CollegeName: res.payload.CollegeName || "college name ",
-        Email: res.payload.Email || "email",
-        Phone: res.payload.Phone || "phone",
-        Address: res.payload.Address || "address",
-        Website: res.payload.Website || "web",
-        avatar: {
-          public_id: res.payload.avatar?.public_id || "",
-          url: res.payload.avatar?.url || "",
-        },
 
-        Description: res.payload.Description || "desc",
-        Code: res.payload.code || "code",
-        Location: res.payload.Location || "loc",
-        State: res.payload.State || "state",
-        City: res.payload.City || "city",
-      })
-    );
+// if (!user){
+  dispatch(getCollege());
 
-    console.log(user);
-  }, []);
+  console.log(college)
+// }
+    // console.log(college, "college");
+ }, []);
+ useEffect(()=>{
+if (user){
+  setCollege(user);
+
+}else
+{
+  dispatch(getCollege());
+}
+ },[user])
+
+//     dispatch(getCollege()).then((res) =>
+//       setCollege({
+//         CollegeName: res.payload.CollegeName || "college name ",
+//         Email: res.payload.Email || "email",
+//         Phone: res.payload.Phone || "phone",
+//         Address: res.payload.Address || "address",
+//         Website: res.payload.Website || "web",
+//         avatar: {
+//           public_id: res.payload.avatar?.public_id || "",
+//           url: res.payload.avatar?.url || "",
+//         },
+
+//         Description: res.payload.Description || "desc",
+//         Code: res.payload.code || "code",
+//         Location: res.payload.Location || "loc",
+//         State: res.payload.State || "state",
+//         City: res.payload.City || "city",
+//       })
+//     );
+
+//     console.log(user);
+//   }, []);
+
 
   useEffect(() => {
     if (user && user.avatar && user.avatar.url) {
@@ -113,7 +100,7 @@ const Profile = () => {
 
   return (
     <div className="px-8">
-      {editable && (
+      {user && editable && (
         <EditHeader
           editable={editable}
           setEditable={setEditable}
@@ -122,8 +109,8 @@ const Profile = () => {
           setCollege={setCollege}
         />
       )}
-      {/* {editable && <EditHeader editable={editable} setEditable={setEditable} />} */}
-      <Header
+
+{   user &&   <Header
         editable={editable}
         setEditable={setEditable}
         handleUpdate={handleUpdate}
@@ -132,7 +119,8 @@ const Profile = () => {
         setAvatar={setAvatar}
         avatar={avatar}
       />
-      {/* <Header editable={editable} setEditable={setEditable} /> */}
+   }
+   {!user && <h1> Loading ... </h1>}
 
       <List editable={editable} setEditable={setEditable} />
       {/* {window.location.reload(true)} */}
