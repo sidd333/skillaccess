@@ -36,6 +36,7 @@ const Profile = () => {
   }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
+
 // if (!user){
   dispatch(getCollege());
 
@@ -52,7 +53,30 @@ if (user){
   dispatch(getCollege());
 }
  },[user])
- 
+
+//     dispatch(getCollege()).then((res) =>
+//       setCollege({
+//         CollegeName: res.payload.CollegeName || "college name ",
+//         Email: res.payload.Email || "email",
+//         Phone: res.payload.Phone || "phone",
+//         Address: res.payload.Address || "address",
+//         Website: res.payload.Website || "web",
+//         avatar: {
+//           public_id: res.payload.avatar?.public_id || "",
+//           url: res.payload.avatar?.url || "",
+//         },
+
+//         Description: res.payload.Description || "desc",
+//         Code: res.payload.code || "code",
+//         Location: res.payload.Location || "loc",
+//         State: res.payload.State || "state",
+//         City: res.payload.City || "city",
+//       })
+//     );
+
+//     console.log(user);
+//   }, []);
+
 
   useEffect(() => {
     if (user && user.avatar && user.avatar.url) {
@@ -63,7 +87,7 @@ if (user){
       dispatch(getCollege());
       // setCollege({ ...college, avatar: { url:user.avatar.url} });
     }
-    dispatch(updateCollege(college));
+    // dispatch(updateCollege(college));
     dispatch(getCollege());
   }, [editable]);
 
@@ -99,6 +123,7 @@ if (user){
    {!user && <h1> Loading ... </h1>}
 
       <List editable={editable} setEditable={setEditable} />
+      {/* {window.location.reload(true)} */}
     </div>
   );
 };

@@ -13,7 +13,7 @@ const collageState = {
   error: "",
   isLoggedIn: false,
   user: null,
-  uploadImg :false,
+  uploadImg: false,
 };
 
 const authToken = localStorage.getItem("auth-token");
@@ -50,7 +50,8 @@ export const loginCollage = createAsyncThunk(
       );
       const res = req.data;
       localStorage.setItem("auth-token", res.token);
-      return res.data;
+      console.log(res);
+      return res;
     } catch (error) {
       console.log("catch");
       return rejectWithValue(error.response.data.message);
@@ -93,6 +94,7 @@ export const getCollege = createAsyncThunk(
           "auth-token": localStorage.getItem('auth-token')
         },
       });
+      // console.log(response.data.college);
       return response.data.college;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -143,7 +145,6 @@ export const logoutCollage = createAsyncThunk(
   }
 );
 
-
 export const updatePassword = createAsyncThunk(
   "collageAuth/updatePassword",
 
@@ -170,7 +171,6 @@ export const updatePassword = createAsyncThunk(
   }
 );
 
-
 const collageAuthSlice = createSlice({
   name: "collageAuth",
   initialState: collageState,
@@ -194,12 +194,14 @@ const collageAuthSlice = createSlice({
       })
       .addCase(registerCollage.rejected, (state, action) => {
         console.log(action.payload);
+
      
 // <<<<<<< AnkitaMalik22-ankita-dev
 //   alert(action.payload);
 // =======
-        window.alert(action.payload || "invalid credentials");
 
+
+        window.alert(action.payload || "invalid credentials");
       })
       .addCase(loginCollage.pending, (state, action) => {
         state.status = "loading";
@@ -207,15 +209,15 @@ const collageAuthSlice = createSlice({
       })
       .addCase(loginCollage.fulfilled, (state, action) => {
         // state.status = action.payload
+
         state.isLoggedIn = true;
         state.user = action.payload
 
-        // Add any fetched posts to the array
-        console.log("fullfilled");
+        state.isLoggedIn = true;
+        console.log(state.user);
       })
       .addCase(loginCollage.rejected, (state, action) => {
-        console.log(action.payload);
-     alert(action.payload);
+        alert(action.payload);
       })
       .addCase(updateCollege.pending, (state, action) => {
         state.status = "loading";
@@ -224,12 +226,13 @@ const collageAuthSlice = createSlice({
       .addCase(updateCollege.fulfilled, (state, action) => {
         // state.status = action.payload
         state.user = action.payload;
-
-        console.log("fullfilled");
+        window.location.reload(true);
       })
       .addCase(updateCollege.rejected, (state, action) => {
         // console.log(action.payload);
         // window.alert(action.payload);
+        window.location.reload(true);
+        console.log("rejected update profile");
       })
       .addCase(getCollege.pending, (state, action) => {
         state.status = "loading";
@@ -238,7 +241,8 @@ const collageAuthSlice = createSlice({
       .addCase(getCollege.fulfilled, (state, action) => {
         // state.status = action.payload
         state.isLoggedIn = true;
-        state.user = action.payload;
+        // state.user = action.payload;
+
         // Add any fetched posts to the array
         console.log("fullfilled");
       })
@@ -254,17 +258,17 @@ const collageAuthSlice = createSlice({
       .addCase(updateAvatar.fulfilled, (state, action) => {
         // state.status = action.payload
 
-        state.status="success"
+        state.status = "success";
         state.user = action.payload;
         state.uploadImg = true;
         // state.user = action.payload;
 
         // getCollege();
         // Add any fetched posts to the array
-        console.log("fullfilled");
+        console.log("fullfilled avatar");
       })
       .addCase(updateAvatar.rejected, (state, action) => {
-        console.log(action.payload);
+        console.log("rejected avatar" + action.payload);
 
         // window.alert(action.payload);
       })
@@ -274,6 +278,8 @@ const collageAuthSlice = createSlice({
       })
       .addCase(logoutCollage.fulfilled, (state, action) => {
         // state.status = action.payload
+
+        state.user = null;
         state.isLoggedIn = false;
 
         // Add any fetched posts to the array
@@ -300,7 +306,7 @@ const collageAuthSlice = createSlice({
         // localStorage.setItem("auth-token", action.payload.token);
       })
       .addCase(updatePassword.rejected, (state, action) => {
-      alert(action.payload.message);
+        alert(action.payload.message);
       });
   },
 });

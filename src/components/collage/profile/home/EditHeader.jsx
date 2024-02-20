@@ -34,8 +34,8 @@ const EditHeader = ({ setEditable, editable, handleUpdate, college }) => {
           </button>
           <button
             className="self-center justify-center flex h-14 px-4 rounded-xl font-bold gap-2 bg-blue-700 text-white sm:px-12 "
-            // onClick={() => handleUpdate(college)}
-            onClick={() => setEditable(false)}
+            onClick={() => handleUpdate(college)}
+            // onClick={() => setEditable(false)}
           >
             <p className="self-center">Save</p>
           </button>
