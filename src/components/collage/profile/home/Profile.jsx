@@ -125,7 +125,6 @@
 //   );
 // };
 
-// export default Profile;
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import List from "./List";
@@ -197,7 +196,10 @@ const Profile = () => {
       setAvatar(user.avatar.url);
     }
     if (avatar) {
-      dispatch(updateAvatar({ avatar }));
+      // const myForm = new FormData();
+      // myForm.set("file", avatar);
+      // console.log(myForm, "myform");
+      dispatch(updateAvatar({ avatar, id: user._id }));
       dispatch(getCollege());
       // setCollege({ ...college, avatar: { url:user.avatar.url} });
     }
