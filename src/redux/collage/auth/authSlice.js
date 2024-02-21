@@ -239,11 +239,13 @@ const collageAuthSlice = createSlice({
         // state.status = action.payload
         state.isLoggedIn = true;
         state.user = action.payload;
+        // window.location.reload(true);
         // Add any fetched posts to the array
         console.log("fullfilled");
       })
       .addCase(getCollege.rejected, (state, action) => {
         console.log(action.payload);
+        // window.location.reload(true);
 
         // window.alert(action.payload);
       })

@@ -8,7 +8,9 @@ const authToken = localStorage.getItem('auth-token');
 const testState = {
 
     testName : "",
+    testDescription : "",
     testType : "",
+    topics :[],
     // testStatus : "",
   sections : [{
     id : 0,
@@ -147,6 +149,26 @@ export const createTest = createAsyncThunk(
 );
 
 
+export const getAllTopics = createAsyncThunk(
+  'test/getAllTopics',
+  async (_, { rejectWithValue, getState }) => {
+    try {
+      const req = await axios.get(`${REACT_APP_API_URL}/api/admin/get-all-topics`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': authToken,
+        },
+      });
+      const res = req.data;
+      return res.sections;
+    } catch (error) {
+      console.log('catch', error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
 const testSlice = createSlice({
     initialState: testState,
     name: "test",
@@ -181,8 +203,6 @@ const testSlice = createSlice({
               };
           }
       },
-      
-
 
         setSections: (state, action) => {
             const payload = action.payload;
@@ -247,9 +267,6 @@ const testSlice = createSlice({
                 state.status = "failed";
                 state.error = action.payload;
             })
-            
-
-
             .addCase(createTest.pending, (state, action) => {
                 state.status = "loading";
                 console.log("pending");
@@ -267,7 +284,22 @@ const testSlice = createSlice({
                 console.log(action.payload);
 
                 window.alert(action.payload);
-            });
+            })
+            .addCase(getAllTopics.pending, (state, action) => {
+                state.status = "loading";
+                console.log("pending");
+            }
+            )
+            .addCase(getAllTopics.fulfilled, (state, action) => {
+                state.topics = action.payload;
+                console.log("fullfilled");
+            })
+            .addCase(getAllTopics.rejected, (state, action) => {
+                console.error("Error fetching topics:", action.payload);
+                state.status = "failed";
+                state.error = action.payload;
+            })
+
     },
 });
 

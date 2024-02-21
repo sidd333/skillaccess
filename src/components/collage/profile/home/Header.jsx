@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   getCollege,
   setUploadImg,
+  updateAvatar,
   updateCollege,
 } from "../../../../redux/collage/auth/authSlice";
 
@@ -20,7 +21,7 @@ const Header = ({
   setAvatar,
 }) => {
   const dispatch = useDispatch();
-  const [avatarPreview, setAvatarPreview] = useState("../../images/user.jpg");
+  const [avatarPreview, setAvatarPreview] = useState(avatar);
   const { uploadImg } = useSelector((state) => state.collageAuth);
 
   useEffect(() => {
@@ -43,10 +44,19 @@ const Header = ({
       if (reader.readyState === 2) {
         setAvatarPreview(reader.result);
         setAvatar(reader.result);
+        
       }
     };
 
     reader.readAsDataURL(e.target.files[0]);
+    // const formData = new FormData();
+
+    // formData.append("avatar", e.target.files[0].toString());
+    // setAvatar( e.target.files[0]);
+    // dispatch(updateAvatar({
+    //   avatar: e.target.files[0]
+    // }));
+
   };
   const imgRef = useRef(null);
   return (
@@ -144,8 +154,8 @@ const Header = ({
                 className="bg-transparent border-none focus:outline-none"
               />
             ) : (
-              college.Description
-            )}
+              (college && college.Description) ? college.Description : ""
+              )}
           </p>
         ) : (
           <p className="text-sm  font-medium mt-2">
@@ -270,7 +280,7 @@ const Header = ({
 
         {college ? (
           <>
-            {editable && college && college.Address ? (
+            {editable && college  ? (
               <input
                 type="text"
                 value={
