@@ -44,7 +44,7 @@ const Header = () => {
         <div className=" flex">
           <button
             className="self-center justify-center flex bg-blue-800 py-3 px-4 rounded-lg text-xs gap-2 text-white"
-            onClick={() => navigate("/collage/test/questions")}
+            onClick={() => navigate("/collage/test/final")}
           >
             Next Step{" "}
             <FaArrowRightLong className="self-center text-lg text-white ml-4" />

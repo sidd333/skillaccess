@@ -3,7 +3,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ Q ,page}) => {
+const Header = ({ Q, page }) => {
   const navigate = useNavigate();
 
   return (
@@ -45,7 +45,11 @@ const Header = ({ Q ,page}) => {
         <div className=" flex">
           <button
             className="self-center justify-center flex bg-blue-800 py-3 px-4 rounded-lg text-xs gap-2 text-white"
-            onClick={() => page== 'submit' ? navigate("/collage/test/submit") : navigate("/collage/test/final") }
+            onClick={() =>
+              page == "submit"
+                ? navigate("/collage/test/submit")
+                : navigate("/collage/test/final")
+            }
           >
             Next Step{" "}
             <FaArrowRightLong className="self-center text-lg text-white ml-4" />

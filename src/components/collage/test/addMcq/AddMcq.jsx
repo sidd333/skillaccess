@@ -3,155 +3,150 @@ import Header from "./Header";
 
 import { FaX } from "react-icons/fa6";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
-import { useDispatch ,useSelector} from "react-redux";
-import { setTest,setMcq } from "../../../../redux/collage/test/testSlice";
-import { useParams } from "react-router-dom";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { setTest, setMcq } from "../../../../redux/collage/test/testSlice";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddMcq = () => {
-const dispatch = useDispatch();
-// section Id
-const { sectionId } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // section Id
+  const { sectionId } = useParams();
 
-const [step , setStep] = useState(1);
-const [click , setClick] = useState(false);
+  const [step, setStep] = useState(1);
+  const [click, setClick] = useState(false);
 
-const {test} = useSelector((state) => state.test);
+  const { test } = useSelector((state) => state.test);
 
-
-
-const [question, setQuestion] = useState({
-  Duration : 0,
-  QuestionType : "mcq",
-  Title: "",
-  Options: {},
-  AnswerIndex: 0,
-})
-const [questions ,setQuestions ] = useState(test.questions || [{ Duration : 0, QuestionType : "mcq", Title: "", Options: {}, AnswerIndex: 0 }]);
-
-useEffect(() => {
-setQuestion({
-  Duration : 0,
-  QuestionType : "mcq",
-  Title: "",
-  Options: {
-  },
-  AnswerIndex: 0,
-});
-
-
-setClick(false);
-}, [click]);
-
-useEffect(() => {
-if (step === 1) {
-  console.log("no previous question");
-} else {
-  console.log("previous question");
-  setQuestion(questions[questions.length - step]);
-}
-}, [step]);
-
-
-
-
-
-
-
-const addQuestion = () => {
-  // Ensure question title is not empty
-  if (!question.Title.trim()) {
-    alert("Please enter a question title.");
-    return;
-  }
-
-  // Ensure at least two options are provided
-  if (Object.keys(question.Options).filter(key => question.Options[key].trim() !== "").length < 2) {
-    alert("Please provide at least two options.");
-    return;
-  }
-
-  // Ensure the correct answer index is within the range of options
-  if (question.AnswerIndex < 0 || question.AnswerIndex >= Object.keys(question.Options).length) {
-    alert("Invalid answer index.");
-    return;
-  }
-
-  // Create a new question object with the current state
-  const newQuestion = { ...question };
-
-  // Update the questions state by adding the new question
-  setQuestions([...questions, newQuestion]);
-
-  console.log("id",sectionId);
-
-  dispatch(setMcq({sectionId, questions : questions}));
-
-  // Dispatch the updated questions to the Redux store
-  // dispatch(setTest({ questions: [...questions, newQuestion] }));
-  // dispatch(setTest({sections : test.sections[id]}))
-
-  // Clear the question state for the next question
-  const clearedOptions = {
-    Options0: "",
-    Options1: "",
-    Options2: "",
-    Options3: "",
-  };
-
-  setQuestion({
+  const [question, setQuestion] = useState({
     Duration: 0,
     QuestionType: "mcq",
     Title: "",
-    Options: clearedOptions,
+    Options: {},
     AnswerIndex: 0,
   });
-  setClick(true);
-
-  // Increment the step counter
-  setStep((prevStep) => prevStep + 1);
-};
-
-
-const handleChanges = (e) => {
-  const { name, value } = e.target;
-
-  if(name.includes("Options")) {
-    setQuestion({
-      ...question,
-      Options: {
-        ...question.Options,
-        [name]: value, // Update the specific option based on the input name
+  const [questions, setQuestions] = useState(
+    test.questions || [
+      {
+        Duration: 0,
+        QuestionType: "mcq",
+        Title: "",
+        Options: {},
+        AnswerIndex: 0,
       },
+    ]
+  );
+
+  useEffect(() => {
+    setQuestion({
+      Duration: 0,
+      QuestionType: "mcq",
+      Title: "",
+      Options: {},
+      AnswerIndex: 0,
     });
-  } else {
-  
-  setQuestion({
-    ...question,
-    [name]: value,
-  });
-  }
 
-console.log(questions,"questions");
+    setClick(false);
+  }, [click]);
 
-}
+  useEffect(() => {
+    if (step === 1) {
+      console.log("no previous question");
+    } else {
+      console.log("previous question");
+      setQuestion(questions[questions.length - step]);
+    }
+  }, [step]);
 
+  const addQuestion = () => {
+    // Ensure question title is not empty
+    if (!question.Title.trim()) {
+      alert("Please enter a question title.");
+      return;
+    }
 
+    // Ensure at least two options are provided
+    if (
+      Object.keys(question.Options).filter(
+        (key) => question.Options[key].trim() !== ""
+      ).length < 2
+    ) {
+      alert("Please provide at least two options.");
+      return;
+    }
 
-const handlePrev = () => {
- if(step === 1) {
-    return;
-  }
-  else {
-    setStep(prev => prev - 1);
-  }
-}
+    // Ensure the correct answer index is within the range of options
+    if (
+      question.AnswerIndex < 0 ||
+      question.AnswerIndex >= Object.keys(question.Options).length
+    ) {
+      alert("Invalid answer index.");
+      return;
+    }
 
+    // Create a new question object with the current state
+    const newQuestion = { ...question };
 
+    // Update the questions state by adding the new question
+    setQuestions([...questions, newQuestion]);
 
+    console.log("id", sectionId);
 
+    dispatch(setMcq({ sectionId, questions: questions }));
 
+    // Dispatch the updated questions to the Redux store
+    // dispatch(setTest({ questions: [...questions, newQuestion] }));
+    // dispatch(setTest({sections : test.sections[id]}))
+
+    // Clear the question state for the next question
+    const clearedOptions = {
+      Options0: "",
+      Options1: "",
+      Options2: "",
+      Options3: "",
+    };
+
+    setQuestion({
+      Duration: 0,
+      QuestionType: "mcq",
+      Title: "",
+      Options: clearedOptions,
+      AnswerIndex: 0,
+    });
+    setClick(true);
+
+    // Increment the step counter
+    setStep((prevStep) => prevStep + 1);
+  };
+
+  const handleChanges = (e) => {
+    const { name, value } = e.target;
+
+    if (name.includes("Options")) {
+      setQuestion({
+        ...question,
+        Options: {
+          ...question.Options,
+          [name]: value, // Update the specific option based on the input name
+        },
+      });
+    } else {
+      setQuestion({
+        ...question,
+        [name]: value,
+      });
+    }
+
+    console.log(questions, "questions");
+  };
+
+  const handlePrev = () => {
+    if (step === 1) {
+      return;
+    } else {
+      setStep((prev) => prev - 1);
+    }
+  };
 
   return (
     <div>
@@ -212,14 +207,20 @@ const handlePrev = () => {
                   />
 
                   {/*  */}
-                  <div className="bg-gray-100 flex justify-center rounded-lg "
-                  onClick = {() => setQuestion({...question, Options: {...question.Options, Options0: ""}})}
+                  <div
+                    className="bg-gray-100 flex justify-center rounded-lg "
+                    onClick={() =>
+                      setQuestion({
+                        ...question,
+                        Options: { ...question.Options, Options0: "" },
+                      })
+                    }
                   >
                     <FaX className="self-center mx-2" />
                   </div>
-                  </span>
+                </span>
 
-                  <span className="flex gap-2">
+                <span className="flex gap-2">
                   {/*  */}
                   {/* radio button */}
                   <div className="flex w-5 justify-center">
@@ -243,8 +244,15 @@ const handlePrev = () => {
                   />
 
                   {/*  */}
-                  <div className="bg-gray-100 flex justify-center rounded-lg "
-                     onClick = {() => setQuestion({...question, Options: {...question.Options, Options1: ""}})}>
+                  <div
+                    className="bg-gray-100 flex justify-center rounded-lg "
+                    onClick={() =>
+                      setQuestion({
+                        ...question,
+                        Options: { ...question.Options, Options1: "" },
+                      })
+                    }
+                  >
                     <FaX className="self-center mx-2" />
                   </div>
                 </span>
@@ -273,8 +281,15 @@ const handlePrev = () => {
                   />
 
                   {/*  */}
-                  <div className="bg-gray-100 flex justify-center rounded-lg "
-                     onClick = {() => setQuestion({...question, Options: {...question.Options, Options2: ""}})}>
+                  <div
+                    className="bg-gray-100 flex justify-center rounded-lg "
+                    onClick={() =>
+                      setQuestion({
+                        ...question,
+                        Options: { ...question.Options, Options2: "" },
+                      })
+                    }
+                  >
                     <FaX className="self-center mx-2" />
                   </div>
                 </span>
@@ -303,12 +318,16 @@ const handlePrev = () => {
                   />
 
                   {/*  */}
-                  <div className="bg-gray-100 flex justify-center rounded-lg "
-                     onClick = {() => setQuestion({...question, Options: {...question.Options, Options3: ""}})}
-       
+                  <div
+                    className="bg-gray-100 flex justify-center rounded-lg "
+                    onClick={() =>
+                      setQuestion({
+                        ...question,
+                        Options: { ...question.Options, Options3: "" },
+                      })
+                    }
                   >
                     <FaX className="self-center mx-2" />
-
                   </div>
                 </span>
                 {/* add button and shuffle container */}
@@ -328,16 +347,22 @@ const handlePrev = () => {
         <div className="absolute bottom-10 flex right-8 gap-2">
           {" "}
           <div className=" flex gap-2">
-            <button className={`self-center justify-center flex ${step === 1 ? ' bg-gray-200' : ' bg-blue-200'} p-2 rounded-lg text-sm font-bold gap-2 w-32`}
-            onClick={handlePrev}>
-            
-              <FaChevronLeft className="self-center"  /> Prev
+            <button
+              className={`self-center justify-center flex ${
+                step === 1 ? " bg-gray-200" : " bg-blue-200"
+              } p-2 rounded-lg text-sm font-bold gap-2 w-32`}
+              // onClick={handlePrev}
+              onClick={() => navigate(-1)}
+            >
+              <FaChevronLeft className="self-center" /> Prev
             </button>
           </div>
           <div className=" flex">
-            <button className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
-            onClick={addQuestion}>
-            
+            <button
+              className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
+              // onClick={addQuestion}
+              onClick={() => window.location.reload(true)}
+            >
               <FaPlus className="self-center" /> Add Next Question
             </button>
           </div>

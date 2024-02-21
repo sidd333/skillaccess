@@ -15,6 +15,7 @@ const AddQuestionsSelectPage = lazy(() => import("./AddQuestionsSelectPage"));
 const SubmitPage = lazy(() => import("./SubmitPage"));
 const TestPage = lazy(() => import("./TestPage"));
 const AssessmentPage = lazy(() => import("./AssessmentPage"));
+const CreateTopicPage = lazy(() => import("./CreateTopicPage"));
 
 export default function () {
   return (
@@ -26,10 +27,11 @@ export default function () {
       <Route path="submit" element={<SubmitPage />} />
       {/* <Route path="preview" element={<AddQuestionsSelectPage />} /> */}
       <Route path="questions" element={<AddQuestionsPage />} />
-      {/* <Route path="questions" element={<AddQuestionsSelectPage />} /> */}
+      <Route path="typeOfQuestions" element={<AddQuestionsSelectPage />} />
       {/* <Route path="preview" element={<AddQuestionsPage />} /> */}
-      <Route path="review" element={<ReviewPage />} />
-      <Route path="mcq/:sectionId" element={<AddMcqPage />} />
+      <Route path="createTopic" element={<CreateTopicPage />} />
+      <Route path="details/:id" element={<ReviewPage />} />
+      <Route path="addMcq/:sectionId" element={<AddMcqPage />} />
       <Route path="code/:sectionId" element={<AddCodePage />} />
       <Route path="essay/:sectionId" element={<AddEssayPage />} />
       <Route path="parav" element={<AddParagraphPage />} />

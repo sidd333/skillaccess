@@ -292,26 +292,31 @@ const CollageLayout = ({ children }) => {
     }
 
     if (location.pathname.match(/\/collage\/profile*/)) {
+      bottom.current.scrollIntoView();
       dispatch(setSelected(7));
       setDown(7);
     }
 
     if (location.pathname.match(/\/collage\/inbox*/)) {
+      bottom.current.scrollIntoView();
       dispatch(setSelected(8));
       setDown(8);
     }
 
     if (location.pathname.match(/\/collage\/teams*/)) {
+      bottom.current.scrollIntoView();
       dispatch(setSelected(9));
       setDown(9);
     }
 
     if (location.pathname.match(/\/collage\/accounting*/)) {
+      bottom.current.scrollIntoView();
       dispatch(setSelected(10));
       setDown(10);
     }
 
     if (location.pathname.match(/\/collage\/settings*/)) {
+      bottom.current.scrollIntoView();
       dispatch(setSelected(11));
       setDown(11);
     }
