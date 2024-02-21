@@ -1,5 +1,5 @@
 import React from "react";
-import { Logo } from "./Logo";
+
 import { FiBell } from "react-icons/fi";
 import { FaAngleDown } from "react-icons/fa";
 const Navbar = (props) => {
@@ -16,9 +16,9 @@ const Navbar = (props) => {
             hamb
           </button>
 
-          <div className="h-10 w-10">
+          <div className="">
             {" "}
-            <Logo />
+            <img src="../../../images/logo.png" alt="" />
           </div>
         </div>
 

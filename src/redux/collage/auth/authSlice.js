@@ -228,7 +228,7 @@ const collageAuthSlice = createSlice({
       .addCase(updateCollege.rejected, (state, action) => {
         // console.log(action.payload);
         // window.alert(action.payload);
-        window.location.reload(true);
+        // window.location.reload(true);
         console.log("rejected update profile");
       })
       .addCase(getCollege.pending, (state, action) => {
