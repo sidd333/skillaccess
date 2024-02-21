@@ -75,7 +75,10 @@ export const updateCollege = createAsyncThunk(
           },
         }
       );
+
       const res = req.data;
+      console.log("should not reject");
+      console.log(res);
       return res.data.college;
     } catch (error) {
       console.log("catch", error.response.data);
@@ -94,7 +97,7 @@ export const getCollege = createAsyncThunk(
           "auth-token": localStorage.getItem("auth-token"),
         },
       });
-      // console.log(response.data.college);
+
       return response.data.college;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -224,6 +227,7 @@ const collageAuthSlice = createSlice({
         // state.status = action.payload
         state.user = action.payload;
         window.location.reload(true);
+        console.log("update college fulfilled");
       })
       .addCase(updateCollege.rejected, (state, action) => {
         // console.log(action.payload);
@@ -241,7 +245,7 @@ const collageAuthSlice = createSlice({
         state.user = action.payload;
 
         // Add any fetched posts to the array
-        console.log("fullfilled");
+        console.log("fullfilled get college");
       })
       .addCase(getCollege.rejected, (state, action) => {
         console.log(action.payload);
@@ -250,7 +254,7 @@ const collageAuthSlice = createSlice({
       })
       .addCase(updateAvatar.pending, (state, action) => {
         state.status = "loading";
-        console.log("pending");
+        console.log("pending avatar");
       })
       .addCase(updateAvatar.fulfilled, (state, action) => {
         // state.status = action.payload
