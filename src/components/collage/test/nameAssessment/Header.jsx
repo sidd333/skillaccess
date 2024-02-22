@@ -3,7 +3,9 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = ({
+  handleNext
+}) => {
   const navigate = useNavigate();
   return (
     <div className="flex w-11/12 mx-auto justify-between mb-2 mt-5">
@@ -44,7 +46,7 @@ const Header = () => {
         <div className=" flex">
           <button
             className="self-center justify-center flex bg-blue-800 py-3 px-4 rounded-lg text-xs gap-2 text-white"
-            onClick={() => navigate("/collage/test/select")}
+            onClick={() => handleNext()}
           >
             Next Step{" "}
             <FaArrowRightLong className="self-center text-lg text-white ml-4" />

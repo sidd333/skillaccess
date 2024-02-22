@@ -6,17 +6,21 @@ import { RxCross1 } from "react-icons/rx";
 import { PiPencilSimpleLine } from "react-icons/pi";
 import { ImFileText } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
-import { setQuesions } from "../../../../redux/collage/test/testSlice";
+import { setQuesions, setTest, setTestSelectedTopics } from "../../../../redux/collage/test/testSlice";
 import { useNavigate } from "react-router-dom";
 
 const AddQuestions = () => {
   const navigate = useNavigate();
-  // question of the section
-  const { sections, selectedSections } = useSelector((state) => state.test);
+  // question of the topic
+  const { topics } = useSelector((state) => state.test);
   React.useEffect(() => {
-    console.log(selectedSections, sections, "selectedSections");
-  }, [sections, selectedSections]);
+    console.log(topics,  "topics");
+  }, [topics]);
   const dispatch = useDispatch();
+
+  const removeTopic = (topicId) => {
+    dispatch(setTestSelectedTopics(topics.filter((topic) => topic._id !== topicId)));
+  }
 
   return (
     <div className="font-dmSans text-sm font-bold">
@@ -34,20 +38,20 @@ const AddQuestions = () => {
               can use five question types: multiple-choice, essay, video and
               code.
             </h2>
-            {sections?.map((section, index) => (
+            {topics?.map((topic, index) => (
               <div className=" sm:mt-5 rounded-lg tracking-wide justify-between  ">
                 <div className=" grid grid-cols-10 row-span-2 gap-x-10 gap-y-3 p-3 bg-gray-100 rounded-lg border border-blued h-28 w-[64vw] mx-auto">
                   {" "}
                   <div className="col-span-2 ">
                     <h2 className="self-center text-xs sm:text-sm">
-                      {section.name}
+                      {topic.Heading}
                     </h2>
                   </div>
                   <div className="col-span-2 col-start-7 ">
                     <span className="flex gap-1">
                       <ImFileText className="text-blued self-center " />
                       <p className="self-center text-xs text-gray-500   sm:text-sm">
-                        {section.type}
+                        {topic.Type}
                       </p>
                     </span>
                   </div>
@@ -59,18 +63,21 @@ const AddQuestions = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="col-span-1 col-start-10  flex justify-center">
+                  <div className="col-span-1 col-start-10  flex justify-center"
+                  onClick={() => removeTopic(topic._id)}
+                  >
                     <RxCross1 className="self-center text-red-600 w-5 h-5" />
                   </div>
                   <div className="col-span-8 line-clamp-2 text-xs font-normal text-[#8F92A1] ">
-                    {section.description}
+                    { topic.Description.length > 100 ? topic.Description.slice(0, 100) + "..." : topic.Description
+                    }
                   </div>
                   <div className="col-span-1 col-start-9  flex">
                     {/* Need Question Details page */}
                     <button
                       className="self-center  justify-center bg-gray-200 p-2 rounded-lg text-xs"
                       // onClick={() =>
-                      //   navigate(`/collage/test/${section.type}/${section.id}`)
+                      //   navigate(`/collage/test/${topic.type}/${topic.id}`)
                       // }
                       onClick={() => navigate("/collage/test/details/:0")}
                     >

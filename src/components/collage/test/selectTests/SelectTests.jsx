@@ -8,6 +8,8 @@ import {
   setTest,
   setSections,
   removeSections,
+  getAllTopics,
+  setTestSelectedTopics,
 } from "../../../../redux/collage/test/testSlice";
 import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -15,25 +17,31 @@ import { useNavigate } from "react-router-dom";
 const SelectTests = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  const { sections } = useSelector((state) => state.test);
+  const { sections ,topics} = useSelector((state) => state.test);
 
-  const [selectedSections, setSelectedSections] = useState([]);
+  const [selectedSections, setSelectedSections] = useState(
+topics
+  );
 
   const addSection = (section) => {
-    const updatedSections = [...selectedSections, section];
-    // console.log(selectedSections,section);
-    // dispatch(setSections(section));
+    // const updatedSections = [...selectedSections, section];
+    // // console.log(selectedSections,section);
+    // // dispatch(setSections(section));
 
     if (selectedSections.length < 5) {
-      if (selectedSections.includes(section)) {
+   for (let i = 0; i < selectedSections.length; i++) {
+      if (selectedSections[i]._id === section._id) {
         return;
       }
+    }
       setSelectedSections([...selectedSections, section]);
-      dispatch(
-        setTest({
-          sections: selectedSections,
-        })
-      );
+    //   dispatch(
+    //     setTest({
+    //       sections: selectedSections,
+    //     })
+    //   );
+
+    dispatch(setTestSelectedTopics(selectedSections));
     }
 
     // dispatch(setSections(sections.filter((s) => s !== section)));
@@ -41,17 +49,29 @@ const SelectTests = () => {
   };
 
   const removeSection = (section) => {
-    const updatedSections = selectedSections.filter((s) => s !== section);
-    dispatch(setSections(updatedSections));
-    setSelectedSections(updatedSections);
+    // const updatedSections = selectedSections.filter((s) => s !== section);
+    // dispatch(setSections(updatedSections));
+    // setSelectedSections(updatedSections);
     // Don't let the user add the same section again
     // dispatch(setSections([...sections, section]));
     // console.log(updatedSections);
+
+    setSelectedSections(selectedSections.filter((s) => s._id !== section._id));
+
+    dispatch(setTestSelectedTopics(selectedSections));
   };
+
+  useEffect(() => {
+    dispatch(getAllTopics());
+    setSelectedSections(topics);
+    // console.log("hello tests",sections);
+  }, []);
+
 
   useEffect(() => {
     // getSelectedSections();
     console.log(selectedSections, "selected");
+    dispatch(setTestSelectedTopics(selectedSections));
   }, [addSection, removeSection, selectedSections]);
 
   return (
@@ -73,9 +93,9 @@ const SelectTests = () => {
         <div className=" mx-auto  my-2 rounded-lg grid sm:grid-cols-5 grid-cols-2 gap-6">
           {selectedSections?.map((section) => (
             <div className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center ">
-              {console.log(section, "section")}
+              {/* {console.log(section, "section")} */}
               <span className="self-center">
-                <h2 className="text-xl font-bold mb-4">{section?.name}</h2>
+                <h2 className="text-xl font-bold mb-4">{section?.Heading}</h2>
                 <div className="flex gap-2">
                   <img
                     src="../../images/icons/menu-boxed.png"
@@ -83,7 +103,8 @@ const SelectTests = () => {
                     className="self-center"
                   />
                   <h2 className="font-bold text-xs text-gray-400 self-center">
-                    {section?.description}
+                  {section?.Type
+                  }
                   </h2>
                 </div>
                 <div className="flex justify-between mt-1">
@@ -151,7 +172,7 @@ const SelectTests = () => {
               </h2>
             </div>
           </div>
-          {sections.map((section) => (
+          {sections?.map((section) => (
             // <div className="card w-96 bg-base-100 shadow-xl">
             //   <div className="card-body">
             //     <h2 className="card-title">{section.name}</h2>
@@ -174,9 +195,12 @@ const SelectTests = () => {
             // </div>
             <div className="w-full h-64 rounded-lg bg-gray-100  relative">
               <div className="card-body">
-                <h2 className="text-xl font-bold mb-4">{section.name}</h2>
+                <h2 className="text-xl font-bold mb-4">{section.Heading}</h2>
                 <p className="text-sm leading-[26px] text-[#8F92A1]">
-                  {section.desription}
+                  {section.Description.length > 100
+                  ? section.Description.substring(0, 60) + "..."
+                  : section.Description 
+                  }
                 </p>
 
                 <div>
@@ -188,7 +212,9 @@ const SelectTests = () => {
                           alt=""
                           className="w-7 h-7"
                         />{" "}
-                        <p className="text-gray-400 self-center">10 mins</p>
+                        <p className="text-gray-400 self-center">{
+                        section.Time}
+                        </p>
                       </span>
                       <button className="w-[90px] h-[40px] bg-[#8F92A120] rounded-xl">
                         Details
