@@ -16,6 +16,15 @@ useEffect(() => {
   console.log(currentTopic, "currentTopic" , id);
 }, [dispatch]);
 
+// update the topic from topics array where the id matches the id in the url
+// for (let i = 0; i < topics.length; i++) {
+//   if (topics[i]._id === id) {
+//   topics[i].questions = newQuestions;
+//   }
+// }
+
+
+
 
   return (
     <div className="font-dmSans text-sm font-bold">
