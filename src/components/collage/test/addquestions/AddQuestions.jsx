@@ -79,7 +79,7 @@ const AddQuestions = () => {
                       // onClick={() =>
                       //   navigate(`/collage/test/${topic.type}/${topic.id}`)
                       // }
-                      onClick={() => navigate("/collage/test/details/:0")}
+                      onClick={() => navigate(`/collage/test/details/${topic._id}`)}
                     >
                       Details
                     </button>

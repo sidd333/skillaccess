@@ -1,9 +1,22 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Header from "./Header";
 import { LiaStopwatchSolid } from "react-icons/lia";
 import Mcq from "./Mcq";
+import { useSelector,useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+const {getTopicById} = require("../../../../redux/collage/test/testSlice");
 
 const Review = () => {
+  const{ id }= useParams();
+  const dispatch = useDispatch();
+const {currentTopic} = useSelector((state) => state.test);
+
+useEffect(() => {
+  dispatch(getTopicById(id));
+  console.log(currentTopic, "currentTopic" , id);
+}, [dispatch]);
+
+
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header />

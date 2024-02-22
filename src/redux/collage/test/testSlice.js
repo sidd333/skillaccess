@@ -90,6 +90,7 @@ const testState = {
   totalAttempts: 0,
   topics: [],
   status: "",
+  currentTopic: {},
 };
 
 export const getTest = createAsyncThunk(
@@ -170,6 +171,28 @@ export const getAllTopics = createAsyncThunk(
       );
       const res = req.data;
       return res.sections;
+    } catch (error) {
+      console.log("catch", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getTopicById = createAsyncThunk(
+  "test/getTopicById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const req = await axios.get(
+        `${REACT_APP_API_URL}/api/admin/topic/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
+      );
+      const res = req.data;
+      return res.section;
     } catch (error) {
       console.log("catch", error.response.data);
       return rejectWithValue(error.response.data);
@@ -315,7 +338,22 @@ const testSlice = createSlice({
         console.error("Error fetching topics:", action.payload);
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(getTopicById.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(getTopicById.fulfilled, (state, action) => {
+        state.currentTopic = action.payload;
+        // console.log(action.payload);
+        console.log("fullfilled");
+      })
+      .addCase(getTopicById.rejected, (state, action) => {
+        console.error("Error fetching topic:", action.payload);
+        state.status = "failed";
+        state.error = action.payload;
       });
+
   },
 });
 
