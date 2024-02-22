@@ -88,6 +88,8 @@ const testState = {
   description: "",
   attempts: 0,
   totalAttempts: 0,
+  totalTime: 0,
+  totalQuestions: 0,
   topics: [],
   status: "",
   currentTopic: {},
