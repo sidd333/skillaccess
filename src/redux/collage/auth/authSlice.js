@@ -119,8 +119,8 @@ export const updateAvatar = createAsyncThunk(
       const res = req.data;
       return res.data.college;
     } catch (error) {
-      console.log("catch", error.response.data);
-      return rejectWithValue(error.response.data);
+      console.log("catch", error.response);
+      return rejectWithValue(error.response);
     }
   }
 );
@@ -188,9 +188,12 @@ const collageAuthSlice = createSlice({
       .addCase(registerCollage.fulfilled, (state, action) => {
         // state.status = action.payload
         state.isLoggedIn = true;
-        state.user = action.payload
+      
         // Add any fetched posts to the array
         console.log("fullfilled");
+        getCollege();
+        // state.user = action.payload;
+          //  window.location.reload(true);
       })
       .addCase(registerCollage.rejected, (state, action) => {
         console.log(action.payload);
@@ -251,7 +254,7 @@ const collageAuthSlice = createSlice({
       })
       .addCase(updateAvatar.pending, (state, action) => {
         state.status = "loading";
-        console.log("pending");
+        console.log("pending avatar");
       })
       .addCase(updateAvatar.fulfilled, (state, action) => {
         // state.status = action.payload
@@ -261,12 +264,12 @@ const collageAuthSlice = createSlice({
         state.uploadImg = true;
         // state.user = action.payload;
 
-        // getCollege();
+        getCollege();
         // Add any fetched posts to the array
-        console.log("fullfilled");
+        console.log("fullfilled avatar");
       })
       .addCase(updateAvatar.rejected, (state, action) => {
-        console.log(action.payload);
+        console.log(action.payload ,"rejected avatar");
 
         // window.alert(action.payload);
       })

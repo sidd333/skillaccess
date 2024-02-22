@@ -24,6 +24,17 @@ const Profile = () => {
     dispatch(updateCollege(college));
     setEditable(false);
   };
+
+  useEffect(() => {
+    console.log(uploadImg);
+
+if(uploadImg){
+  getCollege()
+}else{
+dispatch(  setUploadImg(false))
+}
+  }, [uploadImg])
+  
   useEffect(() => {
     if (user) {
       setCollege(user);
@@ -80,9 +91,12 @@ const Profile = () => {
   useEffect(() => {
     if (submitUpdateProfile) {
       dispatch(updateCollege(college));
+      dispatch(updateAvatar(avatar));
       dispatch(getCollege());
+      dispatch(setUploadImg(false));
       setSubmitUpdateProfile(false);
       setEditable(false);
+      window.location.reload(true);
     }
   }, [submitUpdateProfile]);
   // useEffect(() => {
