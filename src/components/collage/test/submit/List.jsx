@@ -3,7 +3,7 @@ import React from "react";
 import { FaCaretDown } from "react-icons/fa";
 import { RiBookmark2Fill } from "react-icons/ri";
 
-const List = () => {
+const List = ({ question }) => {
   return (
     <div className="flex justify-between gap-2 font-dmSans">
       <button className=" bg-blued rounded-xl text-white text-base font-bold py-2 w-12 h-11">
@@ -15,9 +15,7 @@ const List = () => {
             <div className="mb-4">
               <div className="flex w-full justify-between rounded-lg bg-gray-100 pl-4 py-3 text-left text-sm font-medium  hover:bg-slate-50 focus:outline-none  ">
                 <div>
-                  <p className="text-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
+                  <p className="text-sm">{question.Title}</p>
                 </div>
                 <div className="flex gap-2 self-center">
                   <Disclosure.Button className="flex gap-2 w-10/12 self-center">
@@ -50,7 +48,9 @@ const List = () => {
                       />
                     </div>
 
-                    <label className="text-blacktext-sm">Dairy Study</label>
+                    <label className="text-blacktext-sm">
+                      {question.Options[0]}
+                    </label>
                   </div>
                   <div className="flex gap-2  rounded-lg p-3">
                     <div className="w-6">
@@ -62,7 +62,7 @@ const List = () => {
                       />
                     </div>
 
-                    <label>Field Study</label>
+                    <label>{question.Options[1]}</label>
                   </div>
                   <div className="flex gap-2  rounded-lg p-3">
                     <div className="w-6">
@@ -74,7 +74,7 @@ const List = () => {
                       />
                     </div>
 
-                    <label>Usability Test</label>
+                    <label>{question.Options[2]}</label>
                   </div>
                   <div className="flex gap-2  rounded-lg p-3">
                     <div className="w-6">
@@ -86,7 +86,7 @@ const List = () => {
                       />
                     </div>
 
-                    <label>Inquiry</label>
+                    <label>{question.Options[3]}</label>
                   </div>
                 </Disclosure.Panel>
               </Transition>

@@ -41,20 +41,26 @@ const Submit = () => {
         <Progress />
       </div>
       <div className="mt-16">
-        {topics[0].questions && topics[0].questions.length > 0 ? (
-          topics[0].questions.map((ques) => (
-            <div className="w-full my-2">
-              <List />
-            </div>
-          ))
-        ) : (
-          <></>
-        )}
+        {topics.map((el, i) => {
+          return (
+            <>
+              {topics[i].questions && topics[i].questions.length > 0 ? (
+                topics[i].questions.map((ques) => (
+                  <div className="w-full my-2">
+                    <List question={ques} />
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
+            </>
+          );
+        })}
 
         {/* iterate this list */}
       </div>
 
-      <div className="absolute bottom-10 flex gap-2 w-full justify-center">
+      {/* <div className="absolute bottom-10 flex gap-2 w-full justify-center">
         <div className="rounded-lg bg-gray-100 h-10 w-10 flex justify-center">
           <FaChevronLeft
             className={`rotate-45 text-lg self-center ${
@@ -114,7 +120,7 @@ const Submit = () => {
             onClick={() => selected !== max && setSelected(selected + 1)}
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

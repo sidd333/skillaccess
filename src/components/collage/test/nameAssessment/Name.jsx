@@ -46,6 +46,7 @@ const Name = () => {
 
   const handleSubmit = () => {
     dispatch(setTestBasicDetails(testDetails));
+
     navigate("/collage/test/select");
     console.log(testDetails, name, description, totalAttempts);
   };

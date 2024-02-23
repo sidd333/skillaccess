@@ -7,7 +7,7 @@ import Footer from "./Footer";
 const Finalize = () => {
   const navigate = useNavigate();
 
-  const { name, description, topics, totalAttempts } = useSelector(
+  const { testName, testDescription, topics, testAttempts } = useSelector(
     (state) => state.test
   );
 
@@ -50,12 +50,12 @@ const Finalize = () => {
               id=""
               className="w-full rounded-lg bg-gray-100 focus:outline-none border-none mb-4 py-3 px-7 font-bold text-2xl"
             >
-              {name}
+              {testName}
             </div>
           </div>
 
           <p className="resize-none w-full h-full text-lg bg-gray-100 border-none focus:outline-none rounded-lg  px-7 pt-3 pb-8 focus:ring-0placeholder-gray-400 mb-6">
-            {description}
+            {testDescription}
           </p>
           {/* Need to all these details below from sections */}
           <div className=" w-full h-full text-lg bg-gray-100   mb-3 rounded-lg flex justify-between px-7 py-4">
@@ -70,7 +70,7 @@ const Finalize = () => {
 
           <div className=" w-full h-full text-lg bg-gray-100   mb-3 rounded-lg flex justify-between px-7 py-4">
             <p>Total attempts allowed</p>
-            <p className="text-[#0052CC]  font-bold">{totalAttempts}</p>
+            <p className="text-[#0052CC]  font-bold">{testAttempts}</p>
           </div>
         </div>
 
