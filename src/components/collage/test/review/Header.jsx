@@ -3,9 +3,10 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
 import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { FiUpload } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Header = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   return (
     <div className="flex w-11/12 mx-auto justify-between mb-2 mt-5">
@@ -30,14 +31,14 @@ const Header = () => {
         <div className=" flex gap-2">
           <button
             className="self-center justify-center flex bg-[#F8F8F9] py-3  rounded-xl w-32  gap-2 "
-            onClick={() => navigate("/collage/test/addMcq")}
+            onClick={() => navigate(`/collage/test/addMcq/${id}`)}
           >
             <FiPlus className="self-center text-lg " /> Add
           </button>
 
           <button
             className="self-center justify-center flex bg-blue-700 py-3  rounded-xl w-48 text-white  gap-2 "
-            onClick={() => navigate("/collage/test/addMcq")}
+            onClick={() => navigate(`/collage/test/addMcq/${id}`)}
           >
             <FiUpload className="self-center text-lg " /> Upload Questions
           </button>

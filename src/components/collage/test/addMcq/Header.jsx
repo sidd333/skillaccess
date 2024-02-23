@@ -3,9 +3,9 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createTest } from "../../../../redux/collage/test/testSlice";
+import { addMcq, createTest } from "../../../../redux/collage/test/testSlice";
 
-const Header = ({ questions }) => {
+const Header = ({ question, setQuestion }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { test } = useSelector((state) => state.test);
@@ -22,6 +22,11 @@ const Header = ({ questions }) => {
     navigate("/collage/test/final");
   };
 
+  const handleSave = () => {
+    dispatch(addMcq({ question: question }));
+    setQuestion({ Title: "", Options: [] });
+    navigate("/collage/test/questions");
+  };
   // useEffect(() => {
   //   dispatch(setTest({questions}));
   // }, [questions]);
@@ -56,7 +61,7 @@ const Header = ({ questions }) => {
             className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white"
             // onClick={handleCreateTest}
 
-            onClick={() => window.alert("saved")}
+            onClick={handleSave}
           >
             Save
           </button>
