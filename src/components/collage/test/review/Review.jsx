@@ -12,10 +12,16 @@ const Review = () => {
   const { currentTopic } = useSelector((state) => state.test);
   const [questions, setQuestions] = useState([]);
 
-  useEffect(() => {
-    dispatch(getTopicById(id)).then(() => setQuestions(currentTopic.questions));
-    console.log(currentTopic, "currentTopic", id);
-  }, [dispatch]);
+  useEffect(
+    () => {
+      dispatch(getTopicById(id)).then(() =>
+        setQuestions(currentTopic.questions)
+      );
+      console.log(currentTopic, "currentTopic", id);
+    },
+    [dispatch],
+    []
+  );
   // update the topic from topics array where the id matches the id in the url
   // for (let i = 0; i < topics.length; i++) {
   //   if (topics[i]._id === id) {
@@ -25,7 +31,7 @@ const Review = () => {
 
   return (
     <div className="font-dmSans text-sm font-bold">
-      <Header />
+      <Header id={id} />
 
       <div className="  w-11/12 mx-auto min-h-[90vh] my-2 rounded-lg   bg-gray-100 ">
         <div className="flex justify-between p-4">

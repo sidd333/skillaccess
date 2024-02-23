@@ -572,6 +572,10 @@ const testSlice = createSlice({
           ];
         }
       }
+      state.currentTopic.questions = [
+        ...state.currentTopic.questions,
+        action.payload.question,
+      ];
     },
     setTestName: (state, action) => {
       state.test.testName = action.payload;
