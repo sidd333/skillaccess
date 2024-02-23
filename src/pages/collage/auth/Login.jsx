@@ -8,6 +8,7 @@ import { LuEye } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
+  // cosnt[(error, setError)] = useState();
   const [type, setType] = useState("password");
   const navigate = useNavigate();
   const dispatch = useDispatch();
