@@ -4,12 +4,12 @@ import { PiFileTextBold } from "react-icons/pi";
 import { IoSwapVerticalSharp } from "react-icons/io5";
 import { PiPencilSimpleLineBold } from "react-icons/pi";
 import { CiBookmarkMinus } from "react-icons/ci";
-const Mcq = () => {
+const Mcq = ({ Title, Options, Number }) => {
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between">
       <div className="w-11/12 flex flex-col gap-2">
         <h2 className="px-4 font-semibold pt-3 text-base">
-          1. &nbsp; Which of the following is the answer?
+          {Number + 1} &nbsp; {Title}
         </h2>
         <div className="px-5 pb-4 flex flex-col gap-4">
           <span className="flex gap-2">
@@ -23,7 +23,8 @@ const Mcq = () => {
             </div>
             <label for="answer" className="self-center">
               {" "}
-              Option
+              {console.log("options : ", Options)}
+              {Options[0]}
             </label>
           </span>
           <span className="flex gap-2">
@@ -37,7 +38,7 @@ const Mcq = () => {
             </div>
             <label for="answer" className="self-center">
               {" "}
-              Option
+              {Options[1]}
             </label>
           </span>
           <span className="flex gap-2">
@@ -51,7 +52,7 @@ const Mcq = () => {
             </div>
             <label for="answer" className="self-center">
               {" "}
-              Option
+              {Options[2]}
             </label>
           </span>
           <span className="flex gap-2">
@@ -65,7 +66,7 @@ const Mcq = () => {
             </div>
             <label for="answer" className="self-center">
               {" "}
-              Option
+              {Options[3]}
             </label>
           </span>
         </div>
