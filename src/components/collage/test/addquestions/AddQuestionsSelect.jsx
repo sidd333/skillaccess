@@ -7,27 +7,47 @@ import { PiPencilSimpleLine } from "react-icons/pi";
 import { ImFileText } from "react-icons/im";
 import { setTest } from "../../../../redux/collage/test/testSlice";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const AddQuestionsSelect = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [selectQuestionType, setSelectQuestionType] = useState("");
 
-const dispatch = useDispatch();
-const [selectQuestionType, setSelectQuestionType] = useState("");
+  useEffect(() => {
+    dispatch(setTest({ questionType: selectQuestionType }));
+  }, [selectQuestionType]);
 
-useEffect(() => {
-  dispatch(setTest({ questionType: selectQuestionType }));
-}, [selectQuestionType]);
+  const NavHandler = () => {
+    switch (selectQuestionType) {
+      case "mcq":
+        navigate("/collage/test/addMcq/:0");
+        break;
 
+      case "code":
+        navigate("/collage/test/addcode");
+        break;
 
+      // case "video":
+      //   navigate("/collage/test/addVideo");
+      //   break;
 
+      case "comp":
+        navigate("/collage/test/addPara");
+        break;
 
+      case "essay":
+        navigate("/collage/test/addEssay");
+        break;
 
+      default:
+        window.alert("please select field");
+        break;
+    }
+  };
   return (
     <div className="font-dmSans text-sm font-bold">
       <HeaderSelect Q={selectQuestionType} />
-
-      <div className="w-4/5 mx-auto">
-        <Progress />
-      </div>
 
       <div className="w-11/12 mx-auto mt-20">
         {/* larger screens */}
@@ -40,23 +60,23 @@ useEffect(() => {
 
         <div className="  sm:mt-5 rounded-lg tracking-wide  w-full ">
           {/* mcq */}
-          <div className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+          <div
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 py-4 px-8  my-2  ${
               selectQuestionType === "mcq" && "border-blued "
             }`}
-          onClick={() => setSelectQuestionType("mcq")}>
-            
-          
+            onClick={() => setSelectQuestionType("mcq")}
+          >
             {" "}
-
-
             <div className="flex gap-5 font-dmSans w-1/3">
               <div className="w-5 h-5 self-center">
                 <input
                   type="radio"
                   name="ques"
-                  checked
+                  checked={selectQuestionType === "mcq"}
                   className={`w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center `}
-                  onClick={() => setSelectQuestionType("mcq")}
+                  onClick={(e) => {
+                    setSelectQuestionType("mcq");
+                  }}
                 />
               </div>
 
@@ -81,11 +101,12 @@ useEffect(() => {
           </div>
 
           {/* code */}
-          <div className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+          <div
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 py-4 px-8  my-2  ${
               selectQuestionType === "code" && "border-blued "
             }`}
-          onClick={() => setSelectQuestionType("code")}>
-          
+            onClick={() => setSelectQuestionType("code")}
+          >
             {" "}
             <div className="flex gap-5 font-dmSans w-1/3">
               <div className="w-5 h-5 self-center">
@@ -93,6 +114,7 @@ useEffect(() => {
                 <input
                   type="radio"
                   name="ques"
+                  checked={selectQuestionType === "code"}
                   className={`w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center   border-blue-700`}
                   onClick={() => setSelectQuestionType("code")}
                 />
@@ -117,9 +139,9 @@ useEffect(() => {
           </div>
 
           {/* Essay */}
-    
+
           <div
-            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 py-4 px-8  my-2  ${
               selectQuestionType === "essay" && "border-blued "
             }`}
             onClick={() => setSelectQuestionType("essay")}
@@ -129,6 +151,7 @@ useEffect(() => {
               <div className="w-5 h-5 self-center">
                 <input
                   type="radio"
+                  checked={selectQuestionType === "essay"}
                   name="ques"
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
                   onClick={() => setSelectQuestionType("essay")}
@@ -153,10 +176,8 @@ useEffect(() => {
           </div>
           {/*  */}
 
-            
-         
           <div
-            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 py-4 px-8  my-2  ${
               selectQuestionType === "video" && "border-blued "
             }`}
             onClick={() => setSelectQuestionType("video")}
@@ -167,6 +188,7 @@ useEffect(() => {
                 <input
                   type="radio"
                   name="ques"
+                  checked={selectQuestionType === "video"}
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
                   onClick={() => setSelectQuestionType("video")}
                 />
@@ -192,9 +214,8 @@ useEffect(() => {
 
           {/* Find Answer*/}
 
-         
           <div
-            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 p-4 my-2 ${
+            className={`w-full flex justify-between bg-gray-100 rounded-lg border  h-20 py-4 px-8  my-2  ${
               selectQuestionType === "findAnswer" && "border-blued "
             }`}
             onClick={() => setSelectQuestionType("findAnswer")}
@@ -205,8 +226,9 @@ useEffect(() => {
                 <input
                   type="radio"
                   name="ques"
+                  checked={selectQuestionType === "findAnswer"}
                   className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blue-700 checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                  onClick={() => setSelectQuestionType("comp")}
+                  onClick={() => setSelectQuestionType("findAnswer")}
                 />
               </div>
               <img
@@ -227,6 +249,20 @@ useEffect(() => {
             />
           </div>
           {/*  */}
+        </div>
+      </div>
+
+      <div className=" w-11/12 mx-auto flex justify-end mt-14">
+        <div className="flex gap-4">
+          <button
+            className="self-center justify-center flex bg-gray-100 py-3 px-8 rounded-xl text-xs gap-2 "
+            onClick={NavHandler}
+          >
+            New Question
+          </button>
+          <button className="self-center justify-center flex bg-white border border-blue-500 py-3 px-8 rounded-xl text-xs gap-2 text-blue-500">
+            Copy question from another assessment
+          </button>
         </div>
       </div>
     </div>

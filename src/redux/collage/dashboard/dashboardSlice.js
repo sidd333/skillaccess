@@ -51,6 +51,7 @@ export const getCompany = createAsyncThunk(
     'dashboard/getCompany',
     async (data, { rejectWithValue }) => {
         try {
+            console.log(authToken, "authToken")
             const req = await axios.post(
                 `${REACT_APP_API_URL}/api/college/dashboard/companies`,
                 data,
@@ -62,6 +63,7 @@ export const getCompany = createAsyncThunk(
             const res = req.data;
             return res.companies;
         } catch (error) {
+
             return rejectWithValue(error.response.data);
         }
 

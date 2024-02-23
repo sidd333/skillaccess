@@ -6,44 +6,20 @@ import { useNavigate } from "react-router-dom";
 const Header = ({ Q }) => {
   const navigate = useNavigate();
 
-  const NavHandler = () => {
-    switch (Q) {
-      case "mcq":
-        navigate("/collage/test/addMcq");
-        break;
-
-      case "code":
-        navigate("/collage/test/addcode");
-        break;
-
-      // case "video":
-      //   navigate("/collage/test/addVideo");
-      //   break;
-
-      case "comp":
-        navigate("/collage/test/addPara");
-        break;
-
-      case "essay":
-        navigate("/collage/test/addEssay");
-        break;
-
-      default:
-        // window.alert("please select field");
-        break;
-    }
-  };
   return (
     <div className="flex w-11/12 mx-auto justify-between mb-2 mt-5">
       <div>
         <button className="flex self-center ml-2 rounded-lg  gap-2">
-          <button onClick={() => navigate(-1)} className="mt-2 mr-3">
-            <FaChevronLeft className=" p-3 rounded-lg h-10 w-10 self-center bg-gray-200" />
+          <button
+            className="bg-[#D9E1E7]  self-center ml-2 rounded-lg h-10 w-10 sm:h-12 sm:w-14"
+            onClick={() => navigate(-1)}
+          >
+            <img src="../../images/icons/back.png" alt="" srcset="" />
           </button>
 
           <div className="">
             <h2 className="sm:text-xl  text-left font-bold self-center text-3xl font-dmSans ">
-              Create Assessment
+              Create Topic
             </h2>
             <div className="flex gap-2 text-[#567BF9] text-xs font-medium mt-3">
               <h3 className="mr-2">Untitiled Assessments</h3>
@@ -62,7 +38,7 @@ const Header = ({ Q }) => {
                   className=" object-scale-down"
                 />
               </span>
-              <h3>Add Questions</h3>
+              <h3>21 MINS</h3>
             </div>
           </div>
         </button>
@@ -71,11 +47,10 @@ const Header = ({ Q }) => {
       <div className="bg-gray-100 rounded-xl mx-2   h-12 flex my-2 ">
         <div className=" flex">
           <button
-            className="self-center justify-center flex bg-blue-800 py-3 px-4 rounded-lg text-xs gap-2 text-white"
-            onClick={NavHandler}
+            className="self-center justify-center flex bg-[#0052CC] py-3 px-8 rounded-2xl text-xs gap-2 text-white"
+            onClick={() => navigate("/collage/test/select")}
           >
-            Next Step{" "}
-            <FaArrowRightLong className="self-center text-lg text-white ml-4" />
+            Publish
           </button>
         </div>
       </div>

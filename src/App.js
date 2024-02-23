@@ -1,5 +1,8 @@
 import "./App.css";
 import React, { Suspense, lazy } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCollege, logoutCollage } from "./redux/collage/auth/authSlice";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 //----------------------------------------------collage pages----------------------------------------------------------------------------//
@@ -13,8 +16,7 @@ import Rote from "./pages/collage/home/DashRoutes";
 import TestRoute from "./pages/collage/test/Index";
 
 //-----------------------------------------------------------results
-import ResultsPage from "./pages/collage/results/ResultsPage";
-import ResultsOverviewPage from "./pages/collage/results/ResultsOverviewPage";
+import ResultsRoute from "./pages/collage/results";
 
 //----------------------------------------------------------Q-Bank
 import QuesRoute from "./pages/collage/quesBank";
@@ -23,54 +25,90 @@ import QuesRoute from "./pages/collage/quesBank";
 
 //---------------------------------------------------------------students
 import StudentRoute from "./pages/collage/students";
+
+//---------------------------------------------------------------inbox
+import InboxRoute from "./pages/collage/inbox/index";
+
+//---------------------------------------------------------------settings
+
+import SettingsRoute from "./pages/collage/settings/index";
+
+//---------------------------------------------------------------teams
+
+import TeamsRoute from "./pages/collage/teams";
+
 //----------------------------------------------------------------------------------------------------------------------------------------//
 
 import AccountingPage from "./pages/collage/accounting/AccountingPage";
-import InboxPage from "./pages/collage/inbox/InboxPage";
+
 import ProfilePage from "./pages/collage/profile/ProfilePage";
-import SettingsPage from "./pages/collage/settings/SettingsPage";
-import TeamsPage from "./pages/collage/teams/TeamsPage";
+
 import CompaniesRoute from "./pages/collage/companies";
-import ResultsRoute from "./pages/collage/results";
 
 const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
 
 export default function App() {
+  //  AnkitaMalik22-ankita-dev
+  const dispatch = useDispatch();
+
+  // =======
+  //   const dispatch = useDispatch();
+  //   useEffect(() => {
+  //     dispatch(getCollege());
+  //   }, [dispatch]);
+  // >>>>>>> saveMain
+
+  const { user, isLoggedIn } = useSelector((state) => state.collageAuth);
+
+  useEffect(() => {
+    dispatch(getCollege());
+  }, []);
+
   return (
     <BrowserRouter>
       <Suspense fallback={<>loading</>}>
         <Routes>
           {/* ----------------------------------------collage-------------------------------------------------------------- */}
-          <Route path="" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
+          {isLoggedIn ? (
+            <>
+              {Rote()}
+              {TestRoute()}
+              {StudentRoute()}
+              {QuesRoute()}
+              {CompaniesRoute()}
+              {ResultsRoute()}
+              {InboxRoute()}
+              {SettingsRoute()}
+              {TeamsRoute()}
+            </>
+          ) : (
+            <Route path="*" element={<h1>loading...</h1>} />
+          )}
+          {/* 
           {Rote()}
           {TestRoute()}
           {StudentRoute()}
           {QuesRoute()}
           {CompaniesRoute()}
           {ResultsRoute()}
+          {InboxRoute()}
+          {SettingsRoute()}
+          {TeamsRoute()} */}
 
           <Route path="collage/accounting">
             <Route path="" element={<AccountingPage />} />
           </Route>
 
-          <Route path="collage/inbox">
-            <Route path="" element={<InboxPage />} />
-          </Route>
+          {isLoggedIn && (
+            <Route path="collage/profile">
+              <Route path="" element={<ProfilePage />} />
+            </Route>
+          )}
 
-          <Route path="collage/profile">
-            <Route path="" element={<ProfilePage />} />
-          </Route>
-
-          <Route path="collage/settings">
-            <Route path="" element={<SettingsPage />} />
-          </Route>
-
-          <Route path="collage/teams">
-            <Route path="" element={<TeamsPage />} />
-          </Route>
           {/* .......................................................................................................................... */}
         </Routes>
       </Suspense>

@@ -3,14 +3,23 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-const EditHeader = ({ setEditable, editable }) => {
+const EditHeader = ({
+  setEditable,
+  editable,
+  handleUpdate,
+  college,
+  setSubmitUpdateProfile,
+}) => {
   const navigate = useNavigate();
   return (
     <div className="flex w-[98%] mx-auto justify-between mb-2 mt-5">
       <div className="h-fit self-center">
         <button className="flex self-center ml-2 rounded-lg  gap-2">
           <button
-            onClick={() => setEditable(false)}
+            onClick={() => {
+              setEditable(false);
+              localStorage.setItem("editable", false);
+            }}
             className=" mr-3 self-center bg-[#D9E1E7] sm:w-[72px] h-16 rounded-lg flex justify-center"
           >
             <FaChevronLeft className="   h-6 w-6 self-center " />
@@ -28,13 +37,17 @@ const EditHeader = ({ setEditable, editable }) => {
         <div className=" flex gap-2">
           <button
             className="self-center justify-center flex text-blue-800 h-14 px-4 rounded-xl font-bold gap-2 bg-gray-700 bg-opacity-5 "
-            onClick={() => setEditable(false)}
+            onClick={() => {
+              setEditable(false);
+              localStorage.setItem("editable", false);
+            }}
           >
             <p className="self-center"> Cancel</p>
           </button>
           <button
             className="self-center justify-center flex h-14 px-4 rounded-xl font-bold gap-2 bg-blue-700 text-white sm:px-12 "
-            onClick={() => setEditable(false)}
+            // onClick={() => handleUpdate(college)}
+            onClick={() => setSubmitUpdateProfile(true)}
           >
             <p className="self-center">Save</p>
           </button>

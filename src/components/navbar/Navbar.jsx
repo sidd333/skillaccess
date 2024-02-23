@@ -1,10 +1,10 @@
 import React from "react";
-import { Logo } from "./Logo";
+
 import { FiBell } from "react-icons/fi";
 import { FaAngleDown } from "react-icons/fa";
 const Navbar = (props) => {
   return (
-    <div className="border border-y-1 sorder border-gray-500 bg-white w-full z-40 m-0 fixed top-0">
+    <div className="border border-y-1 sorder border-gray-500 bg-white w-full z-[9999] m-0 fixed top-0">
       <div className="navbar flex justify-between ">
         {/* left */}
         <div>
@@ -16,9 +16,9 @@ const Navbar = (props) => {
             hamb
           </button>
 
-          <div className="h-10 w-10">
+          <div className="">
             {" "}
-            <Logo />
+            <img src="../../../images/logo.png" alt="" />
           </div>
         </div>
 

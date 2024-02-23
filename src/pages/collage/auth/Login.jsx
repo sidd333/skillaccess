@@ -4,8 +4,12 @@ import { loginCollage } from "../../../redux/collage/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LuEye } from "react-icons/lu";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
+  // cosnt[(error, setError)] = useState();
+  const [type, setType] = useState("password");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [Credentials, setCredentials] = useState({
@@ -48,12 +52,14 @@ const Login = () => {
     }
   };
   return (
-    <form>
-      <div className="card card-side bg-base-100 shadow-xl h-full lg:h-[900px]  font-dmSans   ">
-        <figure className="w-1/2 h-full bg-login bg-no-repeat bg-cover bg-center !hidden  lg:!flex !flex-row "></figure>
+    <form action="" className="font-dmSans">
+      <div className=" bg-base-100 shadow-xl h-full min-h-[100vh]  font-dmSans grid grid-cols-5 ">
+        <figure className="w-full h-full bg-login bg-no-repeat bg-cover bg-center !hidden  lg:!block col-span-2 ">
+          {/* <img src="./images/loginBg.jpg" alt="" className="w-full h-full" /> */}
+        </figure>
 
         {/* right half */}
-        <div className="card-body my-auto !mt-20 sm:mt-0">
+        <div className="card-body my-auto !mt-20 sm:mt-0 col-span-3">
           {/* skill access group */}
           <div className="flex gap-2 justify-center">
             <svg
@@ -88,27 +94,24 @@ const Login = () => {
             placeholder="Email Address"
             className="input rounded-xl border-none  md:mt-6 mt-4 focus:outline-none input-md w-full max-w-xs  mx-auto bg-snow "
           />
-          <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 ">
+          <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 rounded-xl  bg-snow ">
             <input
               name="Password"
               onChange={changeHandler}
               value={Credentials.Password}
-              type="password"
+              type={type}
               placeholder="Password"
-              className="input rounded-xl border-none  focus:outline-none input-md w-full max-w-xs  mx-auto bg-snow  "
+              className="input  border-none  focus:outline-none input-md w-full max-w-xs  bg-snow  mx-auto "
             />
-            <button className="btn btn-primary bg-snow">S</button>
-          </div>
-          <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 ">
-            <input
-              name="confirmPassword"
-              onChange={changeHandler}
-              value={Credentials.confirmPassword}
-              type="password"
-              placeholder="Confirm Password"
-              className="input rounded-xl border-none  focus:outline-none input-md w-full max-w-xs  mx-auto bg-snow  "
-            />
-            <button className="btn btn-primary bg-snow">S</button>
+            <button
+              className="btn !shadow-none bg-snow border-none"
+              onClick={(e) => {
+                e.preventDefault();
+                type === "text" ? setType("password") : setType("text");
+              }}
+            >
+              <LuEye className="text-gray-400 text-2xl" />
+            </button>
           </div>
 
           <div className=" flex gap-2  p-2 lg:mt-6 md:mt-6 mt-4   w-full max-w-xs  mx-auto ">
@@ -138,20 +141,24 @@ const Login = () => {
           </label>
 
           <button
-            className="btn btn-accent rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
+            className="btn hover:bg-blue-500  rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
             onClick={handleSubmit}
           >
             Login
           </button>
           <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
-          <button className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  ">
+          <button
+            className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  "
+            onClick={() => navigate("/collage/dashboard")}
+          >
+            <FcGoogle className="text-lg mr-2" />
             <h3 className="opacity-100">Continue with google</h3>
           </button>
           <span className="text-lGray text-center">
-            Already have an account?{" "}
-            <Link to="/" className="text-secondary">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-secondary">
               {" "}
-              SignIn
+              SignUp
             </Link>
           </span>
         </div>
