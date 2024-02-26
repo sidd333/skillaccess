@@ -44,7 +44,6 @@ const testState = {
     ],
   },
 
-
   name: "",
   description: "",
   attempts: 0,
@@ -158,6 +157,48 @@ export const getTopicById = createAsyncThunk(
       return res.section;
     } catch (error) {
       console.log("catch", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const createTopic = createAsyncThunk(
+  "test/createTopic",
+
+  async (data, { rejectWithValue }) => {
+    //   {
+
+    //     "Heading": "DevOps 5",
+
+    //     "Description": "The DevOps test assesses candidates' knowledge of DevOps concepts and practices and whether they can apply that knowledge to improve infrastructure, achieve faster time to market, and lower failure rates of new releases.",
+
+    //     "Time": 10,
+
+    //     "TotalQuestions": 10
+
+    // }
+
+    try {
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/topics/create`,
+
+        data,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+
+            "auth-token": authToken,
+          },
+        }
+      );
+
+      const res = req.data;
+
+      return res.section;
+    } catch (error) {
+      console.log("catch", error.response.data);
+
       return rejectWithValue(error.response.data);
     }
   }
