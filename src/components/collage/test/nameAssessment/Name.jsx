@@ -3,27 +3,33 @@ import { useNavigate } from "react-router-dom";
 import Header from "./Header";
 import { Progress } from "./Progress";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllTests, setTest  , setTestBasicDetails} from "../../../../redux/collage/test/testSlice";
+import {
+  getAllTests,
+  setTest,
+  setTestBasicDetails,
+} from "../../../../redux/collage/test/testSlice";
 
 const Name = () => {
   const dispatch = useDispatch();
-  const { name , description,totalAttempts } = useSelector((state) => state.test);
+  const { name, description, totalAttempts } = useSelector(
+    (state) => state.test
+  );
   // const {} = useSelector((state) =>console.log(state.test));
   const navigate = useNavigate();
-  const [testDetails , setTestDetails] = useState({
-    name : name || "",
-    description : description || "",
-    totalAttempts : totalAttempts || ""
+  const [testDetails, setTestDetails] = useState({
+    name: name || "",
+    description: description || "",
+    totalAttempts: totalAttempts || "",
   });
 
   useEffect(() => {
     setTestDetails({
-      name : name || "",
-      description : description || "",
-      totalAttempts : totalAttempts || ""
-    })
+      name: name || "",
+      description: description || "",
+      totalAttempts: totalAttempts || "",
+    });
     // why getting 0 here
-    console.log(name,description,totalAttempts)
+    console.log(name, description, totalAttempts);
   }, [dispatch]);
 
   // const getTests = () => {
@@ -34,21 +40,19 @@ const Name = () => {
   const handleChange = (e) => {
     setTestDetails({
       ...testDetails,
-      [e.target.name] : e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = () => {
     dispatch(setTestBasicDetails(testDetails));
     navigate("/collage/test/select");
     console.log(testDetails, name, description, totalAttempts);
-  }
-
-
+  };
 
   return (
     <div className="font-dmSans text-sm font-bold">
-      <Header handleNext = {handleSubmit} />
+      <Header handleNext={handleSubmit} />
       <div className="w-4/5 mx-auto">
         <Progress />
       </div>
@@ -64,9 +68,9 @@ const Name = () => {
           type="text"
           className="w-full bg-gray-100 h-16 px-6 text-lg font-bold py-2 mt-12 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 border-none placeholder-gray-400"
           placeholder="Name of the Assessment"
-          name = "name"
-          value = {testDetails.name}
-          onChange = {handleChange}
+          name="name"
+          value={testDetails.name}
+          onChange={handleChange}
         />
         {/* Will be calculated in backend */}
         {/* <input
@@ -81,19 +85,19 @@ const Name = () => {
         /> */}
         <input
           type="text"
-          name ="totalAttempts"
+          name="totalAttempts"
           className="w-full bg-gray-100 h-16 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 border-none placeholder-gray-400"
           placeholder="No. of Attempts"
           value={testDetails.totalAttempts}
-          onChange = {handleChange}
+          onChange={handleChange}
         />
 
         <textarea
           className="w-full bg-gray-100 h-48 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 resize-none border-none placeholder-gray-400"
           placeholder="Add Description"
-          name = "description"
+          name="description"
           value={testDetails.description}
-          onChange = {handleChange}
+          onChange={handleChange}
         />
       </div>
     </div>

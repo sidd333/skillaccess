@@ -6,7 +6,11 @@ import { RxCross1 } from "react-icons/rx";
 import { PiPencilSimpleLine } from "react-icons/pi";
 import { ImFileText } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
-import { setQuesions, setTest, setTestSelectedTopics } from "../../../../redux/collage/test/testSlice";
+import {
+  setQuesions,
+  setTest,
+  setTestSelectedTopics,
+} from "../../../../redux/collage/test/testSlice";
 import { useNavigate } from "react-router-dom";
 
 const AddQuestions = () => {
@@ -14,13 +18,15 @@ const AddQuestions = () => {
   // question of the topic
   const { topics } = useSelector((state) => state.test);
   React.useEffect(() => {
-    console.log(topics,  "topics");
+    console.log(topics, "topics");
   }, [topics]);
   const dispatch = useDispatch();
 
   const removeTopic = (topicId) => {
-    dispatch(setTestSelectedTopics(topics.filter((topic) => topic._id !== topicId)));
-  }
+    dispatch(
+      setTestSelectedTopics(topics.filter((topic) => topic._id !== topicId))
+    );
+  };
 
   return (
     <div className="font-dmSans text-sm font-bold">
@@ -63,14 +69,16 @@ const AddQuestions = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="col-span-1 col-start-10  flex justify-center"
-                  onClick={() => removeTopic(topic._id)}
+                  <div
+                    className="col-span-1 col-start-10  flex justify-center"
+                    onClick={() => removeTopic(topic._id)}
                   >
                     <RxCross1 className="self-center text-red-600 w-5 h-5" />
                   </div>
                   <div className="col-span-8 line-clamp-2 text-xs font-normal text-[#8F92A1] ">
-                    { topic.Description.length > 100 ? topic.Description.slice(0, 100) + "..." : topic.Description
-                    }
+                    {topic.Description.length > 100
+                      ? topic.Description.slice(0, 100) + "..."
+                      : topic.Description}
                   </div>
                   <div className="col-span-1 col-start-9  flex">
                     {/* Need Question Details page */}
@@ -79,7 +87,9 @@ const AddQuestions = () => {
                       // onClick={() =>
                       //   navigate(`/collage/test/${topic.type}/${topic.id}`)
                       // }
-                      onClick={() => navigate(`/collage/test/details/${topic._id}`)}
+                      onClick={() =>
+                        navigate(`/collage/test/details/${topic._id}`)
+                      }
                     >
                       Details
                     </button>

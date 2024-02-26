@@ -3,7 +3,7 @@ import React from "react";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const Footer = ({handleNext}) => {
+const Footer = ({ handleNext }) => {
   const Navigate = useNavigate();
   return (
     <div className="pt-1 relative pb-20">

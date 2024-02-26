@@ -17,11 +17,9 @@ import { useNavigate } from "react-router-dom";
 const SelectTests = () => {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  const { sections ,topics} = useSelector((state) => state.test);
+  const { sections, topics } = useSelector((state) => state.test);
 
-  const [selectedSections, setSelectedSections] = useState(
-topics
-  );
+  const [selectedSections, setSelectedSections] = useState(topics);
 
   const addSection = (section) => {
     // const updatedSections = [...selectedSections, section];
@@ -29,19 +27,19 @@ topics
     // // dispatch(setSections(section));
 
     if (selectedSections.length < 5) {
-   for (let i = 0; i < selectedSections.length; i++) {
-      if (selectedSections[i]._id === section._id) {
-        return;
+      for (let i = 0; i < selectedSections.length; i++) {
+        if (selectedSections[i]._id === section._id) {
+          return;
+        }
       }
-    }
       setSelectedSections([...selectedSections, section]);
-    //   dispatch(
-    //     setTest({
-    //       sections: selectedSections,
-    //     })
-    //   );
+      //   dispatch(
+      //     setTest({
+      //       sections: selectedSections,
+      //     })
+      //   );
 
-    dispatch(setTestSelectedTopics(selectedSections));
+      dispatch(setTestSelectedTopics(selectedSections));
     }
 
     // dispatch(setSections(sections.filter((s) => s !== section)));
@@ -66,7 +64,6 @@ topics
     setSelectedSections(topics);
     // console.log("hello tests",sections);
   }, []);
-
 
   useEffect(() => {
     // getSelectedSections();
@@ -103,8 +100,7 @@ topics
                     className="self-center"
                   />
                   <h2 className="font-bold text-xs text-gray-400 self-center">
-                  {section?.Type
-                  }
+                    {section?.Type}
                   </h2>
                 </div>
                 <div className="flex justify-between mt-1">
@@ -198,9 +194,8 @@ topics
                 <h2 className="text-xl font-bold mb-4">{section.Heading}</h2>
                 <p className="text-sm leading-[26px] text-[#8F92A1]">
                   {section.Description.length > 100
-                  ? section.Description.substring(0, 60) + "..."
-                  : section.Description 
-                  }
+                    ? section.Description.substring(0, 60) + "..."
+                    : section.Description}
                 </p>
 
                 <div>
@@ -212,8 +207,8 @@ topics
                           alt=""
                           className="w-7 h-7"
                         />{" "}
-                        <p className="text-gray-400 self-center">{
-                        section.Time}
+                        <p className="text-gray-400 self-center">
+                          {section.Time}
                         </p>
                       </span>
                       <button className="w-[90px] h-[40px] bg-[#8F92A120] rounded-xl">

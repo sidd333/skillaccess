@@ -3,9 +3,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({
-  handleNext
-}) => {
+const Header = ({ handleNext }) => {
   const navigate = useNavigate();
   return (
     <div className="flex w-11/12 mx-auto justify-between mb-2 mt-5">

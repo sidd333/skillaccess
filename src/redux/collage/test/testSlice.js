@@ -1,5 +1,5 @@
+
 import { createSlice } from "@reduxjs/toolkit";
-import {current } from '@reduxjs/toolkit'
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -7,6 +7,9 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 const authToken = localStorage.getItem("auth-token");
 
 const testState = {
+  testName: "",
+  testDescription: "",
+  testType: "",
 
   sections: [], // All sections from the database
   assessments: [], // All assessments from the database
@@ -16,9 +19,9 @@ const testState = {
   totalAttempts: 0,
   totalTime: 0,
   totalQuestions: 0,
-  topics: [], // Selected topics for the test
+  topics: [], //selected topics
   status: "",
-  currentTopic: {},
+  currentTopic: {}, //on edit
 };
 
 export const getTest = createAsyncThunk(
@@ -38,51 +41,7 @@ export const getTest = createAsyncThunk(
   }
 );
 
-export const getAllTests = createAsyncThunk(
-  "test/getAllTests",
-  async (_, { rejectWithValue, getState }) => {
-    try {
-      console.log(`${REACT_APP_API_URL}api/assessments`);
-      const req = await axios.get(`${REACT_APP_API_URL}/api/assessments`, {
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": authToken,
-        },
-      });
 
-      const res = req.data;
-
-      return res.data;
-    } catch (error) {
-      console.log("catch", error.response.data);
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const createTest = createAsyncThunk(
-  "test/createTest",
-  async (data, { rejectWithValue }) => {
-    try {
-      const req = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/assessments/create`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": authToken,
-          },
-        }
-      );
-      const res = req.data;
-      console.log("success", res);
-      return res.data.assessment;
-    } catch (error) {
-      console.log("catch");
-      return rejectWithValue(error.response.data.message);
-    }
-  }
-);
 
 export const getAllTopics = createAsyncThunk(
   "test/getAllTopics",
@@ -108,14 +67,13 @@ export const getAllTopics = createAsyncThunk(
 
 
 
-export const getAllAssessments = createAsyncThunk(
-  "test/getAllAssessments",
-  async (_, { rejectWithValue, getState }) => {
+export const createTest = createAsyncThunk(
+  "test/createTest",
+  async (data, { rejectWithValue }) => {
     try {
-      const req = await axios.get(
-        `${
-          REACT_APP_API_URL
-        }/api/assessments`,
+      const req = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/assessments/create`,
+        data,
         {
           headers: {
             "Content-Type": "application/json",
@@ -123,15 +81,16 @@ export const getAllAssessments = createAsyncThunk(
           },
         }
       );
-
       const res = req.data;
-      return res.assessments;
+
+      return res.assessment;
     } catch (error) {
-      console.log("catch", error.response.data);
-      return rejectWithValue(error.response.data);
+      console.log("catch");
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
+
 
 
 export const getTopicById = createAsyncThunk(
@@ -195,8 +154,21 @@ export const createTopic = createAsyncThunk(
 const testSlice = createSlice({
   initialState: testState,
   name: "test",
-
   reducers: {
+    addMcq: (state, action) => {
+      for (let i = 0; i < state.topics.length; i++) {
+        if (state.currentTopic._id === state.topics[i]._id) {
+          state.topics[i].questions = [
+            ...state.topics[i].questions,
+            action.payload.question,
+          ];
+        }
+      }
+      state.currentTopic.questions = [
+        ...state.currentTopic.questions,
+        action.payload.question,
+      ];
+    },
     setTestName: (state, action) => {
       state.test.testName = action.payload;
     },
@@ -287,19 +259,6 @@ const testSlice = createSlice({
 
         // window.alert(action.payload);
       })
-      .addCase(getAllTests.pending, (state, action) => {
-        state.status = "loading";
-        console.log("pending");
-      })
-      .addCase(getAllTests.fulfilled, (state, action) => {
-        state.tests = action.payload;
-        console.log("fullfilled");
-      })
-      .addCase(getAllTests.rejected, (state, action) => {
-        console.error("Error fetching tests:", action.payload);
-        state.status = "failed";
-        state.error = action.payload;
-      })
       .addCase(createTest.pending, (state, action) => {
         state.status = "loading";
         console.log("pending");
@@ -316,7 +275,7 @@ const testSlice = createSlice({
         // console.log(action.payload);
         console.log(action.payload);
 
-        window.alert(action.payload);
+        // window.alert(action.payload);
       })
       .addCase(getAllTopics.pending, (state, action) => {
         state.status = "loading";
@@ -378,6 +337,7 @@ const testSlice = createSlice({
 });
 
 export const {
+  addMcq,
   setTestName,
   setTest,
   setSections,
