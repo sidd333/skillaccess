@@ -7,90 +7,16 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 const authToken = localStorage.getItem("auth-token");
 
 const testState = {
-  testName: "",
-  testDescription: "",
-  testType: "",
 
-  // testStatus : "",
-  sections: [
-    // {
-    //   id : 0,
-    //   name : "section 0",
-    //   type : "mcq",
-    //   description : "this is section 0",
-    //    questions :[],
-    // },{
-    //       id : 1,
-    //       name : "section 1",
-    //       type : "mcq",
-    //       description : "this is section 1",
-    //        questions :[],
-    //     },
-    //     {
-    //       id : 2,
-    //       name : "section 2",
-    //       type : "mcq",
-    //       description : "this is section 2",
-    //        questions :[],
-    //     },
-    //     {
-    //       id : 3,
-    //       name : "section 3",
-    //       type : "mcq",
-    //       description : "this is section 3",
-    //        questions :[],
-    //     },
-    //     {
-    //       id : 4,
-    //       name : "section 4",
-    //       type : "mcq",
-    //       description : "this is section 4",
-    //        questions :[],
-    //     },
-    //     {
-    //       id :5,
-    //       name : "section 5",
-    //       type : "mcq",
-    //       description : "this is section 5",
-    //        questions :[],
-    //     }
-  ],
-
-  selectedSections: [],
-
-  questions: [
-    {
-      question: "question 1",
-      options: ["option 1", "option 2", "option 3", "option 4"],
-    },
-    {
-      question: "question 2",
-      options: ["option 1", "option 2", "option 3", "option 4"],
-    },
-  ],
-  test: {
-    testName: "",
-    questionType: "",
-    // testStatus : "",
-    sections: [],
-    questions: [
-      {
-        Duration: 0,
-        QuestionType: "mcq",
-        Title: "",
-        Options: {},
-        AnswerIndex: 0,
-      },
-    ],
-  },
-
+  sections: [], // All sections from the database
+  assessments: [], // All assessments from the database
   name: "",
   description: "",
   attempts: 0,
   totalAttempts: 0,
   totalTime: 0,
   totalQuestions: 0,
-  topics: [],
+  topics: [], // Selected topics for the test
   status: "",
   currentTopic: {},
 };
@@ -163,7 +89,7 @@ export const getAllTopics = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
       const req = await axios.get(
-        `${REACT_APP_API_URL}/api/admin/get-all-topics`,
+        `${REACT_APP_API_URL}/api/collge/topics/all`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -179,6 +105,34 @@ export const getAllTopics = createAsyncThunk(
     }
   }
 );
+
+
+
+export const getAllAssessments = createAsyncThunk(
+  "test/getAllAssessments",
+  async (_, { rejectWithValue, getState }) => {
+    try {
+      const req = await axios.get(
+        `${
+          REACT_APP_API_URL
+        }/api/assessments`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
+      );
+
+      const res = req.data;
+      return res.assessments;
+    } catch (error) {
+      console.log("catch", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 
 export const getTopicById = createAsyncThunk(
   "test/getTopicById",
@@ -201,6 +155,42 @@ export const getTopicById = createAsyncThunk(
     }
   }
 );
+
+
+export const createTopic = createAsyncThunk(
+  "test/createTopic",
+  async (data, { rejectWithValue }) => {
+
+
+  //   {
+  //     "Heading": "DevOps 5",
+  //     "Description": "The DevOps test assesses candidates' knowledge of DevOps concepts and practices and whether they can apply that knowledge to improve infrastructure, achieve faster time to market, and lower failure rates of new releases.",
+  //     "Time": 10,
+  //     "TotalQuestions": 10
+        
+  // }
+
+    try {
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/topics/create`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
+      );
+      const res = req.data;
+      return res.section;
+    } catch (error) {
+      console.log("catch", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
 
 const testSlice = createSlice({
   initialState: testState,
@@ -352,6 +342,34 @@ const testSlice = createSlice({
       })
       .addCase(getTopicById.rejected, (state, action) => {
         console.error("Error fetching topic:", action.payload);
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(createTopic.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(createTopic.fulfilled, (state, action) => {
+        state.sections = action.payload;
+        console.log("fullfilled");
+      })
+      .addCase(createTopic.rejected, (state, action) => {
+        console.error("Error creating topic:", action.payload);
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(getAllAssessments.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(getAllAssessments.fulfilled, (state, action) =>
+
+      {
+        state.assessments = action.payload;
+        console.log("fullfilled");
+      })
+      .addCase(getAllAssessments.rejected, (state, action) => {
+        console.error("Error fetching assessments:", action.payload);
         state.status = "failed";
         state.error = action.payload;
       });
