@@ -3,11 +3,11 @@ import React from "react";
 import { FaCaretDown } from "react-icons/fa";
 import { RiBookmark2Fill } from "react-icons/ri";
 
-const List = ({ question }) => {
+const List = ({ question, number }) => {
   return (
     <div className="flex justify-between gap-2 font-dmSans">
       <button className=" bg-blued rounded-xl text-white text-base font-bold py-2 w-12 h-11">
-        Q-1
+        Q-{number}
       </button>
       <div className="w-full h-11 ">
         <Disclosure>
