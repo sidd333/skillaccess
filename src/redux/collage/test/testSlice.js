@@ -1,5 +1,5 @@
-
 import { createSlice } from "@reduxjs/toolkit";
+import { current } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -73,31 +73,27 @@ export const getTest = createAsyncThunk(
   }
 );
 
-
-
-export const getAllTopics = createAsyncThunk(
-  "test/getAllTopics",
+export const getAllTests = createAsyncThunk(
+  "test/getAllTests",
   async (_, { rejectWithValue, getState }) => {
     try {
-      const req = await axios.get(
-        `${REACT_APP_API_URL}/api/collge/topics/all`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": authToken,
-          },
-        }
-      );
+      console.log(`${REACT_APP_API_URL}api/assessments`);
+      const req = await axios.get(`${REACT_APP_API_URL}/api/assessments`, {
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": authToken,
+        },
+      });
+
       const res = req.data;
-      return res.sections;
+
+      return res.data;
     } catch (error) {
       console.log("catch", error.response.data);
       return rejectWithValue(error.response.data);
     }
   }
 );
-
-
 
 export const createTest = createAsyncThunk(
   "test/createTest",
@@ -123,7 +119,27 @@ export const createTest = createAsyncThunk(
   }
 );
 
-
+export const getAllTopics = createAsyncThunk(
+  "test/getAllTopics",
+  async (_, { rejectWithValue, getState }) => {
+    try {
+      const req = await axios.get(
+        `${REACT_APP_API_URL}/api/admin/get-all-topics`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
+      );
+      const res = req.data;
+      return res.sections;
+    } catch (error) {
+      console.log("catch", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const getTopicById = createAsyncThunk(
   "test/getTopicById",
@@ -146,42 +162,6 @@ export const getTopicById = createAsyncThunk(
     }
   }
 );
-
-
-export const createTopic = createAsyncThunk(
-  "test/createTopic",
-  async (data, { rejectWithValue }) => {
-
-
-  //   {
-  //     "Heading": "DevOps 5",
-  //     "Description": "The DevOps test assesses candidates' knowledge of DevOps concepts and practices and whether they can apply that knowledge to improve infrastructure, achieve faster time to market, and lower failure rates of new releases.",
-  //     "Time": 10,
-  //     "TotalQuestions": 10
-        
-  // }
-
-    try {
-      const req = await axios.post(
-        `${REACT_APP_API_URL}/api/college/topics/create`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": authToken,
-          },
-        }
-      );
-      const res = req.data;
-      return res.section;
-    } catch (error) {
-      console.log("catch", error.response.data);
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-
 
 const testSlice = createSlice({
   initialState: testState,
@@ -291,6 +271,19 @@ const testSlice = createSlice({
 
         // window.alert(action.payload);
       })
+      .addCase(getAllTests.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(getAllTests.fulfilled, (state, action) => {
+        state.tests = action.payload;
+        console.log("fullfilled");
+      })
+      .addCase(getAllTests.rejected, (state, action) => {
+        console.error("Error fetching tests:", action.payload);
+        state.status = "failed";
+        state.error = action.payload;
+      })
       .addCase(createTest.pending, (state, action) => {
         state.status = "loading";
         console.log("pending");
@@ -339,36 +332,7 @@ const testSlice = createSlice({
         console.error("Error fetching topic:", action.payload);
         state.status = "failed";
         state.error = action.payload;
-      })
-      .addCase(createTopic.pending, (state, action) => {
-        state.status = "loading";
-        console.log("pending");
-      })
-      .addCase(createTopic.fulfilled, (state, action) => {
-        state.sections = action.payload;
-        console.log("fullfilled");
-      })
-      .addCase(createTopic.rejected, (state, action) => {
-        console.error("Error creating topic:", action.payload);
-        state.status = "failed";
-        state.error = action.payload;
-      })
-      .addCase(getAllAssessments.pending, (state, action) => {
-        state.status = "loading";
-        console.log("pending");
-      })
-      .addCase(getAllAssessments.fulfilled, (state, action) =>
-
-      {
-        state.assessments = action.payload;
-        console.log("fullfilled");
-      })
-      .addCase(getAllAssessments.rejected, (state, action) => {
-        console.error("Error fetching assessments:", action.payload);
-        state.status = "failed";
-        state.error = action.payload;
       });
-
   },
 });
 
