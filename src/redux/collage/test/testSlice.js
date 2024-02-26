@@ -1,4 +1,3 @@
-
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -9,10 +8,41 @@ const authToken = localStorage.getItem("auth-token");
 const testState = {
   testName: "",
   testDescription: "",
-  testType: "",
+  testAttempts: "",
 
-  sections: [], // All sections from the database
-  assessments: [], // All assessments from the database
+  // testStatus : "",
+
+  //all topics
+  sections: [],
+
+  selectedSections: [],
+
+  questions: [
+    {
+      question: "question 1",
+      options: ["option 1", "option 2", "option 3", "option 4"],
+    },
+    {
+      question: "question 2",
+      options: ["option 1", "option 2", "option 3", "option 4"],
+    },
+  ],
+  test: {
+    testName: "",
+    questionType: "",
+    // testStatus : "",
+    sections: [],
+    questions: [
+      {
+        Duration: 0,
+        QuestionType: "mcq",
+        Title: "",
+        Options: [],
+        AnswerIndex: 0,
+      },
+    ],
+  },
+
   name: "",
   description: "",
   attempts: 0,
@@ -41,8 +71,6 @@ export const getTest = createAsyncThunk(
   }
 );
 
-
-
 export const getAllTopics = createAsyncThunk(
   "test/getAllTopics",
   async (_, { rejectWithValue, getState }) => {
@@ -64,8 +92,6 @@ export const getAllTopics = createAsyncThunk(
     }
   }
 );
-
-
 
 export const createTest = createAsyncThunk(
   "test/createTest",
@@ -91,8 +117,6 @@ export const createTest = createAsyncThunk(
   }
 );
 
-
-
 export const getTopicById = createAsyncThunk(
   "test/getTopicById",
   async (id, { rejectWithValue }) => {
@@ -115,19 +139,16 @@ export const getTopicById = createAsyncThunk(
   }
 );
 
-
 export const createTopic = createAsyncThunk(
   "test/createTopic",
   async (data, { rejectWithValue }) => {
+    //   {
+    //     "Heading": "DevOps 5",
+    //     "Description": "The DevOps test assesses candidates' knowledge of DevOps concepts and practices and whether they can apply that knowledge to improve infrastructure, achieve faster time to market, and lower failure rates of new releases.",
+    //     "Time": 10,
+    //     "TotalQuestions": 10
 
-
-  //   {
-  //     "Heading": "DevOps 5",
-  //     "Description": "The DevOps test assesses candidates' knowledge of DevOps concepts and practices and whether they can apply that knowledge to improve infrastructure, achieve faster time to market, and lower failure rates of new releases.",
-  //     "Time": 10,
-  //     "TotalQuestions": 10
-        
-  // }
+    // }
 
     try {
       const req = await axios.post(
@@ -148,8 +169,6 @@ export const createTopic = createAsyncThunk(
     }
   }
 );
-
-
 
 const testSlice = createSlice({
   initialState: testState,
@@ -266,8 +285,12 @@ const testSlice = createSlice({
       .addCase(createTest.fulfilled, (state, action) => {
         console.log(action.payload);
         state.testName = action.payload.name;
-
-        state.testType = action.payload.level;
+        state.testDescription = action.payload.description;
+        state.testAttempts = action.payload.totalAttempts;
+        state.name = "";
+        state.totalAttempts = null;
+        state.description = "";
+        state.currentTopic = {};
 
         console.log("fullfilled");
       })
@@ -321,9 +344,7 @@ const testSlice = createSlice({
         state.status = "loading";
         console.log("pending");
       })
-      .addCase(getAllAssessments.fulfilled, (state, action) =>
-
-      {
+      .addCase(getAllAssessments.fulfilled, (state, action) => {
         state.assessments = action.payload;
         console.log("fullfilled");
       })
@@ -332,7 +353,6 @@ const testSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       });
-
   },
 });
 
