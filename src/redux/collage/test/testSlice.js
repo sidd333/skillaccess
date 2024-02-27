@@ -44,7 +44,6 @@ const testState = {
     ],
   },
 
-
   name: "",
   description: "",
   attempts: 0,
@@ -54,6 +53,10 @@ const testState = {
   topics: [], //selected topics
   status: "",
   currentTopic: {}, //on edit
+  TopicToBeAdded: {
+    id: "",
+    questions: [],
+  },
 };
 
 export const getTest = createAsyncThunk(
@@ -119,6 +122,30 @@ export const createTest = createAsyncThunk(
   }
 );
 
+export const addQuestionToTopic = createAsyncThunk(
+  "test/addQuestionToTopic",
+  async (data, { rejectWithValue }) => {
+    try {
+      const req = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/college/add-questions/${data.id}/${data.type}`,
+        data.data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
+      );
+      const res = req.data;
+
+      return res.assessment;
+    } catch (error) {
+      console.log("catch");
+      return rejectWithValue(error?.response?.data?.message || "");
+    }
+  }
+);
+
 export const getAllTopics = createAsyncThunk(
   "test/getAllTopics",
   async (_, { rejectWithValue, getState }) => {
@@ -163,10 +190,58 @@ export const getTopicById = createAsyncThunk(
   }
 );
 
+export const createTopic = createAsyncThunk(
+  "test/createTopic",
+
+  async (data, { rejectWithValue }) => {
+    //   {
+
+    //     "Heading": "DevOps 5",
+
+    //     "Description": "The DevOps test assesses candidates' knowledge of DevOps concepts and practices and whether they can apply that knowledge to improve infrastructure, achieve faster time to market, and lower failure rates of new releases.",
+
+    //     "Time": 10,
+
+    //     "TotalQuestions": 10
+
+    // }
+
+    try {
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/topics/create`,
+
+        data,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+
+            "auth-token": authToken,
+          },
+        }
+      );
+
+      const res = req.data;
+
+      return res.section;
+    } catch (error) {
+      console.log("catch", error.response.data);
+
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const testSlice = createSlice({
   initialState: testState,
   name: "test",
   reducers: {
+    addMcqToTopic: (state, action) => {
+      state.TopicToBeAdded.questions = [
+        ...state.TopicToBeAdded.questions,
+        action.payload.question,
+      ];
+    },
     addMcq: (state, action) => {
       for (let i = 0; i < state.topics.length; i++) {
         if (state.currentTopic._id === state.topics[i]._id) {
@@ -332,6 +407,15 @@ const testSlice = createSlice({
         console.error("Error fetching topic:", action.payload);
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(createTopic.pending, (state, action) => {
+        // return action.payload;
+      })
+      .addCase(createTopic.fulfilled, (state, action) => {
+        state.TopicToBeAdded.id = action.payload._id;
+      })
+      .addCase(createTopic.rejected, (state, action) => {
+        // return action.payload;
       });
   },
 });
@@ -347,6 +431,7 @@ export const {
   setMcq,
   setTestBasicDetails,
   setTestSelectedTopics,
+  addMcqToTopic,
 } = testSlice.actions;
 
 export default testSlice.reducer;

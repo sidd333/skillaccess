@@ -14,7 +14,7 @@ const Header = ({ Q }) => {
             className="bg-[#D9E1E7]  self-center ml-2 rounded-lg h-10 w-10 sm:h-12 sm:w-14"
             onClick={() => navigate(-1)}
           >
-            <img src="../../images/icons/back.png" alt="" srcset="" />
+            <img src="../../../../images/icons/back.png" alt="" srcset="" />
           </button>
 
           <div className="">
@@ -25,7 +25,7 @@ const Header = ({ Q }) => {
               <h3 className="mr-2">Untitiled Assessments</h3>
               <span>
                 <img
-                  src="../../images/icons/test.png"
+                  src="../../../../images/icons/test.png"
                   alt="test"
                   className="w-4 h-4"
                 />
@@ -33,7 +33,7 @@ const Header = ({ Q }) => {
               <h3 className="mr-2">0 Tests</h3>{" "}
               <span className="w-2 h-2">
                 <img
-                  src="../../images/icons/hourglass.png"
+                  src="../../../../images/icons/hourglass.png"
                   alt="test"
                   className=" object-scale-down"
                 />
@@ -50,7 +50,8 @@ const Header = ({ Q }) => {
             className="self-center justify-center flex bg-[#0052CC] py-3 px-8 rounded-2xl text-xs gap-2 text-white"
             onClick={() => navigate("/collage/test/select")}
           >
-            Publish
+            Next Step{" "}
+            <FaArrowRightLong className="self-center text-lg text-white ml-4" />
           </button>
         </div>
       </div>
