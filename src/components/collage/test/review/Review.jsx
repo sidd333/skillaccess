@@ -9,19 +9,21 @@ const { getTopicById } = require("../../../../redux/collage/test/testSlice");
 const Review = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { currentTopic } = useSelector((state) => state.test);
-  const [questions, setQuestions] = useState([]);
 
-  useEffect(
-    () => {
-      dispatch(getTopicById(id)).then(() =>
-        setQuestions(currentTopic.questions)
-      );
-      console.log(currentTopic, "currentTopic", id);
-    },
-    [dispatch],
-    []
-  );
+  const topics = JSON.parse(localStorage.getItem("topics"));
+  // const { currentTopic } = useSelector((state) => state.test);
+  const [questions, setQuestions] = useState(topics[id].questions);
+
+  // useEffect(
+  //   () => {
+  //     dispatch(getTopicById(id)).then(() =>
+  //       setQuestions(currentTopic.questions)
+  //     );
+  //     console.log(currentTopic, "currentTopic", id);
+  //   },
+  //   [dispatch],
+  //   []
+  // );
   // update the topic from topics array where the id matches the id in the url
   // for (let i = 0; i < topics.length; i++) {
   //   if (topics[i]._id === id) {

@@ -33,7 +33,7 @@ export default function () {
       <Route path="createTopic" element={<CreateTopicPage />} />
       <Route path="details/:id" element={<ReviewPage />} />
       <Route path="addMcqToTopic/:id" element={<AddMcqToTopicPage />} />
-      <Route path="addMcq/:sectionId" element={<AddMcqPage />} />
+      <Route path="addMcq/:id" element={<AddMcqPage />} />
       <Route path="code/:sectionId" element={<AddCodePage />} />
       <Route path="essay/:sectionId" element={<AddEssayPage />} />
       <Route path="parav" element={<AddParagraphPage />} />

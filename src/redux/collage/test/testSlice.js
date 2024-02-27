@@ -44,13 +44,23 @@ const testState = {
     ],
   },
 
-  name: "",
-  description: "",
+  name: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).name
+    : "",
+  description: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).description
+    : "",
+  // JSON.parse(localStorage.getItem("testDetails")).description || "",
   attempts: 0,
-  totalAttempts: 0,
+  totalAttempts: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).totalAttempts
+    : 0,
+  // JSON.parse(localStorage.getItem("testDetails")).totalAttempts || 0,
   totalTime: 0,
   totalQuestions: 0,
-  topics: [], //selected topics
+  topics: localStorage.getItem("topics")
+    ? JSON.parse(localStorage.getItem("topics"))
+    : [], //selected topics
   status: "",
   currentTopic: {}, //on edit
   TopicToBeAdded: {
@@ -128,7 +138,7 @@ export const addQuestionToTopic = createAsyncThunk(
     try {
       const req = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/college/add-questions/${data.id}/${data.type}`,
-        data.data,
+        { questions: [data.data] },
         {
           headers: {
             "Content-Type": "application/json",
@@ -243,18 +253,21 @@ const testSlice = createSlice({
       ];
     },
     addMcq: (state, action) => {
-      for (let i = 0; i < state.topics.length; i++) {
-        if (state.currentTopic._id === state.topics[i]._id) {
-          state.topics[i].questions = [
-            ...state.topics[i].questions,
-            action.payload.question,
-          ];
-        }
-      }
-      state.currentTopic.questions = [
-        ...state.currentTopic.questions,
+      state.topics[action.payload.id].questions = [
+        ...state.topics[action.payload.id].questions,
         action.payload.question,
       ];
+      // for (let i = 0; i < state.topics.length; i++) {
+      //   if (state.currentTopic._id === state.topics[i]._id) {
+      //
+      //   }
+      // }
+      // state.currentTopic.questions = [
+      //   ...state.currentTopic.questions,
+      //   action.payload.question,
+      // ];
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
     },
     setTestName: (state, action) => {
       state.test.testName = action.payload;
@@ -324,10 +337,28 @@ const testSlice = createSlice({
       state.description = action.payload.description;
       state.totalAttempts = action.payload.totalAttempts;
       state.status = "active";
+      localStorage.setItem(
+        "testDetails",
+        JSON.stringify({
+          name: state.name,
+          description: state.description,
+          totalAttempts: state.totalAttempts,
+        })
+      );
       // console.log(current(state));
     },
     setTestSelectedTopics: (state, action) => {
       state.topics = action.payload;
+      // localStorage.setItem(
+      //   "test",
+      //   JSON.stringify({
+      //     name: action.payload.name,
+      //     description: action.payload.description,
+      //     totalAttempts: action.payload.totalAttempts,
+      //     status: "active",
+      //   })
+      // );
+      localStorage.setItem("topics", JSON.stringify(action.payload));
     },
   },
   extraReducers: (builder) => {

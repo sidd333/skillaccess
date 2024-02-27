@@ -4,7 +4,11 @@ import { Progress } from "./Progress";
 import List from "./List";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { createTest } from "../../../../redux/collage/test/testSlice";
+import {
+  createTest,
+  setTestBasicDetails,
+  setTestSelectedTopics,
+} from "../../../../redux/collage/test/testSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -51,7 +55,13 @@ const Submit = () => {
         totalAttempts,
         topics,
       })
-    ).then(() => navigate("/collage/test/final"));
+    ).then(() => {
+      dispatch(
+        setTestBasicDetails({ name: "", description: "", totalAttempts: null })
+      );
+      dispatch(setTestSelectedTopics([]));
+      navigate("/collage/test/final");
+    });
   };
 
   const max = Math.ceil(questions?.length / 10);

@@ -11,6 +11,7 @@ import {
 
 const Name = () => {
   const dispatch = useDispatch();
+
   const { name, description, totalAttempts } = useSelector(
     (state) => state.test
   );

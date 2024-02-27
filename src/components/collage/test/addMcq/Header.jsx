@@ -1,11 +1,12 @@
 import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addMcq, createTest } from "../../../../redux/collage/test/testSlice";
 
 const Header = ({ question, setQuestion }) => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { test } = useSelector((state) => state.test);
@@ -23,7 +24,7 @@ const Header = ({ question, setQuestion }) => {
   };
 
   const handleSave = () => {
-    dispatch(addMcq({ question: question }));
+    dispatch(addMcq({ question: question, id: id }));
     setQuestion({ Title: "", Options: [] });
     navigate("/collage/test/questions");
   };
