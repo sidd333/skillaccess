@@ -2,10 +2,16 @@ import React from "react";
 
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
 
-const Footer = ({ setQues }) => {
+const Footer = ({ setQues,question,handleSave }) => {
   function Add() {
-    setQues((prev) => [...prev, 1]);
+    setQues({ ...question, questions: [...question.questions, { question: "" }] })
   }
+
+  // React.useEffect(() => {
+  //   console.log(question);
+  // }, [question]);
+
+
   return (
     <div className="pt-20">
       <div className="absolute bottom-10  left-8">
@@ -29,7 +35,9 @@ const Footer = ({ setQues }) => {
         </div>
         <div className=" flex">
           <button className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 ">
-            <FaPlus className="self-center" /> Add Next Question
+            <FaPlus className="self-center" 
+            onClick={() =>console.log(question)}
+            /> Add Next Question
           </button>
         </div>
       </div>

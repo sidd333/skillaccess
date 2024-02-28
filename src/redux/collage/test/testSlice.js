@@ -42,6 +42,7 @@ const testState = {
         AnswerIndex: 0,
       },
     ],
+    
   },
 
   name: localStorage.getItem("testDetails")
@@ -65,7 +66,12 @@ const testState = {
   currentTopic: {}, //on edit
   TopicToBeAdded: {
     id: "",
+     // all the questions of the topic
     questions: [],
+    findAnswers: [],
+    essay: [],
+    video: [],
+    compiler: [],
   },
 };
 
@@ -252,23 +258,67 @@ const testSlice = createSlice({
         action.payload.question,
       ];
     },
+    addFindAnsToTopic: (state, action) => {
+      state.TopicToBeAdded.findAnswers = [
+        ...state.TopicToBeAdded.findAnswers,
+        action.payload.findAnswers,
+      ];
+    },
+    addEssayToTopic: (state, action) => {
+      state.TopicToBeAdded.essay = [
+        ...state.TopicToBeAdded.essay,
+        action.payload.essay
+      ];
+    },
+    addVideoToTopic: (state, action) => {
+      state.TopicToBeAdded.video = [
+        ...state.TopicToBeAdded.video,
+        action.payload.video
+      ];
+    },
+    addCompilerToTopic: (state, action) => {
+      state.TopicToBeAdded.compiler = [
+        ...state.TopicToBeAdded.compiler,
+        action.payload.compiler
+      ];
+    },
+
     addMcq: (state, action) => {
       state.topics[action.payload.id].questions = [
         ...state.topics[action.payload.id].questions,
         action.payload.question,
       ];
-      // for (let i = 0; i < state.topics.length; i++) {
-      //   if (state.currentTopic._id === state.topics[i]._id) {
-      //
-      //   }
-      // }
-      // state.currentTopic.questions = [
-      //   ...state.currentTopic.questions,
-      //   action.payload.question,
-      // ];
       localStorage.setItem("topics", JSON.stringify(state.topics));
       // localStorage.setItem("topics", state.topics);
     },
+
+    addEssay: (state, action) => {
+      state.topics[action.payload.id].essay = [
+        ...state.topics[action.payload.id].essay,
+        action.payload.essay,
+      ];
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
+    },
+    addFindAns : (state, action) => {
+      console.log(action.payload, "action.payload");
+   if(state.topics[action.payload.id].findAnswers){
+    state.topics[action.payload.id].findAnswers = [
+      ...state.topics[action.payload.id].findAnswers,
+      action.payload.findAnswers,
+    ];
+  }else{
+    state.topics[action.payload.id].findAnswers = [
+      action.payload.findAnswers,
+    ];
+  }
+      console.log(state.topics, "state.topics");
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
+    },
+
+
+
     setTestName: (state, action) => {
       state.test.testName = action.payload;
     },
@@ -453,6 +503,8 @@ const testSlice = createSlice({
 
 export const {
   addMcq,
+  addEssay,
+  addFindAns,
   setTestName,
   setTest,
   setSections,
@@ -463,6 +515,10 @@ export const {
   setTestBasicDetails,
   setTestSelectedTopics,
   addMcqToTopic,
+  addFindAnsToTopic,
+  addEssayToTopic,
+  addVideoToTopic,
+  addCompilerToTopic,
 } = testSlice.actions;
 
 export default testSlice.reducer;
