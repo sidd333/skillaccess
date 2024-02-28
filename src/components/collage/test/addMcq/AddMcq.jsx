@@ -17,7 +17,7 @@ const AddMcq = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // section Id
-  const { sectionId } = useParams();
+  const { id } = useParams();
 
   const [step, setStep] = useState(1);
   const [click, setClick] = useState(false);
@@ -464,7 +464,7 @@ const AddMcq = () => {
               className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
               // onClick={addQuestion}
               onClick={() => {
-                dispatch(addMcq({ question: question }));
+                dispatch(addMcq({ question: question, id: id }));
                 setQuestion({ Title: "", Options: [] });
               }}
             >
