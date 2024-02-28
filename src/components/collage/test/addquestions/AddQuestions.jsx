@@ -14,12 +14,13 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const AddQuestions = () => {
+  const topics = JSON.parse(localStorage.getItem("topics"));
   const navigate = useNavigate();
   // question of the topic
-  const { topics } = useSelector((state) => state.test);
-  React.useEffect(() => {
-    console.log(topics, "topics");
-  }, [topics]);
+  // const { topics } = useSelector((state) => state.test);
+  // React.useEffect(() => {
+  //   console.log(topics, "topics");
+  // }, [topics]);
   const dispatch = useDispatch();
 
   const removeTopic = (topicId) => {
@@ -87,9 +88,7 @@ const AddQuestions = () => {
                       // onClick={() =>
                       //   navigate(`/collage/test/${topic.type}/${topic.id}`)
                       // }
-                      onClick={() =>
-                        navigate(`/collage/test/details/${topic._id}`)
-                      }
+                      onClick={() => navigate(`/collage/test/details/${index}`)}
                     >
                       Details
                     </button>

@@ -15,24 +15,29 @@ import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const SelectTests = () => {
+  const [questionType, setQuestionType] = useState("mcq");
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  const { sections, topics } = useSelector((state) => state.test);
+  const { sections } = useSelector((state) => state.test);
+
+  let topics = localStorage.getItem("topics")
+    ? JSON.parse(localStorage.getItem("topics"))
+    : [];
 
   const [selectedSections, setSelectedSections] = useState(topics);
 
   const addSection = (section) => {
-    // const updatedSections = [...selectedSections, section];
-    // // console.log(selectedSections,section);
-    // // dispatch(setSections(section));
-
     if (selectedSections?.length < 5 || !selectedSections) {
       for (let i = 0; i < selectedSections.length; i++) {
         if (selectedSections[i]._id === section._id) {
           return;
         }
       }
-      setSelectedSections([...selectedSections, section]);
+
+      let sectionCopy = { ...section, Type: questionType };
+      // sectionCopy[Type] ="mcq";
+      console.log(sectionCopy);
+      setSelectedSections([...selectedSections, sectionCopy]);
       //   dispatch(
       //     setTest({
       //       sections: selectedSections,
@@ -61,7 +66,11 @@ const SelectTests = () => {
 
   useEffect(() => {
     dispatch(getAllTopics());
-    setSelectedSections(topics);
+    try {
+      topics = JSON.parse(localStorage.getItem("topics"));
+      setSelectedSections(topics);
+    } catch (error) {}
+
     // console.log("hello tests",sections);
   }, []);
 
@@ -150,7 +159,7 @@ const SelectTests = () => {
           </div> */}
         </div>
 
-        <Inputs />
+        <Inputs questionType={questionType} setQuestionType={setQuestionType} />
         <div className="grid grid-cols-4 gap-8 justify-center">
           <div className="w-full h-64 bg-gray-100 rounded-lg flex justify-center">
             <div className=" self-center w-fit h-fit ">

@@ -15,9 +15,9 @@ const Header = ({ question, setQuestion, id, type }) => {
 
   const handleSave = () => {
     dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-
+    setQuestion({ Title: "", Options: [], id: "aaa" });
     // api call to push questions to topic
-    // navigate(-1);
+    navigate("/collage/test/select");
   };
   // useEffect(() => {
   //   dispatch(setTest({questions}));
