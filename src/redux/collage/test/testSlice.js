@@ -53,6 +53,10 @@ const testState = {
   topics: [], //selected topics
   status: "",
   currentTopic: {}, //on edit
+  TopicToBeAdded: {
+    id: "",
+    questions: [],
+  },
 };
 
 export const getTest = createAsyncThunk(
@@ -114,6 +118,30 @@ export const createTest = createAsyncThunk(
     } catch (error) {
       console.log("catch");
       return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const addQuestionToTopic = createAsyncThunk(
+  "test/addQuestionToTopic",
+  async (data, { rejectWithValue }) => {
+    try {
+      const req = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/college/add-questions/${data.id}/${data.type}`,
+        data.data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
+      );
+      const res = req.data;
+
+      return res.assessment;
+    } catch (error) {
+      console.log("catch");
+      return rejectWithValue(error?.response?.data?.message || "");
     }
   }
 );
@@ -208,6 +236,12 @@ const testSlice = createSlice({
   initialState: testState,
   name: "test",
   reducers: {
+    addMcqToTopic: (state, action) => {
+      state.TopicToBeAdded.questions = [
+        ...state.TopicToBeAdded.questions,
+        action.payload.question,
+      ];
+    },
     addMcq: (state, action) => {
       for (let i = 0; i < state.topics.length; i++) {
         if (state.currentTopic._id === state.topics[i]._id) {
@@ -373,6 +407,15 @@ const testSlice = createSlice({
         console.error("Error fetching topic:", action.payload);
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(createTopic.pending, (state, action) => {
+        // return action.payload;
+      })
+      .addCase(createTopic.fulfilled, (state, action) => {
+        state.TopicToBeAdded.id = action.payload._id;
+      })
+      .addCase(createTopic.rejected, (state, action) => {
+        // return action.payload;
       });
   },
 });
@@ -388,6 +431,7 @@ export const {
   setMcq,
   setTestBasicDetails,
   setTestSelectedTopics,
+  addMcqToTopic,
 } = testSlice.actions;
 
 export default testSlice.reducer;

@@ -26,7 +26,7 @@ const SelectTests = () => {
     // // console.log(selectedSections,section);
     // // dispatch(setSections(section));
 
-    if (selectedSections.length < 5) {
+    if (selectedSections?.length < 5 || !selectedSections) {
       for (let i = 0; i < selectedSections.length; i++) {
         if (selectedSections[i]._id === section._id) {
           return;
