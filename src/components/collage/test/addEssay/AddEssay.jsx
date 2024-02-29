@@ -33,7 +33,7 @@ const AddEssay = () => {
     console.log(question);
     if (addType === "topic") {
       dispatch(addEssayToTopic({ data: question, id: id, type: type }));
-      dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+      // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "" });
     } else {
       dispatch(addEssay({ data: question, id: id, type: type }));
@@ -49,6 +49,7 @@ const AddEssay = () => {
         setQuestion={setQuestion}
         id={id}
         type={type}
+        addType={addType}
       />
       <div className="bg-white min-h-[90vh] w-[98%] mx-auto rounded-xl pt-4">
         <div className=" sm:w-[95.7%] mx-auto ">
