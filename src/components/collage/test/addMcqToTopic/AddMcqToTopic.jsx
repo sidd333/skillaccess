@@ -4,147 +4,30 @@ import Header from "./Header";
 import { FaX } from "react-icons/fa6";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
-  setTest,
-  setMcq,
-  addMcq,
+  addMcqToTopic,
+  addQuestionToTopic,
 } from "../../../../redux/collage/test/testSlice";
-import { useNavigate, useParams } from "react-router-dom";
 
-const AddMcq = () => {
-  const { currentTopic, topics } = useSelector((state) => state.test);
-
+const AddMcqToTopic = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // section Id
   const { id } = useParams();
-
-  const [step, setStep] = useState(1);
-  const [click, setClick] = useState(false);
-
-  const { test } = useSelector((state) => state.test);
-  let index = null;
+  const [searchParams, setSearchParams] = useSearchParams();
   const [question, setQuestion] = useState({
+    id: "ddd",
     Title: "",
     Options: [],
     QuestionType: "",
     AnswerIndex: null,
   });
 
-  // const [questions, setQuestions] = useState(
-  //   test.questions || [
-  //     {
-  //       Duration: 0,
-  //       QuestionType: "mcq",
-  //       Title: "",
-  //       Options: {},
-  //       AnswerIndex: 0,
-  //     },
-  //   ]
-  // );
-
-  // useEffect(() => {
-  //   setQuestion({
-  //     Duration: 0,
-  //     QuestionType: "mcq",
-  //     Title: "",
-  //     Options: {},
-  //     AnswerIndex: 0,
-  //   });
-
-  //   setClick(false);
-  // }, [click]);
-
-  // useEffect(() => {
-  //   if (step === 1) {
-  //     console.log("no previous question");
-  //   } else {
-  //     console.log("previous question");
-  //     setQuestion(questions[questions.length - step]);
-  //   }
-  // }, [step]);
-
-  // const addQuestion = () => {
-  //   // Ensure question title is not empty
-  //   if (!question.Title.trim()) {
-  //     alert("Please enter a question title.");
-  //     return;
-  //   }
-
-  //   // Ensure at least two options are provided
-  //   if (
-  //     Object.keys(question.Options).filter(
-  //       (key) => question.Options[key].trim() !== ""
-  //     ).length < 2
-  //   ) {
-  //     alert("Please provide at least two options.");
-  //     return;
-  //   }
-
-  //   // Ensure the correct answer index is within the range of options
-  //   if (
-  //     question.AnswerIndex < 0 ||
-  //     question.AnswerIndex >= Object.keys(question.Options).length
-  //   ) {
-  //     alert("Invalid answer index.");
-  //     return;
-  //   }
-
-  //   // Create a new question object with the current state
-  //   const newQuestion = { ...question };
-
-  //   // Update the questions state by adding the new question
-  //   setQuestions([...questions, newQuestion]);
-
-  //   console.log("id", sectionId);
-
-  //   dispatch(setMcq({ sectionId, questions: questions }));
-
-  //   // Dispatch the updated questions to the Redux store
-  //   // dispatch(setTest({ questions: [...questions, newQuestion] }));
-  //   // dispatch(setTest({sections : test.sections[id]}))
-
-  //   // Clear the question state for the next question
-  //   const clearedOptions = {
-  //     Options0: "",
-  //     Options1: "",
-  //     Options2: "",
-  //     Options3: "",
-  //   };
-
-  //   setQuestion({
-  //     Duration: 0,
-  //     QuestionType: "mcq",
-  //     Title: "",
-  //     Options: clearedOptions,
-  //     AnswerIndex: 0,
-  //   });
-  //   setClick(true);
-
-  //   // Increment the step counter
-  //   setStep((prevStep) => prevStep + 1);
-  // };
-
-  // const handleChanges = (e) => {
-  //   const { name, value } = e.target;
-
-  //   if (name.includes("Options")) {
-  //     setQuestion({
-  //       ...question,
-  //       Options: {
-  //         ...question.Options,
-  //         [name]: value, // Update the specific option based on the input name
-  //       },
-  //     });
-  //   } else {
-  //     setQuestion({
-  //       ...question,
-  //       [name]: value,
-  //     });
-  //   }
-
-  //   console.log(questions, "questions");
-  // };
+  // section Id
+  const { sectionId } = useParams();
+  const type = searchParams.get("type");
+  const [step, setStep] = useState(1);
 
   const handlePrev = () => {
     if (step === 1) {
@@ -224,7 +107,12 @@ const AddMcq = () => {
 
   return (
     <div>
-      <Header question={question} setQuestion={setQuestion} />
+      <Header
+        question={question}
+        setQuestion={setQuestion}
+        id={id}
+        type={type}
+      />
       <div className="bg-white min-h-[90vh] w-[98%] mx-auto rounded-xl pt-4">
         <div className="flex flex-wrap gap-2 sm:w-[95.7%] mx-auto ">
           <span className="w-[49%] ">
@@ -464,8 +352,10 @@ const AddMcq = () => {
               className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
               // onClick={addQuestion}
               onClick={() => {
-                dispatch(addMcq({ question: question, id: id }));
-                setQuestion({ Title: "", Options: [] });
+                dispatch(
+                  addQuestionToTopic({ data: question, id: id, type: type })
+                );
+                setQuestion({ Title: "", Options: [], id: "aaa" });
               }}
             >
               <FaPlus className="self-center" /> Add Next Question
@@ -477,4 +367,4 @@ const AddMcq = () => {
   );
 };
 
-export default AddMcq;
+export default AddMcqToTopic;

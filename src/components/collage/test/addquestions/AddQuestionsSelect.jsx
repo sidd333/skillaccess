@@ -7,37 +7,39 @@ import { PiPencilSimpleLine } from "react-icons/pi";
 import { ImFileText } from "react-icons/im";
 import { setTest } from "../../../../redux/collage/test/testSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const AddQuestionsSelect = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [selectQuestionType, setSelectQuestionType] = useState("");
 
-  useEffect(() => {
-    dispatch(setTest({ questionType: selectQuestionType }));
-  }, [selectQuestionType]);
+  const [selectQuestionType, setSelectQuestionType] = useState("");
+  console.log(id);
+  // useEffect(() => {
+  //   dispatch(setTest({ questionType: selectQuestionType }));
+  // }, [selectQuestionType]);
 
   const NavHandler = () => {
     switch (selectQuestionType) {
       case "mcq":
-        navigate("/collage/test/addMcq/:0");
+        navigate(`/collage/test/addMcqToTopic/${id}?type=mcq&addType=topic`);
         break;
 
       case "code":
-        navigate("/collage/test/addcode");
+        navigate(`/collage/test/code/${id}?type=compiler&addType=topic`);
         break;
 
       // case "video":
       //   navigate("/collage/test/addVideo");
       //   break;
 
-      case "comp":
-        navigate("/collage/test/addPara");
+      case "findAnswer":
+        navigate(`/collage/test/find-ans/${id}?type=findAnswer&addType=topic`);
         break;
 
       case "essay":
-        navigate("/collage/test/addEssay");
+        navigate(`/collage/test/essay/${id}?type=essay&addType=topic`);
         break;
 
       default:
@@ -81,7 +83,7 @@ const AddQuestionsSelect = () => {
               </div>
 
               <img
-                src="../../images/icons/exam.png"
+                src="../../../images/icons/exam.png"
                 alt=""
                 className="w-6 h-8 self-center"
               />
@@ -94,7 +96,7 @@ const AddQuestionsSelect = () => {
               One Correct Answer
             </h2>
             <img
-              src="../../images/icons/dot.png"
+              src="../../../images/icons/dot.png"
               alt=""
               className="self-center w-5"
             />
@@ -121,7 +123,7 @@ const AddQuestionsSelect = () => {
               </div>
 
               <img
-                src="../../images/icons/exam.png"
+                src="../../../images/icons/exam.png"
                 alt=""
                 className="w-6 h-8 self-center"
               />
@@ -132,7 +134,7 @@ const AddQuestionsSelect = () => {
               Programming Questions
             </h2>
             <img
-              src="../../images/icons/dot.png"
+              src="../../../images/icons/dot.png"
               alt=""
               className="self-center w-5"
             />
@@ -158,7 +160,7 @@ const AddQuestionsSelect = () => {
                 />
               </div>
               <img
-                src="../../images/icons/exam.png"
+                src="../../../images/icons/exam.png"
                 alt=""
                 className="w-6 h-8 self-center"
               />
@@ -169,7 +171,7 @@ const AddQuestionsSelect = () => {
               Open Text Answer
             </h2>
             <img
-              src="../../images/icons/dot.png"
+              src="../../../images/icons/dot.png"
               alt=""
               className="self-center w-5"
             />
@@ -194,7 +196,7 @@ const AddQuestionsSelect = () => {
                 />
               </div>
               <img
-                src="../../images/icons/exam.png"
+                src="../../../images/icons/exam.png"
                 alt=""
                 className="w-6 h-8 self-center"
               />
@@ -205,7 +207,7 @@ const AddQuestionsSelect = () => {
               Record video to answer questions
             </h2>
             <img
-              src="../../images/icons/dot.png"
+              src="../../../images/icons/dot.png"
               alt=""
               className="self-center w-5"
             />
@@ -232,7 +234,7 @@ const AddQuestionsSelect = () => {
                 />
               </div>
               <img
-                src="../../images/icons/exam.png"
+                src="../../../images/icons/exam.png"
                 alt=""
                 className="w-6 h-8 self-center"
               />
@@ -243,7 +245,7 @@ const AddQuestionsSelect = () => {
               Read Phrase and Answer them
             </h2>
             <img
-              src="../../images/icons/dot.png"
+              src="../../../images/icons/dot.png"
               alt=""
               className="self-center w-5"
             />

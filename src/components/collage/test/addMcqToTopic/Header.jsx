@@ -1,32 +1,23 @@
 import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addMcq, createTest } from "../../../../redux/collage/test/testSlice";
+import {
+  addMcqToTopic,
+  addQuestionToTopic,
+} from "../../../../redux/collage/test/testSlice";
 
-const Header = ({ question, setQuestion }) => {
-  const { id } = useParams();
+const Header = ({ question, setQuestion, id, type }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { test } = useSelector((state) => state.test);
 
-  const handleCreateTest = () => {
-    console.log("test", test);
-    dispatch(
-      createTest({
-        name: test.testName,
-        level: test.testType,
-        testSections: test.sections,
-      })
-    );
-    navigate("/collage/test/final");
-  };
-
   const handleSave = () => {
-    dispatch(addMcq({ question: question, id: id }));
-    setQuestion({ Title: "", Options: [] });
-    navigate("/collage/test/questions");
+    dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+    setQuestion({ Title: "", Options: [], id: "aaa" });
+    // api call to push questions to topic
+    navigate("/collage/test/select");
   };
   // useEffect(() => {
   //   dispatch(setTest({questions}));

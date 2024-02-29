@@ -3,6 +3,10 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 import { setSelected, selected } from "../redux/collage/sidebar/sideSlice";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  setTestBasicDetails,
+  setTestSelectedTopics,
+} from "../redux/collage/test/testSlice";
 
 const CollageLayout = ({ children }) => {
   const navigate = useNavigate();
@@ -352,7 +356,14 @@ const CollageLayout = ({ children }) => {
                       onMouseOut={() => dispatch(setSelected(down))}
                       onMouseDown={() => {
                         dispatch(setSelected(i));
-
+                        dispatch(
+                          setTestBasicDetails({
+                            name: "",
+                            description: "",
+                            totalAttempts: null,
+                          })
+                        );
+                        dispatch(setTestSelectedTopics([]));
                         setOpen(false);
                         setDown(i);
                         return navigate(el.path);

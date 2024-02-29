@@ -10,11 +10,25 @@ import { CgUnavailable } from "react-icons/cg";
 import Advanced from "./Advanced";
 import Intermediate from "./Intermediate";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  setTestBasicDetails,
+  setTestSelectedTopics,
+} from "../../../../redux/collage/test/testSlice";
+import { useDispatch } from "react-redux";
 
 export const Test = () => {
+  const dispatch = useDispatch();
   const arr = [<Beginner />, <Intermediate />, <Advanced />];
   const navigate = useNavigate();
   const asses = [1, 2, 3, 4, 5];
+
+  useEffect(() => {
+    dispatch(
+      setTestBasicDetails({ name: "", description: "", totalAttempts: null })
+    );
+    dispatch(setTestSelectedTopics([]));
+  }, []);
   return (
     <div className="">
       {/* search bar */}

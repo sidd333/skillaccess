@@ -11,6 +11,7 @@ import {
 
 const Name = () => {
   const dispatch = useDispatch();
+
   const { name, description, totalAttempts } = useSelector(
     (state) => state.test
   );
@@ -46,6 +47,7 @@ const Name = () => {
 
   const handleSubmit = () => {
     dispatch(setTestBasicDetails(testDetails));
+
     navigate("/collage/test/select");
     console.log(testDetails, name, description, totalAttempts);
   };

@@ -3,11 +3,11 @@ import React from "react";
 import { FaCaretDown } from "react-icons/fa";
 import { RiBookmark2Fill } from "react-icons/ri";
 
-const List = () => {
+const List = ({ question, number }) => {
   return (
     <div className="flex justify-between gap-2 font-dmSans">
       <button className=" bg-blued rounded-xl text-white text-base font-bold py-2 w-12 h-11">
-        Q-1
+        Q-{number}
       </button>
       <div className="w-full h-11 ">
         <Disclosure>
@@ -15,9 +15,7 @@ const List = () => {
             <div className="mb-4">
               <div className="flex w-full justify-between rounded-lg bg-gray-100 pl-4 py-3 text-left text-sm font-medium  hover:bg-slate-50 focus:outline-none  ">
                 <div>
-                  <p className="text-sm">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
+                  <p className="text-sm">{question.Title}</p>
                 </div>
                 <div className="flex gap-2 self-center">
                   <Disclosure.Button className="flex gap-2 w-10/12 self-center">
@@ -40,54 +38,26 @@ const List = () => {
                 leaveTo="transform scale-95 opacity-0"
               >
                 <Disclosure.Panel className="bg-white rounded-b-lg pb-2 mb-2  text-sm text-gray-500">
-                  <div className="flex gap-2  rounded-lg p-3">
-                    <div className="w-6">
-                      <input
-                        type="radio"
-                        name="answer"
-                        id="answer"
-                        className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                      />
-                    </div>
+                  {question.Options?.map((question) => (
+                    <div className="flex gap-2  rounded-lg p-3">
+                      <div className="w-6">
+                        <input
+                          type="radio"
+                          name="answer"
+                          id="answer"
+                          className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                        />
+                      </div>
 
-                    <label className="text-blacktext-sm">Dairy Study</label>
-                  </div>
-                  <div className="flex gap-2  rounded-lg p-3">
-                    <div className="w-6">
-                      <input
-                        type="radio"
-                        name="answer"
-                        id="answer"
-                        className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                      />
+                      <label className="text-blacktext-sm">
+                        {question
+                          ? question.question
+                            ? question.question
+                            : question
+                          : ""}
+                      </label>
                     </div>
-
-                    <label>Field Study</label>
-                  </div>
-                  <div className="flex gap-2  rounded-lg p-3">
-                    <div className="w-6">
-                      <input
-                        type="radio"
-                        name="answer"
-                        id="answer"
-                        className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                      />
-                    </div>
-
-                    <label>Usability Test</label>
-                  </div>
-                  <div className="flex gap-2  rounded-lg p-3">
-                    <div className="w-6">
-                      <input
-                        type="radio"
-                        name="answer"
-                        id="answer"
-                        className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                      />
-                    </div>
-
-                    <label>Inquiry</label>
-                  </div>
+                  ))}
                 </Disclosure.Panel>
               </Transition>
             </div>
