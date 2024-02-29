@@ -15,14 +15,19 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
 
   const handleSave = () => {
     if (addType === "topic") {
-      dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
-      dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", questions: [] });
+      if (question.Title != "") {
+        dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
+        dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+        setQuestion({ Title: "", questions: [] });
+      }
+      navigate(-1);
     } else {
-      dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
-      // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", questions: [] });
-      navigate("/collage/test/select");
+      if (question.Title != "") {
+        dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
+        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+        setQuestion({ Title: "", questions: [] });
+      }
+      navigate(-1);
     }
   };
 

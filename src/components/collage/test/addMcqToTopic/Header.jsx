@@ -14,10 +14,13 @@ const Header = ({ question, setQuestion, id, type }) => {
   const { test } = useSelector((state) => state.test);
 
   const handleSave = () => {
-    dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-    setQuestion({ Title: "", Options: [], id: "aaa" });
+    if (question.Title != "") {
+      dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+      setQuestion({ Title: "", Options: [], id: "aaa" });
+    }
+
     // api call to push questions to topic
-    navigate("/collage/test/select");
+    navigate(-1);
   };
   // useEffect(() => {
   //   dispatch(setTest({questions}));

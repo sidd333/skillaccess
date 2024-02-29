@@ -40,7 +40,7 @@ const Header = ({ type, sectionId, qt }) => {
                           ? "addMcq"
                           : qt === "findAnswer"
                           ? "find-ans"
-                          : qt === "code"
+                          : qt === "compiler"
                           ? "code"
                           : qt === "essay"
                           ? "essay"

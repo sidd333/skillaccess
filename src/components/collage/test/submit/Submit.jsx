@@ -153,7 +153,7 @@ const Submit = () => {
       dispatch(
         setTestBasicDetails({ name: "", description: "", totalAttempts: null })
       );
-      dispatch(setTestSelectedTopics([]));
+
       navigate("/collage/test/final");
     });
   };

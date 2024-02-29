@@ -44,6 +44,7 @@ const Inputs = ({ questionType, setQuestionType }) => {
           <option value="essay">essay</option>
 
           <option value="video">video</option>
+          <option value="compiler">code</option>
         </select>
       </div>
     </div>

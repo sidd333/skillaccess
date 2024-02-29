@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import FindAnswer from "./FindAnswer";
 import Essay from "./Essay";
+import Code from "./Code";
 const { getTopicById } = require("../../../../redux/collage/test/testSlice");
 
 const Review = () => {
@@ -24,6 +25,7 @@ const Review = () => {
       questionType === "findAnswer" && setQuestions(topics[id].findAnswers);
       questionType === "essay" && setQuestions(topics[id].essay);
       questionType === "video" && setQuestions(topics[id].video);
+      questionType === "compiler" && setQuestions(topics[id].compiler);
     } else {
       questionType === "mcq" &&
         setQuestions(JSON.parse(localStorage.getItem("Details")).questions);
@@ -33,6 +35,8 @@ const Review = () => {
         setQuestions(JSON.parse(localStorage.getItem("Details")).essay);
       questionType === "video" &&
         setQuestions(JSON.parse(localStorage.getItem("Details")).video);
+      questionType === "compiler" &&
+        setQuestions(JSON.parse(localStorage.getItem("Details")).compiler);
     }
   }, []);
 
@@ -131,8 +135,21 @@ const Review = () => {
           ) : (
             <></>
           )
-        ) : questionType === "code" ? (
-          <>code</>
+        ) : questionType === "compiler" ? (
+          questions?.length > 0 ? (
+            questions.map((question, i) => {
+              // console.log(question);
+              return (
+                <Code
+                  Number={i}
+                  Title={question?.codeQuestion || ""}
+                  code={question?.code}
+                />
+              );
+            })
+          ) : (
+            <></>
+          )
         ) : (
           <>video</>
         )}

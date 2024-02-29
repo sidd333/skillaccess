@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createTest } from "../../../../redux/collage/test/testSlice";
+import {
+  createTest,
+  setTestSelectedTopics,
+} from "../../../../redux/collage/test/testSlice";
 import Footer from "./Footer";
 
 const Finalize = () => {
@@ -10,11 +13,11 @@ const Finalize = () => {
   const { testName, testDescription, topics, testAttempts } = useSelector(
     (state) => state.test
   );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     //  console.log(test);
   }, []);
-  const dispatch = useDispatch();
 
   const totalTime = topics?.reduce((acc, topic) => acc + topic.Time, 0);
   const totalQuestions = topics?.reduce(
