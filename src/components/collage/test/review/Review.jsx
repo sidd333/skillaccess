@@ -57,7 +57,11 @@ const Review = () => {
     <div className="font-dmSans text-sm font-bold">
       <Header
         qt={questionType}
-        id={id}
+        id={
+          localStorage.getItem("Topics")
+            ? JSON.parse(localStorage.getItem("Topics"))._id
+            : ""
+        }
         type={type}
         sectionId={
           localStorage.getItem("Details")
@@ -106,12 +110,12 @@ const Review = () => {
         ) : questionType === "findAnswer" ? (
           questions?.length > 0 ? (
             questions.map((question, i) => {
-              // console.log(question);
+              console.log(question);
               return (
                 <FindAnswer
                   Number={i}
-                  Title={question.Title}
-                  Options={question.questions}
+                  Title={question?.Title || ""}
+                  Options={question?.questions || []}
                 />
               );
             })
@@ -122,7 +126,7 @@ const Review = () => {
           questions?.length > 0 ? (
             questions.map((question, i) => {
               // console.log(question);
-              return <Essay Number={i} Title={question.Title} />;
+              return <Essay Number={i} Title={question?.Title || ""} />;
             })
           ) : (
             <></>

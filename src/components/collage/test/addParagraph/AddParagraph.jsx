@@ -46,8 +46,8 @@ const AddParagraph = () => {
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "", questions: [] });
     } else {
-      dispatch(addFindAns({ data: question, id: id, type: type }));
-      dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+      dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
+      // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "", questions: [] });
     }
   };
@@ -59,6 +59,7 @@ const AddParagraph = () => {
         setQuestion={setQuestion}
         id={id}
         type={type}
+        addType={addType}
       />
       <div className="bg-white min-h-[90vh] w-[98%] mx-auto rounded-xl pt-4 font-dmSans">
         <div className=" sm:w-[95.7%] mx-auto ">

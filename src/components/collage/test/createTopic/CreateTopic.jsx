@@ -26,14 +26,18 @@ const CreateTopic = () => {
 
   const handleNext = () => {
     dispatch(createTopic(topic)).then((res) => {
+      setTopic({
+        Heading: "",
+        Description: "",
+        Time: null,
+        TotalQuestions: null,
+      });
       // console.log(res);
       if (res.payload._id) {
         navigate(`/collage/test/typeOfQuestions/${res.payload._id}`);
       } else {
         window.alert("invalid or duplicate values");
       }
-
-      //
     });
   };
   return (

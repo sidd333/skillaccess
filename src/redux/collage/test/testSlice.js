@@ -259,50 +259,42 @@ const testSlice = createSlice({
     addFindAnsToTopic: (state, action) => {
       state.TopicToBeAdded.findAnswers = [
         ...state.TopicToBeAdded.findAnswers,
-        action.payload.findAnswers,
+        action.payload.data,
       ];
     },
     addEssayToTopic: (state, action) => {
       state.TopicToBeAdded.essay = [
         ...state.TopicToBeAdded.essay,
-        action.payload.essay,
+        action.payload.data,
       ];
     },
     addVideoToTopic: (state, action) => {
       state.TopicToBeAdded.video = [
         ...state.TopicToBeAdded.video,
-        action.payload.video,
+        action.payload.data,
       ];
     },
     addCompilerToTopic: (state, action) => {
       state.TopicToBeAdded.compiler = [
         ...state.TopicToBeAdded.compiler,
-        action.payload.compiler,
+        action.payload.data,
       ];
     },
     addEssay: (state, action) => {
       state.topics[action.payload.id].essay = [
         ...state.topics[action.payload.id].essay,
-        action.payload.essay,
+        action.payload.data,
       ];
       localStorage.setItem("topics", JSON.stringify(state.topics));
       // localStorage.setItem("topics", state.topics);
     },
     addFindAns: (state, action) => {
-      console.log(action.payload, "action.payload");
-      if (state.topics[action.payload.id].findAnswers) {
-        state.topics[action.payload.id].findAnswers = [
-          ...state.topics[action.payload.id].findAnswers,
-          action.payload.findAnswers,
-        ];
-      } else {
-        state.topics[action.payload.id].findAnswers = [
-          action.payload.findAnswers,
-        ];
-      }
-      console.log(state.topics, "state.topics");
+      state.topics[action.payload.id].findAnswers = [
+        ...state.topics[action.payload.id].findAnswers,
+        action.payload.data,
+      ];
+
       localStorage.setItem("topics", JSON.stringify(state.topics));
-      // localStorage.setItem("topics", state.topics);
     },
     addMcq: (state, action) => {
       state.topics[action.payload.id].questions = [
