@@ -2,9 +2,19 @@ import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { addQuestionToTopic } from "../../../../redux/collage/test/testSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-const Header = () => {
+const Header = ({ question, setQuestion, id, type }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSave = () => {
+    dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+    setQuestion({ Title: "" });
+
+    navigate("/collage/test/select");
+  };
   return (
     <div className="flex w-[98%] mx-auto justify-between mb-2 mt-5">
       <div className="h-fit self-center">
@@ -31,7 +41,8 @@ const Header = () => {
           </button>
           <button
             className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white"
-            onClick={() => navigate("/collage/test/preview")}
+            // onClick={() => navigate("/collage/test/preview")}
+            onClick={handleSave}
           >
             Save
           </button>

@@ -23,23 +23,23 @@ const AddQuestionsSelect = () => {
   const NavHandler = () => {
     switch (selectQuestionType) {
       case "mcq":
-        navigate(`/collage/test/addMcqToTopic/${id}?type=mcq`);
+        navigate(`/collage/test/addMcqToTopic/${id}?type=mcq&addType=topic`);
         break;
 
       case "code":
-        navigate("/collage/test/addcode");
+        navigate(`/collage/test/code/${id}?type=compiler&addType=topic`);
         break;
 
       // case "video":
       //   navigate("/collage/test/addVideo");
       //   break;
 
-      case "comp":
-        navigate("/collage/test/addPara");
+      case "findAnswer":
+        navigate(`/collage/test/find-ans/${id}?type=findAnswer&addType=topic`);
         break;
 
       case "essay":
-        navigate("/collage/test/addEssay");
+        navigate(`/collage/test/essay/${id}?type=essay&addType=topic`);
         break;
 
       default:

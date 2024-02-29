@@ -21,12 +21,106 @@ const Submit = () => {
   );
 
   const [questions, setQuestions] = useState();
+  let section1 = [];
+  let section2 = [];
+  let section3 = [];
+  let section4 = [];
+  let section5 = [];
   useEffect(() => {
-    let section1 = topics[0]?.questions || [];
-    let section2 = topics[1]?.questions || [];
-    let section3 = topics[2]?.questions || [];
-    let section4 = topics[3]?.questions || [];
-    let section5 = topics[4]?.questions || [];
+    if (topics[0])
+      switch (topics[0].Type) {
+        case "essay":
+          section1 = topics[0].essay;
+          break;
+        case "video":
+          section1 = topics[0].video;
+          break;
+        case "code":
+          section1 = topics[0].code;
+          break;
+        case "findAnswer":
+          section1 = topics[0].findAnswers;
+          break;
+        default:
+          section1 = topics[0].questions;
+          break;
+      }
+
+    if (topics[1])
+      switch (topics[1].Type) {
+        case "essay":
+          section2 = topics[1].essay;
+          break;
+        case "video":
+          section2 = topics[1].video;
+          break;
+        case "code":
+          section2 = topics[1].code;
+          break;
+        case "findAnswer":
+          section2 = topics[1].findAnswers;
+          break;
+        default:
+          section2 = topics[1].questions;
+          break;
+      }
+
+    if (topics[2])
+      switch (topics[2].Type) {
+        case "essay":
+          section3 = topics[2].essay;
+          break;
+        case "video":
+          section3 = topics[2].video;
+          break;
+        case "code":
+          section3 = topics[2].code;
+          break;
+        case "findAnswer":
+          section3 = topics[2].findAnswers;
+          break;
+        default:
+          section3 = topics[2].questions;
+          break;
+      }
+
+    if (topics[3])
+      switch (topics[3].Type) {
+        case "essay":
+          section4 = topics[3].essay;
+          break;
+        case "video":
+          section4 = topics[3].video;
+          break;
+        case "code":
+          section4 = topics[3].code;
+          break;
+        case "findAnswer":
+          section4 = topics[3].findAnswers;
+          break;
+        default:
+          section4 = topics[3].questions;
+          break;
+      }
+
+    if (topics[4])
+      switch (topics[4].Type) {
+        case "essay":
+          section5 = topics[4].essay;
+          break;
+        case "video":
+          section5 = topics[4].video;
+          break;
+        case "code":
+          section5 = topics[4].code;
+          break;
+        case "findAnswer":
+          section5 = topics[4].findAnswers;
+          break;
+        default:
+          section5 = topics[2].questions;
+          break;
+      }
 
     console.log(section1, section2, section3, section4, section5);
 

@@ -177,7 +177,7 @@ const SelectTests = () => {
               </h2>
             </div>
           </div>
-          {sections?.map((section) => (
+          {sections?.map((section, index) => (
             // <div className="card w-96 bg-base-100 shadow-xl">
             //   <div className="card-body">
             //     <h2 className="card-title">{section.name}</h2>
@@ -220,7 +220,18 @@ const SelectTests = () => {
                           {section.Time}
                         </p>
                       </span>
-                      <button className="w-[90px] h-[40px] bg-[#8F92A120] rounded-xl">
+                      <button
+                        className="w-[90px] h-[40px] bg-[#8F92A120] rounded-xl"
+                        onClick={() => {
+                          localStorage.setItem(
+                            "Details",
+                            JSON.stringify(section)
+                          );
+                          Navigate(
+                            `/collage/test/details/${index}?type=topic&question=${questionType}`
+                          );
+                        }}
+                      >
                         Details
                       </button>
                     </div>
