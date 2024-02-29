@@ -12,7 +12,11 @@ const testState = {
   testAttempts: "",
 
   // testStatus : "",
-
+  assessments: {
+    beginner: [],
+    intermediate: [],
+    advanced: [],
+  },
   //all topics
   sections: [],
 
@@ -94,7 +98,7 @@ export const getAllTests = createAsyncThunk(
   "test/getAllTests",
   async (_, { rejectWithValue, getState }) => {
     try {
-      console.log(`${REACT_APP_API_URL}api/assessments`);
+      console.log(`get tests`);
       const req = await axios.get(`${REACT_APP_API_URL}/api/assessments`, {
         headers: {
           "Content-Type": "application/json",
@@ -103,8 +107,8 @@ export const getAllTests = createAsyncThunk(
       });
 
       const res = req.data;
-
-      return res.data;
+      console.log(res);
+      return res;
     } catch (error) {
       console.log("catch", error.response.data);
       return rejectWithValue(error.response.data);
@@ -165,7 +169,7 @@ export const getAllTopics = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
       const req = await axios.get(
-        `${REACT_APP_API_URL}/api/admin/get-all-topics`,
+        `${REACT_APP_API_URL}/api/college/topics/all`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -174,7 +178,7 @@ export const getAllTopics = createAsyncThunk(
         }
       );
       const res = req.data;
-      return res.sections;
+      return res.topics;
     } catch (error) {
       console.log("catch", error.response.data);
       return rejectWithValue(error.response.data);
@@ -313,6 +317,25 @@ const testSlice = createSlice({
       localStorage.setItem("topics", JSON.stringify(state.topics));
       // localStorage.setItem("topics", state.topics);
     },
+    addCompiler: (state, action) => {
+      console.log("compiler");
+      state.topics[action.payload.id].compiler = [
+        ...state.topics[action.payload.id].compiler,
+        action.payload.data,
+      ];
+
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
+    },
+
+    addVideo: (state, action) => {
+      state.topics[action.payload.id].video = [
+        ...state.topics[action.payload.id].video,
+        action.payload.data,
+      ];
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
+    },
     setTestName: (state, action) => {
       state.test.testName = action.payload;
     },
@@ -426,8 +449,26 @@ const testSlice = createSlice({
         console.log("pending");
       })
       .addCase(getAllTests.fulfilled, (state, action) => {
-        state.tests = action.payload;
-        console.log("fullfilled");
+        let assessments = action.payload.assessments;
+        assessments.map((assement) => {
+          if (assement.level === "beginner") {
+            state.assessments.beginner = [
+              ...state.assessments.beginner,
+              assement,
+            ];
+          } else if (assement.level === "intermediate") {
+            state.assessments.intermediate = [
+              ...state.assessments.intermediate,
+              assement,
+            ];
+          } else {
+            state.assessments.advanced = [
+              ...state.assessments.advanced,
+              assement,
+            ];
+          }
+        });
+        // console.log(action.payload);
       })
       .addCase(getAllTests.rejected, (state, action) => {
         console.error("Error fetching tests:", action.payload);
@@ -506,6 +547,8 @@ export const {
   setQuestions,
   getSelectedSections,
   setMcq,
+  addCompiler,
+  addVideo,
   setTestBasicDetails,
   setTestSelectedTopics,
   addMcqToTopic,
