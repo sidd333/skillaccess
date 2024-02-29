@@ -66,6 +66,10 @@ const testState = {
   TopicToBeAdded: {
     id: "",
     questions: [],
+    findAnswers: [],
+    essay: [],
+    video: [],
+    compiler: [],
   },
 };
 
@@ -118,7 +122,7 @@ export const createTest = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -251,6 +255,54 @@ const testSlice = createSlice({
         ...state.TopicToBeAdded.questions,
         action.payload.question,
       ];
+    },
+    addFindAnsToTopic: (state, action) => {
+      state.TopicToBeAdded.findAnswers = [
+        ...state.TopicToBeAdded.findAnswers,
+        action.payload.findAnswers,
+      ];
+    },
+    addEssayToTopic: (state, action) => {
+      state.TopicToBeAdded.essay = [
+        ...state.TopicToBeAdded.essay,
+        action.payload.essay,
+      ];
+    },
+    addVideoToTopic: (state, action) => {
+      state.TopicToBeAdded.video = [
+        ...state.TopicToBeAdded.video,
+        action.payload.video,
+      ];
+    },
+    addCompilerToTopic: (state, action) => {
+      state.TopicToBeAdded.compiler = [
+        ...state.TopicToBeAdded.compiler,
+        action.payload.compiler,
+      ];
+    },
+    addEssay: (state, action) => {
+      state.topics[action.payload.id].essay = [
+        ...state.topics[action.payload.id].essay,
+        action.payload.essay,
+      ];
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
+    },
+    addFindAns: (state, action) => {
+      console.log(action.payload, "action.payload");
+      if (state.topics[action.payload.id].findAnswers) {
+        state.topics[action.payload.id].findAnswers = [
+          ...state.topics[action.payload.id].findAnswers,
+          action.payload.findAnswers,
+        ];
+      } else {
+        state.topics[action.payload.id].findAnswers = [
+          action.payload.findAnswers,
+        ];
+      }
+      console.log(state.topics, "state.topics");
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
     },
     addMcq: (state, action) => {
       state.topics[action.payload.id].questions = [
@@ -453,6 +505,8 @@ const testSlice = createSlice({
 
 export const {
   addMcq,
+  addEssay,
+  addFindAns,
   setTestName,
   setTest,
   setSections,
@@ -463,6 +517,10 @@ export const {
   setTestBasicDetails,
   setTestSelectedTopics,
   addMcqToTopic,
+  addFindAnsToTopic,
+  addEssayToTopic,
+  addVideoToTopic,
+  addCompilerToTopic,
 } = testSlice.actions;
 
 export default testSlice.reducer;

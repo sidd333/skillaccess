@@ -34,9 +34,10 @@ export default function () {
       <Route path="details/:id" element={<ReviewPage />} />
       <Route path="addMcqToTopic/:id" element={<AddMcqToTopicPage />} />
       <Route path="addMcq/:id" element={<AddMcqPage />} />
-      <Route path="code/:sectionId" element={<AddCodePage />} />
-      <Route path="essay/:sectionId" element={<AddEssayPage />} />
-      <Route path="parav" element={<AddParagraphPage />} />
+      <Route path="code/:id" element={<AddCodePage />} />
+      <Route path="essay/:id" element={<AddEssayPage />} />
+      <Route path="find-ans/:id" element={<AddParagraphPage />} />
+
       <Route path="final" element={<FinalizePage />} />
       <Route path="invite" element={<InvitePage />} />
     </Route>
