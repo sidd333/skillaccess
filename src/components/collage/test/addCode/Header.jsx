@@ -3,8 +3,17 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const Header = ({
+  handleSave
+}) => {
+
   const navigate = useNavigate();
+
+  const save = () => {
+    handleSave();
+    navigate(-1);
+  }
+
   return (
     <div className="flex w-[98%] mx-auto justify-between mb-2 mt-5">
       <div className="h-fit self-center">
@@ -31,7 +40,7 @@ const Header = () => {
           </button>
           <button
             className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white"
-            onClick={() => navigate("/collage/test/preview")}
+            onClick={save}
           >
             Save
           </button>

@@ -316,6 +316,25 @@ const testSlice = createSlice({
       localStorage.setItem("topics", JSON.stringify(state.topics));
       // localStorage.setItem("topics", state.topics);
     },
+    addCompiler : (state, action) => {
+      state.topics[action.payload.id].compiler = [
+        ...state.topics[action.payload.id].compiler,
+        action.payload.compiler,
+      ];
+
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
+    },
+
+    addVideo : (state, action) => {
+      state.topics[action.payload.id].video = [
+        ...state.topics[action.payload.id].video,
+        action.payload.video,
+      ];
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
+    },
+
 
 
 
@@ -505,6 +524,8 @@ export const {
   addMcq,
   addEssay,
   addFindAns,
+  addCompiler,
+  addVideo,
   setTestName,
   setTest,
   setSections,

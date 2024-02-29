@@ -1,9 +1,13 @@
 import React from "react";
 import Editor from "@monaco-editor/react";
 
-const Initial = () => {
+const Initial = ({
+  question,
+  handleChanges,
+}) => {
   function handleEditorChange(value, event) {
     // here is the current value
+    handleChanges({ target: { name: "code", value } });
   }
 
   function handleEditorDidMount(editor, monaco) {
@@ -33,6 +37,9 @@ const Initial = () => {
         onMount={handleEditorDidMount}
         beforeMount={handleEditorWillMount}
         onValidate={handleEditorValidation}
+        name='code'
+        value={question.code}
+
       />
     </code>
   );

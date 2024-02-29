@@ -49,7 +49,8 @@ const AddParagraph = () => {
   }
   else{
     dispatch(addFindAns({ data: question, id: id, type: type }) )
-    dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+    // Adding to the Test Assessment not a Created Topic
+    // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
     setQuestion({ Title: "",
     questions: [] ,
     });
