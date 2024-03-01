@@ -37,7 +37,7 @@ const AddEssay = () => {
       setQuestion({ Title: "" });
     } else {
       dispatch(addEssay({ data: question, id: id, type: type }));
-      dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+      // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "" });
     }
   };

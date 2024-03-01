@@ -254,6 +254,13 @@ const testSlice = createSlice({
   initialState: testState,
   name: "test",
   reducers: {
+    setAssessments: (state, action) => {
+      state.assessments = {
+        beginner: [],
+        intermediate: [],
+        advanced: [],
+      };
+    },
     addMcqToTopic: (state, action) => {
       state.TopicToBeAdded.questions = [
         ...state.TopicToBeAdded.questions,
@@ -556,6 +563,7 @@ export const {
   addEssayToTopic,
   addVideoToTopic,
   addCompilerToTopic,
+  setAssessments,
 } = testSlice.actions;
 
 export default testSlice.reducer;
