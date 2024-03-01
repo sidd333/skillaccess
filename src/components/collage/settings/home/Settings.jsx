@@ -4,6 +4,7 @@ import { FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutCollage } from "../../../../redux/collage/auth/authSlice";
+import { setAssessments } from "../../../../redux/collage/test/testSlice";
 
 const Settings = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Settings = () => {
     try {
       const ch = await dispatch(logoutCollage());
       if (ch.meta.requestStatus === "fulfilled") {
+        dispatch(setAssessments());
         navigate("/");
       }
     } catch (error) {
