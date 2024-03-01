@@ -46,24 +46,23 @@ const Name = () => {
   };
 
   const handleSubmit = () => {
-    let flag = false;
-
+    let flag = "false";
+    if (testDetails.name === "") window.alert("Please enter Name");
     if (assessments.beginner.length > 0) {
-      let assessmentExists = false;
       assessments.beginner.forEach((assessment) => {
         if (assessment.name === testDetails.name) {
-          window.alert("duplicate name");
-          flag = true;
-        } else {
+          flag = "true";
         }
       });
-      if (flag === false) {
-        dispatch(setTestBasicDetails(testDetails));
-
-        navigate("/collage/test/select");
-      }
 
       // console.log(testDetails, name, description, totalAttempts);
+    }
+    if (flag === "false") {
+      dispatch(setTestBasicDetails(testDetails));
+
+      navigate("/collage/test/select");
+    } else {
+      window.alert("duplicate name");
     }
   };
   return (
