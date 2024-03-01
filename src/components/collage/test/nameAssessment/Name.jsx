@@ -47,7 +47,10 @@ const Name = () => {
 
   const handleSubmit = () => {
     let flag = "false";
-    if (testDetails.name === "") window.alert("Please enter Name");
+    if (testDetails.name === "") {
+      window.alert("Please enter Name");
+      flag = "true";
+    }
     if (assessments.beginner.length > 0) {
       assessments.beginner.forEach((assessment) => {
         if (assessment.name === testDetails.name) {

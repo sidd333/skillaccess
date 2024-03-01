@@ -273,7 +273,7 @@ const SelectTests = () => {
               <div className="card-body">
                 <h2 className="text-xl font-bold mb-4">{section.Heading}</h2>
 
-                <p className="text-sm leading-[26px] text-[#8F92A1]">
+                <p className="text-sm leading-[26px] text-[#8F92A1] whitespace-nowrap">
                   {section.Description.length > 100
                     ? section.Description.substring(0, 60) + "..."
                     : section.Description}
