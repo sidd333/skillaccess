@@ -95,6 +95,7 @@ const AddCode = () => {
         });
       }
     } else {
+      console.log("hey");
       if (question.codeQuestion != "") {
         dispatch(addCompiler({ data: question, id: id, type: type }));
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));

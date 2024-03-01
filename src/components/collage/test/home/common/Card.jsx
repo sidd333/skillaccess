@@ -1,13 +1,15 @@
 import React from "react";
 import { PiPencilSimpleLine } from "react-icons/pi";
 import { Bin } from "../../../../icons";
+import { useNavigate } from "react-router-dom";
 
 const Card = (props) => {
+  const navigate = useNavigate();
   return (
     <div className="w-60 h-64 bg-white my-3 text-start font-bold text-black rounded sm:p-2 p-1 font-dmSans">
-      <h2 className="mb-2 line-clamp-2 ">{props.heading}</h2>
+      <h2 className="mb-2 line-clamp-2 ">{props.assessment?.name}</h2>
       <p className="font-normal text-gray-400  line-clamp-4 sm:mb-2 mb-1 h-1/2">
-        {props.desc}
+        {props.assessment?.description}
       </p>
       <h2 className="text-gray-400 font-medium text-base font-dmSans sm:mb-2">
         ATTEMPTS
@@ -65,13 +67,22 @@ const Card = (props) => {
           <div className="w-8 h-8 bg-blue-900 rounded -ml-3"></div>
           <div className="w-8 h-8 bg-blue-100 rounded -ml-3"></div>
           <div className="w-8  rounded  font-dmSans text-gray-400 font-normal self-center ">
-            +{props.attempts}
+            +{props.assessment?.totalAttempts}
           </div>
         </div>
 
         <div className="flex justify-between px-2 gap-3 mt-2">
-          <Bin />
-          <PiPencilSimpleLine className="w-6 h-5 text-blued" />
+          {/* <Bin /> */}
+          <PiPencilSimpleLine
+            className="w-6 h-5 text-blued"
+            onClick={() => {
+              localStorage.setItem(
+                "assessment",
+                JSON.stringify(props.assessment)
+              );
+              navigate("/collage/test/assessment");
+            }}
+          />
         </div>
       </div>
     </div>

@@ -69,6 +69,7 @@ const Beginner = () => {
         {assessments?.beginner?.map((item, i) => (
           <SwiperSlide className="w-full">
             <Card
+              assessment={item}
               heading={item.name}
               desc={item.description}
               attempts={item.totalAttempts}

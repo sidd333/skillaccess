@@ -35,8 +35,8 @@ const Submit = () => {
         case "video":
           section1 = topics[0].video;
           break;
-        case "code":
-          section1 = topics[0].code;
+        case "compiler":
+          section1 = topics[0].compiler;
           break;
         case "findAnswer":
           section1 = topics[0].findAnswers;
@@ -54,8 +54,8 @@ const Submit = () => {
         case "video":
           section2 = topics[1].video;
           break;
-        case "code":
-          section2 = topics[1].code;
+        case "compiler":
+          section2 = topics[1].compiler;
           break;
         case "findAnswer":
           section2 = topics[1].findAnswers;
@@ -73,8 +73,8 @@ const Submit = () => {
         case "video":
           section3 = topics[2].video;
           break;
-        case "code":
-          section3 = topics[2].code;
+        case "compiler":
+          section3 = topics[2].compiler;
           break;
         case "findAnswer":
           section3 = topics[2].findAnswers;
@@ -92,8 +92,8 @@ const Submit = () => {
         case "video":
           section4 = topics[3].video;
           break;
-        case "code":
-          section4 = topics[3].code;
+        case "compiler":
+          section4 = topics[3].compiler;
           break;
         case "findAnswer":
           section4 = topics[3].findAnswers;
@@ -111,8 +111,8 @@ const Submit = () => {
         case "video":
           section5 = topics[4].video;
           break;
-        case "code":
-          section5 = topics[4].code;
+        case "compiler":
+          section5 = topics[4].compiler;
           break;
         case "findAnswer":
           section5 = topics[4].findAnswers;
