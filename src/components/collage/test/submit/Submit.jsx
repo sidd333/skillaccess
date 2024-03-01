@@ -11,6 +11,7 @@ import {
 } from "../../../../redux/collage/test/testSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Code from "./Code";
 
 const Submit = () => {
   const navigate = useNavigate();
@@ -173,10 +174,20 @@ const Submit = () => {
           .map((question, i) => {
             return (
               <div className="my-2">
-                <List
-                  question={question}
-                  number={(selected - 1) * 10 + 1 + i}
-                />{" "}
+                {console.log(question.QuestionType)}
+                {question.codeQuestion && (
+                  <Code
+                    Title={question.codeQuestion}
+                    code={question.code}
+                    number={(selected - 1) * 10 + 1 + i}
+                  />
+                )}
+                {question.Title && (
+                  <List
+                    question={question}
+                    number={(selected - 1) * 10 + 1 + i}
+                  />
+                )}{" "}
               </div>
             );
           })}

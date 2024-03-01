@@ -50,7 +50,7 @@ const Assessment = () => {
   });
   return (
     <div className="font-dmSans text-sm font-bold">
-      <Header />
+      <Header name={assessment.name} />
       <span className="flex gap-2 w-[97%] mx-auto px-2 ">
         <FaFolder className="text-blued w-5 h-5" />
         <h2 className="text-xs">Beginner Level</h2>
