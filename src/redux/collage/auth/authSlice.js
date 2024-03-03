@@ -281,10 +281,11 @@ const collageAuthSlice = createSlice({
       })
       .addCase(logoutCollage.fulfilled, (state, action) => {
         // state.status = action.payload
-        localStorage.setItem("editable", false);
+
         state.user = null;
         state.isLoggedIn = false;
-
+        localStorage.clear();
+        localStorage.setItem("editable", false);
         // Add any fetched posts to the array
         console.log("fullfilled");
       })

@@ -11,6 +11,7 @@ import {
 } from "../../../../redux/collage/test/testSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Code from "./Code";
 
 const Submit = () => {
   const navigate = useNavigate();
@@ -35,8 +36,8 @@ const Submit = () => {
         case "video":
           section1 = topics[0].video;
           break;
-        case "code":
-          section1 = topics[0].code;
+        case "compiler":
+          section1 = topics[0].compiler;
           break;
         case "findAnswer":
           section1 = topics[0].findAnswers;
@@ -54,8 +55,8 @@ const Submit = () => {
         case "video":
           section2 = topics[1].video;
           break;
-        case "code":
-          section2 = topics[1].code;
+        case "compiler":
+          section2 = topics[1].compiler;
           break;
         case "findAnswer":
           section2 = topics[1].findAnswers;
@@ -73,8 +74,8 @@ const Submit = () => {
         case "video":
           section3 = topics[2].video;
           break;
-        case "code":
-          section3 = topics[2].code;
+        case "compiler":
+          section3 = topics[2].compiler;
           break;
         case "findAnswer":
           section3 = topics[2].findAnswers;
@@ -92,8 +93,8 @@ const Submit = () => {
         case "video":
           section4 = topics[3].video;
           break;
-        case "code":
-          section4 = topics[3].code;
+        case "compiler":
+          section4 = topics[3].compiler;
           break;
         case "findAnswer":
           section4 = topics[3].findAnswers;
@@ -111,8 +112,8 @@ const Submit = () => {
         case "video":
           section5 = topics[4].video;
           break;
-        case "code":
-          section5 = topics[4].code;
+        case "compiler":
+          section5 = topics[4].compiler;
           break;
         case "findAnswer":
           section5 = topics[4].findAnswers;
@@ -153,7 +154,7 @@ const Submit = () => {
       dispatch(
         setTestBasicDetails({ name: "", description: "", totalAttempts: null })
       );
-      dispatch(setTestSelectedTopics([]));
+
       navigate("/collage/test/final");
     });
   };
@@ -173,10 +174,20 @@ const Submit = () => {
           .map((question, i) => {
             return (
               <div className="my-2">
-                <List
-                  question={question}
-                  number={(selected - 1) * 10 + 1 + i}
-                />{" "}
+                {console.log(question.QuestionType)}
+                {question.codeQuestion && (
+                  <Code
+                    Title={question.codeQuestion}
+                    code={question.code}
+                    number={(selected - 1) * 10 + 1 + i}
+                  />
+                )}
+                {question.Title && (
+                  <List
+                    question={question}
+                    number={(selected - 1) * 10 + 1 + i}
+                  />
+                )}{" "}
               </div>
             );
           })}

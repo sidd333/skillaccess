@@ -2,18 +2,34 @@ import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { addQuestionToTopic } from "../../../../redux/collage/test/testSlice";
+import {
+  addEssay,
+  addEssayToTopic,
+  addQuestionToTopic,
+} from "../../../../redux/collage/test/testSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const Header = ({ question, setQuestion, id, type }) => {
+const Header = ({ question, setQuestion, id, type, addType }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSave = () => {
-    dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-    setQuestion({ Title: "" });
-
-    navigate("/collage/test/select");
+    console.log(question);
+    if (addType === "topic") {
+      if (question.Title !== "") {
+        dispatch(addEssayToTopic({ data: question, id: id, type: type }));
+        dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+        setQuestion({ Title: "" });
+      }
+      navigate(-1);
+    } else {
+      if (question.Title !== "") {
+        dispatch(addEssay({ data: question, id: id, type: type }));
+        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+        setQuestion({ Title: "" });
+      }
+      navigate(-1);
+    }
   };
   return (
     <div className="flex w-[98%] mx-auto justify-between mb-2 mt-5">

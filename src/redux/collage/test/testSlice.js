@@ -12,7 +12,11 @@ const testState = {
   testAttempts: "",
 
   // testStatus : "",
-
+  assessments: {
+    beginner: [],
+    intermediate: [],
+    advanced: [],
+  },
   //all topics
   sections: [],
 
@@ -94,7 +98,7 @@ export const getAllTests = createAsyncThunk(
   "test/getAllTests",
   async (_, { rejectWithValue, getState }) => {
     try {
-      console.log(`${REACT_APP_API_URL}api/assessments`);
+      console.log(`get tests`);
       const req = await axios.get(`${REACT_APP_API_URL}/api/assessments`, {
         headers: {
           "Content-Type": "application/json",
@@ -103,8 +107,8 @@ export const getAllTests = createAsyncThunk(
       });
 
       const res = req.data;
-
-      return res.data;
+      console.log(res);
+      return res;
     } catch (error) {
       console.log("catch", error.response.data);
       return rejectWithValue(error.response.data);
@@ -165,7 +169,7 @@ export const getAllTopics = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
       const req = await axios.get(
-        `${REACT_APP_API_URL}/api/admin/get-all-topics`,
+        `${REACT_APP_API_URL}/api/college/topics/all`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -174,7 +178,7 @@ export const getAllTopics = createAsyncThunk(
         }
       );
       const res = req.data;
-      return res.sections;
+      return res.topics;
     } catch (error) {
       console.log("catch", error.response.data);
       return rejectWithValue(error.response.data);
@@ -250,6 +254,13 @@ const testSlice = createSlice({
   initialState: testState,
   name: "test",
   reducers: {
+    setAssessments: (state, action) => {
+      state.assessments = {
+        beginner: [],
+        intermediate: [],
+        advanced: [],
+      };
+    },
     addMcqToTopic: (state, action) => {
       state.TopicToBeAdded.questions = [
         ...state.TopicToBeAdded.questions,
@@ -259,50 +270,42 @@ const testSlice = createSlice({
     addFindAnsToTopic: (state, action) => {
       state.TopicToBeAdded.findAnswers = [
         ...state.TopicToBeAdded.findAnswers,
-        action.payload.findAnswers,
+        action.payload.data,
       ];
     },
     addEssayToTopic: (state, action) => {
       state.TopicToBeAdded.essay = [
         ...state.TopicToBeAdded.essay,
-        action.payload.essay,
+        action.payload.data,
       ];
     },
     addVideoToTopic: (state, action) => {
       state.TopicToBeAdded.video = [
         ...state.TopicToBeAdded.video,
-        action.payload.video,
+        action.payload.data,
       ];
     },
     addCompilerToTopic: (state, action) => {
       state.TopicToBeAdded.compiler = [
         ...state.TopicToBeAdded.compiler,
-        action.payload.compiler,
+        action.payload.data,
       ];
     },
     addEssay: (state, action) => {
       state.topics[action.payload.id].essay = [
         ...state.topics[action.payload.id].essay,
-        action.payload.essay,
+        action.payload.data,
       ];
       localStorage.setItem("topics", JSON.stringify(state.topics));
       // localStorage.setItem("topics", state.topics);
     },
     addFindAns: (state, action) => {
-      console.log(action.payload, "action.payload");
-      if (state.topics[action.payload.id].findAnswers) {
-        state.topics[action.payload.id].findAnswers = [
-          ...state.topics[action.payload.id].findAnswers,
-          action.payload.findAnswers,
-        ];
-      } else {
-        state.topics[action.payload.id].findAnswers = [
-          action.payload.findAnswers,
-        ];
-      }
-      console.log(state.topics, "state.topics");
+      state.topics[action.payload.id].findAnswers = [
+        ...state.topics[action.payload.id].findAnswers,
+        action.payload.data,
+      ];
+
       localStorage.setItem("topics", JSON.stringify(state.topics));
-      // localStorage.setItem("topics", state.topics);
     },
     addMcq: (state, action) => {
       state.topics[action.payload.id].questions = [
@@ -318,6 +321,25 @@ const testSlice = createSlice({
       //   ...state.currentTopic.questions,
       //   action.payload.question,
       // ];
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
+    },
+    addCompiler: (state, action) => {
+      console.log("compiler");
+      state.topics[action.payload.id].compiler = [
+        ...state.topics[action.payload.id].compiler,
+        action.payload.data,
+      ];
+
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+      // localStorage.setItem("topics", state.topics);
+    },
+
+    addVideo: (state, action) => {
+      state.topics[action.payload.id].video = [
+        ...state.topics[action.payload.id].video,
+        action.payload.data,
+      ];
       localStorage.setItem("topics", JSON.stringify(state.topics));
       // localStorage.setItem("topics", state.topics);
     },
@@ -434,8 +456,26 @@ const testSlice = createSlice({
         console.log("pending");
       })
       .addCase(getAllTests.fulfilled, (state, action) => {
-        state.tests = action.payload;
-        console.log("fullfilled");
+        let assessments = action.payload.assessments;
+        assessments.map((assement) => {
+          if (assement.level === "beginner") {
+            state.assessments.beginner = [
+              ...state.assessments.beginner,
+              assement,
+            ];
+          } else if (assement.level === "intermediate") {
+            state.assessments.intermediate = [
+              ...state.assessments.intermediate,
+              assement,
+            ];
+          } else {
+            state.assessments.advanced = [
+              ...state.assessments.advanced,
+              assement,
+            ];
+          }
+        });
+        // console.log(action.payload);
       })
       .addCase(getAllTests.rejected, (state, action) => {
         console.error("Error fetching tests:", action.payload);
@@ -514,6 +554,8 @@ export const {
   setQuestions,
   getSelectedSections,
   setMcq,
+  addCompiler,
+  addVideo,
   setTestBasicDetails,
   setTestSelectedTopics,
   addMcqToTopic,
@@ -521,6 +563,7 @@ export const {
   addEssayToTopic,
   addVideoToTopic,
   addCompilerToTopic,
+  setAssessments,
 } = testSlice.actions;
 
 export default testSlice.reducer;

@@ -24,9 +24,11 @@ const Header = ({ question, setQuestion }) => {
   };
 
   const handleSave = () => {
-    dispatch(addMcq({ question: question, id: id }));
-    setQuestion({ Title: "", Options: [] });
-    navigate("/collage/test/questions");
+    if (question.Title !== "") {
+      dispatch(addMcq({ question: question, id: id }));
+      setQuestion({ Title: "", Options: [] });
+    }
+    navigate(-1);
   };
   // useEffect(() => {
   //   dispatch(setTest({questions}));

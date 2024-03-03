@@ -12,7 +12,7 @@ import {
 const Name = () => {
   const dispatch = useDispatch();
 
-  const { name, description, totalAttempts } = useSelector(
+  const { name, description, totalAttempts, assessments } = useSelector(
     (state) => state.test
   );
   // const {} = useSelector((state) =>console.log(state.test));
@@ -46,12 +46,28 @@ const Name = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(setTestBasicDetails(testDetails));
+    let flag = "false";
+    if (testDetails.name === "") {
+      window.alert("Please enter Name");
+      flag = "true";
+    }
+    if (assessments.beginner.length > 0) {
+      assessments.beginner.forEach((assessment) => {
+        if (assessment.name === testDetails.name) {
+          flag = "true";
+        }
+      });
 
-    navigate("/collage/test/select");
-    console.log(testDetails, name, description, totalAttempts);
+      // console.log(testDetails, name, description, totalAttempts);
+    }
+    if (flag === "false") {
+      dispatch(setTestBasicDetails(testDetails));
+
+      navigate("/collage/test/select");
+    } else {
+      window.alert("duplicate name");
+    }
   };
-
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header handleNext={handleSubmit} />

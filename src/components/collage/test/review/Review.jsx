@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import FindAnswer from "./FindAnswer";
 import Essay from "./Essay";
+import Code from "./Code";
 const { getTopicById } = require("../../../../redux/collage/test/testSlice");
 
 const Review = () => {
@@ -24,7 +25,8 @@ const Review = () => {
       questionType === "findAnswer" && setQuestions(topics[id].findAnswers);
       questionType === "essay" && setQuestions(topics[id].essay);
       questionType === "video" && setQuestions(topics[id].video);
-    } else {
+      questionType === "compiler" && setQuestions(topics[id].compiler);
+    } else if (type === "topic") {
       questionType === "mcq" &&
         setQuestions(JSON.parse(localStorage.getItem("Details")).questions);
       questionType === "findAnswer" &&
@@ -33,6 +35,29 @@ const Review = () => {
         setQuestions(JSON.parse(localStorage.getItem("Details")).essay);
       questionType === "video" &&
         setQuestions(JSON.parse(localStorage.getItem("Details")).video);
+      questionType === "compiler" &&
+        setQuestions(JSON.parse(localStorage.getItem("Details")).compiler);
+    } else {
+      questionType === "mcq" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].questions
+        );
+      questionType === "findAnswer" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].findAnswers
+        );
+      questionType === "essay" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].essay
+        );
+      questionType === "video" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].video
+        );
+      questionType === "compiler" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].compiler
+        );
     }
   }, []);
 
@@ -57,7 +82,11 @@ const Review = () => {
     <div className="font-dmSans text-sm font-bold">
       <Header
         qt={questionType}
-        id={id}
+        id={
+          localStorage.getItem("Topics")
+            ? JSON.parse(localStorage.getItem("Topics"))._id
+            : ""
+        }
         type={type}
         sectionId={
           localStorage.getItem("Details")
@@ -106,12 +135,12 @@ const Review = () => {
         ) : questionType === "findAnswer" ? (
           questions?.length > 0 ? (
             questions.map((question, i) => {
-              // console.log(question);
+              console.log(question);
               return (
                 <FindAnswer
                   Number={i}
-                  Title={question.Title}
-                  Options={question.questions}
+                  Title={question?.Title || ""}
+                  Options={question?.questions || []}
                 />
               );
             })
@@ -122,13 +151,26 @@ const Review = () => {
           questions?.length > 0 ? (
             questions.map((question, i) => {
               // console.log(question);
-              return <Essay Number={i} Title={question.Title} />;
+              return <Essay Number={i} Title={question?.Title || ""} />;
             })
           ) : (
             <></>
           )
-        ) : questionType === "code" ? (
-          <>code</>
+        ) : questionType === "compiler" ? (
+          questions?.length > 0 ? (
+            questions.map((question, i) => {
+              // console.log(question);
+              return (
+                <Code
+                  Number={i}
+                  Title={question?.codeQuestion || ""}
+                  code={question?.code}
+                />
+              );
+            })
+          ) : (
+            <></>
+          )
         ) : (
           <>video</>
         )}
