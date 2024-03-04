@@ -17,11 +17,8 @@ const Submit = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { name, description, topics, totalAttempts } = useSelector(
-    (state) => state.test
-  );
-
-
+  const { name, description, topics, totalAttempts, totalQuestions } =
+    useSelector((state) => state.test);
 
   const [questions, setQuestions] = useState();
   let section1 = [];
@@ -134,8 +131,6 @@ const Submit = () => {
       ...section4,
       ...section5,
     ]);
-
- 
   }, []);
 
   const handleSubmit = () => {
@@ -144,19 +139,28 @@ const Submit = () => {
     //   totalQuestions,
     //   totalAttempts
     // }
-  
+
+    if (!name || !description || !totalAttempts || !totalQuestions) {
+      window.alert("Please fill all the details");
+      return;
+    }
+    if (!topics[0]) {
+      window.alert("Please select atleast one topic");
+      return;
+    }
+
     dispatch(
-   
       createTest({
         name,
         description,
         totalAttempts,
+        totalQuestions,
         topics,
       })
     ).then(() => {
-      dispatch(
-        setTestBasicDetails({ name: "", description: "", totalAttempts: null })
-      );
+      // dispatch(
+      //   setTestBasicDetails({ name: "", description: "", totalAttempts: null ,totalQuestions:0})
+      // );
 
       navigate("/collage/test/final");
     });

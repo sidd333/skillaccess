@@ -16,7 +16,7 @@ import {
   setTestBasicDetails,
   setTestSelectedTopics,
 } from "../../../../redux/collage/test/testSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Test = () => {
   const dispatch = useDispatch();
@@ -24,13 +24,19 @@ export const Test = () => {
   const navigate = useNavigate();
   const asses = [1, 2, 3, 4, 5];
 
-  useEffect(() => {
-    dispatch(
-      setTestBasicDetails({ name: "", description: "", totalAttempts: null })
-    );
-    dispatch(setTestSelectedTopics([]));
-    dispatch(getAllTests());
-  }, []);
+  const { status } = useSelector((state) => state.collageAuth);
+  useEffect(
+    () => {
+      dispatch(
+        setTestBasicDetails({ name: "", description: "", totalAttempts: null ,totalQuestions:null})
+      );
+      dispatch(setTestSelectedTopics([]));
+      dispatch(getAllTests());
+    },
+    [],
+    status
+  );
+
   const arr = [<Beginner />, <Intermediate />, <Advanced />];
 
   return (
@@ -86,9 +92,9 @@ export const Test = () => {
                       </div>
 
                       <Transition
-                        enter="transition duration-300 "
-                        enterFrom="transform scale-95 ease-in opacity-0"
-                        enterTo="transform scale-100   duration-700 opacity-100"
+                        enter=" "
+                        enterFrom=""
+                        enterTo=""
                         leave="transition duration-300 ease-out"
                         leaveFrom="transform scale-100  opacity-100"
                         leaveTo="transform scale-95 opacity-0"

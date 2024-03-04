@@ -58,10 +58,12 @@ const testState = {
   attempts: 0,
   totalAttempts: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).totalAttempts
-    : 0,
+    : "",
   // JSON.parse(localStorage.getItem("testDetails")).totalAttempts || 0,
   totalTime: 0,
-  totalQuestions: 0,
+  totalQuestions: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).totalQuestions
+    : null,
   topics: localStorage.getItem("topics")
     ? JSON.parse(localStorage.getItem("topics"))
     : [], //selected topics
@@ -102,7 +104,7 @@ export const getAllTests = createAsyncThunk(
       const req = await axios.get(`${REACT_APP_API_URL}/api/assessments`, {
         headers: {
           "Content-Type": "application/json",
-          "auth-token": authToken,
+          "auth-token": localStorage.getItem("auth-token"),
         },
       });
 
@@ -410,6 +412,8 @@ const testSlice = createSlice({
       state.name = action.payload.name;
       state.description = action.payload.description;
       state.totalAttempts = action.payload.totalAttempts;
+      state.totalQuestions = action.payload.totalQuestions;
+
       state.status = "active";
       localStorage.setItem(
         "testDetails",
@@ -417,8 +421,10 @@ const testSlice = createSlice({
           name: state.name,
           description: state.description,
           totalAttempts: state.totalAttempts,
+          totalQuestions: state.totalQuestions,
         })
       );
+      console.log(action.payload, "action.payload");
       // console.log(current(state));
     },
     setTestSelectedTopics: (state, action) => {
@@ -464,15 +470,9 @@ const testSlice = createSlice({
               assement,
             ];
           } else if (assement.level === "intermediate") {
-            state.assessments.intermediate = [
-              ...state.assessments.intermediate,
-              assement,
-            ];
+            state.assessments.intermediate = [assement];
           } else {
-            state.assessments.advanced = [
-              ...state.assessments.advanced,
-              assement,
-            ];
+            state.assessments.advanced = [assement];
           }
         });
         // console.log(action.payload);
@@ -491,6 +491,7 @@ const testSlice = createSlice({
         state.testName = action.payload.name;
         state.testDescription = action.payload.description;
         state.testAttempts = action.payload.totalAttempts;
+        state.totalQuestions = action.payload.totalQuestions;
         state.name = "";
         state.totalAttempts = null;
         state.description = "";

@@ -70,13 +70,14 @@ const Beginner = () => {
           <SwiperSlide className="w-full">
             <Card
               assessment={item}
-              heading={item.name}
-              desc={item.description}
-              attempts={item.totalAttempts}
+              // heading={item.name}
+              // desc={item.description}
+              // attempts={item.totalAttempts}
               progress={4}
             />
           </SwiperSlide>
         ))}
+        <SwiperSlide></SwiperSlide>
 
         <span className="absolute top-1/2 right-0 z-20 h-fit w-fit">
           <SlideNextButton />
