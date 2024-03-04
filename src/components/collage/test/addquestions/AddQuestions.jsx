@@ -14,9 +14,8 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const AddQuestions = () => {
-  const [topics, setTopics] = useState(JSON.parse(localStorage.getItem("topics")));
 
-  const [remove , setRemove] = useState(false);
+  const topics = useSelector((state) => state.test.topics);
 
   const navigate = useNavigate();
   // question of the topic
@@ -26,26 +25,10 @@ const AddQuestions = () => {
   // }, [topics]);
   const dispatch = useDispatch();
 
-
-
-
-  const removeTopic = (topicId,index) => {
-    // dispatch(
-    //   setTestSelectedTopics(topics.filter((topic) => topic._id !== topicId))
-    // );
-
-
-      const updatedSections = topics;
-  
-  if (topics.length > 0) {
-    updatedSections.splice(index, 1);
-  }
-  
-      // setSelectedSections(updatedSections);
-  
-  
-      dispatch(setTestSelectedTopics(updatedSections));
-      setRemove(!remove);
+  const removeTopic = (index) => {
+    let topicsCopy = [...topics];
+    topicsCopy.splice(index, 1);
+    dispatch(setTestSelectedTopics(topicsCopy));
 
   };
 
@@ -103,7 +86,9 @@ const AddQuestions = () => {
                   </div>
                   <div
                     className="col-span-1 col-start-10  flex justify-center"
-                    onClick={() => removeTopic(topic._id,index)}
+
+                    onClick={() => removeTopic(index)}
+
                   >
                     <RxCross1 className="self-center text-red-600 w-5 h-5" />
                   </div>

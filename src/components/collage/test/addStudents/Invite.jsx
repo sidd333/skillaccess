@@ -6,7 +6,6 @@ import List from "./List";
 import { useSelector } from "react-redux";
 
 const Invite = () => {
-  const { name } = useSelector((state) => state.test);
   const [students, setStudents] = useState([]);
   return (
     <div>
