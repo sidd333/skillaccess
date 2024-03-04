@@ -102,7 +102,7 @@ export const getAllTests = createAsyncThunk(
       const req = await axios.get(`${REACT_APP_API_URL}/api/assessments`, {
         headers: {
           "Content-Type": "application/json",
-          "auth-token": authToken,
+          "auth-token": localStorage.getItem("auth-token"),
         },
       });
 
@@ -459,20 +459,11 @@ const testSlice = createSlice({
         let assessments = action.payload.assessments;
         assessments.map((assement) => {
           if (assement.level === "beginner") {
-            state.assessments.beginner = [
-              ...state.assessments.beginner,
-              assement,
-            ];
+            state.assessments.beginner = [assement];
           } else if (assement.level === "intermediate") {
-            state.assessments.intermediate = [
-              ...state.assessments.intermediate,
-              assement,
-            ];
+            state.assessments.intermediate = [assement];
           } else {
-            state.assessments.advanced = [
-              ...state.assessments.advanced,
-              assement,
-            ];
+            state.assessments.advanced = [assement];
           }
         });
         // console.log(action.payload);

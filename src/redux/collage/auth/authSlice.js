@@ -211,7 +211,7 @@ const collageAuthSlice = createSlice({
       })
       .addCase(loginCollage.fulfilled, (state, action) => {
         // state.status = action.payload
-
+        state.status = "done";
         state.isLoggedIn = true;
         state.user = action.payload;
 
@@ -221,7 +221,7 @@ const collageAuthSlice = createSlice({
         alert(action.payload);
       })
       .addCase(updateCollege.pending, (state, action) => {
-        state.status = "loading";
+        // state.status = "loading";
         console.log("pending");
       })
       .addCase(updateCollege.fulfilled, (state, action) => {
@@ -237,11 +237,10 @@ const collageAuthSlice = createSlice({
         console.log("rejected update profile");
       })
       .addCase(getCollege.pending, (state, action) => {
-        state.status = "loading";
+        // state.status = "loading";
         console.log("pending");
       })
       .addCase(getCollege.fulfilled, (state, action) => {
-        // state.status = action.payload
         state.isLoggedIn = true;
         state.user = action.payload;
 
@@ -254,7 +253,7 @@ const collageAuthSlice = createSlice({
         // window.alert(action.payload);
       })
       .addCase(updateAvatar.pending, (state, action) => {
-        state.status = "loading";
+        // state.status = "loading";
         console.log("pending avatar");
       })
       .addCase(updateAvatar.fulfilled, (state, action) => {
