@@ -28,7 +28,7 @@ const Header = ({ type, sectionId, qt }) => {
       </div>
 
       <div className="rounded-xl mx-2   h-12 flex my-2 ">
-        {
+        {type !== "assessment" && (
           <div className=" flex gap-2">
             <button
               className="self-center justify-center flex bg-[#F8F8F9] py-3  rounded-xl w-32  gap-2 "
@@ -64,7 +64,7 @@ const Header = ({ type, sectionId, qt }) => {
               <PiSlidersHorizontalLight className="mx-auto sm:h-8 sm:w-8 h-6 w-6" />
             </button>
           </div>
-        }
+        )}
       </div>
     </div>
   );

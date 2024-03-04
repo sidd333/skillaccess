@@ -26,7 +26,7 @@ const Review = () => {
       questionType === "essay" && setQuestions(topics[id].essay);
       questionType === "video" && setQuestions(topics[id].video);
       questionType === "compiler" && setQuestions(topics[id].compiler);
-    } else {
+    } else if (type === "topic") {
       questionType === "mcq" &&
         setQuestions(JSON.parse(localStorage.getItem("Details")).questions);
       questionType === "findAnswer" &&
@@ -37,6 +37,27 @@ const Review = () => {
         setQuestions(JSON.parse(localStorage.getItem("Details")).video);
       questionType === "compiler" &&
         setQuestions(JSON.parse(localStorage.getItem("Details")).compiler);
+    } else {
+      questionType === "mcq" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].questions
+        );
+      questionType === "findAnswer" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].findAnswers
+        );
+      questionType === "essay" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].essay
+        );
+      questionType === "video" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].video
+        );
+      questionType === "compiler" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].compiler
+        );
     }
   }, []);
 
