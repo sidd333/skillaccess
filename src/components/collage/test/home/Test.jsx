@@ -26,7 +26,7 @@ export const Test = () => {
 
   useEffect(() => {
     dispatch(
-      setTestBasicDetails({ name: "", description: "", totalAttempts: null })
+      setTestBasicDetails({ name: "", description: "", totalAttempts: null,totalQuestions:0 })
     );
     dispatch(setTestSelectedTopics([]));
     dispatch(getAllTests());

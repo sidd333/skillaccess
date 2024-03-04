@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import Header from "./Header";
 import { Progress } from "./Progress";
 import { LiaStopwatchSolid } from "react-icons/lia";
@@ -14,7 +14,10 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const AddQuestions = () => {
-  const topics = JSON.parse(localStorage.getItem("topics"));
+  const [topics, setTopics] = useState(JSON.parse(localStorage.getItem("topics")));
+
+  const [remove , setRemove] = useState(false);
+
   const navigate = useNavigate();
   // question of the topic
   // const { topics } = useSelector((state) => state.test);
@@ -23,11 +26,39 @@ const AddQuestions = () => {
   // }, [topics]);
   const dispatch = useDispatch();
 
-  const removeTopic = (topicId) => {
-    dispatch(
-      setTestSelectedTopics(topics.filter((topic) => topic._id !== topicId))
-    );
+
+
+
+  const removeTopic = (topicId,index) => {
+    // dispatch(
+    //   setTestSelectedTopics(topics.filter((topic) => topic._id !== topicId))
+    // );
+
+
+      const updatedSections = topics;
+  
+  if (topics.length > 0) {
+    updatedSections.splice(index, 1);
+  }
+  
+      // setSelectedSections(updatedSections);
+  
+  
+      dispatch(setTestSelectedTopics(updatedSections));
+      setRemove(!remove);
+
   };
+
+  useEffect(() => {
+ 
+    if(remove){
+      setTopics(JSON.parse(localStorage.getItem("topics")));
+      setRemove(false);
+    }
+
+
+  }, [remove]);
+  
 
   return (
     <div className="font-dmSans text-sm font-bold">
@@ -72,7 +103,7 @@ const AddQuestions = () => {
                   </div>
                   <div
                     className="col-span-1 col-start-10  flex justify-center"
-                    onClick={() => removeTopic(topic._id)}
+                    onClick={() => removeTopic(topic._id,index)}
                   >
                     <RxCross1 className="self-center text-red-600 w-5 h-5" />
                   </div>
