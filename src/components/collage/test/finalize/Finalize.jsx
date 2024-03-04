@@ -21,6 +21,7 @@ const Finalize = () => {
 
   const totalTime = topics?.reduce((acc, topic) => acc + topic.Time, 0);
 
+
   const totalQuestions = topics?.reduce((acc, topic) => {
     return (
       acc +
@@ -30,6 +31,7 @@ const Finalize = () => {
       (topic.compiler?.length || 0) +
       (topic.essay?.length || 0)
     );
+
   }, 0);
 
   const handleSubmit = () => {
@@ -47,7 +49,9 @@ const Finalize = () => {
     //     topics,
     //   })
     // );
+
     navigate("/collage/test/invite");
+   
   };
 
   return (

@@ -41,6 +41,7 @@ const SelectTests = () => {
     if (selectedSections?.length < 5 || !selectedSections) {
       for (let i = 0; i < selectedSections.length; i++) {
         if (selectedSections[i]._id === section._id) {
+
           if (selectedSections[i].Type === questionType) {
             return;
           }
@@ -52,6 +53,7 @@ const SelectTests = () => {
           //   return;
 
           // }
+
         }
       }
 
@@ -84,9 +86,11 @@ const SelectTests = () => {
   const removeSection = (section, index) => {
     const updatedSections = [...selectedSections];
 
+
     updatedSections.splice(index, 1);
 
     setSelectedSections(updatedSections);
+
 
     dispatch(setTestSelectedTopics(updatedSections));
   };
@@ -130,11 +134,13 @@ const SelectTests = () => {
         </div>
 
         <div className=" mx-auto  my-2 rounded-lg grid sm:grid-cols-5 grid-cols-2 gap-6">
+
           {selectedSections?.map((section, index) => (
             <div
               className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center "
               key={`${section._id + section.Type}`}
             >
+
               {/* {console.log(section, "section")} */}
 
               <span className="self-center">
@@ -168,7 +174,9 @@ const SelectTests = () => {
                   <img
                     src="../../images/icons/cross.png"
                     alt=""
+
                     onClick={() => removeSection(section, index)}
+
                   />
                 </div>
               </span>

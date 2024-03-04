@@ -21,6 +21,8 @@ const Submit = () => {
     (state) => state.test
   );
 
+
+
   const [questions, setQuestions] = useState();
   let section1 = [];
   let section2 = [];
@@ -133,7 +135,7 @@ const Submit = () => {
       ...section5,
     ]);
 
-    console.log(questions);
+ 
   }, []);
 
   const handleSubmit = () => {
@@ -142,8 +144,9 @@ const Submit = () => {
     //   totalQuestions,
     //   totalAttempts
     // }
-
+  
     dispatch(
+   
       createTest({
         name,
         description,

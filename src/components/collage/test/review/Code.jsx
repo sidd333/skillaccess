@@ -23,7 +23,7 @@ const Code = ({ Title, code, Number }) => {
             </div>
             <label for="answer" className="self-center">
               {" "}
-              {code}
+              {code.toString().substring(0, 50)}{" "}
             </label>
           </span>
         </div>
