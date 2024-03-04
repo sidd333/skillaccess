@@ -23,11 +23,12 @@ export const Test = () => {
 
   const navigate = useNavigate();
   const asses = [1, 2, 3, 4, 5];
+
   const { status } = useSelector((state) => state.collageAuth);
   useEffect(
     () => {
       dispatch(
-        setTestBasicDetails({ name: "", description: "", totalAttempts: null })
+        setTestBasicDetails({ name: "", description: "", totalAttempts: null ,totalQuestions:null})
       );
       dispatch(setTestSelectedTopics([]));
       dispatch(getAllTests());
@@ -35,6 +36,7 @@ export const Test = () => {
     [],
     status
   );
+
   const arr = [<Beginner />, <Intermediate />, <Advanced />];
 
   return (

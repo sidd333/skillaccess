@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 const Invite = () => {
   const [students, setStudents] = useState([]);
-  const { name } = useSelector((state) => state.test);
   return (
     <div>
       <div className="bg-white min-h-[90vh] w-[98%] mx-auto rounded-xl pt-4 font-dmSans">
