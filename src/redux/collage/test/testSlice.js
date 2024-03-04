@@ -61,7 +61,9 @@ const testState = {
     : "",
   // JSON.parse(localStorage.getItem("testDetails")).totalAttempts || 0,
   totalTime: 0,
-  totalQuestions: localStorage.getItem("testDetails") ? JSON.parse(localStorage.getItem("testDetails")).totalQuestions : null,
+  totalQuestions: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).totalQuestions
+    : null,
   topics: localStorage.getItem("topics")
     ? JSON.parse(localStorage.getItem("topics"))
     : [], //selected topics
@@ -412,7 +414,6 @@ const testSlice = createSlice({
       state.totalAttempts = action.payload.totalAttempts;
       state.totalQuestions = action.payload.totalQuestions;
 
-
       state.status = "active";
       localStorage.setItem(
         "testDetails",
@@ -420,7 +421,7 @@ const testSlice = createSlice({
           name: state.name,
           description: state.description,
           totalAttempts: state.totalAttempts,
-          totalQuestions : state.totalQuestions
+          totalQuestions: state.totalQuestions,
         })
       );
       console.log(action.payload, "action.payload");

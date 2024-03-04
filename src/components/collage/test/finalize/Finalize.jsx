@@ -13,9 +13,10 @@ const Finalize = () => {
   // const { testName, testDescription, topics, testAttempts,totalQuestions } = useSelector(
   //   (state) => state.test
   // );
+  const { name, description, totalQuestions, testAttempts, topics } =
+    useSelector((state) => state.test);
+  const testDetails = JSON.parse(localStorage.getItem("testDetails"));
 
-  const testDetails = localStorage.getItem("testDetails");
-  const topics = JSON.parse(localStorage.getItem("topics"));
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,7 +24,6 @@ const Finalize = () => {
   }, []);
 
   const totalTime = topics?.reduce((acc, topic) => acc + topic.Time, 0);
-
 
   // const totalQuestions = topics?.reduce((acc, topic) => {
   //   return (
@@ -44,17 +44,16 @@ const Finalize = () => {
     //   totalAttempts
     // }
 
-    // dispatch(
-    //   createTest({
-    //     name,
-    //     description,
-    //     totalAttempts,
-    //     topics,
-    //   })
-    // );
+    dispatch(
+      createTest({
+        name: testDetails.name,
+        description: testDetails.description,
+        totalAttempts: testDetails.totalQuestions,
+        topics,
+      })
+    );
 
     navigate("/collage/test/invite");
-   
   };
 
   return (
@@ -82,12 +81,16 @@ const Finalize = () => {
 
           <div className=" w-full h-full text-lg bg-gray-100   mb-3 rounded-lg flex justify-between px-7 py-4">
             <p>Total number of questions</p>
-            <p className="text-[#0052CC]  font-bold">{testDetails.totalQuestions}</p>
+            <p className="text-[#0052CC]  font-bold">
+              {testDetails.totalQuestions}
+            </p>
           </div>
 
           <div className=" w-full h-full text-lg bg-gray-100   mb-3 rounded-lg flex justify-between px-7 py-4">
             <p>Total attempts allowed</p>
-            <p className="text-[#0052CC]  font-bold">{testDetails.testAttempts}</p>
+            <p className="text-[#0052CC]  font-bold">
+              {testDetails.totalAttempts}
+            </p>
           </div>
         </div>
 

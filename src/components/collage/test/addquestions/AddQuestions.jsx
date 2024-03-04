@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import { Progress } from "./Progress";
 import { LiaStopwatchSolid } from "react-icons/lia";
@@ -14,7 +14,6 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const AddQuestions = () => {
-
   const topics = useSelector((state) => state.test.topics);
 
   const navigate = useNavigate();
@@ -29,19 +28,7 @@ const AddQuestions = () => {
     let topicsCopy = [...topics];
     topicsCopy.splice(index, 1);
     dispatch(setTestSelectedTopics(topicsCopy));
-
   };
-
-  useEffect(() => {
- 
-    if(remove){
-      setTopics(JSON.parse(localStorage.getItem("topics")));
-      setRemove(false);
-    }
-
-
-  }, [remove]);
-  
 
   return (
     <div className="font-dmSans text-sm font-bold">
@@ -86,9 +73,7 @@ const AddQuestions = () => {
                   </div>
                   <div
                     className="col-span-1 col-start-10  flex justify-center"
-
                     onClick={() => removeTopic(index)}
-
                   >
                     <RxCross1 className="self-center text-red-600 w-5 h-5" />
                   </div>
