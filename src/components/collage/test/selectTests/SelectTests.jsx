@@ -30,7 +30,14 @@ const SelectTests = () => {
     if (selectedSections?.length < 5 || !selectedSections) {
       for (let i = 0; i < selectedSections.length; i++) {
         if (selectedSections[i]._id === section._id) {
-          return;
+          if(selectedSections[i].Type === questionType){
+            return;
+          }
+          // else{
+          //   selectedSections[i].Type = questionType;
+          //   return;
+          // }
+         
         }
       }
 
@@ -51,17 +58,12 @@ const SelectTests = () => {
     // console.log(updatedSections);
   };
 
-  const removeSection = (section) => {
-    // const updatedSections = selectedSections.filter((s) => s !== section);
-    // dispatch(setSections(updatedSections));
-    // setSelectedSections(updatedSections);
-    // Don't let the user add the same section again
-    // dispatch(setSections([...sections, section]));
-    // console.log(updatedSections);
+  const removeSection = (section, index) => {
+    const updatedSections = [...selectedSections];
+    updatedSections.splice(index, 1);
+    setSelectedSections(updatedSections);
 
-    setSelectedSections(selectedSections.filter((s) => s._id !== section._id));
-
-    dispatch(setTestSelectedTopics(selectedSections));
+    dispatch(setTestSelectedTopics(updatedSections));
   };
 
   useEffect(() => {
@@ -97,8 +99,8 @@ const SelectTests = () => {
         </div>
 
         <div className=" mx-auto  my-2 rounded-lg grid sm:grid-cols-5 grid-cols-2 gap-6">
-          {selectedSections?.map((section) => (
-            <div className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center ">
+          {selectedSections?.map((section,index) => (
+            <div className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center " key={`${section._id + section.Type}`}>
               {/* {console.log(section, "section")} */}
               <span className="self-center">
                 <h2 className="text-xl font-bold mb-4">{section?.Heading}</h2>
@@ -127,7 +129,7 @@ const SelectTests = () => {
                   <img
                     src="../../images/icons/cross.png"
                     alt=""
-                    onClick={() => removeSection(section)}
+                    onClick={() => removeSection(section,index)}
                   />
                 </div>
               </span>
