@@ -20,13 +20,13 @@ const Inputs = ({ questionType, setQuestionType }) => {
         </span>
       </div>
       <div className="flex gap-1 w-full justify-end">
-        <select
+        {/* <select
           name=""
           id=""
           className="focus:outline-none select focus:ring-1 focus:ring-blued bg-gray-100 sm:w-1/3 w-1/2  rounded-lg self-center text-gray-400"
         >
           <option value="">Topic</option>
-        </select>
+        </select> */}
 
         <select
           name=""

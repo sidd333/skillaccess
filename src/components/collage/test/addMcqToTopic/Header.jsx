@@ -14,7 +14,15 @@ const Header = ({ question, setQuestion, id, type }) => {
   const { test } = useSelector((state) => state.test);
 
   const handleSave = () => {
-    if (question.Title != "") {
+    if (question.Title === "" ) {
+      window.alert("Please enter question");
+      return;
+    }
+    if (question.Options &&  question.Options.length < 4) {
+
+      window.alert("Please enter atleast 4 options");
+      return;
+    }else {
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "", Options: [], id: "aaa" });
     }
