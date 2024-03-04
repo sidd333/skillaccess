@@ -465,7 +465,10 @@ const testSlice = createSlice({
         let assessments = action.payload.assessments;
         assessments.map((assement) => {
           if (assement.level === "beginner") {
-            state.assessments.beginner = [assement];
+            state.assessments.beginner = [
+              ...state.assessments.beginner,
+              assement,
+            ];
           } else if (assement.level === "intermediate") {
             state.assessments.intermediate = [assement];
           } else {
