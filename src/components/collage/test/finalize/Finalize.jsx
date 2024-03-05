@@ -59,7 +59,7 @@ const Finalize = () => {
     navigate("/collage/test/invite");
     localStorage.removeItem("testDetails");
     localStorage.removeItem("totalTime");
-    
+
   };
 
   return (
@@ -100,7 +100,7 @@ const Finalize = () => {
           </div>
         </div>
 
-        <Footer onClick={handleSubmit} />
+        <Footer handleNext={handleSubmit} />
       </div>
     </div>
   );

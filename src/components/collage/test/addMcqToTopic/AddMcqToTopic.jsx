@@ -360,7 +360,7 @@ const AddMcqToTopic = () => {
                 dispatch(
                   addQuestionToTopic({ data: question, id: id, type: type })
                 );
-                setQuestion({ Title: "", Options: [], id: "aaa" });
+                setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 });
               }}
             >
               <FaPlus className="self-center" /> Add Next Question

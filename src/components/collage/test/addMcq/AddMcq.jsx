@@ -471,7 +471,7 @@ const AddMcq = () => {
               // onClick={addQuestion}
               onClick={() => {
                 dispatch(addMcq({ question: question, id: id }));
-                setQuestion({ Title: "", Options: [] });
+                setQuestion({ Title: "", Options: [],Duration: 0 });
               }}
             >
               <FaPlus className="self-center" /> Add Next Question
