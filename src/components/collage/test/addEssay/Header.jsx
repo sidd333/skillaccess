@@ -22,7 +22,7 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
       else {
         dispatch(addEssayToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "" });
+        setQuestion({ Title: "" , Duration : 0 });
       
       navigate(-1);
       }
@@ -34,7 +34,7 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
       else{
         dispatch(addEssay({ data: question, id: id, type: type }));
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "" });
+        setQuestion({ Title: "" , Duration : 0 });
       
       navigate(-1);
       }

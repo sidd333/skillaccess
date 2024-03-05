@@ -25,7 +25,7 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
        else {
         dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "", questions: [] });
+        setQuestion({ Title: "", questions: [] ,Duration : 0});
         navigate(-1);
       }
 
