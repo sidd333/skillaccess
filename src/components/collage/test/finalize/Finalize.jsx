@@ -59,7 +59,8 @@ const Finalize = () => {
     navigate("/collage/test/invite");
     localStorage.removeItem("testDetails");
     localStorage.removeItem("totalTime");
-    
+
+
   };
 
   return (
