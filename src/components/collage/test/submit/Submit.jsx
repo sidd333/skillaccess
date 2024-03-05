@@ -131,7 +131,7 @@ const Submit = () => {
       ...section4,
       ...section5,
     ]);
-  }, []);
+  }, [topics, ""]);
 
   const handleSubmit = () => {
     // dispatch(setTest({
@@ -184,6 +184,7 @@ const Submit = () => {
                 {console.log(question.QuestionType)}
                 {question.codeQuestion && (
                   <Code
+                    question={question}
                     Title={question.codeQuestion}
                     code={question.code}
                     number={(selected - 1) * 10 + 1 + i}

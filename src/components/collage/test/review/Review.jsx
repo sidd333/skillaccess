@@ -17,10 +17,11 @@ const Review = () => {
   const type = searchParams.get("type");
   const questionType = searchParams.get("question");
   // console.log(questionType);
+  const { topics } = useSelector((state) => state.test);
   useEffect(() => {
     if (type === "section") {
-      const topics = JSON.parse(localStorage.getItem("topics"));
-      // const { currentTopic } = useSelector((state) => state.test);
+      // const topics = JSON.parse(localStorage.getItem("topics"));
+
       questionType === "mcq" && setQuestions(topics[id].questions);
       questionType === "findAnswer" && setQuestions(topics[id].findAnswers);
       questionType === "essay" && setQuestions(topics[id].essay);
@@ -59,7 +60,7 @@ const Review = () => {
           JSON.parse(localStorage.getItem("assessment")).topics[id].compiler
         );
     }
-  }, []);
+  }, [topics, ""]);
 
   // useEffect(
   //   () => {
@@ -122,6 +123,7 @@ const Review = () => {
               // console.log(question);
               return (
                 <Mcq
+                  id={id}
                   Number={i}
                   Title={question.Title}
                   Options={question.Options}
@@ -138,6 +140,7 @@ const Review = () => {
               console.log(question);
               return (
                 <FindAnswer
+                  id={id}
                   Number={i}
                   Title={question?.Title || ""}
                   Options={question?.questions || []}
@@ -151,7 +154,7 @@ const Review = () => {
           questions?.length > 0 ? (
             questions.map((question, i) => {
               // console.log(question);
-              return <Essay Number={i} Title={question?.Title || ""} />;
+              return <Essay Number={i} Title={question?.Title || ""} id={id} />;
             })
           ) : (
             <></>
@@ -162,6 +165,7 @@ const Review = () => {
               // console.log(question);
               return (
                 <Code
+                  id={id}
                   Number={i}
                   Title={question?.codeQuestion || ""}
                   code={question?.code}

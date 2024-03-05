@@ -2,8 +2,19 @@ import { Disclosure, Transition } from "@headlessui/react";
 import React from "react";
 import { FaCaretDown } from "react-icons/fa";
 import { RiBookmark2Fill } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import { removeQuestionById } from "../../../../redux/collage/test/testSlice";
 
-const List = ({ Title, number, code }) => {
+const List = ({ Title, number, code, question }) => {
+  const dispatch = useDispatch();
+  const handleDelete = ({ sectionId, questionId }) => {
+    dispatch(
+      removeQuestionById({
+        sectionId,
+        questionId,
+      })
+    );
+  };
   return (
     <div className="flex justify-between gap-2 font-dmSans relative z-10">
       <button className=" bg-blued rounded-xl text-white text-base font-bold py-2 w-12 h-11">
@@ -51,7 +62,16 @@ const List = ({ Title, number, code }) => {
           )}
         </Disclosure>
       </div>
-      <div className="bg-gray-100 h-11 flex rounded-xl px-1">
+      <div
+        className="bg-gray-100 h-11 flex rounded-xl px-1"
+        onClick={() => {
+          console.log(question);
+          handleDelete({
+            sectionId: question.section,
+            questionId: question._id,
+          });
+        }}
+      >
         <img
           src="../../images/icons/cross.png"
           alt="cross"
