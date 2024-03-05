@@ -30,6 +30,30 @@ const SelectTests = () => {
   const dispatch = useDispatch();
 
   const { sections } = useSelector((state) => state.test);
+  // for filter the sections
+
+  const [filteredSections, setFilteredSections] = useState(sections);
+
+   const handleFilterSections = (e) => {
+    const value = e.target.value;
+     if(value === "" || value.trim() === ""){
+console.log("empty");
+console.log(filteredSections, "filtered");
+      setFilteredSections(sections);
+
+      return;
+     }else{
+      setFilteredSections(sections.filter((section) => {
+        const regex = new RegExp(value, 'i');
+        return regex.test(section.Heading);
+      }));
+
+      console.log(filteredSections, "filtered--",value);
+     }
+    
+  };
+
+
 
   let topics = localStorage.getItem("topics")
     ? JSON.parse(localStorage.getItem("topics"))
@@ -98,6 +122,11 @@ const SelectTests = () => {
   useEffect(() => {
     dispatch(getAllTopics());
 
+    if(sections){
+      setFilteredSections(sections);
+      console.log(sections, "sections");
+    }
+
     try {
       topics = JSON.parse(localStorage.getItem("topics"));
 
@@ -106,6 +135,16 @@ const SelectTests = () => {
 
     // console.log("hello tests",sections);
   }, []);
+
+  useEffect(() => {
+    console.log(sections, "sections");
+    if(sections) {
+      setFilteredSections(sections);
+    }
+  }, [sections]);
+
+
+
 
   useEffect(() => {
     // getSelectedSections();
@@ -215,7 +254,7 @@ const SelectTests = () => {
           </div> */}
         </div>
 
-        <Inputs questionType={questionType} setQuestionType={setQuestionType} />
+        <Inputs questionType={questionType} setQuestionType={setQuestionType} handleFilter={handleFilterSections} />
 
         <div className="grid grid-cols-4 gap-8 justify-center">
           <div className="w-full h-64 bg-gray-100 rounded-lg flex justify-center">
@@ -236,7 +275,7 @@ const SelectTests = () => {
               </h2>
             </div>
           </div>
-          {sections?.map((section, index) => (
+          {filteredSections?.map((section, index) => (
             // <div className="card w-96 bg-base-100 shadow-xl">
 
             //   <div className="card-body">
@@ -281,8 +320,8 @@ const SelectTests = () => {
               <div className="card-body">
                 <h2 className="text-xl font-bold mb-4">{section.Heading}</h2>
 
-                <p className="text-sm leading-[26px] text-[#8F92A1] whitespace-nowrap">
-                  {section.Description.length > 100
+                <p className="text-sm leading-[26px] text-[#8F92A1] break-words">
+                  {section.Description.length > 60
                     ? section.Description.substring(0, 60) + "..."
                     : section.Description}
                 </p>

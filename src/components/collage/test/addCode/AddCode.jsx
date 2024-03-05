@@ -40,7 +40,7 @@ const AddCode = () => {
   // ]
   const [question, setQuestion] = useState({
     id: "aaa",
-    duration: 30,
+    Duration: 30,
     code: "",
     codeQuestion: "",
     codeLanguage: "",

@@ -91,7 +91,7 @@ const AddQuestions = () => {
                       // }
                       onClick={() =>
                         navigate(
-                          `/collage/test/details/${index}?type=section&question=${topic.Type}`
+                          `/collage/test/details/${index}?type=section&question=${topic.Type}&topicId=${topic._id}`
                         )
                       }
                     >
