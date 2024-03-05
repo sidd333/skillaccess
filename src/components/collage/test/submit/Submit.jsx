@@ -17,7 +17,7 @@ const Submit = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { name, description, topics, totalAttempts, totalQuestions } =
+  const { name, description, topics, totalAttempts, totalQuestions,totalDuration } =
     useSelector((state) => state.test);
 
   const [questions, setQuestions] = useState();
@@ -133,6 +133,32 @@ const Submit = () => {
     ]);
   }, []);
 
+  const handleCalculateTime = () => {
+    const totalTimeCal = topics.map((topic) => {
+      console.log(topic);
+  
+      const totalMcq = topic.questions?.reduce((acc, curr) => {
+        return acc + parseInt(curr.Duration);
+      }, 0);
+      const totalEssay = topic.essay?.reduce((acc, curr) => {
+        return acc + parseInt(curr.Duration);
+      }, 0);
+      const totalVideo = topic.video?.reduce((acc, curr) => {
+        return acc + parseInt(curr.Duration);
+      }, 0);
+      const totalCompiler = topic.compiler?.reduce((acc, curr) => {
+        return acc + parseInt(curr.Duration);
+      }, 0);
+      const totalFindAnswer = topic.findAnswers?.reduce((acc, curr) => {
+        return acc + parseInt(curr.Duration);
+      }, 0);
+      const total = totalMcq + totalEssay + totalVideo + totalCompiler + totalFindAnswer;
+      return total;
+    });
+    return totalTimeCal;
+  }
+  
+
   const handleSubmit = () => {
     // dispatch(setTest({
     //   totalTime,
@@ -149,12 +175,37 @@ const Submit = () => {
       return;
     }
 
+    if(totalQuestions>questions.length){
+      window.alert(`Add ${totalQuestions-questions.length} more questions to complete the test`);
+      return;
+    }
+    if(totalQuestions<questions.length){
+      window.alert(`Remove ${questions.length-totalQuestions} questions to complete the test`);
+      return;
+    }
+
+const totalTimeCal = handleCalculateTime();
+
+    if (totalTimeCal > totalDuration) {
+      window.alert("Total duration of questions is greater than the total duration of test");
+      return;
+    }
+
+    if(totalTimeCal < totalDuration){
+      window.alert("Total duration of questions is less than the total duration of test");
+      return;
+    }
+   
+    console.log(totalTimeCal,totalDuration);
+    
+
     dispatch(
       createTest({
         name,
         description,
         totalAttempts,
         totalQuestions,
+        totalDuration,
         topics,
       })
     ).then(() => {

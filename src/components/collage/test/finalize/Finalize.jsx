@@ -13,7 +13,7 @@ const Finalize = () => {
   // const { testName, testDescription, topics, testAttempts,totalQuestions } = useSelector(
   //   (state) => state.test
   // );
-  const { name, description, totalQuestions, testAttempts, topics } =
+  const { name, description, totalQuestions, testAttempts, topics,totalDuration } =
     useSelector((state) => state.test);
   const testDetails = JSON.parse(localStorage.getItem("testDetails"));
 
@@ -76,7 +76,7 @@ const Finalize = () => {
           {/* Need to all these details below from sections */}
           <div className=" w-full h-full text-lg bg-gray-100   mb-3 rounded-lg flex justify-between px-7 py-4">
             <p>Total time to complete</p>
-            <p className="text-[#0052CC]  font-bold">{totalTime} mins</p>
+            <p className="text-[#0052CC]  font-bold">{testDetails.totalDuration} mins</p>
           </div>
 
           <div className=" w-full h-full text-lg bg-gray-100   mb-3 rounded-lg flex justify-between px-7 py-4">

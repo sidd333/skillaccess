@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
-const authToken = localStorage.getItem("auth-token");
+let authToken = localStorage.getItem("auth-token");
 
 const testState = {
   testName: "",
@@ -58,6 +58,9 @@ const testState = {
   attempts: 0,
   totalAttempts: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).totalAttempts
+    : "",
+    totalDuration: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).totalDuration
     : "",
   // JSON.parse(localStorage.getItem("testDetails")).totalAttempts || 0,
   totalTime: 0,
@@ -413,6 +416,7 @@ const testSlice = createSlice({
       state.description = action.payload.description;
       state.totalAttempts = action.payload.totalAttempts;
       state.totalQuestions = action.payload.totalQuestions;
+      state.totalDuration = action.payload.totalDuration;
 
       state.status = "active";
       localStorage.setItem(
@@ -422,6 +426,7 @@ const testSlice = createSlice({
           description: state.description,
           totalAttempts: state.totalAttempts,
           totalQuestions: state.totalQuestions,
+          totalDuration: state.totalDuration,
         })
       );
       console.log(action.payload, "action.payload");
@@ -498,6 +503,8 @@ const testSlice = createSlice({
         state.currentTopic = {};
 
         console.log("fullfilled");
+
+        getAllTests();
       })
       .addCase(createTest.rejected, (state, action) => {
         // console.log(action.payload);

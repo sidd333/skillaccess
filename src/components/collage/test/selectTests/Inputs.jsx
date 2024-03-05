@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 
 import { IoIosSearch } from "react-icons/io";
 
-const Inputs = ({ questionType, setQuestionType }) => {
+const Inputs = ({ questionType, setQuestionType,handleFilter }) => {
   return (
     <div className=" mx-auto  my-2 rounded-lg sm:flex justify-between">
       {" "}
@@ -15,6 +15,9 @@ const Inputs = ({ questionType, setQuestionType }) => {
           <input
             type="text"
             placeholder="Search..."
+            name="search"
+
+            onChange={handleFilter}
             className="placeholder pl-0 border-none self-center bg-gray-100 focus:outline-none focus:ring-0 rounded-e-lg sm:w-80 w-fit"
           />
         </span>

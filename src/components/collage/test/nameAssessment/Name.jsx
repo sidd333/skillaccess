@@ -12,7 +12,7 @@ import {
 const Name = () => {
   const dispatch = useDispatch();
 
-  const { name, description, totalAttempts, assessments,totalQuestions } = useSelector(
+  const { name, description, totalAttempts, assessments,totalQuestions,totalDuration } = useSelector(
     (state) => state.test
   );
   // const {} = useSelector((state) =>console.log(state.test));
@@ -22,6 +22,7 @@ const Name = () => {
     description: description || "",
     totalAttempts: totalAttempts || "",
     totalQuestions: totalQuestions || null,
+    totalDuration : totalDuration || null,
   });
 
   useEffect(() => {
@@ -30,6 +31,7 @@ const Name = () => {
       description: description || "",
       totalAttempts: totalAttempts || "",
       totalQuestions: totalQuestions || null,
+      totalDuration : totalDuration || null,
     });
     // why getting 0 here
     // console.log(name, description, totalAttempts);
@@ -120,6 +122,15 @@ const Name = () => {
           value={testDetails.totalQuestions}
           onChange={handleChange}
         />
+          <input
+       
+       name="totalDuration"
+       type="number"
+       className="w-full bg-gray-100 h-16 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 border-none placeholder-gray-400"
+       placeholder="Total Duration in minutes"
+       value={testDetails.totalDuration}
+       onChange={handleChange}
+       />
 
 
         <textarea
