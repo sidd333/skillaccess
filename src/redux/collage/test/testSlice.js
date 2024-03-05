@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
-const authToken = localStorage.getItem("auth-token");
+let authToken = localStorage.getItem("auth-token");
 
 const testState = {
   testName: "",
@@ -58,6 +58,9 @@ const testState = {
   attempts: 0,
   totalAttempts: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).totalAttempts
+    : "",
+    totalDuration: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).totalDuration
     : "",
   // JSON.parse(localStorage.getItem("testDetails")).totalAttempts || 0,
   totalTime: 0,
@@ -314,17 +317,113 @@ const testSlice = createSlice({
         ...state.topics[action.payload.id].questions,
         action.payload.question,
       ];
-      // for (let i = 0; i < state.topics.length; i++) {
-      //   if (state.currentTopic._id === state.topics[i]._id) {
-      //
-      //   }
-      // }
-      // state.currentTopic.questions = [
-      //   ...state.currentTopic.questions,
-      //   action.payload.question,
-      // ];
+
       localStorage.setItem("topics", JSON.stringify(state.topics));
-      // localStorage.setItem("topics", state.topics);
+    },
+    removeQuestion: (state, action) => {
+      //questionType, topicIndex ,selfIndex
+      const { topicIndex, selfIndex, questionType } = action.payload;
+      let copy = [];
+      switch (questionType) {
+        case "mcq":
+          copy = [...state.topics[topicIndex].questions];
+          state.topics[topicIndex].questions = copy.filter((ques, index) => {
+            return index !== selfIndex;
+          });
+          break;
+
+        case "essay":
+          copy = [...state.topics[topicIndex].essay];
+          state.topics[topicIndex].essay = copy.filter((ques, index) => {
+            return index !== selfIndex;
+          });
+          break;
+
+        case "compiler":
+          copy = [...state.topics[topicIndex].compiler];
+          state.topics[topicIndex].compiler = copy.filter((ques, index) => {
+            return index !== selfIndex;
+          });
+          break;
+        case "findAnswer":
+          copy = [...state.topics[topicIndex].findAnswers];
+          state.topics[topicIndex].findAnswers = copy.filter((ques, index) => {
+            return index !== selfIndex;
+          });
+          break;
+        default:
+          break;
+      }
+
+      localStorage.setItem("topics", JSON.stringify(state.topics));
+    },
+
+    removeQuestionById: (state, action) => {
+      //questionType, topicIndex ,selfIndex
+      const { sectionId, questionId } = action.payload;
+      let copy = [];
+      let topicIndex, selfIndex;
+      state.topics.map((topic, index) => {
+        if (topic._id === sectionId) topicIndex = index;
+      });
+
+      const questionType = state.topics[topicIndex].Type;
+
+      switch (questionType) {
+        case "mcq":
+          state.topics[topicIndex].questions.map((question, index) => {
+            console.log(question._id, questionId);
+            if (question._id === questionId) {
+              selfIndex = index;
+            }
+          });
+          console.log(selfIndex);
+          copy = [...state.topics[topicIndex].questions];
+          state.topics[topicIndex].questions = copy.filter((ques, index) => {
+            return index !== selfIndex;
+          });
+
+          break;
+
+        case "essay":
+          state.topics[topicIndex].essay.map((question, index) => {
+            if (question._id === questionId) {
+              selfIndex = index;
+            }
+          });
+          copy = [...state.topics[topicIndex].essay];
+          state.topics[topicIndex].essay = copy.filter((ques, index) => {
+            return index !== selfIndex;
+          });
+          break;
+
+        case "compiler":
+          state.topics[topicIndex].compiler.map((question, index) => {
+            if (question._id === questionId) {
+              selfIndex = index;
+            }
+          });
+          copy = [...state.topics[topicIndex].compiler];
+          state.topics[topicIndex].compiler = copy.filter((ques, index) => {
+            return index !== selfIndex;
+          });
+          break;
+        case "findAnswer":
+          state.topics[topicIndex].findAnswers.map((question, index) => {
+            if (question._id === questionId) {
+              selfIndex = index;
+            }
+          });
+          copy = [...state.topics[topicIndex].findAnswers];
+          state.topics[topicIndex].findAnswers = copy.filter((ques, index) => {
+            return index !== selfIndex;
+          });
+          break;
+        default:
+          break;
+      }
+
+      localStorage.setItem("topics", JSON.stringify(state.topics));
     },
     addCompiler: (state, action) => {
       console.log("compiler");
@@ -413,6 +512,7 @@ const testSlice = createSlice({
       state.description = action.payload.description;
       state.totalAttempts = action.payload.totalAttempts;
       state.totalQuestions = action.payload.totalQuestions;
+      state.totalDuration = action.payload.totalDuration;
 
       state.status = "active";
       localStorage.setItem(
@@ -422,6 +522,7 @@ const testSlice = createSlice({
           description: state.description,
           totalAttempts: state.totalAttempts,
           totalQuestions: state.totalQuestions,
+          totalDuration: state.totalDuration,
         })
       );
       console.log(action.payload, "action.payload");
@@ -498,6 +599,8 @@ const testSlice = createSlice({
         state.currentTopic = {};
 
         console.log("fullfilled");
+
+        getAllTests();
       })
       .addCase(createTest.rejected, (state, action) => {
         // console.log(action.payload);
@@ -545,6 +648,8 @@ const testSlice = createSlice({
 });
 
 export const {
+  removeQuestionById,
+  removeQuestion,
   addMcq,
   addEssay,
   addFindAns,

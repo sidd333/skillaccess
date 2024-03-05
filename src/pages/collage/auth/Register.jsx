@@ -32,7 +32,7 @@ const Register = () => {
 
   const sel = useSelector((state) => state.collageAuth);
   useEffect(() => {
-    // console.log(sel);
+  localStorage.removeItem("auth-token")
   }, []);
 
   const handleSubmit = async (e) => {

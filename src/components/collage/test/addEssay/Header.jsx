@@ -16,19 +16,29 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
   const handleSave = () => {
     console.log(question);
     if (addType === "topic") {
-      if (question.Title !== "") {
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      }
+      else {
         dispatch(addEssayToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({ Title: "" });
-      }
+      
       navigate(-1);
+      }
+      
     } else {
-      if (question.Title !== "") {
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      }
+      else{
         dispatch(addEssay({ data: question, id: id, type: type }));
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({ Title: "" });
-      }
+      
       navigate(-1);
+      }
+      
     }
   };
   return (
