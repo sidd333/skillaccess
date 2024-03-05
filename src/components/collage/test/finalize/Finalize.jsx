@@ -17,13 +17,15 @@ const Finalize = () => {
     useSelector((state) => state.test);
   const testDetails = JSON.parse(localStorage.getItem("testDetails"));
 
+  const totalTime = localStorage.getItem("totalTime");
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     //  console.log(test);
   }, []);
 
-  const totalTime = topics?.reduce((acc, topic) => acc + topic.Time, 0);
+  // const totalTime = topics?.reduce((acc, topic) => acc + topic.Time, 0);
 
   // const totalQuestions = topics?.reduce((acc, topic) => {
   //   return (
@@ -44,16 +46,20 @@ const Finalize = () => {
     //   totalAttempts
     // }
 
-    dispatch(
-      createTest({
-        name: testDetails.name,
-        description: testDetails.description,
-        totalAttempts: testDetails.totalQuestions,
-        topics,
-      })
-    );
+    // dispatch(
+    //   createTest({
+    //     name: testDetails.name,
+    //     description: testDetails.description,
+    //     totalAttempts: testDetails.totalQuestions,
+        
+    //     topics,
+    //   })
+    // );
 
     navigate("/collage/test/invite");
+    localStorage.removeItem("testDetails");
+    localStorage.removeItem("totalTime");
+    
   };
 
   return (
@@ -76,7 +82,7 @@ const Finalize = () => {
           {/* Need to all these details below from sections */}
           <div className=" w-full h-full text-lg bg-gray-100   mb-3 rounded-lg flex justify-between px-7 py-4">
             <p>Total time to complete</p>
-            <p className="text-[#0052CC]  font-bold">{testDetails.totalDuration} mins</p>
+            <p className="text-[#0052CC]  font-bold">{totalTime} mins</p>
           </div>
 
           <div className=" w-full h-full text-lg bg-gray-100   mb-3 rounded-lg flex justify-between px-7 py-4">
@@ -94,7 +100,7 @@ const Finalize = () => {
           </div>
         </div>
 
-        <Footer handleNext={handleSubmit} />
+        <Footer onClick={handleSubmit} />
       </div>
     </div>
   );

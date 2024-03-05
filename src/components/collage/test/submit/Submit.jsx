@@ -118,7 +118,7 @@ const Submit = () => {
           section5 = topics[4].findAnswers;
           break;
         default:
-          section5 = topics[2].questions;
+          section5 = topics[4].questions;
           break;
       }
 
@@ -176,28 +176,32 @@ const Submit = () => {
     }
 
     if(totalQuestions>questions.length){
+      console.log(totalQuestions,questions.length);
       window.alert(`Add ${totalQuestions-questions.length} more questions to complete the test`);
       return;
     }
     if(totalQuestions<questions.length){
+      console.log(totalQuestions,questions.length);
       window.alert(`Remove ${questions.length-totalQuestions} questions to complete the test`);
       return;
     }
 
 const totalTimeCal = handleCalculateTime();
 
-    if (totalTimeCal > totalDuration) {
+console.log(totalTimeCal[0],totalDuration);
+
+    if (totalTimeCal[0] > totalDuration) {
       window.alert("Total duration of questions is greater than the total duration of test");
       return;
     }
 
-    if(totalTimeCal < totalDuration){
-      window.alert("Total duration of questions is less than the total duration of test");
-      return;
-    }
+    // if(totalTimeCal < totalDuration){
+    //   window.alert("Total duration of questions is less than the total duration of test");
+    //   return;
+    // }
    
-    console.log(totalTimeCal,totalDuration);
-    
+    console.log(totalTimeCal[0],totalDuration);
+    localStorage.setItem("totalTime", JSON.stringify(totalTimeCal[0]))
 
     dispatch(
       createTest({
@@ -205,7 +209,7 @@ const totalTimeCal = handleCalculateTime();
         description,
         totalAttempts,
         totalQuestions,
-        totalDuration,
+        totalDuration: totalTimeCal[0],
         topics,
       })
     ).then(() => {
@@ -217,7 +221,7 @@ const totalTimeCal = handleCalculateTime();
     });
   };
 
-  const max = Math.ceil(questions?.length / 10);
+  const max = questions?.length / 10;
   const [selected, setSelected] = useState(1);
 
   return (

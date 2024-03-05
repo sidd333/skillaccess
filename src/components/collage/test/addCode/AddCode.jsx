@@ -82,6 +82,7 @@ const AddCode = () => {
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
           code: "",
+          Duration: 30,
           codeQuestion: "",
           codeLanguage: "",
           parameters: [
@@ -100,6 +101,7 @@ const AddCode = () => {
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
           code: "",
+          Duration: 30,
           codeQuestion: "",
           codeLanguage: "",
           parameters: [

@@ -34,7 +34,7 @@ const Header = ({ question, setQuestion }) => {
       return;
     }else{
       dispatch(addMcq({ question: question, id: id }));
-      setQuestion({ Title: "", Options: [] });
+      setQuestion({ Title: "", Options: [] , Duration : 0 });
     
       navigate(-1);
     }
