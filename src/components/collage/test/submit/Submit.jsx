@@ -131,7 +131,7 @@ const Submit = () => {
       ...section4,
       ...section5,
     ]);
-  }, []);
+  }, [topics, ""]);
 
   const handleCalculateTime = () => {
     const totalTimeCal = topics.map((topic) => {
@@ -239,6 +239,7 @@ console.log(totalTimeCal[0],totalDuration);
                 {console.log(question.QuestionType)}
                 {question.codeQuestion && (
                   <Code
+                    question={question}
                     Title={question.codeQuestion}
                     code={question.code}
                     number={(selected - 1) * 10 + 1 + i}
