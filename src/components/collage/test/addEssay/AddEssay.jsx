@@ -30,15 +30,16 @@ const AddEssay = () => {
   };
 
   const handleSave = () => {
-    console.log(question);
+
     if (addType === "topic") {
+      console.log(question , "topic question adedd");
       dispatch(addEssayToTopic({ data: question, id: id, type: type }));
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "" });
+      setQuestion({ Title: "", Duration: 0 });
     } else {
       dispatch(addEssay({ data: question, id: id, type: type }));
       // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "" });
+      setQuestion({ Title: "", Duration: 0});
     }
   };
 

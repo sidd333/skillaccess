@@ -24,7 +24,7 @@ const Header = ({ question, setQuestion, id, type }) => {
       return;
     }else {
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", Options: [], id: "aaa" });
+      setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 });
     }
 
     // api call to push questions to topic
