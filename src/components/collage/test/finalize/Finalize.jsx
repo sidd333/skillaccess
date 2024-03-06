@@ -60,6 +60,7 @@ const Finalize = () => {
     localStorage.removeItem("testDetails");
     localStorage.removeItem("totalTime");
 
+
   };
 
   return (
@@ -100,7 +101,7 @@ const Finalize = () => {
           </div>
         </div>
 
-        <Footer handleNext={handleSubmit} />
+        <Footer onClick={handleSubmit} />
       </div>
     </div>
   );
