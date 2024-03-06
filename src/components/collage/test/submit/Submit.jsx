@@ -208,13 +208,13 @@ const Submit = () => {
 
     console.log(totalTimeCal[0], totalDuration);
 
-    if (totalTimeCal[0] > totalDuration) {
-      window.alert(
-        "Total duration of questions is greater than the total duration of test"
-      );
+    // if (totalTimeCal[0] > totalDuration) {
+    //   window.alert(
+    //     "Total duration of questions is greater than the total duration of test"
+    //   );
 
-      return;
-    }
+    //   return;
+    // }
 
     // if(totalTimeCal < totalDuration){
     //   window.alert("Total duration of questions is less than the total duration of test");
@@ -229,7 +229,8 @@ const Submit = () => {
         description,
         totalAttempts,
         totalQuestions,
-        totalDuration: totalTimeCal[0],
+        // totalDuration: totalTimeCal[0],
+        totalDuration,
         topics,
       })
     ).then(() => {

@@ -86,8 +86,11 @@ const Finalize = () => {
           </p>
           {/* Need to all these details below from sections */}
           <div className=" w-full h-full text-lg bg-gray-100   mb-3 rounded-lg flex justify-between px-7 py-4">
-            <p>Total time to complete</p>
-            <p className="text-[#0052CC]  font-bold">{totalTime} mins</p>
+            <p>Total duration of test</p>
+            <p className="text-[#0052CC]  font-bold">
+              {testDetails.totalDuration}mins
+            </p>
+            {/* {totalTime}  */}
           </div>
 
           <div className=" w-full h-full text-lg bg-gray-100   mb-3 rounded-lg flex justify-between px-7 py-4">
