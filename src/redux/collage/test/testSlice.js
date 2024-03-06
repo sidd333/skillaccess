@@ -128,7 +128,7 @@ export const getAllTests = createAsyncThunk(
       });
 
       const res = req.data;
-      console.log(res);
+      // console.log(res);
       return res;
     } catch (error) {
       console.log("catch", error.response.data);
@@ -623,7 +623,9 @@ const testSlice = createSlice({
             state.assessments.advanced = [assement];
           }
         });
+      
         // console.log(action.payload);
+        console.log(assessments?.beginner);
       })
       .addCase(getAllTests.rejected, (state, action) => {
         console.error("Error fetching tests:", action.payload);

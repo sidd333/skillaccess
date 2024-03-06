@@ -14,6 +14,12 @@ import { useSelector } from "react-redux";
 const Beginner = () => {
   const { assessments } = useSelector((state) => state.test);
 
+  const uniqueIds = new Set();
+
+  const filteredBeginnerAssessments = assessments?.beginner?.filter(
+    (item) => !uniqueIds.has(item?._id) && uniqueIds.add(item?._id)
+  );
+
   const navigate = useNavigate();
   return (
     <div className="flex bg-[#F8F8F9] w-full gap-2">
@@ -66,16 +72,17 @@ const Beginner = () => {
           },
         }}
       >
-        {assessments?.beginner?.map((item, i) => (
-          <SwiperSlide className="w-full">
-            <Card
+        {filteredBeginnerAssessments?.map((item,index) =>  (
+          <SwiperSlide key={`${item._id}-${index}`} className="w-full">
+            <Card key={`${item._id}-${index}` }
               assessment={item}
+              
               // heading={item.name}
               // desc={item.description}
               // attempts={item.totalAttempts}
               progress={4}
             />
-          </SwiperSlide>
+           </SwiperSlide>
         ))}
         <SwiperSlide></SwiperSlide>
 

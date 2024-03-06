@@ -470,8 +470,23 @@ const AddMcq = () => {
               className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
               // onClick={addQuestion}
               onClick={() => {
-                dispatch(addMcq({ question: question, id: id }));
-                setQuestion({ Title: "", Options: [],Duration: 0 });
+                if (question.Title === "" ) {
+                  window.alert("Please enter question");
+                  return;
+                }
+                if (question.Options &&  question.Options.length < 4) {
+            
+                  window.alert("Please enter atleast 4 options");
+                  return;
+                }
+                if(question.Duration===0){
+                  window.alert("Please enter required time");
+                  return;
+                }
+                else{
+                  dispatch(addMcq({ question: question, id: id }));
+                  setQuestion({ Title: "", Options: [] , Duration : 0 });
+                }
               }}
             >
               <FaPlus className="self-center" /> Add Next Question

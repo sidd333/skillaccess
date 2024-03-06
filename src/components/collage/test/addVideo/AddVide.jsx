@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-
+import Loader from "./Loader";
 import { useDropzone } from "react-dropzone";
 
 import { GrUploadOption } from "react-icons/gr";
@@ -59,6 +59,7 @@ const AddVideo = () => {
 
   const [timerInterval, setTimerInterval] = useState(null);
 
+  const[loading,setLoading]=useState(false);
   const maxDurationInSeconds = 3 * 60;
 
   const warningTime = 10;
@@ -209,7 +210,9 @@ const AddVideo = () => {
   const authToken = localStorage.getItem("auth-token");
 
   const uploadVideo = async (videoFile) => {
+    
     try {
+      setLoading(true);
       const formData = new FormData();
 
       formData.append("video", videoFile);
@@ -225,7 +228,8 @@ const AddVideo = () => {
 
             "auth-token": authToken,
           },
-        }
+        },
+      
       );
 
       const videoLinkFromServer = response.data.video;
@@ -239,6 +243,9 @@ const AddVideo = () => {
       navigate(`/collage/test/video/${id}/selectType`);
     } catch (error) {
       console.error("Error uploading video:", error);
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -397,7 +404,7 @@ const AddVideo = () => {
 
               onClick={handleFileUpload}
             >
-              <FaPlus className="self-center" /> Add Questions
+              <FaPlus className="self-center" /> Add Questions {loading && <Loader />}
             </button>
           </div>
         </div>

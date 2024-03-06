@@ -32,7 +32,12 @@ const Header = ({ question, setQuestion }) => {
 
       window.alert("Please enter atleast 4 options");
       return;
-    }else{
+    }
+    if(question.Duration===0){
+      window.alert("Please enter required time");
+      return;
+    }
+    else{
       dispatch(addMcq({ question: question, id: id }));
       setQuestion({ Title: "", Options: [] , Duration : 0 });
     

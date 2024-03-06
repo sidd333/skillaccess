@@ -32,14 +32,27 @@ const AddEssay = () => {
   const handleSave = () => {
 
     if (addType === "topic") {
-      console.log(question , "topic question adedd");
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      }
+      if(question.Duration===0){
+        window.alert("Please enter required time");
+        return;
+      }
+      else {
       dispatch(addEssayToTopic({ data: question, id: id, type: type }));
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "", Duration: 0 });
+      }
     } else {
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      }
+      else{
       dispatch(addEssay({ data: question, id: id, type: type }));
       // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "", Duration: 0});
+      }
     }
   };
 
