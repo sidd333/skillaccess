@@ -11,10 +11,10 @@ import {
 } from "../../../../redux/collage/test/testSlice";
 import { useSearchParams } from "react-router-dom";
 
-const Mcq = ({ Title, Options, Number, id, type, view }) => {
+const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
   const [search, setSearch] = useSearchParams();
 
-  const [mcq, setMcq] = useState({ Title: Title, Options: Options });
+  const [mcq, setMcq] = useState(question);
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const { name, value, key } = e.target;

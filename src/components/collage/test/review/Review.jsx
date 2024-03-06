@@ -129,6 +129,7 @@ const Review = () => {
                   type={type}
                   id={id}
                   Number={i}
+                  question={question}
                   Title={question.Title}
                   Options={question.Options}
                   AnswerIndex={question.AnswerIndex}
