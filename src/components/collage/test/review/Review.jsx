@@ -7,6 +7,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import FindAnswer from "./FindAnswer";
 import Essay from "./Essay";
 import Code from "./Code";
+import Video from "./Video";
 const { getTopicById } = require("../../../../redux/collage/test/testSlice");
 
 const Review = () => {
@@ -16,6 +17,7 @@ const Review = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const type = searchParams.get("type");
   const questionType = searchParams.get("question");
+  const view = searchParams.get("view");
   // console.log(questionType);
   const { topics } = useSelector((state) => state.test);
   useEffect(() => {
@@ -123,6 +125,8 @@ const Review = () => {
               // console.log(question);
               return (
                 <Mcq
+                  view={view}
+                  type={type}
                   id={id}
                   Number={i}
                   Title={question.Title}
@@ -140,6 +144,7 @@ const Review = () => {
               console.log(question);
               return (
                 <FindAnswer
+                  type={type}
                   id={id}
                   Number={i}
                   Title={question?.Title || ""}
@@ -154,7 +159,14 @@ const Review = () => {
           questions?.length > 0 ? (
             questions.map((question, i) => {
               // console.log(question);
-              return <Essay Number={i} Title={question?.Title || ""} id={id} />;
+              return (
+                <Essay
+                  Number={i}
+                  Title={question?.Title || ""}
+                  id={id}
+                  type={type}
+                />
+              );
             })
           ) : (
             <></>
@@ -165,6 +177,7 @@ const Review = () => {
               // console.log(question);
               return (
                 <Code
+                  type={type}
                   id={id}
                   Number={i}
                   Title={question?.codeQuestion || ""}
@@ -175,8 +188,21 @@ const Review = () => {
           ) : (
             <></>
           )
+        ) : questions?.length > 0 ? (
+          questions.map((question, i) => {
+            // console.log(question);
+            return (
+              <Video
+                Number={i}
+                id={id}
+                video={question}
+                view={view}
+                type={type}
+              />
+            );
+          })
         ) : (
-          <>video</>
+          <></>
         )}
       </div>
     </div>
