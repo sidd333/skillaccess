@@ -146,9 +146,11 @@ const Review = () => {
               console.log(question);
               return (
                 <FindAnswer
-                  type={type}
+                view={view}
+                type={type}
                   id={id}
                   Number={i}
+                  question={question}
                   Title={question?.Title || ""}
                   Options={question?.questions || []}
                 />
@@ -166,7 +168,9 @@ const Review = () => {
                   Number={i}
                   Title={question?.Title || ""}
                   id={id}
+                  view={view}
                   type={type}
+                  question={question}
                 />
               );
             })
@@ -179,11 +183,13 @@ const Review = () => {
               // console.log(question);
               return (
                 <Code
-                  type={type}
+                view={view}
+                type={type}
                   id={id}
                   Number={i}
                   Title={question?.codeQuestion || ""}
                   code={question?.code}
+                  question={question}
                 />
               );
             })
@@ -200,6 +206,7 @@ const Review = () => {
                 video={question}
                 view={view}
                 type={type}
+                question={question}
               />
             );
           })
