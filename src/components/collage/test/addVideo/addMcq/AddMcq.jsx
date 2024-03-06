@@ -15,7 +15,7 @@ import {
   addVideo,
 } from "../../../../../redux/collage/test/testSlice";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const AddMcq = () => {
   const { currentTopic, topics } = useSelector((state) => state.test);
@@ -36,11 +36,13 @@ const AddMcq = () => {
 
   let index = null;
 
+  const [search, setSearch] = useSearchParams();
+
+  console.log(search.get("topicId"));
   const [question, setQuestion] = useState({
     Title: "",
-
+    Duration: 0,
     Options: [],
-
     QuestionType: "",
 
     AnswerIndex: null,
@@ -458,7 +460,7 @@ const AddMcq = () => {
               onClick={() => {
                 dispatch(addVideo({ question: question }));
 
-                setQuestion({ Title: "", Options: [], Duration: 1 });
+                setQuestion({ Title: "", Options: [], Duration: 0 });
               }}
             >
               <FaPlus className="self-center" /> Add Next Question

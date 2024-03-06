@@ -22,13 +22,19 @@ const Header = ({ question, setQuestion, id, type }) => {
 
       window.alert("Please enter atleast 4 options");
       return;
-    }else {
+    }
+    if(question.Duration===0){
+      window.alert("Please enter required time");
+      return;
+    }
+    else {
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 });
+      navigate(-1);
     }
 
     // api call to push questions to topic
-    navigate(-1);
+   
   };
   // useEffect(() => {
   //   dispatch(setTest({questions}));

@@ -9,7 +9,7 @@ import {
   setMcq,
   addMcq,
 } from "../../../../redux/collage/test/testSlice";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const AddMcq = () => {
   const { currentTopic, topics } = useSelector((state) => state.test);
@@ -21,11 +21,14 @@ const AddMcq = () => {
 
   const [step, setStep] = useState(1);
   const [click, setClick] = useState(false);
+  const [search, setSearch] = useSearchParams();
 
+  const section = search.get("topicId");
   const { test } = useSelector((state) => state.test);
-  let index = null;
+  console.log(section);
   const [question, setQuestion] = useState({
-    Duration : 0,
+    section: section,
+    Duration: 0,
     Title: "",
     Options: [],
     QuestionType: "",
@@ -162,12 +165,11 @@ const AddMcq = () => {
         // console.log({ ...prev, Title: e.target.value });
         return { ...prev, Title: e.target.value };
       });
-    } else if(e.target.name === "Duration") {
+    } else if (e.target.name === "Duration") {
       setQuestion((prev) => {
         return { ...prev, Duration: e.target.value };
       });
-    }
-    else {
+    } else {
       switch (e.target.name) {
         case "Option1":
           setQuestion((prev) => {
@@ -470,8 +472,25 @@ const AddMcq = () => {
               className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
               // onClick={addQuestion}
               onClick={() => {
-                dispatch(addMcq({ question: question, id: id }));
-                setQuestion({ Title: "", Options: [],Duration: 0 });
+
+                if (question.Title === "" ) {
+                  window.alert("Please enter question");
+                  return;
+                }
+                if (question.Options &&  question.Options.length < 4) {
+            
+                  window.alert("Please enter atleast 4 options");
+                  return;
+                }
+                if(question.Duration===0){
+                  window.alert("Please enter required time");
+                  return;
+                }
+                else{
+                  dispatch(addMcq({ question: question, id: id }));
+                  setQuestion({ Title: "", Options: [] , Duration : 0 });
+                }
+
               }}
             >
               <FaPlus className="self-center" /> Add Next Question

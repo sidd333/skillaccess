@@ -19,6 +19,7 @@ const AddParagraph = () => {
   const type = searchParams.get("type");
   const addType = searchParams.get("addType");
   const [question, setQuestion] = useState({
+    section: searchParams.get("topicId"),
     id: "aaa",
     Title: "",
     Duration: 0,
@@ -42,13 +43,14 @@ const AddParagraph = () => {
 
   const handleSave = () => {
     if (addType === "topic") {
+      
       dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", questions: [],Duration: 0 });
+      setQuestion({ Title: "", questions: [], Duration: 0 });
     } else {
       dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
       // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", questions: [] ,Duration: 0});
+      setQuestion({ Title: "", questions: [], Duration: 0 });
     }
   };
 

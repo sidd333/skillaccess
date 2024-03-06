@@ -39,6 +39,7 @@ const AddCode = () => {
   // "hello world"
   // ]
   const [question, setQuestion] = useState({
+    section: searchParams.get("topicId"),
     id: "aaa",
     Duration: 0,
     code: "",

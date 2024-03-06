@@ -11,22 +11,23 @@ export const editQuestionFun = (state, action) => {
 
     case "essay":
       copy = [...state.topics[topicIndex].essay];
-      state.topics[topicIndex].essay = copy.filter((ques, index) => {
-        return index !== selfIndex;
-      });
+      copy[selfIndex] = question;
+      state.topics[topicIndex].essay = copy;
+
       break;
 
     case "compiler":
       copy = [...state.topics[topicIndex].compiler];
-      state.topics[topicIndex].compiler = copy.filter((ques, index) => {
-        return index !== selfIndex;
-      });
+      copy[selfIndex] = question;
+      state.topics[topicIndex].compiler = copy;
+      // .filter((ques, index) => {
+      //   return index !== selfIndex;
+      // });
       break;
     case "findAnswer":
       copy = [...state.topics[topicIndex].findAnswers];
-      state.topics[topicIndex].findAnswers = copy.filter((ques, index) => {
-        return index !== selfIndex;
-      });
+      copy[selfIndex] = question;
+      state.topics[topicIndex].findAnswers = copy;
       break;
     default:
       break;

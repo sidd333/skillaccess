@@ -14,7 +14,7 @@ const Card = (props) => {
       <h2 className="text-gray-400 font-medium text-base font-dmSans sm:mb-2">
         ATTEMPTS
       </h2>
-      <div className="grid grid-cols-4 w-full px-2 gap-2 mb-4">
+       <div className="grid grid-cols-4 w-full px-2 gap-2 mb-4">
         <div
           className={`${
             props.progress === 1
@@ -58,10 +58,10 @@ const Card = (props) => {
               ? "bg-gray-200"
               : "bg-green-500"
           } w-full h-1 rounded`}
-        ></div>
+        ></div> 
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between ">
         <div className="flex ">
           <div className="w-8 h-8 bg-blue-500  rounded"></div>
           <div className="w-8 h-8 bg-blue-900 rounded -ml-3"></div>
