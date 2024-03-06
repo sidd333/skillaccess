@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { editQuestionFun } from "./reducerFunctions/question";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 let authToken = localStorage.getItem("auth-token");
@@ -59,7 +60,7 @@ const testState = {
   totalAttempts: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).totalAttempts
     : "",
-    totalDuration: localStorage.getItem("testDetails")
+  totalDuration: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).totalDuration
     : "",
   // JSON.parse(localStorage.getItem("testDetails")).totalAttempts || 0,
@@ -72,14 +73,29 @@ const testState = {
     : [], //selected topics
   status: "",
   currentTopic: {}, //on edit
-  TopicToBeAdded: {
-    id: "",
-    questions: [],
-    findAnswers: [],
-    essay: [],
-    video: [],
-    compiler: [],
-  },
+  TopicToBeAdded: localStorage.getItem("TopicToBeAdded")
+    ? JSON.parse(localStorage.getItem("TopicToBeAdded"))
+    : {
+        id: "",
+
+        questions: [],
+
+        findAnswers: [],
+
+        essay: [],
+
+        video: {
+          videoFile: "",
+
+          questions: [],
+
+          short: [],
+
+          long: [],
+        },
+
+        compiler: [],
+      },
 };
 
 export const getTest = createAsyncThunk(
@@ -320,6 +336,32 @@ const testSlice = createSlice({
 
       localStorage.setItem("topics", JSON.stringify(state.topics));
     },
+    addVideo: (state, action) => {
+      // Assuming state.TopicToBeAdded.video is an object
+      //this is addAddVideoToTopic
+      const { data } = action.payload;
+
+      if (data) {
+        state.TopicToBeAdded.video.videoFile = data;
+      }
+
+      if (action.payload.short) {
+        state.TopicToBeAdded.video.short = action.payload.short;
+      }
+
+      if (action.payload.long) {
+        state.TopicToBeAdded.video.long = action.payload.long;
+      }
+
+      if (action.payload.question) {
+        state.TopicToBeAdded.video.questions.push(action.payload.question);
+      }
+
+      localStorage.setItem(
+        "TopicToBeAdded",
+        JSON.stringify(state.TopicToBeAdded)
+      );
+    },
     removeQuestion: (state, action) => {
       //questionType, topicIndex ,selfIndex
       const { topicIndex, selfIndex, questionType } = action.payload;
@@ -425,6 +467,10 @@ const testSlice = createSlice({
 
       localStorage.setItem("topics", JSON.stringify(state.topics));
     },
+
+    editQuestion: (state, action) => {
+      editQuestionFun(state, action);
+    },
     addCompiler: (state, action) => {
       console.log("compiler");
       state.topics[action.payload.id].compiler = [
@@ -436,14 +482,14 @@ const testSlice = createSlice({
       // localStorage.setItem("topics", state.topics);
     },
 
-    addVideo: (state, action) => {
-      state.topics[action.payload.id].video = [
-        ...state.topics[action.payload.id].video,
-        action.payload.data,
-      ];
-      localStorage.setItem("topics", JSON.stringify(state.topics));
-      // localStorage.setItem("topics", state.topics);
-    },
+    // addVideo: (state, action) => {
+    //   state.topics[action.payload.id].video = [
+    //     ...state.topics[action.payload.id].video,
+    //     action.payload.data,
+    //   ];
+    //   localStorage.setItem("topics", JSON.stringify(state.topics));
+    //   // localStorage.setItem("topics", state.topics);
+    // },
     setTestName: (state, action) => {
       state.test.testName = action.payload;
     },
@@ -648,6 +694,7 @@ const testSlice = createSlice({
 });
 
 export const {
+  editQuestion,
   removeQuestionById,
   removeQuestion,
   addMcq,

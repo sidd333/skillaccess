@@ -91,7 +91,7 @@ const AddQuestions = () => {
                       // }
                       onClick={() =>
                         navigate(
-                          `/collage/test/details/${index}?type=section&question=${topic.Type}&topicId=${topic._id}`
+                          `/collage/test/details/${index}?type=section&question=${topic.Type}&topicId=${topic._id}&view=false`
                         )
                       }
                     >
@@ -99,7 +99,14 @@ const AddQuestions = () => {
                     </button>
                   </div>
                   <div className="col-span-1  flex justify-center">
-                    <PiPencilSimpleLine className="self-center text-blued w-5 h-5" />
+                    <PiPencilSimpleLine
+                      className="self-center text-blued w-5 h-5"
+                      onClick={() =>
+                        navigate(
+                          `/collage/test/details/${index}?type=section&question=${topic.Type}&topicId=${topic._id}&view=true`
+                        )
+                      }
+                    />
                   </div>
                 </div>
               </div>
