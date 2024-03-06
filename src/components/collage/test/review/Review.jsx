@@ -91,6 +91,7 @@ const Review = () => {
             : ""
         }
         type={type}
+        topicId={searchParams.get("topicId")}
         sectionId={
           localStorage.getItem("Details")
             ? JSON.parse(localStorage.getItem("Details"))._id

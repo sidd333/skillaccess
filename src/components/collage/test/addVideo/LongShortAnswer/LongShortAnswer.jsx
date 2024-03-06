@@ -32,7 +32,7 @@ const LongShortAnswer = () => {
 
     Title: "",
 
-    Duration: "",
+    Duration: 0,
   });
 
   const handleChanges = (e) => {
@@ -52,7 +52,7 @@ const LongShortAnswer = () => {
 
       // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
-      setQuestion({ Title: "" });
+      setQuestion({ Title: "", Duration: 0 });
     } else {
       if (LongShort === "short") {
         dispatch(addVideo({ short: question }));
@@ -65,7 +65,7 @@ const LongShortAnswer = () => {
 
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
-        setQuestion({ Title: "" });
+        setQuestion({ Title: "", Duration: 0 });
       }
     }
   };

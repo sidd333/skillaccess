@@ -72,8 +72,24 @@ const Header = () => {
             // Add other properties if needed
           },
         };
+        let mcq = topicToBeAdded.video.questions.reduce((acc, question) => {
+          return acc + parseInt(question.Duration);
+        }, 0);
+        let long = topicToBeAdded.video.long.reduce((acc, question) => {
+          return acc + parseInt(question.Duration);
+        }, 0);
+
+        let short = topicToBeAdded.video.short.reduce((acc, question) => {
+          return acc + parseInt(question.Duration);
+        }, 0);
+        console.log(mcq);
+        let Duration = mcq + long + short;
         dispatch(
-          addQuestionToTopic({ data: topicToBeAdded.video, id: id, type: type })
+          addQuestionToTopic({
+            data: { ...topicToBeAdded.video, Duration: Duration },
+            id: id,
+            type: type,
+          })
         ).then(() => {
           localStorage.setItem(
             "TopicToBeAdded",
