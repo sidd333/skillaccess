@@ -1,28 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
-import { PiFileTextBold } from "react-icons/pi";
-import { IoSwapVerticalSharp } from "react-icons/io5";
 import { PiPencilSimpleLineBold } from "react-icons/pi";
-import { CiBookmarkMinus } from "react-icons/ci";
-import { removeQuestion } from "../../../../redux/collage/test/testSlice";
+import {
+  editQuestion,
+  removeQuestion,
+} from "../../../../redux/collage/test/testSlice";
+import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-const Essay = ({ Title, Number, id }) => {
+
+
+
+
+
+const Essay = ({ Title, Number, id , question ,type,view}) => {
   const dispatch = useDispatch();
+  const [search, setSearch] = useSearchParams();
+  const [essay, setEssay] = useState(question);
+
+  const handleChange = (e) => {
+    const { name, value, key } = e.target;
+    if (name === "Title") {
+      // console.log("name");
+      setEssay((prev) => {
+        return { ...prev, [name]: [value] };
+      });
+    }
+    
+  };
   const handleDelete = () => {
     dispatch(
-      removeQuestion({
-        selfIndex: Number,
-        topicIndex: id,
-        questionType: "essay",
-      })
+      removeQuestion({ selfIndex: Number, topicIndex: id, questionType: "essay" })
     );
   };
+
+  // const handleDelete = () => {
+  //   dispatch(
+  //     removeQuestion({
+  //       selfIndex: Number,
+  //       topicIndex: id,
+  //       questionType: "essay",
+  //     })
+  //   );
+  // };
   return (
-    <div className="mx-6 flex bg-white rounded-lg justify-between">
-      <div className="w-11/12 flex flex-col gap-2">
-        <h2 className="px-4 font-semibold pt-3 text-base">
-          {Number + 1} &nbsp; {Title}
-        </h2>
+    <div className="mx-6 flex bg-white rounded-lg justify-between mb-2">
+      <div className="w-11/12 flex flex-col gap-2 ">
+      {search.get(`${Number}`) !== "true" ? (
+          <h2 className="px-4 font-semibold pt-3 text-base">
+            {Number + 1} &nbsp; {Title}
+          </h2>
+        ) : (
+          <input
+            onChange={handleChange}
+            placeholder="enter new question"
+            name="Title"
+            value={essay.Title}
+          />
+        )}
         <div className="px-5 pb-4 flex flex-col gap-4">
           {/* {Options.map((ques) => (
             <span className="flex gap-2">
@@ -42,16 +76,61 @@ const Essay = ({ Title, Number, id }) => {
           ))} */}
         </div>
       </div>
-      <div className="w-[5%] flex flex-col gap-4 text-blued justify-center border-s-2 py-1">
+  
+      {/* <div className="w-[5%] flex flex-col gap-4 text-blued justify-center border-s-2 py-1">
         <RxCross1
           className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
           onClick={handleDelete}
-        />
-        <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
+        /> */}
+
+
+        
+        {/* <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
         <IoSwapVerticalSharp className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
         <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
-        <PiPencilSimpleLineBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
-      </div>
+        <PiPencilSimpleLineBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
+      {/* </div> */}
+
+
+      {type !== "topic" && view !== "false" && (
+        <div className="w-[5%] flex flex-col gap-4 text-blued border-s-2 py-1">
+          <RxCross1
+            className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
+            onClick={handleDelete}
+          />
+          {/* <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
+          {/* <IoSwapVerticalSharp className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
+        <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
+
+          {search.get(`${Number}`) !== "true" ? (
+            <PiPencilSimpleLineBold
+              className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center"
+              onClick={() => {
+                search.set(`${Number}`, "true");
+                setSearch(search);
+              }}
+            />
+          ) : (
+            <PiPencilSimpleLineBold
+              className=" w-6 h-6 p-1 rounded-lg bg-amber-600 self-center"
+              onClick={() => {
+                search.set(`${Number}`, "false");
+                setSearch(search);
+                dispatch(
+                  editQuestion({
+                    topicIndex: id,
+                    selfIndex: Number,
+                    questionType: "essay",
+                    question: essay,
+                  })
+                );
+              }}
+            />
+          )}
+        </div>
+      )}
+
+
     </div>
   );
 };

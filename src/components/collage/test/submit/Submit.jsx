@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Code from "./Code";
+import Video from "./Video";
 
 const Submit = () => {
   const navigate = useNavigate();
@@ -181,17 +182,23 @@ const Submit = () => {
       return;
     }
 
-
-    if(totalQuestions>questions.length){
-      console.log(totalQuestions,questions.length);
-      window.alert(`Add ${totalQuestions-questions.length} more questions to complete the test`);
+    if (totalQuestions > questions.length) {
+      console.log(totalQuestions, questions.length);
+      window.alert(
+        `Add ${
+          totalQuestions - questions.length
+        } more questions to complete the test`
+      );
       return;
     }
-    if(totalQuestions<questions.length){
-      console.log(totalQuestions,questions.length);
-      window.alert(`Remove ${questions.length-totalQuestions} questions to complete the test`);
+    if (totalQuestions < questions.length) {
+      console.log(totalQuestions, questions.length);
+      window.alert(
+        `Remove ${
+          questions.length - totalQuestions
+        } questions to complete the test`
+      );
 
-  
       return;
     }
 
@@ -199,11 +206,12 @@ const Submit = () => {
 
     console.log(totalTimeCal, totalDuration);
 
-
-console.log(totalTimeCal[0],totalDuration);
+    console.log(totalTimeCal[0], totalDuration);
 
     if (totalTimeCal[0] > totalDuration) {
-      window.alert("Total duration of questions is greater than the total duration of test");
+      window.alert(
+        "Total duration of questions is greater than the total duration of test"
+      );
 
       return;
     }
@@ -212,9 +220,8 @@ console.log(totalTimeCal[0],totalDuration);
     //   window.alert("Total duration of questions is less than the total duration of test");
     //   return;
 
-   
-    console.log(totalTimeCal[0],totalDuration);
-    localStorage.setItem("totalTime", JSON.stringify(totalTimeCal[0]))
+    console.log(totalTimeCal[0], totalDuration);
+    localStorage.setItem("totalTime", JSON.stringify(totalTimeCal[0]));
 
     dispatch(
       createTest({
@@ -249,7 +256,6 @@ console.log(totalTimeCal[0],totalDuration);
           .map((question, i) => {
             return (
               <div className="my-2">
-                {console.log(question.QuestionType)}
                 {question.codeQuestion && (
                   <Code
                     question={question}
@@ -262,6 +268,12 @@ console.log(totalTimeCal[0],totalDuration);
                   <List
                     question={question}
                     number={(selected - 1) * 10 + 1 + i}
+                  />
+                )}
+                {question.videoFile && (
+                  <Video
+                    Number={(selected - 1) * 10 + 1 + i}
+                    video={question}
                   />
                 )}{" "}
               </div>

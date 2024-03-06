@@ -5,7 +5,7 @@ import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { FiUpload } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Header = ({ type, sectionId, qt }) => {
+const Header = ({ type, sectionId, qt, topicId }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   return (
@@ -51,7 +51,7 @@ const Header = ({ type, sectionId, qt }) => {
                           : qt === "essay"
                           ? "essay"
                           : "addMcq"
-                      }/${id}?addType=test`
+                      }/${id}?addType=test&topicId=${topicId}`
                     )
                   : navigate(`/collage/test/typeOfQuestions/${sectionId}`)
               }

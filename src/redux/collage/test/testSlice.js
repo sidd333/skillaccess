@@ -346,11 +346,17 @@ const testSlice = createSlice({
       }
 
       if (action.payload.short) {
-        state.TopicToBeAdded.video.short = action.payload.short;
+        state.TopicToBeAdded.video.short = [
+          ...state.TopicToBeAdded.video.short,
+          action.payload.short,
+        ];
       }
 
       if (action.payload.long) {
-        state.TopicToBeAdded.video.long = action.payload.long;
+        state.TopicToBeAdded.video.long = [
+          ...state.TopicToBeAdded.video.long,
+          action.payload.long,
+        ];
       }
 
       if (action.payload.question) {
@@ -393,6 +399,7 @@ const testSlice = createSlice({
             return index !== selfIndex;
           });
           break;
+
         default:
           break;
       }
@@ -409,6 +416,7 @@ const testSlice = createSlice({
         if (topic._id === sectionId) topicIndex = index;
       });
 
+      console.log(state.topics[topicIndex]);
       const questionType = state.topics[topicIndex].Type;
 
       switch (questionType) {
@@ -458,6 +466,18 @@ const testSlice = createSlice({
           });
           copy = [...state.topics[topicIndex].findAnswers];
           state.topics[topicIndex].findAnswers = copy.filter((ques, index) => {
+            return index !== selfIndex;
+          });
+          break;
+
+        case "video":
+          state.topics[topicIndex].video.map((question, index) => {
+            if (question._id === questionId) {
+              selfIndex = index;
+            }
+          });
+          copy = [...state.topics[topicIndex].video];
+          state.topics[topicIndex].video = copy.filter((ques, index) => {
             return index !== selfIndex;
           });
           break;

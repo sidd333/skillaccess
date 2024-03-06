@@ -20,6 +20,7 @@ const AddEssay = () => {
   const type = searchParams.get("type");
   const addType = searchParams.get("addType");
   const [question, setQuestion] = useState({
+    section: searchParams.get("topicId"),
     id: "aaa",
     Title: "",
     Duration: 0,
@@ -30,8 +31,8 @@ const AddEssay = () => {
   };
 
   const handleSave = () => {
-
     if (addType === "topic") {
+
       if (question.Title == "") {
         window.alert("Please enter the question");
       }
@@ -40,6 +41,7 @@ const AddEssay = () => {
         return;
       }
       else {
+
       dispatch(addEssayToTopic({ data: question, id: id, type: type }));
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "", Duration: 0 });
@@ -51,8 +53,10 @@ const AddEssay = () => {
       else{
       dispatch(addEssay({ data: question, id: id, type: type }));
       // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+
       setQuestion({ Title: "", Duration: 0});
       }
+
     }
   };
 

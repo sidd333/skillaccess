@@ -72,8 +72,24 @@ const Header = () => {
             // Add other properties if needed
           },
         };
+        let mcq = topicToBeAdded.video.questions.reduce((acc, question) => {
+          return acc + parseInt(question.Duration);
+        }, 0);
+        let long = topicToBeAdded.video.long.reduce((acc, question) => {
+          return acc + parseInt(question.Duration);
+        }, 0);
+
+        let short = topicToBeAdded.video.short.reduce((acc, question) => {
+          return acc + parseInt(question.Duration);
+        }, 0);
+        console.log(mcq);
+        let Duration = mcq + long + short;
         dispatch(
-          addQuestionToTopic({ data: topicToBeAdded.video, id: id, type: type })
+          addQuestionToTopic({
+            data: { ...topicToBeAdded.video, Duration: Duration },
+            id: id,
+            type: type,
+          })
         ).then(() => {
           localStorage.setItem(
             "TopicToBeAdded",
@@ -126,7 +142,7 @@ const Header = () => {
 
       <div className="bg-gray-100 rounded-xl mx-2   h-12 flex my-2 ">
         <div className=" flex">
-          {showSubmitButton && (
+          {/* {showSubmitButton && (
             // Show "Submit" button
 
             <button
@@ -136,7 +152,7 @@ const Header = () => {
               Submit
               <FaArrowRightLong className="self-center text-lg text-white ml-4" />
             </button>
-          )}
+          )} */}
 
           {/* // : 
 
