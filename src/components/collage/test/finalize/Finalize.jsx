@@ -13,8 +13,14 @@ const Finalize = () => {
   // const { testName, testDescription, topics, testAttempts,totalQuestions } = useSelector(
   //   (state) => state.test
   // );
-  const { name, description, totalQuestions, testAttempts, topics,totalDuration } =
-    useSelector((state) => state.test);
+  const {
+    name,
+    description,
+    totalQuestions,
+    testAttempts,
+    topics,
+    totalDuration,
+  } = useSelector((state) => state.test);
   const testDetails = JSON.parse(localStorage.getItem("testDetails"));
 
   const totalTime = localStorage.getItem("totalTime");
@@ -51,7 +57,7 @@ const Finalize = () => {
     //     name: testDetails.name,
     //     description: testDetails.description,
     //     totalAttempts: testDetails.totalQuestions,
-        
+
     //     topics,
     //   })
     // );
@@ -59,8 +65,6 @@ const Finalize = () => {
     navigate("/collage/test/invite");
     localStorage.removeItem("testDetails");
     localStorage.removeItem("totalTime");
-
-
   };
 
   return (
@@ -101,7 +105,7 @@ const Finalize = () => {
           </div>
         </div>
 
-        <Footer onClick={handleSubmit} />
+        <Footer handleNext={handleSubmit} />
       </div>
     </div>
   );

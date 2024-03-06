@@ -104,7 +104,7 @@ const List = ({ question, number }) => {
           alt="cross"
           className="self-center "
           onClick={() => {
-            console.log(question);
+            // console.log(question);
             handleDelete({
               sectionId: question.section,
               questionId: question._id,
