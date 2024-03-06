@@ -275,6 +275,29 @@ const testSlice = createSlice({
   initialState: testState,
   name: "test",
   reducers: {
+    clearTopicToBeAdded: (state, action) => {
+      state.TopicToBeAdded = {
+        id: "",
+
+        questions: [],
+
+        findAnswers: [],
+
+        essay: [],
+
+        video: {
+          videoFile: "",
+
+          questions: [],
+
+          short: [],
+
+          long: [],
+        },
+
+        compiler: [],
+      };
+    },
     setAssessments: (state, action) => {
       state.assessments = {
         beginner: [],
@@ -643,7 +666,7 @@ const testSlice = createSlice({
             state.assessments.advanced = [assement];
           }
         });
-      
+
         // console.log(action.payload);
         console.log(assessments?.beginner);
       })
@@ -717,6 +740,7 @@ const testSlice = createSlice({
 });
 
 export const {
+  clearTopicToBeAdded,
   editQuestion,
   removeQuestionById,
   removeQuestion,

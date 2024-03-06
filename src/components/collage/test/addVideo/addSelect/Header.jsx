@@ -6,7 +6,10 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { addQuestionToTopic } from "../../../../../redux/collage/test/testSlice";
+import {
+  addQuestionToTopic,
+  clearTopicToBeAdded,
+} from "../../../../../redux/collage/test/testSlice";
 
 const Header = ({ selectQuestionType }) => {
   const { id } = useParams();
@@ -53,6 +56,7 @@ const Header = ({ selectQuestionType }) => {
       );
       navigate("/collage/test/select");
     });
+    dispatch(clearTopicToBeAdded);
   };
 
   const navigate = useNavigate();
