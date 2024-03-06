@@ -15,19 +15,36 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
 
   const handleSave = () => {
     if (addType === "topic") {
-      if (question.Title != "") {
+      if (question.Title == "") {
+   window.alert("Please enter paragraph");
+      }else if (question.questions.length == 1 && question.questions[0].question == "" ) {
+        
+          window.alert("Please enter atleast one question");
+         
+      }
+       else {
         dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "", questions: [] });
+        setQuestion({ Title: "", questions: [] ,Duration : 0});
+        navigate(-1);
       }
-      navigate(-1);
+
     } else {
-      if (question.Title != "") {
+      if (question.Title == "") {
+        window.alert("Please enter paragraph");
+           }else if (question.questions.length == 1 && question.questions[0].question == "" ) {
+        
+            window.alert("Please enter atleast one question");
+           
+        }
+            
+      else{
         dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "", questions: [] });
+        setQuestion({ Title: "", questions: [], Duration: 0 });
+        navigate(-1);
       }
-      navigate(-1);
+     
     }
   };
 

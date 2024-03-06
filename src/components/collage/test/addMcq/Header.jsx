@@ -11,24 +11,36 @@ const Header = ({ question, setQuestion }) => {
   const dispatch = useDispatch();
   const { test } = useSelector((state) => state.test);
 
-  const handleCreateTest = () => {
-    console.log("test", test);
-    dispatch(
-      createTest({
-        name: test.testName,
-        level: test.testType,
-        testSections: test.sections,
-      })
-    );
-    navigate("/collage/test/final");
-  };
+  // const handleCreateTest = () => {
+  //   console.log("test", test);
+  //   dispatch(
+  //     createTest({
+  //       name: test.testName,
+  //       level: test.testType,
+  //       testSections: test.sections,
+  //     })
+  //   );
+  //   navigate("/collage/test/final");
+  // };
 
   const handleSave = () => {
-    if (question.Title !== "") {
-      dispatch(addMcq({ question: question, id: id }));
-      setQuestion({ Title: "", Options: [] });
+    if (question.Title === "" ) {
+      window.alert("Please enter question");
+      return;
     }
-    navigate(-1);
+    if (question.Options &&  question.Options.length < 4) {
+
+      window.alert("Please enter atleast 4 options");
+      return;
+    }else{
+      dispatch(addMcq({ question: question, id: id }));
+      setQuestion({ Title: "", Options: [] , Duration : 0 });
+    
+      navigate(-1);
+    }
+
+  
+  
   };
   // useEffect(() => {
   //   dispatch(setTest({questions}));

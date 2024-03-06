@@ -12,7 +12,7 @@ import {
 const Name = () => {
   const dispatch = useDispatch();
 
-  const { name, description, totalAttempts, assessments } = useSelector(
+  const { name, description, totalAttempts, assessments,totalQuestions,totalDuration } = useSelector(
     (state) => state.test
   );
   // const {} = useSelector((state) =>console.log(state.test));
@@ -21,6 +21,8 @@ const Name = () => {
     name: name || "",
     description: description || "",
     totalAttempts: totalAttempts || "",
+    totalQuestions: totalQuestions || null,
+    totalDuration : totalDuration || null,
   });
 
   useEffect(() => {
@@ -28,9 +30,11 @@ const Name = () => {
       name: name || "",
       description: description || "",
       totalAttempts: totalAttempts || "",
+      totalQuestions: totalQuestions || null,
+      totalDuration : totalDuration || null,
     });
     // why getting 0 here
-    console.log(name, description, totalAttempts);
+    // console.log(name, description, totalAttempts);
   }, [dispatch]);
 
   // const getTests = () => {
@@ -102,13 +106,32 @@ const Name = () => {
           placeholder="No. of Questions"
         /> */}
         <input
-          type="text"
+          type="number"
           name="totalAttempts"
           className="w-full bg-gray-100 h-16 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 border-none placeholder-gray-400"
           placeholder="No. of Attempts"
           value={testDetails.totalAttempts}
           onChange={handleChange}
         />
+           <input
+       
+          name="totalQuestions"
+          type="number"
+          className="w-full bg-gray-100 h-16 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 border-none placeholder-gray-400"
+          placeholder="No. of Questions"
+          value={testDetails.totalQuestions}
+          onChange={handleChange}
+        />
+          <input
+       
+       name="totalDuration"
+       type="number"
+       className="w-full bg-gray-100 h-16 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 border-none placeholder-gray-400"
+       placeholder="Total Duration in minutes"
+       value={testDetails.totalDuration}
+       onChange={handleChange}
+       />
+
 
         <textarea
           className="w-full bg-gray-100 h-48 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 resize-none border-none placeholder-gray-400"

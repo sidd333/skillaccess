@@ -21,7 +21,7 @@ const AddParagraph = () => {
   const [question, setQuestion] = useState({
     id: "aaa",
     Title: "",
-    Duration: "",
+    Duration: 0,
     questions: [{ question: "" }],
   });
 
@@ -44,11 +44,11 @@ const AddParagraph = () => {
     if (addType === "topic") {
       dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", questions: [] });
+      setQuestion({ Title: "", questions: [],Duration: 0 });
     } else {
       dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
       // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", questions: [] });
+      setQuestion({ Title: "", questions: [] ,Duration: 0});
     }
   };
 
@@ -67,17 +67,17 @@ const AddParagraph = () => {
             <h2 className="font-bold mb-2">Question</h2>
             <select
               name="Duration"
-              // onChange={handleChanges}
-              // value={questions.Duration}
+              onChange={handleChanges}
+              value={question.Duration}
               id=""
               className="w-full rounded-lg bg-gray-100 focus:outline-none border-none mb-4  select text-gray-400"
             >
-              <option value="D">Time to answer the question</option>
+              <option value={0}>Time to answer the question</option>
 
-              <option value="1">1 minute</option>
-              <option value="2">2 minutes</option>
-              <option value="3">3 minutes</option>
-              <option value="4">4 minutes</option>
+              <option value={1}>1 minute</option>
+              <option value={2}>2 minutes</option>
+              <option value={3}>3 minutes</option>
+              <option value={4}>4 minutes</option>
             </select>
           </div>
 

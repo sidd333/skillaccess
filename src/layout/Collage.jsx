@@ -361,6 +361,7 @@ const CollageLayout = ({ children }) => {
                             name: "",
                             description: "",
                             totalAttempts: null,
+                            totalQuestions: 0,
                           })
                         );
                         dispatch(setTestSelectedTopics([]));

@@ -6,7 +6,6 @@ import List from "./List";
 import { useSelector } from "react-redux";
 
 const Invite = () => {
-  const { name } = useSelector((state) => state.test);
   const [students, setStudents] = useState([]);
   return (
     <div>
@@ -18,7 +17,7 @@ const Invite = () => {
               id=""
               className="w-full rounded-lg bg-gray-100 focus:outline-none border-none mb-4 py-3 px-7 font-bold text-2xl"
             >
-              {name}
+              Jhon Doe
             </div>
           </div>
 

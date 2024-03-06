@@ -40,7 +40,7 @@ const AddCode = () => {
   // ]
   const [question, setQuestion] = useState({
     id: "aaa",
-    duration: 30,
+    Duration: 0,
     code: "",
     codeQuestion: "",
     codeLanguage: "",
@@ -82,6 +82,7 @@ const AddCode = () => {
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
           code: "",
+          Duration: 0,
           codeQuestion: "",
           codeLanguage: "",
           parameters: [
@@ -100,6 +101,7 @@ const AddCode = () => {
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
           code: "",
+          Duration: 0,
           codeQuestion: "",
           codeLanguage: "",
           parameters: [

@@ -17,9 +17,14 @@ const Submit = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { name, description, topics, totalAttempts } = useSelector(
-    (state) => state.test
-  );
+  const {
+    name,
+    description,
+    topics,
+    totalAttempts,
+    totalQuestions,
+    totalDuration,
+  } = useSelector((state) => state.test);
 
   const [questions, setQuestions] = useState();
   let section1 = [];
@@ -119,7 +124,7 @@ const Submit = () => {
           section5 = topics[4].findAnswers;
           break;
         default:
-          section5 = topics[2].questions;
+          section5 = topics[4].questions;
           break;
       }
 
@@ -132,9 +137,33 @@ const Submit = () => {
       ...section4,
       ...section5,
     ]);
+  }, [topics, ""]);
 
-    console.log(questions);
-  }, []);
+  const handleCalculateTime = () => {
+    const totalTimeCal = topics.map((topic) => {
+      console.log(topic);
+
+      const totalMcq = topic.questions?.reduce((acc, curr) => {
+        return acc + parseInt(curr.Duration);
+      }, 0);
+      const totalEssay = topic.essay?.reduce((acc, curr) => {
+        return acc + parseInt(curr.Duration);
+      }, 0);
+      const totalVideo = topic.video?.reduce((acc, curr) => {
+        return acc + parseInt(curr.Duration);
+      }, 0);
+      const totalCompiler = topic.compiler?.reduce((acc, curr) => {
+        return acc + parseInt(curr.Duration);
+      }, 0);
+      const totalFindAnswer = topic.findAnswers?.reduce((acc, curr) => {
+        return acc + parseInt(curr.Duration);
+      }, 0);
+      const total =
+        totalMcq + totalEssay + totalVideo + totalCompiler + totalFindAnswer;
+      return total;
+    });
+    return totalTimeCal;
+  };
 
   const handleSubmit = () => {
     // dispatch(setTest({
@@ -143,23 +172,69 @@ const Submit = () => {
     //   totalAttempts
     // }
 
+    if (!name || !description || !totalAttempts || !totalQuestions) {
+      window.alert("Please fill all the details");
+      return;
+    }
+    if (!topics[0]) {
+      window.alert("Please select atleast one topic");
+      return;
+    }
+
+
+    if(totalQuestions>questions.length){
+      console.log(totalQuestions,questions.length);
+      window.alert(`Add ${totalQuestions-questions.length} more questions to complete the test`);
+      return;
+    }
+    if(totalQuestions<questions.length){
+      console.log(totalQuestions,questions.length);
+      window.alert(`Remove ${questions.length-totalQuestions} questions to complete the test`);
+
+  
+      return;
+    }
+
+    const totalTimeCal = handleCalculateTime();
+
+    console.log(totalTimeCal, totalDuration);
+
+
+console.log(totalTimeCal[0],totalDuration);
+
+    if (totalTimeCal[0] > totalDuration) {
+      window.alert("Total duration of questions is greater than the total duration of test");
+
+      return;
+    }
+
+    // if(totalTimeCal < totalDuration){
+    //   window.alert("Total duration of questions is less than the total duration of test");
+    //   return;
+
+   
+    console.log(totalTimeCal[0],totalDuration);
+    localStorage.setItem("totalTime", JSON.stringify(totalTimeCal[0]))
+
     dispatch(
       createTest({
         name,
         description,
         totalAttempts,
+        totalQuestions,
+        totalDuration: totalTimeCal[0],
         topics,
       })
     ).then(() => {
-      dispatch(
-        setTestBasicDetails({ name: "", description: "", totalAttempts: null })
-      );
+      // dispatch(
+      //   setTestBasicDetails({ name: "", description: "", totalAttempts: null ,totalQuestions:0})
+      // );
 
       navigate("/collage/test/final");
     });
   };
 
-  const max = Math.ceil(questions?.length / 10);
+  const max = questions?.length / 10;
   const [selected, setSelected] = useState(1);
 
   return (
@@ -177,6 +252,7 @@ const Submit = () => {
                 {console.log(question.QuestionType)}
                 {question.codeQuestion && (
                   <Code
+                    question={question}
                     Title={question.codeQuestion}
                     code={question.code}
                     number={(selected - 1) * 10 + 1 + i}

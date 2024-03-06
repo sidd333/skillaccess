@@ -59,7 +59,7 @@ const CreateTopic = () => {
           placeholder="Name of the Topic"
         />
 
-        <input
+        {/* <input
           onChange={changeHandler}
           name="TotalQuestions"
           value={topic.TotalQuestions}
@@ -74,7 +74,7 @@ const CreateTopic = () => {
           type="text"
           className="w-full bg-gray-100 h-16 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 border-none placeholder-gray-400"
           placeholder="Set Duration"
-        />
+        /> */}
         <textarea
           onChange={changeHandler}
           name="Description"
