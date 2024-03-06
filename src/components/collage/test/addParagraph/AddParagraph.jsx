@@ -43,6 +43,7 @@ const AddParagraph = () => {
 
   const handleSave = () => {
     if (addType === "topic") {
+      
       dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "", questions: [], Duration: 0 });
