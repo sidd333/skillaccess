@@ -81,7 +81,9 @@ const Video = ({ video, Number }) => {
       <PiPencilSimpleLineBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
     </div>
   )} */}
-              <h1>{video?.questions && "Multiple Choice questions"}</h1>
+              <h1>
+                {video?.questions.length > 0 && "Multiple Choice questions"}
+              </h1>
               {video?.questions?.length > 0 &&
                 video.questions.map((mcq, index) => {
                   return (
@@ -93,12 +95,12 @@ const Video = ({ video, Number }) => {
                   );
                 })}
 
-              <h1>{video?.long && "Long answer questions"}</h1>
+              <h1>{video?.long.length > 0 && "Long answer questions"}</h1>
               {video?.long?.length > 0 &&
                 video.long.map((question, index) => (
                   <VideoEssay Title={question.Title} Number={index} />
                 ))}
-              <h1> {video?.short && "Short answer questions"}</h1>
+              <h1> {video?.short.length > 0 && "Short answer questions"}</h1>
               {video?.short?.length > 0 &&
                 video.short.map((question, index) => (
                   <VideoEssay Title={question.Title} Number={index} />

@@ -23,7 +23,7 @@ const VideoMcq = ({
       <div className="w-11/12 flex flex-col gap-2">
         {search.get(`${Number}`) !== "true" ? (
           <h2 className="px-4 font-semibold pt-3 text-base">
-            {Number + 1} &nbsp;
+            {Number + 1} &nbsp;{mcq.Title}
           </h2>
         ) : (
           <input
