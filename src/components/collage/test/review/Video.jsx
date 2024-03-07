@@ -6,11 +6,13 @@ import {
   removeQuestion,
 } from "../../../../redux/collage/test/testSlice";
 import ReactPlayer from "react-player";
+import { RxCross1 } from "react-icons/rx";
+import { PiPencilSimpleLineBold } from "react-icons/pi";
 import { useSearchParams } from "react-router-dom";
 import VideoMcq from "./VideoMcq";
 import VideoEssay from "./VideoEssay";
 
-const Video = ({ Number, id, video, type, view }) => {
+const Video = ({ Number, id, video, type, view}) => {
   const [search, setSearch] = useSearchParams();
   const dispatch = useDispatch();
   const handleDelete = () => {
@@ -18,33 +20,38 @@ const Video = ({ Number, id, video, type, view }) => {
       removeQuestion({
         selfIndex: Number,
         topicIndex: id,
-        questionType: "compiler",
+        questionType: "video",
       })
     );
   };
+  console.log(video , "video")
 
-  const [mcq, setMcq] = useState({ Title: "", Options: [1, 2, 3, 4] });
-  const handleChange = (e) => {
-    const { name, value, key } = e.target;
-    if (name === "Title") {
-      console.log("name");
-      setMcq((prev) => {
-        return { ...prev, [name]: [value] };
-      });
-    } else {
-      console.log(key);
-      setMcq((prev) => {
-        return {
-          ...prev,
-          Options: [
-            ...prev.Options.slice(0, name),
-            value,
-            ...prev.Options.slice(name + 1),
-          ],
-        };
-      });
-    }
-  };
+  const [videoState, setVideoState] = useState(video);
+
+  // const [mcq, setMcq] = useState(question);
+
+
+  // const handleChange = (e) => {
+  //   const { name, value, key } = e.target;
+  //   if (name === "Title") {
+  //     console.log("name");
+  //     setMcq((prev) => {
+  //       return { ...prev, [name]: [value] };
+  //     });
+  //   } else {
+  //     console.log(name + " " + value + " " + key);
+  //     setMcq((prev) => {
+  //       return {
+  //         ...prev,
+  //         Options: [
+  //           ...prev.Options.slice(0, name),
+  //           value,
+  //           ...prev.Options.slice(name + 1),
+  //         ],
+  //       };
+  //     });
+  //   }
+  // };
   return (
     <div className="mx-6  bg-white rounded-lg ">
       <div className="w-11/12 flex flex-col gap-2">
@@ -82,17 +89,61 @@ const Video = ({ Number, id, video, type, view }) => {
         </div>
       )} */}
 
+{type !== "topic" && view !== "false" && (
+        <div className="w-full content-end mr-1 flex-wrap items-end flex flex-col gap-4 text-blued border-s-2 py-1">
+          <RxCross1
+            className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
+            onClick={handleDelete}
+          />
+          {/* <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
+          {/* <IoSwapVerticalSharp className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
+<CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
+
+          {search.get(`${Number}`) !== "true" ? (
+            <PiPencilSimpleLineBold
+              className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center"
+              onClick={() => {
+                search.set(`${Number}`, "true");
+                setSearch(search);
+              }}
+            />
+          ) : (
+            <PiPencilSimpleLineBold
+              className=" w-6 h-6 p-1 rounded-lg bg-amber-600 self-center"
+              onClick={() => {
+                search.set(`${Number}`, "false");
+                setSearch(search);
+                dispatch(
+                  editQuestion({
+                    topicIndex: id,
+                    selfIndex: Number,
+                    questionType: "video",
+                    question: videoState,
+                  })
+                );
+              }}
+            />
+          )}
+        </div>
+      )}
+
+
       {video?.questions?.length > 0 &&
-        video.questions.map((mcq, index) => {
+        video.questions.map((question, index) => {
+          // console.log(mcq);
           return (
             <VideoMcq
+            key={index}
               id={id}
-              handleDelete={handleDelete}
+              // handleDelete={handleDelete}
               view={view}
               type={type}
-              mcq={mcq}
-              Number={index}
-              handleChange={handleChange}
+               question={question}
+               videoState={videoState}
+               setVideoState={setVideoState}
+              Number={Number}
+       
+              // handleChange={handleChange}
               search={search}
               setSearch={setSearch}
             />
@@ -100,11 +151,25 @@ const Video = ({ Number, id, video, type, view }) => {
         })}
       {video?.long?.length > 0 &&
         video.long.map((question, index) => (
-          <VideoEssay Title={question.Title} Number={index} search={search} />
+          <VideoEssay Title={question.Title} question={question} Number={Number} search={search}
+          type = {'long'}
+          id = {id}
+          view = {view}
+          key = {index}
+          setVideoState={setVideoState}
+          videoState={videoState}
+
+          />
         ))}
       {video?.short?.length > 0 &&
         video.short.map((question, index) => (
-          <VideoEssay Title={question.Title} Number={index} search={search} />
+          <VideoEssay Title={question.Title} question={question}  Number={Number} search={search}  type ={'short'}
+          id = {question.id}
+          view = {view} 
+          key={index }
+          setVideoState={setVideoState}
+          videoState={videoState}
+          />
         ))}
     </div>
   );

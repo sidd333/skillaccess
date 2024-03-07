@@ -24,7 +24,11 @@ const Header = ({ question, setQuestion, id, type, addType, LongShort }) => {
 
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
-        setQuestion({ Title: "" });
+        setQuestion({  id:`${Date.now()}`,
+
+        Title: "",
+    
+        Duration: 0});
       }
 
       navigate(-1);
@@ -35,7 +39,11 @@ const Header = ({ question, setQuestion, id, type, addType, LongShort }) => {
 
           // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
-          setQuestion({ Title: "" });
+          setQuestion({ id:`${Date.now()}`,
+
+          Title: "",
+      
+          Duration: 0,});
 
           navigate(-1);
         } else {
@@ -43,7 +51,11 @@ const Header = ({ question, setQuestion, id, type, addType, LongShort }) => {
 
           // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
-          setQuestion({ Title: "" });
+          setQuestion({  id:`${Date.now()}`,
+
+          Title: "",
+      
+          Duration: 0,});
 
           navigate(-1);
         }
