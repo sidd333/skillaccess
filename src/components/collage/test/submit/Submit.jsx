@@ -19,6 +19,7 @@ const Submit = () => {
   const dispatch = useDispatch();
 
   const {
+    level,
     name,
     description,
     topics,
@@ -225,6 +226,7 @@ const Submit = () => {
 
     dispatch(
       createTest({
+        level,
         name,
         description,
         totalAttempts,
@@ -253,7 +255,7 @@ const Submit = () => {
       </div>
       <div className="mt-16">
         {questions
-          ?.slice((selected - 1) * 10 + (selected > 1 ? 1 : 0), selected * 10)
+          ?.slice((selected - 1) * 10, selected * 10)
           .map((question, i) => {
             return (
               <div className="my-2">

@@ -12,13 +12,13 @@ import Card from "./common/Card";
 import { useSelector } from "react-redux";
 
 const Beginner = () => {
-  const { assessments } = useSelector((state) => state.test);
+  const beginner = useSelector((state) => state.test.assessments.beginner);
 
-  const uniqueIds = new Set();
+  // const uniqueIds = new Set();
 
-  const filteredBeginnerAssessments = assessments?.beginner?.filter(
-    (item) => !uniqueIds.has(item?._id) && uniqueIds.add(item?._id)
-  );
+  // const filteredBeginnerAssessments = assessments?.beginner?.filter(
+  //   (item) => !uniqueIds.has(item?._id) && uniqueIds.add(item?._id)
+  // );
 
   const navigate = useNavigate();
   return (
@@ -72,17 +72,17 @@ const Beginner = () => {
           },
         }}
       >
-        {filteredBeginnerAssessments?.map((item,index) =>  (
+        {beginner?.map((item, index) => (
           <SwiperSlide key={`${item._id}-${index}`} className="w-full">
-            <Card key={`${item._id}-${index}` }
+            <Card
+              key={`${item._id}-${index}`}
               assessment={item}
-              
               // heading={item.name}
               // desc={item.description}
               // attempts={item.totalAttempts}
               progress={4}
             />
-           </SwiperSlide>
+          </SwiperSlide>
         ))}
         <SwiperSlide></SwiperSlide>
 
