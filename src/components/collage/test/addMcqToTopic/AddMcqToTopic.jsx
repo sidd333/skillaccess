@@ -366,12 +366,12 @@ const AddMcqToTopic = () => {
                   window.alert("Please enter question");
                   return;
                 }
-                if (question.Options &&  question.Options.length < 4) {
+               else if (question.Options &&  question.Options.length < 4) {
             
                   window.alert("Please enter atleast 4 options");
                   return;
                 }
-                if(question.Duration===0){
+                else if(question.Duration===0){
                   window.alert("Please enter required time");
                   return;
                 }

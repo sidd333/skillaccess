@@ -29,6 +29,11 @@ export const editQuestionFun = (state, action) => {
       copy[selfIndex] = question;
       state.topics[topicIndex].findAnswers = copy;
       break;
+      case "video":
+      copy = [...state.topics[topicIndex].video];
+      copy[selfIndex] = question;
+      state.topics[topicIndex].video= copy;
+      break;
     default:
       break;
   }

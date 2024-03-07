@@ -16,12 +16,16 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
   const handleSave = () => {
     if (addType === "topic") {
       if (question.Title == "") {
-   window.alert("Please enter paragraph");
-      }else if (question.questions.length == 1 && question.questions[0].question == "" ) {
-        
-          window.alert("Please enter atleast one question");
-         
+        window.alert("Please enter the question");
       }
+      else if(question.Duration===0){
+        window.alert("Please enter required time");
+        return;
+      }
+      else  if (question.questions.some(q => q.question === "")) {
+        window.alert("Please enter all questions");
+        return;
+      } 
        else {
         dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
@@ -32,11 +36,11 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
     } else {
       if (question.Title == "") {
         window.alert("Please enter paragraph");
-           }else if (question.questions.length == 1 && question.questions[0].question == "" ) {
-        
-            window.alert("Please enter atleast one question");
-           
-        }
+           }
+           else if (question.questions.some(q => q.question === "")) {
+            window.alert("Please enter all questions");
+            return;
+          } 
             
       else{
         dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
