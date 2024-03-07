@@ -3,6 +3,7 @@ import { current } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { editQuestionFun } from "./reducerFunctions/question";
+import { getAllTestFulfilled } from "./reducerFunctions/test";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 let authToken = localStorage.getItem("auth-token");
@@ -48,7 +49,9 @@ const testState = {
       },
     ],
   },
-
+  level: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).level
+    : "",
   name: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).name
     : "",
@@ -607,11 +610,12 @@ const testSlice = createSlice({
       state.totalAttempts = action.payload.totalAttempts;
       state.totalQuestions = action.payload.totalQuestions;
       state.totalDuration = action.payload.totalDuration;
-
+      state.level = action.payload.level;
       state.status = "active";
       localStorage.setItem(
         "testDetails",
         JSON.stringify({
+          level: state.level,
           name: state.name,
           description: state.description,
           totalAttempts: state.totalAttempts,
@@ -657,23 +661,7 @@ const testSlice = createSlice({
         console.log("pending");
       })
       .addCase(getAllTests.fulfilled, (state, action) => {
-        let assessments = action.payload.assessments;
-        assessments.map((assement) => {
-          if (assement.level === "beginner") {
-            // state.assessments.beginner = [
-            //   ...state.assessments.beginner,
-            //   assement,
-            // ];
-            state.assessments.beginner.push(assement);
-          } else if (assement.level === "intermediate") {
-            state.assessments.intermediate = [assement];
-          } else {
-            state.assessments.advanced = [assement];
-          }
-        });
-
-        // console.log(action.payload);
-        console.log(assessments?.beginner);
+        getAllTestFulfilled(state, action);
       })
       .addCase(getAllTests.rejected, (state, action) => {
         console.error("Error fetching tests:", action.payload);
