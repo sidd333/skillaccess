@@ -15,7 +15,8 @@ const Header = ({ type, sectionId, qt, topicId }) => {
           <button
             onClick={() => {
               type === "section" && navigate("/collage/test/questions");
-              type !== "section" && navigate("/collage/test/select");
+              type === "topic" && navigate("/collage/test/select");
+              type === "assessment" && navigate(-1);
             }}
             className="mt-2 mr-3"
           >

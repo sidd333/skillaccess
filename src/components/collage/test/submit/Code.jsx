@@ -53,7 +53,8 @@ const List = ({ Title, number, code, question }) => {
                     <div className="w-6"></div>
 
                     <label className="text-blacktext-sm">
-                      {code.toString().substring(0, 50)}
+                      {/* {code.toString().substring(0, 50)} */}
+                      {code}
                     </label>
                   </div>
                 </Disclosure.Panel>
