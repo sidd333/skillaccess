@@ -38,7 +38,7 @@ const Inputs = ({ questionType, setQuestionType,handleFilter }) => {
           onChange={(e) => setQuestionType(e.target.value)}
           className="select text-gray-400 focus:outline-none focus:ring-1 focus:ring-blued bg-gray-100 sm:w-1/3   w-1/2 rounded-lg self-center"
         >
-          <option value="mcq">Question Type</option>
+          <option value="">Question Type</option>
 
           <option value="mcq">MCQ</option>
 

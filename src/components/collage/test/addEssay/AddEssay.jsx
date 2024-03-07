@@ -36,7 +36,7 @@ const AddEssay = () => {
       if (question.Title == "") {
         window.alert("Please enter the question");
       }
-      if(question.Duration===0){
+      else if(question.Duration===0){
         window.alert("Please enter required time");
         return;
       }
