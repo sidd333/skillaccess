@@ -28,7 +28,7 @@ const LongShortAnswer = () => {
   const LongShort = searchParams.get("length");
 
   const [question, setQuestion] = useState({
-    id: "aaa",
+    id:`${Date.now()}`,
 
     Title: "",
 
@@ -52,20 +52,32 @@ const LongShortAnswer = () => {
 
       // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
-      setQuestion({ Title: "", Duration: 0 });
+      setQuestion({  id:`${Date.now()}`,
+
+      Title: "",
+  
+      Duration: 0, });
     } else {
       if (LongShort === "short") {
         dispatch(addVideo({ short: question }));
 
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
-        setQuestion({ Title: "" });
+        setQuestion({  id:`${Date.now()}`,
+
+        Title: "",
+    
+        Duration: 0,});
       } else {
         dispatch(addVideo({ long: question }));
 
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
-        setQuestion({ Title: "", Duration: 0 });
+        setQuestion({  id:`${Date.now()}`,
+
+        Title: "",
+    
+        Duration: 0, });
       }
     }
   };
