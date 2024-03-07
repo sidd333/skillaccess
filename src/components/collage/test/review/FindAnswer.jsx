@@ -33,17 +33,7 @@ const [search, setSearch] = useSearchParams();
       // });
 
       setFindAnswer((prev) => {
-        console.log(prev);
-        console.log({
-          ...prev,
-          questions: [
-            {
-              question: prev.questions.slice(0, name),
-              value,
-              ...prev.questions.slice(name + 1),
-            },
-          ],
-        });
+       
         return {
           ...prev,
           questions: [

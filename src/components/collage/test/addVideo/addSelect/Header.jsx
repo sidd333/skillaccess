@@ -30,6 +30,9 @@ const Header = ({ selectQuestionType }) => {
 
         // Add other properties if needed
       },
+
+
+ 
     };
     let mcq = topicToBeAdded.video.questions.reduce((acc, question) => {
       return acc + parseInt(question.Duration);
@@ -43,9 +46,12 @@ const Header = ({ selectQuestionType }) => {
     }, 0);
     console.log(mcq);
     let Duration = mcq + long + short;
+
+    const vid =  { ...topicToBeAdded.video,Duration: Duration};
+    dispatch(clearTopicToBeAdded());
     dispatch(
       addQuestionToTopic({
-        data: { ...topicToBeAdded.video, Duration: Duration },
+        data:vid,
         id: id,
         type: "video",
       })
@@ -56,7 +62,7 @@ const Header = ({ selectQuestionType }) => {
       );
       navigate("/collage/test/select");
     });
-    dispatch(clearTopicToBeAdded);
+   
   };
 
   const navigate = useNavigate();
