@@ -297,6 +297,11 @@ const testSlice = createSlice({
 
         compiler: [],
       };
+
+      localStorage.setItem(
+        "TopicToBeAdded",
+        JSON.stringify(state.TopicToBeAdded)
+      );
     },
     setAssessments: (state, action) => {
       state.assessments = {
