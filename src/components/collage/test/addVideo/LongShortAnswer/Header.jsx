@@ -20,11 +20,7 @@ const Header = ({ question, setQuestion, id, type, addType, LongShort }) => {
 
     if (addType === "topic") {
       if (question.Title !== "") {
-        // dispatch(addEssayToTopic({ data: question, id: id, type: type }));
-
-        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-
-        setQuestion({ Title: "" });
+      setQuestion({ Title: "" });
       }
 
       navigate(-1);

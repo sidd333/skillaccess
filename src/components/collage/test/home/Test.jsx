@@ -85,10 +85,10 @@ export const Test = () => {
                             )}
                           </h2>{" "}
                         </Disclosure.Button>
-                        <CiSettings
+                        {/* <CiSettings
                           className="w-5 h-5 text-gray-500 hover:cursor-pointer"
                           onClick={() => navigate("/collage/test/assessment")}
-                        />
+                        /> */}
                       </div>
 
                       <Transition

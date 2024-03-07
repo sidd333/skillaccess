@@ -23,7 +23,7 @@ import { FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const SelectTests = () => {
-  const [questionType, setQuestionType] = useState("mcq");
+  const [questionType, setQuestionType] = useState("");
 
   const Navigate = useNavigate();
 
@@ -62,6 +62,10 @@ console.log(filteredSections, "filtered");
   const [selectedSections, setSelectedSections] = useState(topics);
 
   const addSection = (section) => {
+    if (!questionType) {
+      window.alert("Please select a question type first.");
+      return;
+    }
     if (selectedSections?.length < 5 || !selectedSections) {
       for (let i = 0; i < selectedSections.length; i++) {
         if (selectedSections[i]._id === section._id) {

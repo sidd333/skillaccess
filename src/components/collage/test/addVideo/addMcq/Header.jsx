@@ -38,11 +38,27 @@ const Header = ({ question, setQuestion }) => {
   };
 
   const handleSave = () => {
+    
+    if (question.Title === "" ) {
+      window.alert("Please enter question");
+      return;
+    }
+   else if (question.Options &&  question.Options.length < 4) {
+
+      window.alert("Please enter atleast 4 options");
+      return;
+    }
+   else if(question.Duration===0){
+      window.alert("Please enter required time");
+      return;
+    }
+    else{
     dispatch(addVideo({ question: question }));
 
     setQuestion({ Title: "", Options: [] });
 
     navigate(-1);
+    }
   };
 
   // useEffect(() => {

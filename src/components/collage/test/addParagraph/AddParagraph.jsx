@@ -12,6 +12,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const AddParagraph = () => {
+  const MAX_QUESTIONS = 3;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -43,14 +44,33 @@ const AddParagraph = () => {
 
   const handleSave = () => {
     if (addType === "topic") {
-      
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      }
+     else if(question.Duration===0){
+        window.alert("Please enter required time");
+        return;
+      }
+      else if (question.questions.some(q => q.question === "")) {
+        window.alert("Please enter all questions");
+        return;
+      }
+      else {
       dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
       dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", questions: [], Duration: 0 });
+      setQuestion({ Title: "", questions: [{question:''}], Duration: 0 });
+       }
     } else {
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      }
+      else{
       dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
+
       // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
       setQuestion({ Title: "", questions: [], Duration: 0 });
+     
+      }
     }
   };
 
@@ -117,11 +137,21 @@ const AddParagraph = () => {
             <div className=" flex">
               <button
                 className="self-center justify-center flex bg-[#8F92A1] bg-opacity-10  py-3 px-4 rounded-xl text-sm font-bold gap-2 "
-                onClick={() =>
-                  setQuestion({
-                    ...question,
-                    questions: [...question.questions, { question: "" }],
-                  })
+                onClick={() =>{
+                
+                if (question.questions.some(q => q.question === "")) {
+                  window.alert("Please enter all questions");
+                } 
+               else if (question.questions.length >= MAX_QUESTIONS) {
+                  window.alert("You can't add more than 3 questions");
+                } 
+            else{
+                setQuestion({
+                  ...question,
+                  questions: [...question.questions, { question: "" }],
+                })
+              }
+            }
                 }
               >
                 Add More
