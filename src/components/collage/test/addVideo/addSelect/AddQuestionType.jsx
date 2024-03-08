@@ -64,8 +64,7 @@ const AddQuestionType = () => {
 
         <div className="   my-2 rounded-lg tracking-wide justify-between  ">
           <h2 className="font-normal text-xs sm:text-sm text-gray-400  mt-8 tracking-wide ">
-            Add up to 10 custom questions to your assessment (optional). You can
-            use five question types: multiple-choice, essay, video and code.
+            You can use three question types: multiple-choice,long and short .
           </h2>
         </div>
 
