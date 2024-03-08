@@ -13,8 +13,16 @@ import {
 import { useSearchParams } from "react-router-dom";
 // import { type } from "@testing-library/user-event/dist/type";
 
-
-const VideoEssay = ({ Number, Title,question ,search,setVideoState,videoState,type}) => {
+const VideoEssay = ({
+  Number,
+  Title,
+  question,
+  search,
+  setVideoState,
+  videoState,
+  type,
+  Index,
+}) => {
   // const dispatch = useDispatch();
   const [essay, setEssay] = useState(question);
   // const [search, setSearch] = useSearchParams();
@@ -27,43 +35,50 @@ const VideoEssay = ({ Number, Title,question ,search,setVideoState,videoState,ty
         return { ...prev, [name]: [value] };
       });
     }
- if(type=== 'short'){
- if(videoState.short.length === 0){
-  setVideoState((prev) => {
-    return { ...prev, short :[essay] };
-  });
-}
-else{
-  setVideoState((prev) => {
-    return { ...prev, short :[...prev.short.slice(0, Number), essay, ...prev.short.slice(Number + 1)] };
-  });
-}
-  console.log( videoState, "short")
- }
-  else if(type === 'long'){
-  if(videoState.long.length === 0){
-    setVideoState((prev) => {
-      return { ...prev, long :[essay] };
-    });
-  }
-  else{
-    setVideoState((prev) => {
-      return { ...prev, long :[...prev.long.slice(0, Number), essay, ...prev.long.slice(Number + 1)] };
-    });
-  }
-   
+    if (type === "short") {
+      if (videoState.short.length === 0) {
+        setVideoState((prev) => {
+          return { ...prev, short: [essay] };
+        });
+      } else {
+        setVideoState((prev) => {
+          return {
+            ...prev,
+            short: [
+              ...prev.short.slice(0, Number),
+              essay,
+              ...prev.short.slice(Number + 1),
+            ],
+          };
+        });
+      }
+      console.log(videoState, "short");
+    } else if (type === "long") {
+      if (videoState.long.length === 0) {
+        setVideoState((prev) => {
+          return { ...prev, long: [essay] };
+        });
+      } else {
+        setVideoState((prev) => {
+          return {
+            ...prev,
+            long: [
+              ...prev.long.slice(0, Number),
+              essay,
+              ...prev.long.slice(Number + 1),
+            ],
+          };
+        });
+      }
+    }
   };
-
-}
-
-
 
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between my-4">
       <div className="w-11/12 flex flex-col gap-2">
         {search.get(`${Number}`) !== "true" ? (
           <h2 className="px-4 font-semibold pt-3 text-base">
-            {Number + 1} &nbsp; {essay.Title}
+            {Index + 1} &nbsp; {essay.Title}
           </h2>
         ) : (
           <input
@@ -74,18 +89,18 @@ else{
           />
         )}
       </div>
-     
+
       {/* {type !== "topic" && view !== "false" && (
         <div className="w-[5%] flex flex-col gap-4 text-blued border-s-2 py-1"> */}
-          {/* <RxCross1
+      {/* <RxCross1
             className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
             onClick={handleDelete}
           /> */}
-          {/* <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
-          {/* <IoSwapVerticalSharp className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
+      {/* <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
+      {/* <IoSwapVerticalSharp className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
         <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
 
-          {/* {search.get(`${Number}`) !== "true" ? (
+      {/* {search.get(`${Number}`) !== "true" ? (
             <PiPencilSimpleLineBold
               className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center"
               onClick={() => {
@@ -112,7 +127,6 @@ else{
           )}
         </div>
       )} */}
-
     </div>
   );
 };

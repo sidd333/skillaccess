@@ -49,7 +49,11 @@ const AddEssay = () => {
         dispatch(addEssay({ data: question, id: id, type: type }));
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
-        setQuestion({ Title: "", Duration: 0 });
+        setQuestion({
+          Title: "",
+          Duration: 0,
+          section: searchParams.get("topicId"),
+        });
       }
     }
   };

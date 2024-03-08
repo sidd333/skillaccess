@@ -51,7 +51,10 @@ const AddVideo = () => {
   const [file, setFile] = useState(null);
 
   const [videoLink, setVideoLink] = useState("");
-  const[loading,setLoading]=useState(false);
+
+
+  const [loading, setLoading] = useState(false);
+
   const chunksRef = useRef([]);
 
   const [videoPreview, setVideoPreview] = useState("");
@@ -406,8 +409,14 @@ const AddVideo = () => {
 
               onClick={handleFileUpload}
             >
-              <FaPlus className="self-center" /> Add Questions
-              {loading && <Loader />}
+
+              Add Questions{" "}
+              {loading === false ? (
+                <FaPlus className="self-center" />
+              ) : (
+                <Loader />
+              )}
+
             </button>
           </div>
         </div>

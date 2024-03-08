@@ -58,47 +58,59 @@ const Header = ({ selectQuestionType }) => {
     dispatch(clearTopicToBeAdded());
 
     console.log(searchParam.get("section"));
-    searchParam.get("section") !== "null"
-      ? dispatch(
-          addQuestionToTopic({
-            index: id,
-            data: vid,
-            id: searchParam.get("section"),
-            type: "video",
-          })
-        ).then((res) => {
-          localStorage.setItem(
-            "TopicToBeAdded",
-            JSON.stringify(updatedTopicToBeAdded)
-          );
-          console.log(res);
-
-          navigate(
-            `/collage/test/${id}?type=section&question=video&topicId=${searchParam.get(
-              "section"
-            )}&view=true`
-          );
+    if (searchParam.get("section") !== "null") {
+      dispatch(addVideoToSection({ data: vid, index: id }));
+      if (totalLength === 0) {
+        window.alert("no questions");
+      } else {
+        navigate(
+          `/collage/test/details/${id}?type=section&question=video&topicId=${searchParam.get(
+            "section"
+          )}&view=false`
+        );
+      }
+    } else {
+      dispatch(
+        addQuestionToTopic({
+          data: vid,
+          id: id,
+          type: "video",
         })
-      : dispatch(
-          addQuestionToTopic({
-            data: vid,
-            id: id,
-            type: "video",
-          })
-        ).then((res) => {
-          localStorage.setItem(
-            "TopicToBeAdded",
-            JSON.stringify(updatedTopicToBeAdded)
-          );
-          console.log(res);
-          if (totalLength === 0) {
-            alert("Please add questions to the assessment");
-            return;
-          } else {
-            navigate("/collage/test/select");
-          }
-          //           navigate(`/collage/test/select`);
-        });
+      ).then((res) => {
+        localStorage.setItem(
+          "TopicToBeAdded",
+          JSON.stringify(updatedTopicToBeAdded)
+        );
+        console.log(res);
+        if (totalLength === 0) {
+          alert("Please add questions to the assessment");
+          return;
+        } else {
+          navigate("/collage/test/select");
+        }
+        //           navigate(`/collage/test/select`);
+      });
+    }
+    //  dispatch(
+    //     addQuestionToTopic({
+    //       index: id,
+    //       data: vid,
+    //       id: searchParam.get("section"),
+    //       type: "video",
+    //     })
+    //   ).then((res) => {
+    //     localStorage.setItem(
+    //       "TopicToBeAdded",
+    //       JSON.stringify(updatedTopicToBeAdded)
+    //     );
+    //     console.log(res);
+
+    //     navigate(
+    //       `/collage/test/${id}?type=section&question=video&topicId=${searchParam.get(
+    //         "section"
+    //       )}&view=true`
+    //     );
+    //   })
   };
 
   const navigate = useNavigate();

@@ -180,11 +180,6 @@ export const addQuestionToTopic = createAsyncThunk(
       );
       const res = req.data;
 
-      data.index &&
-        dispatch(
-          addVideoToSection({ data: res.questions[0], index: data.index })
-        );
-
       // if (data.index) return { question: res.questions[0] };
       return res.questions;
     } catch (error) {
@@ -434,6 +429,13 @@ const testSlice = createSlice({
         case "findAnswer":
           copy = [...state.topics[topicIndex].findAnswers];
           state.topics[topicIndex].findAnswers = copy.filter((ques, index) => {
+            return index !== selfIndex;
+          });
+          break;
+
+        case "video":
+          copy = [...state.topics[topicIndex].video];
+          state.topics[topicIndex].video = copy.filter((ques, index) => {
             return index !== selfIndex;
           });
           break;

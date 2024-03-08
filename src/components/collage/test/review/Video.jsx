@@ -12,7 +12,7 @@ import { useSearchParams } from "react-router-dom";
 import VideoMcq from "./VideoMcq";
 import VideoEssay from "./VideoEssay";
 
-const Video = ({ Number, id, video, type, view}) => {
+const Video = ({ Number, id, video, type, view }) => {
   const [search, setSearch] = useSearchParams();
   const dispatch = useDispatch();
   const handleDelete = () => {
@@ -24,12 +24,11 @@ const Video = ({ Number, id, video, type, view}) => {
       })
     );
   };
-  console.log(video , "video")
+  console.log(video, "video");
 
   const [videoState, setVideoState] = useState(video);
 
   // const [mcq, setMcq] = useState(question);
-
 
   // const handleChange = (e) => {
   //   const { name, value, key } = e.target;
@@ -89,7 +88,7 @@ const Video = ({ Number, id, video, type, view}) => {
         </div>
       )} */}
 
-{type !== "topic" && view !== "false" && (
+      {type !== "topic" && view !== "false" && (
         <div className="w-full content-end mr-1 flex-wrap items-end flex flex-col gap-4 text-blued border-s-2 py-1">
           <RxCross1
             className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
@@ -127,22 +126,20 @@ const Video = ({ Number, id, video, type, view}) => {
         </div>
       )}
 
-
       {video?.questions?.length > 0 &&
         video.questions.map((question, index) => {
-          // console.log(mcq);
           return (
             <VideoMcq
-            key={index}
+              key={index}
+              Index={index}
               id={id}
               // handleDelete={handleDelete}
               view={view}
               type={type}
-               question={question}
-               videoState={videoState}
-               setVideoState={setVideoState}
+              question={question}
+              videoState={videoState}
+              setVideoState={setVideoState}
               Number={Number}
-       
               // handleChange={handleChange}
               search={search}
               setSearch={setSearch}
@@ -151,24 +148,34 @@ const Video = ({ Number, id, video, type, view}) => {
         })}
       {video?.long?.length > 0 &&
         video.long.map((question, index) => (
-          <VideoEssay Title={question.Title} question={question} Number={Number} search={search}
-          type = {'long'}
-          id = {id}
-          view = {view}
-          key = {index}
-          setVideoState={setVideoState}
-          videoState={videoState}
-
+          <VideoEssay
+            Title={question.Title}
+            question={question}
+            Number={Number}
+            search={search}
+            type={"long"}
+            id={id}
+            view={view}
+            Index={index}
+            key={index}
+            setVideoState={setVideoState}
+            videoState={videoState}
           />
         ))}
       {video?.short?.length > 0 &&
         video.short.map((question, index) => (
-          <VideoEssay Title={question.Title} question={question}  Number={Number} search={search}  type ={'short'}
-          id = {question.id}
-          view = {view} 
-          key={index }
-          setVideoState={setVideoState}
-          videoState={videoState}
+          <VideoEssay
+            Title={question.Title}
+            question={question}
+            Number={Number}
+            search={search}
+            type={"short"}
+            Index={index}
+            id={question.id}
+            view={view}
+            key={index}
+            setVideoState={setVideoState}
+            videoState={videoState}
           />
         ))}
     </div>
