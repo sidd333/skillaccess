@@ -64,7 +64,8 @@ const AddQuestionType = () => {
 
         <div className="   my-2 rounded-lg tracking-wide justify-between  ">
           <h2 className="font-normal text-xs sm:text-sm text-gray-400  mt-8 tracking-wide ">
-            You can use three question types: multiple-choice,long and short .
+            You can use three question types: multiple-choice, short and long
+            answer.
           </h2>
         </div>
 
