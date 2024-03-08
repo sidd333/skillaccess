@@ -56,11 +56,21 @@ const Header = ({ selectQuestionType }) => {
         type: "video",
       })
     ).then(() => {
-      localStorage.setItem(
-        "TopicToBeAdded",
-        JSON.stringify(updatedTopicToBeAdded)
-      );
-      navigate("/collage/test/select");
+        localStorage.setItem(
+          "TopicToBeAdded",
+          JSON.stringify(updatedTopicToBeAdded)
+        );
+
+        const totalLength = vid.questions.length + vid.long.length + vid.short.length;
+
+        if (totalLength === 0) {
+          alert("Please add questions to the assessment");
+          return;
+        } else {
+          navigate("/collage/test/select");
+        }
+    
+  
     });
    
   };
