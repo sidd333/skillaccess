@@ -44,6 +44,7 @@ import AccountingPage from "./pages/collage/accounting/AccountingPage";
 import ProfilePage from "./pages/collage/profile/ProfilePage";
 
 import CompaniesRoute from "./pages/collage/companies";
+import Loader from "./Loader";
 
 const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
@@ -67,11 +68,12 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Suspense fallback={<>loading</>}>
+      <Suspense fallback={<></>}>
         <Routes>
           {/* ----------------------------------------collage-------------------------------------------------------------- */}
           <Route path="" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="loader" element={<Loader />} />
 
           {isLoggedIn ? (
             <>
