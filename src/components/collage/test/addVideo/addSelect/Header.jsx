@@ -54,6 +54,7 @@ const Header = ({ selectQuestionType }) => {
     };
     dispatch(clearTopicToBeAdded());
 
+
     console.log(searchParam.get("section"));
     searchParam.get("section") !== "null"
       ? dispatch(
@@ -70,6 +71,8 @@ const Header = ({ selectQuestionType }) => {
           );
           console.log(res);
 
+      
+      
           navigate(
             `/collage/test/${id}?type=section&question=video&topicId=${searchParam.get(
               "section"
@@ -88,9 +91,15 @@ const Header = ({ selectQuestionType }) => {
             JSON.stringify(updatedTopicToBeAdded)
           );
           console.log(res);
-
-          navigate(`/collage/test/select`);
+ if (totalLength === 0) {
+          alert("Please add questions to the assessment");
+          return;
+        } else {
+          navigate("/collage/test/select");
+        }
+//           navigate(`/collage/test/select`);
         });
+
   };
 
   const navigate = useNavigate();

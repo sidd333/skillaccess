@@ -7,8 +7,8 @@ const Header = ({ handleSave }) => {
   const navigate = useNavigate();
 
   const save = () => {
-    handleSave();
-    navigate(-1);
+    handleSave("save");
+    // navigate(-1);
   };
 
   return (

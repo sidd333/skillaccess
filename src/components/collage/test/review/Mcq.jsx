@@ -50,6 +50,30 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
       removeQuestion({ selfIndex: Number, topicIndex: id, questionType: "mcq" })
     );
   };
+
+  const handleEdit =()=>{
+
+    if(mcq.Title === "" || mcq.Options[0] === "" || mcq.Options[1] === "" || mcq.Options[2] === "" || mcq.Options[3] === ""){
+      alert("Please fill all the fields");
+ 
+       return;
+     }else{
+      search.set(`${Number}`, "false");
+                setSearch(search);
+                dispatch(
+                  editQuestion({
+                    topicIndex: id,
+                    selfIndex: Number,
+                    questionType: "mcq",
+                    question: mcq,
+                  })
+                );
+    }
+  
+  }
+
+
+
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between my-4">
       <div className="w-11/12 flex flex-col gap-2">
@@ -205,18 +229,7 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
           ) : (
             <PiPencilSimpleLineBold
               className=" w-6 h-6 p-1 rounded-lg bg-amber-600 self-center"
-              onClick={() => {
-                search.set(`${Number}`, "false");
-                setSearch(search);
-                dispatch(
-                  editQuestion({
-                    topicIndex: id,
-                    selfIndex: Number,
-                    questionType: "mcq",
-                    question: mcq,
-                  })
-                );
-              }}
+              onClick={handleEdit}
             />
           )}
         </div>

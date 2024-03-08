@@ -42,6 +42,32 @@ const Essay = ({ Title, Number, id , question ,type,view}) => {
   //     })
   //   );
   // };
+
+
+
+
+  const handleEdit =()=>{
+    console.log(essay);
+    if(essay.Title[0] === ""){
+     alert("Please fill all the fields");
+
+      return;
+    }else{
+      search.set(`${Number}`, "false");
+      setSearch(search);
+      dispatch(
+        editQuestion({
+          topicIndex: id,
+          selfIndex: Number,
+          questionType: "essay",
+          question: essay,
+        })
+      );
+    }
+  
+  }
+
+
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between mb-2">
       <div className="w-11/12 flex flex-col gap-2 ">
@@ -113,18 +139,7 @@ const Essay = ({ Title, Number, id , question ,type,view}) => {
           ) : (
             <PiPencilSimpleLineBold
               className=" w-6 h-6 p-1 rounded-lg bg-amber-600 self-center"
-              onClick={() => {
-                search.set(`${Number}`, "false");
-                setSearch(search);
-                dispatch(
-                  editQuestion({
-                    topicIndex: id,
-                    selfIndex: Number,
-                    questionType: "essay",
-                    question: essay,
-                  })
-                );
-              }}
+              onClick={handleEdit}
             />
           )}
         </div>
