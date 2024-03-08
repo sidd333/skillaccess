@@ -5,14 +5,16 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
   addQuestionToTopic,
+  addVideoToSection,
   clearTopicToBeAdded,
 } from "../../../../../redux/collage/test/testSlice";
 
 const Header = ({ selectQuestionType }) => {
   const { id } = useParams();
+  const [searchParam, setSearchParam] = useSearchParams();
   const dispatch = useDispatch();
   const topicToBeAdded = useSelector((state) => state.test.TopicToBeAdded);
   const submit = () => {
@@ -30,9 +32,6 @@ const Header = ({ selectQuestionType }) => {
 
         // Add other properties if needed
       },
-
-
- 
     };
     let mcq = topicToBeAdded.video.questions.reduce((acc, question) => {
       return acc + parseInt(question.Duration);
@@ -47,22 +46,51 @@ const Header = ({ selectQuestionType }) => {
     console.log(mcq);
     let Duration = mcq + long + short;
 
-    const vid =  { ...topicToBeAdded.video,Duration: Duration};
+    const vid = {
+      ...topicToBeAdded.video,
+      Duration: Duration,
+      section:
+        searchParam.get("section") !== "null" ? searchParam.get("section") : id,
+    };
     dispatch(clearTopicToBeAdded());
-    dispatch(
-      addQuestionToTopic({
-        data:vid,
-        id: id,
-        type: "video",
-      })
-    ).then(() => {
-      localStorage.setItem(
-        "TopicToBeAdded",
-        JSON.stringify(updatedTopicToBeAdded)
-      );
-      navigate("/collage/test/select");
-    });
-   
+
+    console.log(searchParam.get("section"));
+    searchParam.get("section") !== "null"
+      ? dispatch(
+          addQuestionToTopic({
+            index: id,
+            data: vid,
+            id: searchParam.get("section"),
+            type: "video",
+          })
+        ).then((res) => {
+          localStorage.setItem(
+            "TopicToBeAdded",
+            JSON.stringify(updatedTopicToBeAdded)
+          );
+          console.log(res);
+
+          navigate(
+            `/collage/test/${id}?type=section&question=video&topicId=${searchParam.get(
+              "section"
+            )}&view=true`
+          );
+        })
+      : dispatch(
+          addQuestionToTopic({
+            data: vid,
+            id: id,
+            type: "video",
+          })
+        ).then((res) => {
+          localStorage.setItem(
+            "TopicToBeAdded",
+            JSON.stringify(updatedTopicToBeAdded)
+          );
+          console.log(res);
+
+          navigate(`/collage/test/select`);
+        });
   };
 
   const navigate = useNavigate();

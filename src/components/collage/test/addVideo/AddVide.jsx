@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import Loader from "./Loader";
+
 import { useDropzone } from "react-dropzone";
 
 import { GrUploadOption } from "react-icons/gr";
@@ -34,7 +34,7 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 const AddVideo = () => {
   const dispatch = useDispatch();
-
+  const [searchParam, setSearchParam] = useSearchParams();
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -59,7 +59,6 @@ const AddVideo = () => {
 
   const [timerInterval, setTimerInterval] = useState(null);
 
-  const[loading,setLoading]=useState(false);
   const maxDurationInSeconds = 3 * 60;
 
   const warningTime = 10;
@@ -210,9 +209,7 @@ const AddVideo = () => {
   const authToken = localStorage.getItem("auth-token");
 
   const uploadVideo = async (videoFile) => {
-    
     try {
-      setLoading(true);
       const formData = new FormData();
 
       formData.append("video", videoFile);
@@ -228,8 +225,7 @@ const AddVideo = () => {
 
             "auth-token": authToken,
           },
-        },
-      
+        }
       );
 
       const videoLinkFromServer = response.data.video;
@@ -240,12 +236,13 @@ const AddVideo = () => {
 
       // Navigate to the next step
 
-      navigate(`/collage/test/video/${id}/selectType`);
+      navigate(
+        `/collage/test/video/${id}/selectType?section=${searchParam.get(
+          "topicId"
+        )}`
+      );
     } catch (error) {
       console.error("Error uploading video:", error);
-    }
-    finally{
-      setLoading(false);
     }
   };
 
@@ -404,7 +401,7 @@ const AddVideo = () => {
 
               onClick={handleFileUpload}
             >
-              <FaPlus className="self-center" /> Add Questions {loading && <Loader />}
+              <FaPlus className="self-center" /> Add Questions
             </button>
           </div>
         </div>
