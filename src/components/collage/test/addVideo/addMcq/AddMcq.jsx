@@ -472,10 +472,14 @@ const AddMcq = () => {
                   window.alert("Please enter required time");
                   return;
                 }
+                else if(question.AnswerIndex===null){
+                  window.alert("Please select the correct answer");
+                  return;
+                }
                 else{
                 dispatch(addVideo({ question: question }));
 
-                setQuestion({ Title: "", Options: [], Duration: 0 });
+                setQuestion({ Title: "", Options: [], Duration: 0, AnswerIndex: null});
                 }
               }}
             >

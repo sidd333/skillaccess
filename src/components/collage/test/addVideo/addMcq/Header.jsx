@@ -52,10 +52,14 @@ const Header = ({ question, setQuestion }) => {
       window.alert("Please enter required time");
       return;
     }
+    else if(question.AnswerIndex===null){
+      window.alert("Please enter correct answer");
+      return;
+    }
     else{
     dispatch(addVideo({ question: question }));
 
-    setQuestion({ Title: "", Options: [] });
+    setQuestion({ Title: "", Options: [] , AnswerIndex:null });
 
     navigate(-1);
     }

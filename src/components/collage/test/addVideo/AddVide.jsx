@@ -52,7 +52,9 @@ const AddVideo = () => {
 
   const [videoLink, setVideoLink] = useState("");
 
+
   const [loading, setLoading] = useState(false);
+
   const chunksRef = useRef([]);
 
   const [videoPreview, setVideoPreview] = useState("");
@@ -247,6 +249,9 @@ const AddVideo = () => {
     } catch (error) {
       console.error("Error uploading video:", error);
     }
+    finally{
+      setLoading(false);
+    }
   };
 
   const handleFileUpload = () => {
@@ -404,12 +409,14 @@ const AddVideo = () => {
 
               onClick={handleFileUpload}
             >
+
               Add Questions{" "}
               {loading === false ? (
                 <FaPlus className="self-center" />
               ) : (
                 <Loader />
               )}
+
             </button>
           </div>
         </div>

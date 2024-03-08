@@ -128,6 +128,10 @@ const AddCode = () => {
 
           return;
         }
+        if(question.codeQuestion === ""){
+          alert("Please add the question");
+          return;
+        }
 
         if (question.Duration == 0) {
           alert("Please fill the duration");

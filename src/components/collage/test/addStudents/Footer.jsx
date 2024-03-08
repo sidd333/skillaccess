@@ -12,7 +12,11 @@ const Footer = ({ setStudents }) => {
         <div className=" flex gap-2">
           <button
             className="self-center justify-center flex bg-blue-700 rounded-lg text-sm font-bold gap-2 px-10 py-3"
-            onClick={() => navigate("/collage/test")}
+            onClick={() => { 
+              localStorage.removeItem("testDetails");
+              localStorage.removeItem("totalTime"); 
+              navigate("/collage/test");
+            }}
           >
             <FaPlus className="text-white text-lg" />
             <p className="self-center text-white">Invite</p>
