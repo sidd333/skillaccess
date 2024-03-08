@@ -98,6 +98,62 @@ const Header = () => {
           navigate("/collage/test/select");
         });
       }
+    } else {
+      if (showSubmitButton) {
+        // dispatch(addVideoToTopic({ data:topicToBeAdded.video, id: id, type: type }));
+        const updatedTopicToBeAdded = {
+          ...topicToBeAdded,
+
+          video: {
+            videoFile: "", // Set video link to an empty string
+
+            questions: [], // Set questions to an empty array
+
+            long: {
+              Title: "", // Set long title to an empty string
+
+              // Add other properties if needed
+            },
+
+            short: {
+              Title: "", // Set short title to an empty string
+
+              // Add other properties if needed
+            },
+
+            // Add other properties if needed
+          },
+        };
+        let mcq = topicToBeAdded.video.questions.reduce((acc, question) => {
+          return acc + parseInt(question.Duration);
+        }, 0);
+        let long = topicToBeAdded.video.long.reduce((acc, question) => {
+          return acc + parseInt(question.Duration);
+        }, 0);
+
+        let short = topicToBeAdded.video.short.reduce((acc, question) => {
+          return acc + parseInt(question.Duration);
+        }, 0);
+        console.log(mcq);
+        let Duration = mcq + long + short;
+        dispatch(
+          addQuestionToTopic({
+            data: { ...topicToBeAdded.video, Duration: Duration },
+            id: searchParams.get("topicId"),
+            type: "video",
+          })
+        ).then(() => {
+          localStorage.setItem(
+            "TopicToBeAdded",
+            JSON.stringify(updatedTopicToBeAdded)
+          );
+          navigate(
+            `test/collage/details/${id}type=section&question=video&topicId=${searchParams.get(
+              "topicId"
+            )}&view=true`
+          );
+        });
+      }
     }
   };
 
