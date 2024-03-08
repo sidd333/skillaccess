@@ -142,29 +142,44 @@ const Submit = () => {
   }, [topics, ""]);
 
   const handleCalculateTime = () => {
-    const totalTimeCal = topics.map((topic) => {
-      console.log(topic);
 
-      const totalMcq = topic.questions?.reduce((acc, curr) => {
-        return acc + parseInt(curr.Duration);
-      }, 0);
-      const totalEssay = topic.essay?.reduce((acc, curr) => {
-        return acc + parseInt(curr.Duration);
-      }, 0);
-      const totalVideo = topic.video?.reduce((acc, curr) => {
-        return acc + parseInt(curr.Duration);
-      }, 0);
-      const totalCompiler = topic.compiler?.reduce((acc, curr) => {
-        return acc + parseInt(curr.Duration);
-      }, 0);
-      const totalFindAnswer = topic.findAnswers?.reduce((acc, curr) => {
-        return acc + parseInt(curr.Duration);
-      }, 0);
-      const total =
-        totalMcq + totalEssay + totalVideo + totalCompiler + totalFindAnswer;
-      return total;
+    let totalMcq = 0, totalEssay = 0, totalVideo = 0, totalCompiler = 0, totalFindAnswer = 0;
+    const totalTimeCal = topics.forEach((topic) => {
+
+      if (topic.Type === "essay") {
+        totalEssay += topic.essay?.reduce((acc, curr) => {
+          console.log(parseInt(curr.Duration));
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (topic.Type === "video") {
+        totalVideo += topic.video?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (topic.Type === "compiler") {
+        totalCompiler += topic.compiler?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (topic.Type === "findAnswer") {
+        totalFindAnswer += topic.findAnswers?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+
+      if (topic.Type === 'mcq') {
+        totalMcq += topic.questions?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
     });
-    return totalTimeCal;
+
+    const total =
+      totalMcq + totalEssay + totalVideo + totalCompiler + totalFindAnswer;
+
+    console.log(total, "total" , totalMcq, totalEssay, totalVideo, totalCompiler, totalFindAnswer);
+    return total;
   };
 
   const handleSubmit = () => {
@@ -203,11 +218,15 @@ const Submit = () => {
       return;
     }
 
-    const totalTimeCal = handleCalculateTime();
+  let totalTimeCal = handleCalculateTime();
+
+// totalTimeCal = totalTimeCal.reduce((acc, curr) => {
+//   return acc + curr;
+// }, 0);
 
     console.log(totalTimeCal, totalDuration);
 
-    console.log(totalTimeCal[0], totalDuration);
+    // console.log(totalTimeCal, totalDuration);
 
     // if (totalTimeCal[0] > totalDuration) {
     //   window.alert(
@@ -221,8 +240,8 @@ const Submit = () => {
     //   window.alert("Total duration of questions is less than the total duration of test");
     //   return;
 
-    console.log(totalTimeCal[0], totalDuration);
-    localStorage.setItem("totalTime", JSON.stringify(totalTimeCal[0]));
+    // console.log(totalTimeCal, totalDuration);
+    localStorage.setItem("totalTime", JSON.stringify(totalTimeCal));
 
     dispatch(
       createTest({
@@ -231,8 +250,8 @@ const Submit = () => {
         description,
         totalAttempts,
         totalQuestions,
-        // totalDuration: totalTimeCal[0],
-        totalDuration,
+        totalDuration: totalTimeCal,
+        // totalDuration,
         topics,
       })
     ).then(() => {

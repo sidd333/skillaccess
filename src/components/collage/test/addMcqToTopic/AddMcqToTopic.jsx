@@ -375,11 +375,15 @@ const AddMcqToTopic = () => {
                   window.alert("Please enter required time");
                   return;
                 }
+                else if(question.AnswerIndex===null){
+                  window.alert("Please select correct answer");
+                  return;
+                }
                 else{
                 dispatch(
                   addQuestionToTopic({ data: question, id: id, type: type })
                 );
-                setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 });
+                setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 , AnswerIndex: null});
                 }
               }}
             >

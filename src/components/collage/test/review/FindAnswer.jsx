@@ -69,6 +69,29 @@ const [search, setSearch] = useSearchParams();
   // ,[question])
 
 
+  const handleEdit =()=>{
+
+    if(findAnswer.Title === "" || findAnswer.questions.some((ques) => ques.question === "")){
+     alert("Please fill all the fields");
+
+      return;
+    }else{
+      search.set(`${Number}`, "false");
+      setSearch(search);
+  
+    dispatch(
+      editQuestion({
+        topicIndex: id,
+        selfIndex: Number,
+        questionType: "findAnswer",
+        question: findAnswer,
+      })
+    );
+    }
+  
+  }
+
+
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between mb-2">
       <div className="w-11/12 flex flex-col gap-2">
@@ -152,18 +175,7 @@ const [search, setSearch] = useSearchParams();
           ) : (
             <PiPencilSimpleLineBold
               className=" w-6 h-6 p-1 rounded-lg bg-amber-600 self-center"
-              onClick={() => {
-                search.set(`${Number}`, "false");
-                setSearch(search);
-                dispatch(
-                  editQuestion({
-                    topicIndex: id,
-                    selfIndex: Number,
-                    questionType: "findAnswer",
-                    question: findAnswer,
-                  })
-                );
-              }}
+              onClick={handleEdit}
             />
           )}
         </div>
