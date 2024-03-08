@@ -9,7 +9,7 @@ import {
 } from "../../../../redux/collage/test/testSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const Header = ({ question, setQuestion, id, type, addType }) => {
+const Header = ({ question, setQuestion, id, type, addType, section }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -17,38 +17,42 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
     if (addType === "topic") {
       if (question.Title == "") {
         window.alert("Please enter the question");
-      }
-      else if(question.Duration===0){
+      } else if (question.Duration === 0) {
         window.alert("Please enter required time");
         return;
-      }
-      else  if (question.questions.some(q => q.question === "")) {
+      } else if (question.questions.some((q) => q.question === "")) {
         window.alert("Please enter all questions");
         return;
-      } 
-       else {
+      } else {
         dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "", questions: [] ,Duration : 0});
+        setQuestion({
+          Title: "",
+          questions: [],
+          Duration: 0,
+          section: section,
+        });
         navigate(-1);
       }
-
     } else {
       if (question.Title == "") {
         window.alert("Please enter paragraph");
-           }
-           else if (question.questions.some(q => q.question === "")) {
-            window.alert("Please enter all questions");
-            return;
-          } 
-            
-      else{
-        dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
+      } else if (question.questions.some((q) => q.question === "")) {
+        window.alert("Please enter all questions");
+        return;
+      } else {
+        dispatch(
+          addFindAns({
+            data: question,
+            id: id,
+            type: "findAnswer",
+            section: section,
+          })
+        );
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({ Title: "", questions: [], Duration: 0 });
         navigate(-1);
       }
-     
     }
   };
 

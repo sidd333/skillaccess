@@ -232,7 +232,7 @@ const AddMcq = () => {
 
   return (
     <div>
-      <Header question={question} setQuestion={setQuestion} />
+      <Header question={question} setQuestion={setQuestion} section={section} />
       <div className="bg-white min-h-[90vh] w-[98%] mx-auto rounded-xl pt-4">
         <div className="flex flex-wrap gap-2 sm:w-[95.7%] mx-auto ">
           <span className="w-[49%] ">
@@ -472,25 +472,24 @@ const AddMcq = () => {
               className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
               // onClick={addQuestion}
               onClick={() => {
-
-                if (question.Title === "" ) {
+                if (question.Title === "") {
                   window.alert("Please enter question");
                   return;
-                }
-               else if (question.Options &&  question.Options.length < 4) {
-            
+                } else if (question.Options && question.Options.length < 4) {
                   window.alert("Please enter atleast 4 options");
                   return;
-                }
-               else if(question.Duration===0){
+                } else if (question.Duration === 0) {
                   window.alert("Please enter required time");
                   return;
-                }
-                else{
+                } else {
                   dispatch(addMcq({ question: question, id: id }));
-                  setQuestion({ Title: "", Options: [] , Duration : 0 });
+                  setQuestion({
+                    Title: "",
+                    Options: [],
+                    Duration: 0,
+                    section: section,
+                  });
                 }
-
               }}
             >
               <FaPlus className="self-center" /> Add Next Question

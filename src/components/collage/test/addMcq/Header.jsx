@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addMcq, createTest } from "../../../../redux/collage/test/testSlice";
 
-const Header = ({ question, setQuestion }) => {
+const Header = ({ question, setQuestion, section }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,28 +24,21 @@ const Header = ({ question, setQuestion }) => {
   // };
 
   const handleSave = () => {
-    if (question.Title === "" ) {
+    if (question.Title === "") {
       window.alert("Please enter question");
       return;
-    }
-   else if (question.Options &&  question.Options.length < 4) {
-
+    } else if (question.Options && question.Options.length < 4) {
       window.alert("Please enter atleast 4 options");
       return;
-    }
-   else if(question.Duration===0){
+    } else if (question.Duration === 0) {
       window.alert("Please enter required time");
       return;
-    }
-    else{
+    } else {
       dispatch(addMcq({ question: question, id: id }));
-      setQuestion({ Title: "", Options: [] , Duration : 0 });
-    
+      setQuestion({ Title: "", Options: [], Duration: 0, section: section });
+
       navigate(-1);
     }
-
-  
-  
   };
   // useEffect(() => {
   //   dispatch(setTest({questions}));

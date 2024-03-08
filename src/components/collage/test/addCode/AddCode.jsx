@@ -82,6 +82,7 @@ const AddCode = () => {
         dispatch(addCompilerToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
+          section: searchParams.get("topicId"),
           code: "",
           Duration: 0,
           codeQuestion: "",

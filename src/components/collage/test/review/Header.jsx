@@ -51,6 +51,8 @@ const Header = ({ type, sectionId, qt, topicId }) => {
                           ? "code"
                           : qt === "essay"
                           ? "essay"
+                          : qt === "video"
+                          ? "video"
                           : "addMcq"
                       }/${id}?addType=test&topicId=${topicId}`
                     )

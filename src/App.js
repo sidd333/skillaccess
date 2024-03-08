@@ -68,12 +68,12 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Suspense fallback={<></>}>
+      <Suspense fallback={<Loader />}>
         <Routes>
           {/* ----------------------------------------collage-------------------------------------------------------------- */}
           <Route path="" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="loader" element={<Loader />} />
+          {/* <Route path="loader" element={<Loader />} /> */}
 
           {isLoggedIn ? (
             <>
@@ -88,7 +88,7 @@ export default function App() {
               {TeamsRoute()}
             </>
           ) : (
-            <Route path="*" element={<h1>loading...</h1>} />
+            <Route path="*" element={<Loader />} />
           )}
           {/* 
           {Rote()}
