@@ -32,31 +32,25 @@ const AddEssay = () => {
 
   const handleSave = () => {
     if (addType === "topic") {
-
       if (question.Title == "") {
         window.alert("Please enter the question");
-      }
-      else if(question.Duration===0){
+      } else if (question.Duration === 0) {
         window.alert("Please enter required time");
         return;
-      }
-      else {
-
-      dispatch(addEssayToTopic({ data: question, id: id, type: type }));
-      dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", Duration: 0 });
+      } else {
+        dispatch(addEssayToTopic({ data: question, id: id, type: type }));
+        dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+        setQuestion({ Title: "", Duration: 0 });
       }
     } else {
       if (question.Title == "") {
         window.alert("Please enter the question");
-      }
-      else{
-      dispatch(addEssay({ data: question, id: id, type: type }));
-      // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+      } else {
+        dispatch(addEssay({ data: question, id: id, type: type }));
+        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
-      setQuestion({ Title: "", Duration: 0});
+        setQuestion({ Title: "", Duration: 0 });
       }
-
     }
   };
 
@@ -101,7 +95,10 @@ const AddEssay = () => {
         <div className="absolute bottom-10 flex right-8 gap-2">
           {" "}
           <div className=" flex gap-2">
-            <button className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32">
+            <button
+              className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32"
+              onClick={() => navigate(-1)}
+            >
               <FaChevronLeft className="self-center" /> Prev
             </button>
           </div>
