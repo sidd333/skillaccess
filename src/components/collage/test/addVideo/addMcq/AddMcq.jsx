@@ -46,7 +46,7 @@ const AddMcq = () => {
     QuestionType: "",
 
     AnswerIndex: null,
-    Duration: 1,
+    Duration: 0,
   });
 
   const handlePrev = () => {

@@ -52,6 +52,9 @@ const Header = ({ selectQuestionType }) => {
       section:
         searchParam.get("section") !== "null" ? searchParam.get("section") : id,
     };
+
+    const totalLength =
+      vid.questions.length + vid.long.length + vid.short.length;
     dispatch(clearTopicToBeAdded());
 
     console.log(searchParam.get("section"));
@@ -88,8 +91,13 @@ const Header = ({ selectQuestionType }) => {
             JSON.stringify(updatedTopicToBeAdded)
           );
           console.log(res);
-
-          navigate(`/collage/test/select`);
+          if (totalLength === 0) {
+            alert("Please add questions to the assessment");
+            return;
+          } else {
+            navigate("/collage/test/select");
+          }
+          //           navigate(`/collage/test/select`);
         });
   };
 

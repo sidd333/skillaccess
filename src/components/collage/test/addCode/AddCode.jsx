@@ -16,6 +16,7 @@ const AddCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [validate , setValidate] = useState(false);
   const { id } = useParams();
   const type = searchParams.get("type");
   const addType = searchParams.get("addType");
@@ -76,9 +77,24 @@ const AddCode = () => {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = (component) => {
     if (addType === "topic") {
-      if (question.codeQuestion != "") {
+
+      if (question.codeQuestion != "" || question.code != "" || question.codeLanguage != "" ||question.code != ""){
+       
+       
+
+        if(question.code === ""){
+          alert("Please fill the code");
+        
+          return;
+        }
+
+        if(question.Duration == 0){ 
+          alert("Please fill the duration");
+        
+          return;
+        }
         dispatch(addCompilerToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
@@ -96,9 +112,27 @@ const AddCode = () => {
           testcase: [{ input: "", expectedOutput: "" }],
           output: [""],
         });
+     
+      }
+      else{
+      
+        alert("Please fill all the fields");
+
       }
     } else {
-      if (question.codeQuestion != "") {
+      if (question.codeQuestion != "" || question.code != "" || question.codeLanguage != "" || question.code != ""){
+        if(question.code === ""){
+          alert("Please fill the code");
+         
+          return;
+        }
+
+  
+        if(question.Duration == 0){ 
+       
+          alert("Please fill the duration");
+          return;
+        }
         dispatch(addCompiler({ data: question, id: id, type: type }));
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
@@ -115,14 +149,24 @@ const AddCode = () => {
           testcase: [{ input: "", expectedOutput: "" }],
           output: [""],
         });
+       
+      }
+      else{
+        alert("Please fill all the fields");
+
+      
       }
     }
     console.log(question);
+    if(component === "save"){
+      navigate(-1);
+    }
+
   };
 
   return (
     <div className="">
-      <Header handleSave={handleSave} />
+      <Header handleSave={handleSave}/>
       <div className="bg-white min-h-[90vh] mx-auto rounded-xl pt-4 sm:w-[95.7%] px-3 relative">
         <div className="flex flex-wrap gap-2  ">
           <span className="w-[49%] ">
@@ -159,7 +203,7 @@ const AddCode = () => {
             <div className=" flex">
               <button
                 className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
-                onClick={handleSave}
+                onClick={()=> handleSave("next")}
               >
                 <FaPlus className="self-center" /> Add Next Question
               </button>

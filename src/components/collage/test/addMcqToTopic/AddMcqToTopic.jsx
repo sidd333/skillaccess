@@ -155,6 +155,7 @@ const AddMcqToTopic = () => {
                   {/* radio button */}
                   <div className="flex w-5 justify-center">
                     <input
+                      sele
                       type="radio"
                       name="Answer"
                       id="option1"
@@ -362,24 +363,29 @@ const AddMcqToTopic = () => {
                 // );
                 // setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 });
 
-                if (question.Title === "" ) {
+                if (question.Title === "") {
                   window.alert("Please enter question");
                   return;
-                }
-               else if (question.Options &&  question.Options.length < 4) {
-            
+                } else if (question.Options && question.Options.length < 4) {
                   window.alert("Please enter atleast 4 options");
                   return;
-                }
-                else if(question.Duration===0){
+                } else if (question.Duration === 0) {
                   window.alert("Please enter required time");
                   return;
-                }
-                else{
-                dispatch(
-                  addQuestionToTopic({ data: question, id: id, type: type })
-                );
-                setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 });
+                } else if (question.AnswerIndex === null) {
+                  window.alert("Please select correct answer");
+                  return;
+                } else {
+                  dispatch(
+                    addQuestionToTopic({ data: question, id: id, type: type })
+                  );
+                  setQuestion({
+                    Title: "",
+                    Options: [],
+                    id: "aaa",
+                    Duration: 0,
+                    AnswerIndex: null,
+                  });
                 }
               }}
             >

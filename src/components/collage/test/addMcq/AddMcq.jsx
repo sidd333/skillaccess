@@ -481,12 +481,16 @@ const AddMcq = () => {
                 } else if (question.Duration === 0) {
                   window.alert("Please enter required time");
                   return;
+                } else if (question.AnswerIndex === null) {
+                  window.alert("Please select correct answer");
+                  return;
                 } else {
                   dispatch(addMcq({ question: question, id: id }));
                   setQuestion({
                     Title: "",
                     Options: [],
                     Duration: 0,
+                    AnswerIndex: null,
                     section: section,
                   });
                 }
