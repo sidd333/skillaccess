@@ -159,7 +159,10 @@ const AddParagraph = () => {
           <div className="absolute bottom-10 flex right-8 gap-2">
             {" "}
             <div className=" flex gap-2">
-              <button className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32">
+              <button
+                className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32"
+                onClick={() => navigate(-1)}
+              >
                 <FaChevronLeft className="self-center" /> Prev
               </button>
             </div>

@@ -31,7 +31,7 @@ const Header = ({ handleSave }) => {
       </div>
 
       <div className=" rounded-xl mx-2   h-12 flex my-2 font-dmSans ">
-        <div className=" flex gap-2">
+        <div className=" flex gap-2" onClick={() => navigate(-1)}>
           <button className="self-center w-24  justify-center flex text-blue-800 py-2 px-4 rounded-xl font-bold gap-2 bg-white">
             Cancel
           </button>
