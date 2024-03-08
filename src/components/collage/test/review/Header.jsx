@@ -5,7 +5,7 @@ import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { FiUpload } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Header = ({ type, sectionId, qt, topicId }) => {
+const Header = ({ type, sectionId, qt, topicId, view }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   return (
@@ -35,7 +35,7 @@ const Header = ({ type, sectionId, qt, topicId }) => {
       </div>
 
       <div className="rounded-xl mx-2   h-12 flex my-2 ">
-        {type !== "assessment" && (
+        {type !== "assessment" && view !== "false" && (
           <div className=" flex gap-2">
             <button
               className="self-center justify-center flex bg-[#F8F8F9] py-3  rounded-xl w-32  gap-2 "

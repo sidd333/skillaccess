@@ -29,6 +29,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { addVideo } from "../../../../redux/collage/test/testSlice";
+import Loader from "./Loader";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
@@ -50,6 +51,9 @@ const AddVideo = () => {
   const [file, setFile] = useState(null);
 
   const [videoLink, setVideoLink] = useState("");
+
+
+  const [loading, setLoading] = useState(false);
 
   const chunksRef = useRef([]);
 
@@ -210,6 +214,7 @@ const AddVideo = () => {
 
   const uploadVideo = async (videoFile) => {
     try {
+      setLoading(true);
       const formData = new FormData();
 
       formData.append("video", videoFile);
@@ -243,6 +248,9 @@ const AddVideo = () => {
       );
     } catch (error) {
       console.error("Error uploading video:", error);
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -401,7 +409,14 @@ const AddVideo = () => {
 
               onClick={handleFileUpload}
             >
-              <FaPlus className="self-center" /> Add Questions
+
+              Add Questions{" "}
+              {loading === false ? (
+                <FaPlus className="self-center" />
+              ) : (
+                <Loader />
+              )}
+
             </button>
           </div>
         </div>

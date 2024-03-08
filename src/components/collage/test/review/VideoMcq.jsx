@@ -7,11 +7,9 @@ import { IoSwapVerticalSharp } from "react-icons/io5";
 import { PiPencilSimpleLineBold } from "react-icons/pi";
 import { CiBookmarkMinus } from "react-icons/ci";
 
-
-
 const VideoMcq = ({
   Number,
- question,
+  question,
   id,
   search,
   setVideoState,
@@ -20,13 +18,12 @@ const VideoMcq = ({
   handleDelete,
   type,
   view,
-  videoState
+  Index,
+  videoState,
 }) => {
   const dispatch = useDispatch();
 
-
   const [mcq, setMcq] = useState(question);
-
 
   const handleChange = (e) => {
     const { name, value, key } = e.target;
@@ -49,40 +46,37 @@ const VideoMcq = ({
     //   return { ...prev, questions :[...prev.mcq.slice(0, Number), mcq, ...prev.mcq.slice(Number + 1)] };
     // });
 
-  // setVideoState((prev) => {
-  //   return {
-  //     ...prev,
-  //     questions: [
-  //       ...prev.questions.slice(0, Number),
-  //       { ...prev.questions[Number], Options: mcq.Options },
-  //       ...prev.questions.slice(Number + 1),
-  //     ],
-  //   };
-  // });
+    // setVideoState((prev) => {
+    //   return {
+    //     ...prev,
+    //     questions: [
+    //       ...prev.questions.slice(0, Number),
+    //       { ...prev.questions[Number], Options: mcq.Options },
+    //       ...prev.questions.slice(Number + 1),
+    //     ],
+    //   };
+    // });
 
-  setVideoState((prev) => {
-    return {
-      ...prev,
-      questions: [
-        ...prev.questions.slice(0, Number),
-        { ...prev.questions[Number], Options: mcq.Options },
-        ...prev.questions.slice(Number + 1),
-      ],
-    };
-  });
-  // console.log(videoState, "mcq-state");
-  // console.log(mcq, "mcq");
-
+    setVideoState((prev) => {
+      return {
+        ...prev,
+        questions: [
+          ...prev.questions.slice(0, Number),
+          { ...prev.questions[Number], Options: mcq.Options },
+          ...prev.questions.slice(Number + 1),
+        ],
+      };
+    });
+    // console.log(videoState, "mcq-state");
+    // console.log(mcq, "mcq");
   };
-
-
 
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between my-4">
       <div className="w-11/12 flex flex-col gap-2">
         {search.get(`${Number}`) !== "true" ? (
           <h2 className="px-4 font-semibold pt-3 text-base">
-            {Number + 1} &nbsp;{mcq.Title}
+            {Index + 1}&nbsp;{mcq.Title}
           </h2>
         ) : (
           <input
@@ -93,9 +87,6 @@ const VideoMcq = ({
           />
         )}
         <div className="px-5 pb-4 flex flex-col gap-4">
-
-
-      
           {/* <span className="flex gap-2">
             <div className="flex w-5 justify-center">
               <input
@@ -187,9 +178,8 @@ const VideoMcq = ({
             )}
           </span> */}
 
-{mcq.Options.map((ques,index) => (
+          {mcq.Options.map((ques, index) => (
             <span className="flex gap-2">
-           
               <div className="flex w-5 justify-center">
                 <input
                   type="radio"
@@ -200,29 +190,23 @@ const VideoMcq = ({
               </div>
               <label htmlFor="answer" className="self-center">
                 {" "}
-                {
-                  
-                  search.get(`${Number}`) !== "true" ? (
-                
-                    mcq.Options[index]
-                
-                  ) : (
-                    <>
-                      <input
-                        name={index}
-                        value={ mcq.Options[index]}
-                        onChange={handleChange}
-                        placeholder="enter new question"
-                      />
-                    </>
-                  )
-                }
+                {search.get(`${Number}`) !== "true" ? (
+                  mcq.Options[index]
+                ) : (
+                  <>
+                    <input
+                      name={index}
+                      value={mcq.Options[index]}
+                      onChange={handleChange}
+                      placeholder="enter new question"
+                    />
+                  </>
+                )}
               </label>
             </span>
           ))}
         </div>
       </div>
-    
     </div>
   );
 };

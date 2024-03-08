@@ -84,6 +84,7 @@ const Review = () => {
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header
+        view={view}
         qt={questionType}
         id={
           localStorage.getItem("Topics")
@@ -146,8 +147,8 @@ const Review = () => {
               console.log(question);
               return (
                 <FindAnswer
-                view={view}
-                type={type}
+                  view={view}
+                  type={type}
                   id={id}
                   Number={i}
                   question={question}
@@ -183,8 +184,8 @@ const Review = () => {
               // console.log(question);
               return (
                 <Code
-                view={view}
-                type={type}
+                  view={view}
+                  type={type}
                   id={id}
                   Number={i}
                   Title={question?.codeQuestion || ""}

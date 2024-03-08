@@ -142,10 +142,12 @@ const Submit = () => {
   }, [topics, ""]);
 
   const handleCalculateTime = () => {
-
-    let totalMcq = 0, totalEssay = 0, totalVideo = 0, totalCompiler = 0, totalFindAnswer = 0;
+    let totalMcq = 0,
+      totalEssay = 0,
+      totalVideo = 0,
+      totalCompiler = 0,
+      totalFindAnswer = 0;
     const totalTimeCal = topics.forEach((topic) => {
-
       if (topic.Type === "essay") {
         totalEssay += topic.essay?.reduce((acc, curr) => {
           console.log(parseInt(curr.Duration));
@@ -168,7 +170,7 @@ const Submit = () => {
         }, 0);
       }
 
-      if (topic.Type === 'mcq') {
+      if (topic.Type === "mcq") {
         totalMcq += topic.questions?.reduce((acc, curr) => {
           return acc + parseInt(curr.Duration);
         }, 0);
@@ -178,7 +180,15 @@ const Submit = () => {
     const total =
       totalMcq + totalEssay + totalVideo + totalCompiler + totalFindAnswer;
 
-    console.log(total, "total" , totalMcq, totalEssay, totalVideo, totalCompiler, totalFindAnswer);
+    console.log(
+      total,
+      "total",
+      totalMcq,
+      totalEssay,
+      totalVideo,
+      totalCompiler,
+      totalFindAnswer
+    );
     return total;
   };
 
@@ -218,11 +228,11 @@ const Submit = () => {
       return;
     }
 
-  let totalTimeCal = handleCalculateTime();
+    let totalTimeCal = handleCalculateTime();
 
-// totalTimeCal = totalTimeCal.reduce((acc, curr) => {
-//   return acc + curr;
-// }, 0);
+    // totalTimeCal = totalTimeCal.reduce((acc, curr) => {
+    //   return acc + curr;
+    // }, 0);
 
     console.log(totalTimeCal, totalDuration);
 
@@ -242,7 +252,7 @@ const Submit = () => {
 
     // console.log(totalTimeCal, totalDuration);
     localStorage.setItem("totalTime", JSON.stringify(totalTimeCal));
-
+    localStorage.setItem("testName", JSON.stringify(name));
     dispatch(
       createTest({
         level,
