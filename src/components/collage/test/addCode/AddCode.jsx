@@ -16,7 +16,7 @@ const AddCode = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [validate , setValidate] = useState(false);
+  const [validate, setValidate] = useState(false);
   const { id } = useParams();
   const type = searchParams.get("type");
   const addType = searchParams.get("addType");
@@ -79,25 +79,27 @@ const AddCode = () => {
 
   const handleSave = (component) => {
     if (addType === "topic") {
-
-      if (question.codeQuestion != "" || question.code != "" || question.codeLanguage != "" ||question.code != ""){
-       
-       
-
-        if(question.code === ""){
+      if (
+        question.codeQuestion != "" ||
+        question.code != "" ||
+        question.codeLanguage != "" ||
+        question.code != ""
+      ) {
+        if (question.code === "") {
           alert("Please fill the code");
-        
+
           return;
         }
 
-        if(question.Duration == 0){ 
+        if (question.Duration == 0) {
           alert("Please fill the duration");
-        
+
           return;
         }
         dispatch(addCompilerToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
+          section: searchParams.get("topicId"),
           code: "",
           Duration: 0,
           codeQuestion: "",
@@ -111,18 +113,19 @@ const AddCode = () => {
           testcase: [{ input: "", expectedOutput: "" }],
           output: [""],
         });
-     
-      }
-      else{
-      
+      } else {
         alert("Please fill all the fields");
-
       }
     } else {
-      if (question.codeQuestion != "" || question.code != "" || question.codeLanguage != "" || question.code != ""){
-        if(question.code === ""){
+      if (
+        question.codeQuestion != "" ||
+        question.code != "" ||
+        question.codeLanguage != "" ||
+        question.code != ""
+      ) {
+        if (question.code === "") {
           alert("Please fill the code");
-         
+
           return;
         }
         if(question.codeQuestion === ""){
@@ -130,9 +133,7 @@ const AddCode = () => {
           return;
         }
 
-  
-        if(question.Duration == 0){ 
-       
+        if (question.Duration == 0) {
           alert("Please fill the duration");
           return;
         }
@@ -152,24 +153,19 @@ const AddCode = () => {
           testcase: [{ input: "", expectedOutput: "" }],
           output: [""],
         });
-       
-      }
-      else{
+      } else {
         alert("Please fill all the fields");
-
-      
       }
     }
     console.log(question);
-    if(component === "save"){
+    if (component === "save") {
       navigate(-1);
     }
-
   };
 
   return (
     <div className="">
-      <Header handleSave={handleSave}/>
+      <Header handleSave={handleSave} />
       <div className="bg-white min-h-[90vh] mx-auto rounded-xl pt-4 sm:w-[95.7%] px-3 relative">
         <div className="flex flex-wrap gap-2  ">
           <span className="w-[49%] ">
@@ -199,14 +195,17 @@ const AddCode = () => {
           <div className="absolute bottom-10 flex right-8 gap-2">
             {" "}
             <div className=" flex gap-2">
-              <button className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32">
+              <button
+                className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32"
+                onClick={() => navigate(-1)}
+              >
                 <FaChevronLeft className="self-center" /> Prev
               </button>
             </div>
             <div className=" flex">
               <button
                 className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
-                onClick={()=> handleSave("next")}
+                onClick={() => handleSave("next")}
               >
                 <FaPlus className="self-center" /> Add Next Question
               </button>

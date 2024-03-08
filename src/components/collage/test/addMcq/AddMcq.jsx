@@ -232,7 +232,7 @@ const AddMcq = () => {
 
   return (
     <div>
-      <Header question={question} setQuestion={setQuestion} />
+      <Header question={question} setQuestion={setQuestion} section={section} />
       <div className="bg-white min-h-[90vh] w-[98%] mx-auto rounded-xl pt-4">
         <div className="flex flex-wrap gap-2 sm:w-[95.7%] mx-auto ">
           <span className="w-[49%] ">
@@ -442,9 +442,9 @@ const AddMcq = () => {
                 </span>
                 {/* add button and shuffle container */}
                 <div className="flex justify-between">
-                  <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
+                  {/* <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
                     <FaPlus className="self-center" /> Add
-                  </button>
+                  </button> */}
                   <span className="self-center">
                     <input type="checkbox" className="mr-2" />{" "}
                     <label className="">Shuffle Answers</label>
@@ -472,29 +472,28 @@ const AddMcq = () => {
               className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
               // onClick={addQuestion}
               onClick={() => {
-
-                if (question.Title === "" ) {
+                if (question.Title === "") {
                   window.alert("Please enter question");
                   return;
-                }
-               else if (question.Options &&  question.Options.length < 4) {
-            
+                } else if (question.Options && question.Options.length < 4) {
                   window.alert("Please enter atleast 4 options");
                   return;
-                }
-               else if(question.Duration===0){
+                } else if (question.Duration === 0) {
                   window.alert("Please enter required time");
                   return;
-                }
-                else if(question.AnswerIndex===null){
+                } else if (question.AnswerIndex === null) {
                   window.alert("Please select correct answer");
                   return;
-                }
-                else{
+                } else {
                   dispatch(addMcq({ question: question, id: id }));
-                  setQuestion({ Title: "", Options: [] , Duration : 0 , AnswerIndex : null});
+                  setQuestion({
+                    Title: "",
+                    Options: [],
+                    Duration: 0,
+                    AnswerIndex: null,
+                    section: section,
+                  });
                 }
-
               }}
             >
               <FaPlus className="self-center" /> Add Next Question

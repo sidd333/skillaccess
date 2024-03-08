@@ -166,7 +166,7 @@ export const createTest = createAsyncThunk(
 
 export const addQuestionToTopic = createAsyncThunk(
   "test/addQuestionToTopic",
-  async (data, { rejectWithValue }) => {
+  async (data, { rejectWithValue, dispatch }) => {
     try {
       const req = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/college/add-questions/${data.id}/${data.type}`,
@@ -180,7 +180,13 @@ export const addQuestionToTopic = createAsyncThunk(
       );
       const res = req.data;
 
-      return res.assessment;
+      data.index &&
+        dispatch(
+          addVideoToSection({ data: res.questions[0], index: data.index })
+        );
+
+      // if (data.index) return { question: res.questions[0] };
+      return res.questions;
     } catch (error) {
       console.log("catch");
       return rejectWithValue(error?.response?.data?.message || "");
@@ -331,11 +337,12 @@ const testSlice = createSlice({
         action.payload.data,
       ];
     },
-    addVideoToTopic: (state, action) => {
-      state.TopicToBeAdded.video = [
-        ...state.TopicToBeAdded.video,
+    addVideoToSection: (state, action) => {
+      state.topics[action.payload.index].video = [
+        ...state.topics[action.payload.index].video,
         action.payload.data,
       ];
+      localStorage.setItem("topics", JSON.stringify(state.topics));
     },
     addCompilerToTopic: (state, action) => {
       state.TopicToBeAdded.compiler = [
@@ -642,6 +649,9 @@ const testSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(addQuestionToTopic.fulfilled, (state, action) => {
+        console.log(action.payload);
+      })
       .addCase(getTest.pending, (state, action) => {
         state.status = "loading";
         console.log("pending");
@@ -754,7 +764,7 @@ export const {
   addMcqToTopic,
   addFindAnsToTopic,
   addEssayToTopic,
-  addVideoToTopic,
+  addVideoToSection,
   addCompilerToTopic,
   setAssessments,
 } = testSlice.actions;

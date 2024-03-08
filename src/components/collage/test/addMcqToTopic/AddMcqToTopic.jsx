@@ -155,6 +155,7 @@ const AddMcqToTopic = () => {
                   {/* radio button */}
                   <div className="flex w-5 justify-center">
                     <input
+                      sele
                       type="radio"
                       name="Answer"
                       id="option1"
@@ -327,9 +328,9 @@ const AddMcqToTopic = () => {
                 </span>
                 {/* add button and shuffle container */}
                 <div className="flex justify-between">
-                  <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
+                  {/* <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
                     <FaPlus className="self-center" /> Add
-                  </button>
+                  </button> */}
                   <span className="self-center">
                     <input type="checkbox" className="mr-2" />{" "}
                     <label className="">Shuffle Answers</label>
@@ -362,28 +363,29 @@ const AddMcqToTopic = () => {
                 // );
                 // setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 });
 
-                if (question.Title === "" ) {
+                if (question.Title === "") {
                   window.alert("Please enter question");
                   return;
-                }
-               else if (question.Options &&  question.Options.length < 4) {
-            
+                } else if (question.Options && question.Options.length < 4) {
                   window.alert("Please enter atleast 4 options");
                   return;
-                }
-                else if(question.Duration===0){
+                } else if (question.Duration === 0) {
                   window.alert("Please enter required time");
                   return;
-                }
-                else if(question.AnswerIndex===null){
+                } else if (question.AnswerIndex === null) {
                   window.alert("Please select correct answer");
                   return;
-                }
-                else{
-                dispatch(
-                  addQuestionToTopic({ data: question, id: id, type: type })
-                );
-                setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 , AnswerIndex: null});
+                } else {
+                  dispatch(
+                    addQuestionToTopic({ data: question, id: id, type: type })
+                  );
+                  setQuestion({
+                    Title: "",
+                    Options: [],
+                    id: "aaa",
+                    Duration: 0,
+                    AnswerIndex: null,
+                  });
                 }
               }}
             >
