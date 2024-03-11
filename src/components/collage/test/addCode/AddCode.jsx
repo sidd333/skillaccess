@@ -83,14 +83,19 @@ const AddCode = () => {
         question.codeQuestion != "" ||
         question.code != "" ||
         question.codeLanguage != "" ||
-        question.code != ""
+        question.code != ""||
+        question.verificationCode!=""
       ) {
         if (question.code === "") {
           alert("Please fill the code");
 
           return;
         }
+        if (question.verificationCode === "") {
+          alert("Please fill the code");
 
+          return;
+        }
         if (question.Duration == 0) {
           alert("Please fill the duration");
 
@@ -131,7 +136,8 @@ const AddCode = () => {
         question.codeQuestion != "" ||
         question.code != "" ||
         question.codeLanguage != "" ||
-        question.code != ""
+        question.code != "" ||
+        question.verificationCode!=""
       ) {
         if (question.code === "") {
           alert("Please fill the code");
@@ -140,6 +146,11 @@ const AddCode = () => {
         }
         if(question.codeQuestion === ""){
           alert("Please add the question");
+          return;
+        }
+        if (question.verificationCode === "") {
+          alert("Please fill the code");
+
           return;
         }
 
@@ -168,15 +179,17 @@ const AddCode = () => {
           ],
           testcase: [{ input: "", expectedOutput: "" }],
           output: [""],
+
         });
+        if (component === "save") {
+          navigate(-1);
+        }
       } else {
         alert("Please fill all the fields");
       }
     }
     console.log(question);
-    if (component === "save") {
-      navigate(-1);
-    }
+   
   };
 
   return (
