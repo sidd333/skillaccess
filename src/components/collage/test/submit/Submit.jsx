@@ -198,9 +198,14 @@ const Submit = () => {
     //   totalQuestions,
     //   totalAttempts
     // }
-
     if (!name || !description || !totalAttempts || !totalQuestions) {
-      window.alert("Please fill all the details");
+      const confirmed = window.confirm("Please fill all the details");
+
+      if (confirmed) {
+        // Navigate to the specified page
+        navigate(`/collage/test/name?level=${level}`);
+      }
+
       return;
     }
     if (!topics[0]) {

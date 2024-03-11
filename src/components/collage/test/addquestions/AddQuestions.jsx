@@ -42,9 +42,8 @@ const AddQuestions = () => {
         <div className="   my-2 rounded-lg tracking-wide justify-between  ">
           <div className="grid grid-rows-1 w-[65vw]">
             <h2 className="font-normal text-xs sm:text-sm text-gray-400  mt-8 tracking-wide [word-spacing:4px] ">
-              Add up to 10 custom questions to your assessment (optional). You
-              can use five question types: multiple-choice, essay, video and
-              code.
+            Add up to 10 custom questions to your assessment (optional). You can
+          use five question types: multiple-choice, essay, video ,code and find answer.
             </h2>
             {topics?.map((topic, index) => (
               <div className=" sm:mt-5 rounded-lg tracking-wide justify-between  ">

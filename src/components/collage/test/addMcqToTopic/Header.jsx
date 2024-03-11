@@ -23,7 +23,7 @@ const Header = ({ question, setQuestion, id, type }) => {
       window.alert("Please enter atleast 4 options");
       return;
     }
-    else if(question.Duration===0){
+    else if(question.Duration==0){
       window.alert("Please enter required time");
       return;
     }
