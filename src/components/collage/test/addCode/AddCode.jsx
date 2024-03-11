@@ -96,6 +96,16 @@ const AddCode = () => {
 
           return;
         }
+        if (question.codeQuestion === "") {
+          alert("Please fill the question");
+
+          return;
+        }
+        if (question.codeLanguage === "") {
+          alert("Please fill the codelanguage");
+
+          return;
+        }
         dispatch(addCompilerToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
@@ -135,6 +145,11 @@ const AddCode = () => {
 
         if (question.Duration == 0) {
           alert("Please fill the duration");
+          return;
+        }
+        if (question.codeLanguage === "") {
+          alert("Please fill the langugage");
+
           return;
         }
         dispatch(addCompiler({ data: question, id: id, type: type }));

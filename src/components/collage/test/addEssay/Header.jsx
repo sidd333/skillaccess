@@ -19,7 +19,7 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
       if (question.Title == "") {
         window.alert("Please enter the question");
       }
-     else if(question.Duration===0){
+     else if(question.Duration==0){
         window.alert("Please enter required time");
         return;
       }

@@ -11,6 +11,7 @@ import Advanced from "./Advanced";
 import Intermediate from "./Intermediate";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+
 import {
   getAllTests,
   setTestBasicDetails,
@@ -20,7 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const Test = () => {
   const dispatch = useDispatch();
-
+  const beginner = useSelector((state) => state.test.assessments.beginner);
+  
   const navigate = useNavigate();
   const asses = [1, 2, 3, 4, 5];
 
@@ -65,7 +67,7 @@ export const Test = () => {
                               <>
                                 Beginner level{" "}
                                 <p className="inline-block text-gray-400">
-                                  &#40;3&#41;
+                                  &#40;{beginner.length}&#41;
                                 </p>{" "}
                               </>
                             ) : i === 1 ? (
