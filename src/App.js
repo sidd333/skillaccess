@@ -45,6 +45,8 @@ import ProfilePage from "./pages/collage/profile/ProfilePage";
 
 import CompaniesRoute from "./pages/collage/companies";
 import Loader from "./Loader";
+import ForgotPassword from "./pages/collage/auth/ForgotPassword";
+import ResetPassword from "./pages/collage/auth/ResetPassword";
 
 const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
@@ -73,6 +75,8 @@ export default function App() {
           {/* ----------------------------------------collage-------------------------------------------------------------- */}
           <Route path="" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/password/reset/:id" element={<ResetPassword />} />
           {/* <Route path="loader" element={<Loader />} /> */}
 
           {isLoggedIn ? (

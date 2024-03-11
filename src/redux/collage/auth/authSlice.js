@@ -11,6 +11,7 @@ console.log(process.env);
 const collageState = {
   status: "",
   error: "",
+  Error: [],
   isLoggedIn: false,
   user: null,
   uploadImg: false,
@@ -51,6 +52,25 @@ export const loginCollage = createAsyncThunk(
       const res = req.data;
       localStorage.setItem("auth-token", res.token);
       console.log(res);
+      return res;
+    } catch (error) {
+      console.log("catch");
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const forgotPassword = createAsyncThunk(
+  "collageAuth/forgotPassword",
+  async (data, { rejectWithValue }) => {
+    try {
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/password/forgot`,
+        data,
+        { withCredentials: true }
+      );
+      const res = req.data;
+
       return res;
     } catch (error) {
       console.log("catch");
@@ -149,6 +169,32 @@ export const logoutCollage = createAsyncThunk(
   }
 );
 
+export const resetPassword = createAsyncThunk(
+  "collageAuth/updatePassword",
+
+  async (data, { rejectWithValue }) => {
+    try {
+      console.log("updating", authToken);
+      const req = await axios.put(
+        `${REACT_APP_API_URL}/api/college/password/reset/${data.token}`,
+        { password: data.password, confirmPassword: data.confirmPassword },
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": authToken,
+          },
+        }
+      );
+      const res = req.data;
+      return res;
+    } catch (error) {
+      console.log("catch", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const updatePassword = createAsyncThunk(
   "collageAuth/updatePassword",
 
@@ -185,6 +231,7 @@ const collageAuthSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(forgotPassword.fulfilled, (state, action) => {})
       .addCase(registerCollage.pending, (state, action) => {
         state.status = "loading";
         console.log("pending");
@@ -218,6 +265,7 @@ const collageAuthSlice = createSlice({
         console.log(state.user);
       })
       .addCase(loginCollage.rejected, (state, action) => {
+        state.Error = [...state.Error, action.payload];
         alert(action.payload);
       })
       .addCase(updateCollege.pending, (state, action) => {

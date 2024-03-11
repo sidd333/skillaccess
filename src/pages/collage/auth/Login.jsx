@@ -9,6 +9,8 @@ import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   // cosnt[(error, setError)] = useState();
+
+  const { Error } = useSelector((state) => state.collageAuth);
   const [type, setType] = useState("password");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -113,6 +115,30 @@ const Login = () => {
               <LuEye className="text-gray-400 text-2xl" />
             </button>
           </div>
+
+          <div
+            className=" flex gap-2  px-2 lg:mt-6 md:mt-6 mt-4   w-full max-w-xs  mx-auto justify-end cursor-pointer"
+            onClick={() => navigate("/forgotPassword")}
+          >
+            <h1 className="text-blue-700 font-bold">Forgot Password</h1>
+          </div>
+
+          {Error.length > 0 &&
+            Error.map((error) => (
+              <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 rounded-xl  ">
+                <input
+                  type="checkbox"
+                  defaultChecked={true}
+                  onClick={(e) => e.preventDefault()}
+                  placeholder="Confirm Password"
+                  disabled={true}
+                  className="  border-none w-4 h-4 focus:outline-none  rounded-full bg-gray-400  mx-auto  checked:bg-gray-400 mt-2 mr-2 hover:!bg-red-500"
+                />
+                <h1 className="text-gray-400 self-center w-full">
+                  {error.message}
+                </h1>
+              </div>
+            ))}
 
           <div className=" flex gap-2  p-2 lg:mt-6 md:mt-6 mt-4   w-full max-w-xs  mx-auto ">
             {" "}
