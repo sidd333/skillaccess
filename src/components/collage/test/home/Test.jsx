@@ -22,6 +22,8 @@ import { useDispatch, useSelector } from "react-redux";
 export const Test = () => {
   const dispatch = useDispatch();
   const beginner = useSelector((state) => state.test.assessments.beginner);
+  const intermediate = useSelector((state) => state.test.assessments.intermediate);
+  const advanced = useSelector((state) => state.test.assessments.advanced);
   
   const navigate = useNavigate();
   const asses = [1, 2, 3, 4, 5];
@@ -74,14 +76,14 @@ export const Test = () => {
                               <>
                                 For Intermediate{" "}
                                 <p className="inline-block text-gray-400">
-                                  &#40;83&#41;
+                                  &#40;{intermediate.length}&#41;
                                 </p>{" "}
                               </>
                             ) : (
                               <>
                                 For Advanced{" "}
                                 <p className="inline-block text-gray-400">
-                                  &#40;143&#41;
+                                  &#40;{advanced.length}&#41;
                                 </p>{" "}
                               </>
                             )}
