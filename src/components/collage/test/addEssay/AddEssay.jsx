@@ -45,7 +45,12 @@ const AddEssay = () => {
     } else {
       if (question.Title == "") {
         window.alert("Please enter the question");
-      } else {
+      }
+      else if (question.Duration == 0) {
+        window.alert("Please enter required time");
+        return;
+      }
+      else {
         dispatch(addEssay({ data: question, id: id, type: type }));
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 

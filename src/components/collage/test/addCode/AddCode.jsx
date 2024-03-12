@@ -128,7 +128,14 @@ const AddCode = () => {
           testcase: [{ input: "", expectedOutput: "" }],
           output: [""],
         });
+    setToggle(1);
+
+        if (component === "save") {
+          navigate(-1);
+        }
+
         setToggle(1);
+
       } else {
         alert("Please fill all the fields");
       }

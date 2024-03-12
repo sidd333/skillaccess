@@ -198,7 +198,7 @@ const Submit = () => {
     //   totalQuestions,
     //   totalAttempts
     // }
-    if (!name || !description || !totalAttempts || !totalQuestions) {
+    if (!name || !description || !totalAttempts || !totalQuestions ||!totalDuration) {
       const confirmed = window.confirm("Please fill all the details");
 
       if (confirmed) {
@@ -206,6 +206,14 @@ const Submit = () => {
         navigate(`/collage/test/name?level=${level}`);
       }
 
+      return;
+    }
+    if (totalAttempts < 0 || totalDuration < 0 || totalQuestions < 0) {
+      const confirmed= window.confirm("Total attempts, total duration, and total questions must be positive numbers.");
+      if (confirmed) {
+        // Navigate to the specified page
+        navigate(`/collage/test/name?level=${level}`);
+      }
       return;
     }
     if (!topics[0]) {

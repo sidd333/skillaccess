@@ -19,24 +19,39 @@ const Header = ({ question, setQuestion, id, type, addType, LongShort }) => {
     console.log(question);
 
     if (addType === "topic") {
-      if (question.Title !== "") {
+     
 
         // dispatch(addEssayToTopic({ data: question, id: id, type: type }));
 
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+        if (question.Title == "") {
+          window.alert("Please enter the question");
+        }
+        if (question.Duration == 0) {
+          window.alert("Please enter required time");
+          return;
+        }else{
 
+        
         setQuestion({  id:`${Date.now()}`,
 
         Title: "",
     
         Duration: 0});
-
       }
+      
 
       navigate(-1);
     } else {
-      if (question.Title !== "") {
+     
         if (LongShort === "short") {
+          if (question.Title == "") {
+            window.alert("Please enter the question");
+          } else if (question.Duration == 0) {
+            window.alert("Please enter required time");
+            return;
+          }
+else{
           dispatch(addVideo({ short: question }));
 
           // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
@@ -48,7 +63,15 @@ const Header = ({ question, setQuestion, id, type, addType, LongShort }) => {
           Duration: 0,});
 
           navigate(-1);
-        } else {
+        }
+       } else {
+          if (question.Title == "") {
+            window.alert("Please enter the question");
+          } else if (question.Duration == 0) {
+            window.alert("Please enter required time");
+            return;
+          }
+else{
           dispatch(addVideo({ long: question }));
 
           // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
@@ -62,6 +85,7 @@ const Header = ({ question, setQuestion, id, type, addType, LongShort }) => {
           navigate(-1);
         }
       }
+      
     }
   };
 
