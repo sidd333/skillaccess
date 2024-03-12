@@ -128,6 +128,9 @@ const AddCode = () => {
           testcase: [{ input: "", expectedOutput: "" }],
           output: [""],
         });
+        if (component === "save") {
+          navigate(-1);
+        }
       } else {
         alert("Please fill all the fields");
       }

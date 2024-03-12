@@ -60,7 +60,15 @@ const AddParagraph = () => {
     } else {
       if (question.Title == "") {
         window.alert("Please enter the question");
-      } else {
+      }
+      else if (question.Duration == 0) {
+        window.alert("Please enter required time");
+        return;
+      } else if (question.questions.some((q) => q.question === "")) {
+        window.alert("Please enter all questions");
+        return;
+      } 
+       else {
         dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
 
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));

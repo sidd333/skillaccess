@@ -26,9 +26,10 @@ const VideoMcq = ({
   const [mcq, setMcq] = useState(question);
 
   const handleChange = (e) => {
-    const { name, value, key } = e.target;
+    const { name, value } = e.target;
+  
     if (name === "Title") {
-      console.log("name", name, value, key);
+      console.log("name", name, value);
       setMcq((prev) => {
         return { ...prev, [name]: value };
       });
@@ -42,21 +43,7 @@ const VideoMcq = ({
         };
       });
     }
-    // setVideoState((prev) => {
-    //   return { ...prev, questions :[...prev.mcq.slice(0, Number), mcq, ...prev.mcq.slice(Number + 1)] };
-    // });
-
-    // setVideoState((prev) => {
-    //   return {
-    //     ...prev,
-    //     questions: [
-    //       ...prev.questions.slice(0, Number),
-    //       { ...prev.questions[Number], Options: mcq.Options },
-    //       ...prev.questions.slice(Number + 1),
-    //     ],
-    //   };
-    // });
-
+  
     setVideoState((prev) => {
       return {
         ...prev,
@@ -67,9 +54,8 @@ const VideoMcq = ({
         ],
       };
     });
-    // console.log(videoState, "mcq-state");
-    // console.log(mcq, "mcq");
   };
+  
 
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between my-4">

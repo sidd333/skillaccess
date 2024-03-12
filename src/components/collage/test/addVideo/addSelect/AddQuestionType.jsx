@@ -107,7 +107,7 @@ const AddQuestionType = () => {
               One Correct Answer
             </h2>
             <img
-              src="../../../images/icons/dot.png"
+              src="../../../../images/icons/dot.png"
               alt=""
               className="self-center w-5"
             />
@@ -181,7 +181,7 @@ const AddQuestionType = () => {
               Answer in detail
             </h2>
             <img
-              src="../../../images/icons/dot.png"
+              src="../../../../images/icons/dot.png"
               alt=""
               className="self-center w-5"
             />

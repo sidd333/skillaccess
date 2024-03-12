@@ -40,7 +40,12 @@ const Header = ({ question, setQuestion, id, type, addType, section }) => {
       } else if (question.questions.some((q) => q.question === "")) {
         window.alert("Please enter all questions");
         return;
-      } else {
+      } 
+      else if (question.Duration == 0) {
+        window.alert("Please enter required time");
+        return;
+      }
+      else {
         dispatch(
           addFindAns({
             data: question,
