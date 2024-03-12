@@ -367,11 +367,12 @@ console.log(question);
                 if (question.Title === "") {
                   window.alert("Please enter question");
                   return;
-                } else if (question.Options && question.Options.length < 4) {
+                }
+                 else if (question.Options && question.Options.length < 4) {
                   window.alert("Please enter atleast 4 options");
                   return;
                 }
-                else if (question.Options.some((option) => option.trim() === '')) {
+                else if (question.Options.some((option) => option.trim() === "")) {
                   window.alert("Please enter all options");
                   return;
                 }

@@ -50,6 +50,8 @@ import ResetPassword from "./pages/collage/auth/ResetPassword";
 
 const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
+const PrivacyPolicy = lazy(() => import("./pages/collage/auth/PrivacyPolicy"));
+const TermsConditions = lazy(() => import("./pages/collage/auth/TermsConditions"));
 
 export default function App() {
   //  AnkitaMalik22-ankita-dev
