@@ -5,12 +5,13 @@ import TestCases from "./TestCases";
 import Verification from "./Verification";
 
 const Code = ({
+  toggle,
+  setToggle,
   question,
   handleChanges,
   handleQuestionChange,
   setQuestion,
 }) => {
-  const [toggle, setToggle] = useState(1);
   return (
     <div className="font-dmSans">
       <h2 className="font-bold mb-3 text-xl">
