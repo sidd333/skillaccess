@@ -6,7 +6,6 @@ import { editQuestionFun } from "./reducerFunctions/question";
 import { getAllTestFulfilled } from "./reducerFunctions/test";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
-let authToken = localStorage.getItem("auth-token");
 
 const testState = {
   testName: "",
@@ -174,7 +173,7 @@ export const addQuestionToTopic = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -198,7 +197,7 @@ export const getAllTopics = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -220,7 +219,7 @@ export const getTopicById = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -259,7 +258,7 @@ export const createTopic = createAsyncThunk(
           headers: {
             "Content-Type": "application/json",
 
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
