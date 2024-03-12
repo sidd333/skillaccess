@@ -21,7 +21,7 @@ const AddEssay = () => {
   const addType = searchParams.get("addType");
   const [question, setQuestion] = useState({
     section: searchParams.get("topicId"),
-    id: "aaa",
+    _id: Date.now(),
     Title: "",
     Duration: 0,
   });
@@ -55,6 +55,7 @@ const AddEssay = () => {
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
 
         setQuestion({
+          _id: Date.now(),
           Title: "",
           Duration: 0,
           section: searchParams.get("topicId"),

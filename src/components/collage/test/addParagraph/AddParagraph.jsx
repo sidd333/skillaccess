@@ -21,7 +21,7 @@ const AddParagraph = () => {
   const addType = searchParams.get("addType");
   const [question, setQuestion] = useState({
     section: searchParams.get("topicId"),
-    id: "aaa",
+    _id: Date.now(),
     Title: "",
     Duration: 0,
     questions: [{ question: "" }],
@@ -55,7 +55,12 @@ const AddParagraph = () => {
       } else {
         dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "", questions: [{ question: "" }], Duration: 0 });
+        setQuestion({
+          Title: "",
+          questions: [{ question: "" }],
+          Duration: 0,
+          _id: Date.now(),
+        });
       }
     } else {
       if (question.Title == "") {
@@ -73,6 +78,7 @@ const AddParagraph = () => {
 
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
+          _id: Date.now(),
           Title: "",
           questions: [],
           Duration: 0,

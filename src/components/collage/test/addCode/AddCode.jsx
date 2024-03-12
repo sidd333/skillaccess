@@ -41,6 +41,7 @@ const AddCode = () => {
   // ]
   const [question, setQuestion] = useState({
     section: searchParams.get("topicId"),
+    _id: Date.now(),
     id: "aaa",
     Duration: 0,
     code: "",
@@ -174,6 +175,7 @@ const AddCode = () => {
         dispatch(addCompiler({ data: question, id: id, type: type }));
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
+          _id: Date.now(),
           section: searchParams.get("topicId"),
           code: "",
           Duration: 0,
