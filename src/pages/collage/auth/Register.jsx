@@ -211,14 +211,14 @@ const Register = () => {
           >
             Create Account
           </button>
-          <h3 className=" text-center text-lGray text-bold text-xs mt-1">OR</h3>
+          {/* <h3 className=" text-center text-lGray text-bold text-xs mt-1">OR</h3>
           <button
             className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  "
             onClick={() => navigate("/collage/dashboard")}
           >
             <FcGoogle className="text-lg mr-2" />
             <h3 className="opacity-100">Continue with google</h3>
-          </button>
+          </button> */}
           <span className="text-lGray text-center text-sm font-semibold">
             Already have an account?{" "}
             <Link to="/" className="text-blue-600 ">

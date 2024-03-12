@@ -27,6 +27,7 @@ const AddMcq = () => {
   const { test } = useSelector((state) => state.test);
   console.log(section);
   const [question, setQuestion] = useState({
+    _id: Date.now(),
     section: search.get("topicId"),
     Duration: 0,
     Title: "",
@@ -487,6 +488,7 @@ const AddMcq = () => {
                 } else {
                   dispatch(addMcq({ question: question, id: id }));
                   setQuestion({
+                    _id: Date.now(),
                     Title: "",
                     Options: [],
                     Duration: 0,

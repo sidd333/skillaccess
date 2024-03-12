@@ -112,6 +112,7 @@ const Video = ({ Number, id, video, type, view }) => {
               onClick={() => {
                 search.set(`${Number}`, "false");
                 setSearch(search);
+                console.log(videoState);
                 dispatch(
                   editQuestion({
                     topicIndex: id,
