@@ -296,6 +296,7 @@ const Submit = () => {
         <Progress />
       </div>
       <div className="mt-16">
+        {console.log(questions)}
         {questions
           ?.slice((selected - 1) * 10, selected * 10)
           .map((question, i) => {

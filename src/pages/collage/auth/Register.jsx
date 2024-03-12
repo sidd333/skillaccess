@@ -11,11 +11,11 @@ const Register = () => {
   const [Credentials, setCredentials] = useState({
     Email: "",
     Password: "",
-    From: "",
-    To: "",
+
+    Phone: null,
     FirstName: "",
     LastName: "",
-    Major: "",
+
     University: "",
   });
   const [checked, setChecked] = useState(false);
@@ -32,20 +32,21 @@ const Register = () => {
 
   const sel = useSelector((state) => state.collageAuth);
   useEffect(() => {
-  localStorage.removeItem("auth-token")
+    localStorage.removeItem("auth-token");
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { Email, Password, FirstName, LastName, Major, University } =
+    const { Email, Password, FirstName, LastName, University, Phone } =
       Credentials;
     const data = {
+      Phone,
       Email,
       Password,
       FirstName,
       LastName,
-      Major,
+
       CollegeName: University,
     };
     try {
@@ -135,32 +136,14 @@ const Register = () => {
 
           {/* dates */}
           <div className="w-full max-w-xl  mx-auto flex md:mt-6 mt-4 ">
-            {/* major */}
-            <input
-              name="Major"
-              value={Credentials.Major}
-              onChange={changeHandler}
-              type="text"
-              placeholder="Major"
-              className="input rounded-xl border-none  focus:outline-none input-md w-1/2  mx-auto bg-snow  "
-            />
-            <span className="w-1/2 flex gap-4 ml-2">
+            <span className="w-full flex gap-4 ">
               <input
-                name="From"
-                value={Credentials.From}
+                name="Phone"
+                value={Credentials.Phone}
                 onChange={changeHandler}
-                type="text"
-                placeholder="From"
-                className="input rounded-xl border-none  focus:outline-none input-md w-1/2  mx-auto bg-snow  "
-              />
-
-              <input
-                name="To"
-                value={Credentials.To}
-                onChange={changeHandler}
-                type="text"
-                placeholder="To"
-                className="input rounded-xl border-none  focus:outline-none input-md w-1/2  mx-auto bg-snow  "
+                type="number"
+                placeholder="Mobile Number"
+                className="input rounded-xl border-none  focus:outline-none input-md w-full  mx-auto bg-snow"
               />
             </span>
           </div>
