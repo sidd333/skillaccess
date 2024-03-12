@@ -20,7 +20,7 @@ const AddCode = () => {
   const { id } = useParams();
   const type = searchParams.get("type");
   const addType = searchParams.get("addType");
-
+  const [toggle, setToggle] = useState(1);
   // Format of the question object
   // "code": "printf('hello world')",
   // "codeQuestion": "Write a program to print 'hello world'",
@@ -128,6 +128,7 @@ const AddCode = () => {
           testcase: [{ input: "", expectedOutput: "" }],
           output: [""],
         });
+        setToggle(1);
       } else {
         alert("Please fill all the fields");
       }
@@ -144,7 +145,7 @@ const AddCode = () => {
 
           return;
         }
-        if(question.codeQuestion === ""){
+        if (question.codeQuestion === "") {
           alert("Please add the question");
           return;
         }
@@ -181,9 +182,13 @@ const AddCode = () => {
           output: [""],
 
         });
+     setToggle(1);
         if (component === "save") {
           navigate(-1);
         }
+
+   
+
       } else {
         alert("Please fill all the fields");
       }
@@ -210,6 +215,8 @@ const AddCode = () => {
           </span>
           <span className="w-[49%]">
             <Code
+              toggle={toggle}
+              setToggle={setToggle}
               question={question}
               handleChanges={handleChanges}
               handleQuestionChange={handleQuestionChange}
