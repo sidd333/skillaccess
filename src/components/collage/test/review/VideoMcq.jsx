@@ -81,6 +81,9 @@ const VideoMcq = ({
           />
         )}
         <div className="px-5 pb-4 flex flex-col gap-4">
+
+        
+
           <button
             onClick={() =>
               setVideoState((prev) => {
@@ -189,6 +192,7 @@ const VideoMcq = ({
               />
             )}
           </span> */}
+
 
           {mcq.Options.map((ques, index) => (
             <span className="flex gap-2">

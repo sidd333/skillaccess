@@ -154,7 +154,7 @@ const Login = () => {
             <hr className="w-1/12 border-2 border-lGray opacity-20" />
           </div>
 
-          <label className=" flex gap-2 cursor-pointer mx-auto w-full max-w-xs">
+          <label className=" flex  gap-2 cursor-pointer mx-auto w-full max-w-xs">
             <input
               type="checkbox"
               checked="false"
@@ -162,7 +162,7 @@ const Login = () => {
             />
             <span className="text-lGray">
               By creating an account, you agree to our{" "}
-              <Link to="/"> Term and Conditions</Link>
+              <Link className="text-blue-600" to="/terms&policies"> Terms-Policies.</Link>
             </span>
           </label>
 

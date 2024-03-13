@@ -1,8 +1,18 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 import { FiBell } from "react-icons/fi";
 import { FaAngleDown } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 const Navbar = (props) => {
+  const navigate = useNavigate(); 
+  const goToProfile = () => {
+    // Function to navigate to profile page
+    navigate("/collage/profile"); // Use navigate function to navigate to desired URL
+  };
+  const userDetails = useSelector(
+    (state) => state.collageAuth
+  );
+  
   return (
     <div className="border border-y-1 sorder border-gray-500 bg-white w-full z-[9999] m-0 fixed top-0">
       <div className="navbar flex justify-between ">
@@ -31,10 +41,12 @@ const Navbar = (props) => {
           </button>
 
           {/* noifiaction */}
-          <button className="border-2 border-gray-400  rounded-lg p-1 relative flex gap-2">
-            <img src="../../images/user.jpg" alt="" className="h-7 w-7" />{" "}
+          <button className="border-2 border-gray-400  rounded-lg p-1 relative flex gap-2"
+          onClick={goToProfile}
+          >
+            <img src={userDetails?.user?.avatar?.url} alt="" className="h-7 w-7" />{" "}
             <h2 className="pr-2 text-sm font-bold self-center font-dmSans italic">
-              Hello Ravi
+             Hello {userDetails?.user?.FirstName}
             </h2>
           </button>
 
