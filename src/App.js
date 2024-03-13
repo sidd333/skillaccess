@@ -50,8 +50,8 @@ import ResetPassword from "./pages/collage/auth/ResetPassword";
 
 const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
-const PrivacyPolicy = lazy(() => import("./pages/collage/auth/PrivacyPolicy"));
-const TermsConditions = lazy(() => import("./pages/collage/auth/TermsConditions"));
+const TermsPolicies = lazy(() => import("./pages/collage/auth/TermsPolicies"));
+
 
 export default function App() {
   //  AnkitaMalik22-ankita-dev
@@ -77,6 +77,7 @@ export default function App() {
           {/* ----------------------------------------collage-------------------------------------------------------------- */}
           <Route path="" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/terms&policies" element={<TermsPolicies/>}/>
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/password/reset/:id" element={<ResetPassword />} />
           {/* <Route path="loader" element={<Loader />} /> */}

@@ -53,7 +53,7 @@ const VideoMcq = ({
           ...prev.questions.slice(Number + 1),
         ],
       };
-    });
+    }); 
   };
   
 
@@ -73,96 +73,7 @@ const VideoMcq = ({
           />
         )}
         <div className="px-5 pb-4 flex flex-col gap-4">
-          {/* <span className="flex gap-2">
-            <div className="flex w-5 justify-center">
-              <input
-                type="radio"
-                id="answer"
-                className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-              />{" "}
-            </div>
-            {search.get(`${Number}`) !== "true" ? (
-              <label for="answer" className="self-center">
-                {" "}
-                {mcq.Options[0]}
-              </label>
-            ) : (
-              <input
-                onChange={handleChange}
-                placeholder="enter new option"
-                name={0}
-                value={mcq.Options[0]}
-              />
-            )}
-          </span>
-          <span className="flex gap-2">
-            <div className="flex w-5 justify-center">
-              <input
-                type="radio"
-                name="answer"
-                id="answer"
-                className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-              />{" "}
-            </div>
-            {search.get(`${Number}`) !== "true" ? (
-              <label for="answer" className="self-center">
-                {" "}
-                {mcq.Options[1]}
-              </label>
-            ) : (
-              <input
-                onChange={handleChange}
-                placeholder="enter new option"
-                name={1}
-                value={mcq.Options[1]}
-              />
-            )}
-          </span>
-          <span className="flex gap-2">
-            <div className="flex w-5 justify-center">
-              <input
-                type="radio"
-                id="answer"
-                className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-              />{" "}
-            </div>
-            {search.get(`${Number}`) !== "true" ? (
-              <label for="answer" className="self-center">
-                {" "}
-                {mcq.Options[2]}
-              </label>
-            ) : (
-              <input
-                onChange={handleChange}
-                name={2}
-                placeholder="enter new option"
-                value={mcq.Options[2]}
-              />
-            )}
-          </span>
-          <span className="flex gap-2">
-            <div className="flex w-5 justify-center">
-              <input
-                type="radio"
-                name="answer"
-                id="answer"
-                className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-              />{" "}
-            </div>
-            {search.get(`${Number}`) !== "true" ? (
-              <label for="answer" className="self-center">
-                {" "}
-                {mcq.Options[3]}
-              </label>
-            ) : (
-              <input
-                onChange={handleChange}
-                placeholder="enter new option"
-                name={3}
-                value={mcq.Options[3]}
-              />
-            )}
-          </span> */}
+        
 
           {mcq.Options.map((ques, index) => (
             <span className="flex gap-2">
