@@ -12,16 +12,22 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const AddParagraph = () => {
+  const MAX_QUESTIONS = 3;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const { id } = useParams();
   const type = searchParams.get("type");
   const addType = searchParams.get("addType");
+  let ID;
+  searchParams.get("topicId") !== null
+    ? (ID = searchParams.get("topicId"))
+    : (ID = id);
   const [question, setQuestion] = useState({
-    id: "aaa",
+    section: searchParams.get("topicId"),
+    id: ID + Date.now(),
     Title: "",
-    Duration: "",
+    Duration: 0,
     questions: [{ question: "" }],
   });
 
@@ -42,23 +48,60 @@ const AddParagraph = () => {
 
   const handleSave = () => {
     if (addType === "topic") {
-      dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
-      dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", questions: [] });
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      } else if (question.Duration == 0) {
+        window.alert("Please enter required time");
+        return;
+      } else if (question.questions.some((q) => q.question === "")) {
+        window.alert("Please enter all questions");
+        return;
+      } else {
+        dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
+        dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+        setQuestion({
+          Title: "",
+          section: ID,
+          questions: [{ question: "" }],
+          Duration: 0,
+          id: ID + Date.now(),
+        });
+      }
     } else {
-      dispatch(addFindAns({ data: question, id: id, type: type }));
-      dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-      setQuestion({ Title: "", questions: [] });
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      }
+      else if (question.Duration == 0) {
+        window.alert("Please enter required time");
+        return;
+      } else if (question.questions.some((q) => q.question === "")) {
+        window.alert("Please enter all questions");
+        return;
+      } 
+       else {
+        dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
+
+        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+        setQuestion({
+          id: ID + Date.now(),
+          Title: "",
+          questions: [],
+          Duration: 0,
+          section: ID,
+        });
+      }
     }
   };
 
   return (
     <div>
       <Header
+        section={ID}
         question={question}
         setQuestion={setQuestion}
         id={id}
         type={type}
+        addType={addType}
       />
       <div className="bg-white min-h-[90vh] w-[98%] mx-auto rounded-xl pt-4 font-dmSans">
         <div className=" sm:w-[95.7%] mx-auto ">
@@ -66,17 +109,17 @@ const AddParagraph = () => {
             <h2 className="font-bold mb-2">Question</h2>
             <select
               name="Duration"
-              // onChange={handleChanges}
-              // value={questions.Duration}
+              onChange={handleChanges}
+              value={question.Duration}
               id=""
               className="w-full rounded-lg bg-gray-100 focus:outline-none border-none mb-4  select text-gray-400"
             >
-              <option value="D">Time to answer the question</option>
+              <option value={0}>Time to answer the question</option>
 
-              <option value="1">1 minute</option>
-              <option value="2">2 minutes</option>
-              <option value="3">3 minutes</option>
-              <option value="4">4 minutes</option>
+              <option value={1}>1 minute</option>
+              <option value={2}>2 minutes</option>
+              <option value={3}>3 minutes</option>
+              <option value={4}>4 minutes</option>
             </select>
           </div>
 
@@ -108,28 +151,37 @@ const AddParagraph = () => {
         </div>
 
         {/* <Footer question={question}  setQues={setQuestion} handleSave={handleSave} /> */}
-        <div className="pt-20">
-          <div className="absolute bottom-10  left-8">
+        <div className="pt-10 flex justify-between">
+          <div className=" ml-8 mb-10">
             {" "}
             <div className=" flex">
               <button
                 className="self-center justify-center flex bg-[#8F92A1] bg-opacity-10  py-3 px-4 rounded-xl text-sm font-bold gap-2 "
-                onClick={() =>
-                  setQuestion({
-                    ...question,
-                    questions: [...question.questions, { question: "" }],
-                  })
-                }
+                onClick={() => {
+                  if (question.questions.some((q) => q.question === "")) {
+                    window.alert("Please enter all questions");
+                  } else if (question.questions.length >= MAX_QUESTIONS) {
+                    window.alert("You can't add more than 3 questions");
+                  } else {
+                    setQuestion({
+                      ...question,
+                      questions: [...question.questions, { question: "" }],
+                    });
+                  }
+                }}
               >
                 Add More
               </button>
             </div>
           </div>
 
-          <div className="absolute bottom-10 flex right-8 gap-2">
+          <div className=" mb-10 flex pr-8 gap-2">
             {" "}
             <div className=" flex gap-2">
-              <button className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32">
+              <button
+                className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32"
+                onClick={() => navigate(-1)}
+              >
                 <FaChevronLeft className="self-center" /> Prev
               </button>
             </div>

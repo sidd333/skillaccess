@@ -14,10 +14,31 @@ const Header = ({ question, setQuestion, id, type }) => {
   const { test } = useSelector((state) => state.test);
 
   const handleSave = () => {
-    dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-    setQuestion({ Title: "", Options: [], id: "aaa" });
+    if (question.Title === "" ) {
+      window.alert("Please enter question");
+      return;
+    }
+    else if (question.Options &&  question.Options.length < 4) {
+
+      window.alert("Please enter atleast 4 options");
+      return;
+    }
+    else if(question.Duration==0){
+      window.alert("Please enter required time");
+      return;
+    }
+    else if(question.AnswerIndex===null){
+      window.alert("Please select correct answer");
+      return;
+    }
+    else {
+      dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+      setQuestion({ Title: "", Options: [] , Duration : 0 ,AnswerIndex:null});
+      navigate(-1);
+    }
+
     // api call to push questions to topic
-    navigate("/collage/test/select");
+   
   };
   // useEffect(() => {
   //   dispatch(setTest({questions}));

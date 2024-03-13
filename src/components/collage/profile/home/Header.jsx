@@ -86,7 +86,7 @@ const Header = ({
               />
             </div>
           ) : (
-            <div className="relative w-14 h-14 bg-blued self-center rounded-lg flex items-center">
+            <div className="relative w-14 h-14 bg-blued self-center rounded-lg flex justify-center items-center">
               <img
                 src={
                   college && college.avatar && college.avatar.url
@@ -95,7 +95,7 @@ const Header = ({
                 }
                 alt="avatar"
                 width="50px"
-                className="relative top[-50%]"
+                className="relative top[-50%]  "
               />
               {/* {editable && (
                 <div className="absolute bottom-2 -right-1 w-6 h-6 rounded-lg p-[.35rem] bg-blue-700 bg-opacity-80">
@@ -181,7 +181,10 @@ const Header = ({
                 onChange={(e) =>
                   setCollege({ ...college, Description: e.target.value })
                 }
-                className="bg-transparent border-none focus:outline-none"
+                className={`border-none focus:outline-none ${
+                  !college.Description ? 'bg-gray-200' : 'bg-transparent'
+                }`}
+                placeholder="Add Description"
               />
             ) : (
               "No Description Available"
@@ -203,7 +206,10 @@ const Header = ({
                   onChange={(e) =>
                     setCollege({ ...college, Email: e.target.value })
                   }
-                  className="bg-transparent border-none focus:outline-none"
+                  className={`border-none focus:outline-none ${
+                    !college.Email ? 'bg-gray-200' : 'bg-transparent'
+                  }`}
+                  placeholder="Add Email"
                 />
               ) : college && college.Email ? (
                 college.Email
@@ -233,7 +239,10 @@ const Header = ({
                 onChange={(e) =>
                   setCollege({ ...college, Phone: e.target.value })
                 }
-                className="bg-transparent border-none focus:outline-none"
+                className={`border-none focus:outline-none ${
+                  !college.Phone ? 'bg-gray-200' : 'bg-transparent'
+                }`}
+                placeholder="Add Phone Number"
               />
             ) : college && college.Phone ? (
               college.Phone
@@ -263,7 +272,10 @@ const Header = ({
                   onChange={(e) =>
                     setCollege({ ...college, Website: e.target.value })
                   }
-                  className="bg-transparent border-none focus:outline-none"
+                  className={`border-none focus:outline-none ${
+                    !college.Website ? 'bg-gray-200' : 'bg-transparent'
+                  }`}
+                  placeholder="Add College Website"
                 />
               ) : (
                 <a
@@ -306,7 +318,10 @@ const Header = ({
                 onChange={(e) =>
                   setCollege({ ...college, Address: e.target.value })
                 }
-                className="bg-transparent border-none focus:outline-none"
+                className={`border-none focus:outline-none ${
+                  !college.Address ? 'bg-gray-200' : 'bg-transparent'
+                }`}
+                placeholder="College Address"
               />
             ) : (
               <p className="break-words max-w-[316px] text-sm  font-dmSans font-medium self-center">

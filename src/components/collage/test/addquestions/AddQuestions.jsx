@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import { Progress } from "./Progress";
 import { LiaStopwatchSolid } from "react-icons/lia";
@@ -14,7 +14,8 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const AddQuestions = () => {
-  const topics = JSON.parse(localStorage.getItem("topics"));
+  const topics = useSelector((state) => state.test.topics);
+
   const navigate = useNavigate();
   // question of the topic
   // const { topics } = useSelector((state) => state.test);
@@ -23,10 +24,10 @@ const AddQuestions = () => {
   // }, [topics]);
   const dispatch = useDispatch();
 
-  const removeTopic = (topicId) => {
-    dispatch(
-      setTestSelectedTopics(topics.filter((topic) => topic._id !== topicId))
-    );
+  const removeTopic = (index) => {
+    let topicsCopy = [...topics];
+    topicsCopy.splice(index, 1);
+    dispatch(setTestSelectedTopics(topicsCopy));
   };
 
   return (
@@ -41,9 +42,8 @@ const AddQuestions = () => {
         <div className="   my-2 rounded-lg tracking-wide justify-between  ">
           <div className="grid grid-rows-1 w-[65vw]">
             <h2 className="font-normal text-xs sm:text-sm text-gray-400  mt-8 tracking-wide [word-spacing:4px] ">
-              Add up to 10 custom questions to your assessment (optional). You
-              can use five question types: multiple-choice, essay, video and
-              code.
+            Add up to 10 custom questions to your assessment (optional). You can
+          use five question types: multiple-choice, essay, video ,code and find answer.
             </h2>
             {topics?.map((topic, index) => (
               <div className=" sm:mt-5 rounded-lg tracking-wide justify-between  ">
@@ -72,7 +72,7 @@ const AddQuestions = () => {
                   </div>
                   <div
                     className="col-span-1 col-start-10  flex justify-center"
-                    onClick={() => removeTopic(topic._id)}
+                    onClick={() => removeTopic(index)}
                   >
                     <RxCross1 className="self-center text-red-600 w-5 h-5" />
                   </div>
@@ -90,7 +90,7 @@ const AddQuestions = () => {
                       // }
                       onClick={() =>
                         navigate(
-                          `/collage/test/details/${index}?type=section&question=${topic.Type}`
+                          `/collage/test/details/${index}?type=section&question=${topic.Type}&topicId=${topic._id}&view=false`
                         )
                       }
                     >
@@ -98,7 +98,14 @@ const AddQuestions = () => {
                     </button>
                   </div>
                   <div className="col-span-1  flex justify-center">
-                    <PiPencilSimpleLine className="self-center text-blued w-5 h-5" />
+                    <PiPencilSimpleLine
+                      className="self-center text-blued w-5 h-5"
+                      onClick={() =>
+                        navigate(
+                          `/collage/test/details/${index}?type=section&question=${topic.Type}&topicId=${topic._id}&view=true`
+                        )
+                      }
+                    />
                   </div>
                 </div>
               </div>

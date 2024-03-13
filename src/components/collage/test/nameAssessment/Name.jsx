@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Header from "./Header";
 import { Progress } from "./Progress";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,26 +11,40 @@ import {
 
 const Name = () => {
   const dispatch = useDispatch();
+  const [search, setSearch] = useSearchParams();
 
-  const { name, description, totalAttempts } = useSelector(
-    (state) => state.test
-  );
+  const level = search.get("level");
+
+  const {
+    name,
+    description,
+    totalAttempts,
+    assessments,
+    totalQuestions,
+    totalDuration,
+  } = useSelector((state) => state.test);
   // const {} = useSelector((state) =>console.log(state.test));
   const navigate = useNavigate();
   const [testDetails, setTestDetails] = useState({
+    level: level,
     name: name || "",
     description: description || "",
     totalAttempts: totalAttempts || "",
+    totalQuestions: totalQuestions || null,
+    totalDuration: totalDuration || null,
   });
 
   useEffect(() => {
     setTestDetails({
+      level: level,
       name: name || "",
       description: description || "",
       totalAttempts: totalAttempts || "",
+      totalQuestions: totalQuestions || null,
+      totalDuration: totalDuration || null,
     });
     // why getting 0 here
-    console.log(name, description, totalAttempts);
+    // console.log(name, description, totalAttempts);
   }, [dispatch]);
 
   // const getTests = () => {
@@ -46,12 +60,28 @@ const Name = () => {
   };
 
   const handleSubmit = () => {
-    dispatch(setTestBasicDetails(testDetails));
+    let flag = "false";
+    if (testDetails.name === "") {
+      window.alert("Please enter Name");
+      flag = "true";
+    }
+    if (assessments.beginner.length > 0) {
+      assessments.beginner.forEach((assessment) => {
+        if (assessment.name === testDetails.name) {
+          flag = "true";
+        }
+      });
 
-    navigate("/collage/test/select");
-    console.log(testDetails, name, description, totalAttempts);
+      // console.log(testDetails, name, description, totalAttempts);
+    }
+    if (flag === "false") {
+      dispatch(setTestBasicDetails(testDetails));
+
+      navigate("/collage/test/select");
+    } else {
+      window.alert("duplicate name");
+    }
   };
-
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header handleNext={handleSubmit} />
@@ -63,7 +93,7 @@ const Name = () => {
       <div className="  w-11/12 mx-auto h-[90vh] my-2 rounded-lg  justify-between  ">
         <h2 className="w-full font-medium  text-gray-400 sm:h-10 py-2 sm:mt-12  mt-4 rounded-lg mb-10 sm:mb-1 text-lg">
           Add up to 10 custom questions to your assessment (optional). You can
-          use five question types: multiple-choice, essay, video and code.
+          use five question types: multiple-choice, essay, video, code and find answer.
         </h2>
 
         <input
@@ -86,11 +116,27 @@ const Name = () => {
           placeholder="No. of Questions"
         /> */}
         <input
-          type="text"
+          type="number"
           name="totalAttempts"
           className="w-full bg-gray-100 h-16 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 border-none placeholder-gray-400"
           placeholder="No. of Attempts"
           value={testDetails.totalAttempts}
+          onChange={handleChange}
+        />
+        <input
+          name="totalQuestions"
+          type="number"
+          className="w-full bg-gray-100 h-16 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 border-none placeholder-gray-400"
+          placeholder="No. of Questions"
+          value={testDetails.totalQuestions}
+          onChange={handleChange}
+        />
+        <input
+          name="totalDuration"
+          type="number"
+          className="w-full bg-gray-100 h-16 px-6 text-lg font-bold py-8 mt-4 rounded-lg focus:outline-0 focus:ring-blued focus:ring-1 border-none placeholder-gray-400"
+          placeholder="Total Duration in minutes"
+          value={testDetails.totalDuration}
           onChange={handleChange}
         />
 

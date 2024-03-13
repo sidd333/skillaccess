@@ -11,14 +11,22 @@ import {
 } from "../../../../redux/collage/test/testSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Code from "./Code";
+import Video from "./Video";
 
 const Submit = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { name, description, topics, totalAttempts } = useSelector(
-    (state) => state.test
-  );
+  const {
+    level,
+    name,
+    description,
+    topics,
+    totalAttempts,
+    totalQuestions,
+    totalDuration,
+  } = useSelector((state) => state.test);
 
   const [questions, setQuestions] = useState();
   let section1 = [];
@@ -35,8 +43,8 @@ const Submit = () => {
         case "video":
           section1 = topics[0].video;
           break;
-        case "code":
-          section1 = topics[0].code;
+        case "compiler":
+          section1 = topics[0].compiler;
           break;
         case "findAnswer":
           section1 = topics[0].findAnswers;
@@ -54,8 +62,8 @@ const Submit = () => {
         case "video":
           section2 = topics[1].video;
           break;
-        case "code":
-          section2 = topics[1].code;
+        case "compiler":
+          section2 = topics[1].compiler;
           break;
         case "findAnswer":
           section2 = topics[1].findAnswers;
@@ -73,8 +81,8 @@ const Submit = () => {
         case "video":
           section3 = topics[2].video;
           break;
-        case "code":
-          section3 = topics[2].code;
+        case "compiler":
+          section3 = topics[2].compiler;
           break;
         case "findAnswer":
           section3 = topics[2].findAnswers;
@@ -92,8 +100,8 @@ const Submit = () => {
         case "video":
           section4 = topics[3].video;
           break;
-        case "code":
-          section4 = topics[3].code;
+        case "compiler":
+          section4 = topics[3].compiler;
           break;
         case "findAnswer":
           section4 = topics[3].findAnswers;
@@ -111,14 +119,14 @@ const Submit = () => {
         case "video":
           section5 = topics[4].video;
           break;
-        case "code":
-          section5 = topics[4].code;
+        case "compiler":
+          section5 = topics[4].compiler;
           break;
         case "findAnswer":
           section5 = topics[4].findAnswers;
           break;
         default:
-          section5 = topics[2].questions;
+          section5 = topics[4].questions;
           break;
       }
 
@@ -131,9 +139,58 @@ const Submit = () => {
       ...section4,
       ...section5,
     ]);
+  }, [topics, ""]);
 
-    console.log(questions);
-  }, []);
+  const handleCalculateTime = () => {
+    let totalMcq = 0,
+      totalEssay = 0,
+      totalVideo = 0,
+      totalCompiler = 0,
+      totalFindAnswer = 0;
+    const totalTimeCal = topics.forEach((topic) => {
+      if (topic.Type === "essay") {
+        totalEssay += topic.essay?.reduce((acc, curr) => {
+          console.log(parseInt(curr.Duration));
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (topic.Type === "video") {
+        totalVideo += topic.video?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (topic.Type === "compiler") {
+        totalCompiler += topic.compiler?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (topic.Type === "findAnswer") {
+        totalFindAnswer += topic.findAnswers?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+
+      if (topic.Type === "mcq") {
+        totalMcq += topic.questions?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+    });
+
+    const total =
+      totalMcq + totalEssay + totalVideo + totalCompiler + totalFindAnswer;
+
+    console.log(
+      total,
+      "total",
+      totalMcq,
+      totalEssay,
+      totalVideo,
+      totalCompiler,
+      totalFindAnswer
+    );
+    return total;
+  };
 
   const handleSubmit = () => {
     // dispatch(setTest({
@@ -141,24 +198,95 @@ const Submit = () => {
     //   totalQuestions,
     //   totalAttempts
     // }
+    if (!name || !description || !totalAttempts || !totalQuestions ||!totalDuration) {
+      const confirmed = window.confirm("Please fill all the details");
 
+      if (confirmed) {
+        // Navigate to the specified page
+        navigate(`/collage/test/name?level=${level}`);
+      }
+
+      return;
+    }
+    if (totalAttempts < 0 || totalDuration < 0 || totalQuestions < 0) {
+      const confirmed= window.confirm("Total attempts, total duration, and total questions must be positive numbers.");
+      if (confirmed) {
+        // Navigate to the specified page
+        navigate(`/collage/test/name?level=${level}`);
+      }
+      return;
+    }
+    if (!topics[0]) {
+      window.alert("Please select atleast one topic");
+      return;
+    }
+
+    if (totalQuestions > questions.length) {
+      console.log(totalQuestions, questions.length);
+      window.alert(
+        `Add ${
+          totalQuestions - questions.length
+        } more questions to complete the test`
+      );
+      return;
+    }
+    if (totalQuestions < questions.length) {
+      console.log(totalQuestions, questions.length);
+      window.alert(
+        `Remove ${
+          questions.length - totalQuestions
+        } questions to complete the test`
+      );
+
+      return;
+    }
+
+    let totalTimeCal = handleCalculateTime();
+
+    // totalTimeCal = totalTimeCal.reduce((acc, curr) => {
+    //   return acc + curr;
+    // }, 0);
+
+    console.log(totalTimeCal, totalDuration);
+
+    // console.log(totalTimeCal, totalDuration);
+
+    // if (totalTimeCal[0] > totalDuration) {
+    //   window.alert(
+    //     "Total duration of questions is greater than the total duration of test"
+    //   );
+
+    //   return;
+    // }
+
+    // if(totalTimeCal < totalDuration){
+    //   window.alert("Total duration of questions is less than the total duration of test");
+    //   return;
+
+    // console.log(totalTimeCal, totalDuration);
+    localStorage.setItem("totalTime", JSON.stringify(totalTimeCal));
+    localStorage.setItem("testName", JSON.stringify(name));
     dispatch(
       createTest({
+        level,
         name,
         description,
         totalAttempts,
+        totalQuestions,
+        totalDuration: totalTimeCal,
+        // totalDuration,
         topics,
       })
     ).then(() => {
-      dispatch(
-        setTestBasicDetails({ name: "", description: "", totalAttempts: null })
-      );
-      dispatch(setTestSelectedTopics([]));
+      // dispatch(
+      //   setTestBasicDetails({ name: "", description: "", totalAttempts: null ,totalQuestions:0})
+      // );
+
       navigate("/collage/test/final");
     });
   };
 
-  const max = Math.ceil(questions?.length / 10);
+  const max = questions?.length / 10;
   const [selected, setSelected] = useState(1);
 
   return (
@@ -168,15 +296,32 @@ const Submit = () => {
         <Progress />
       </div>
       <div className="mt-16">
+        {console.log(questions)}
         {questions
-          ?.slice((selected - 1) * 10 + (selected > 1 ? 1 : 0), selected * 10)
+          ?.slice((selected - 1) * 10, selected * 10)
           .map((question, i) => {
             return (
               <div className="my-2">
-                <List
-                  question={question}
-                  number={(selected - 1) * 10 + 1 + i}
-                />{" "}
+                {question.codeQuestion && (
+                  <Code
+                    question={question}
+                    Title={question.codeQuestion}
+                    code={question.code}
+                    number={(selected - 1) * 10 + 1 + i}
+                  />
+                )}
+                {question.Title && (
+                  <List
+                    question={question}
+                    number={(selected - 1) * 10 + 1 + i}
+                  />
+                )}
+                {question.videoFile && (
+                  <Video
+                    Number={(selected - 1) * 10 + 1 + i}
+                    video={question}
+                  />
+                )}{" "}
               </div>
             );
           })}

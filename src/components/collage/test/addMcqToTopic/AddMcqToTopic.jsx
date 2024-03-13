@@ -17,7 +17,8 @@ const AddMcqToTopic = () => {
   const { id } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [question, setQuestion] = useState({
-    id: "ddd",
+    Duration: 0,
+    id: id + Date.now(),
     Title: "",
     Options: [],
     QuestionType: "",
@@ -43,6 +44,10 @@ const AddMcqToTopic = () => {
       setQuestion((prev) => {
         // console.log({ ...prev, Title: e.target.value });
         return { ...prev, Title: e.target.value };
+      });
+    } else if (e.target.name === "Duration") {
+      setQuestion((prev) => {
+        return { ...prev, Duration: e.target.value };
       });
     } else {
       switch (e.target.name) {
@@ -104,7 +109,8 @@ const AddMcqToTopic = () => {
       }
     }
   };
-
+  
+console.log(question);
   return (
     <div>
       <Header
@@ -119,17 +125,17 @@ const AddMcqToTopic = () => {
             <h2 className="font-bold">Question</h2>
             <select
               name="Duration"
-              // onChange={handleChanges}
-              // value={questions.Duration}
+              onChange={handleChanges}
+              value={question.Duration}
               id=""
               className="w-full rounded-lg bg-gray-100 focus:outline-none border-none mb-4  select text-gray-400"
             >
-              <option value="D">Time to answer the question</option>
+              <option value={0}>Time to answer the question</option>
 
-              <option value="1">1 minute</option>
-              <option value="2">2 minutes</option>
-              <option value="3">3 minutes</option>
-              <option value="4">4 minutes</option>
+              <option value={1}>1 minute</option>
+              <option value={2}>2 minutes</option>
+              <option value={3}>3 minutes</option>
+              <option value={4}>4 minutes</option>
             </select>
 
             <textarea
@@ -352,10 +358,37 @@ const AddMcqToTopic = () => {
               className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
               // onClick={addQuestion}
               onClick={() => {
-                dispatch(
-                  addQuestionToTopic({ data: question, id: id, type: type })
-                );
-                setQuestion({ Title: "", Options: [], id: "aaa" });
+                // dispatch(
+                //   addQuestionToTopic({ data: question, id: id, type: type })
+                // );
+                // setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 });
+
+                if (question.Title === "") {
+                  window.alert("Please enter question");
+                  return;
+                }
+                 else if (question.Options && question.Options.length < 4) {
+                  window.alert("Please enter atleast 4 options");
+                  return;
+                }
+                else if (question.Options.some((option) => option.trim() === "")) {
+                  window.alert("Please enter all options");
+                  return;
+                }
+                else if (question.Duration == 0) {
+                  window.alert("Please enter required time");
+                  return;
+                } else {
+                  dispatch(
+                    addQuestionToTopic({ data: question, id: id, type: type })
+                  );
+                  setQuestion({
+                    Title: "",
+                    Options: [],
+                    id: id + Date.now(),
+                    Duration: 0,
+                  });
+                }
               }}
             >
               <FaPlus className="self-center" /> Add Next Question

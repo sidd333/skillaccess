@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import FindAnswer from "./FindAnswer";
 import Essay from "./Essay";
+import Code from "./Code";
+import Video from "./Video";
 const { getTopicById } = require("../../../../redux/collage/test/testSlice");
 
 const Review = () => {
@@ -15,16 +17,19 @@ const Review = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const type = searchParams.get("type");
   const questionType = searchParams.get("question");
+  const view = searchParams.get("view");
   // console.log(questionType);
+  const { topics } = useSelector((state) => state.test);
   useEffect(() => {
     if (type === "section") {
-      const topics = JSON.parse(localStorage.getItem("topics"));
-      // const { currentTopic } = useSelector((state) => state.test);
+      // const topics = JSON.parse(localStorage.getItem("topics"));
+
       questionType === "mcq" && setQuestions(topics[id].questions);
       questionType === "findAnswer" && setQuestions(topics[id].findAnswers);
       questionType === "essay" && setQuestions(topics[id].essay);
       questionType === "video" && setQuestions(topics[id].video);
-    } else {
+      questionType === "compiler" && setQuestions(topics[id].compiler);
+    } else if (type === "topic") {
       questionType === "mcq" &&
         setQuestions(JSON.parse(localStorage.getItem("Details")).questions);
       questionType === "findAnswer" &&
@@ -33,8 +38,31 @@ const Review = () => {
         setQuestions(JSON.parse(localStorage.getItem("Details")).essay);
       questionType === "video" &&
         setQuestions(JSON.parse(localStorage.getItem("Details")).video);
+      questionType === "compiler" &&
+        setQuestions(JSON.parse(localStorage.getItem("Details")).compiler);
+    } else {
+      questionType === "mcq" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].questions
+        );
+      questionType === "findAnswer" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].findAnswers
+        );
+      questionType === "essay" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].essay
+        );
+      questionType === "video" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].video
+        );
+      questionType === "compiler" &&
+        setQuestions(
+          JSON.parse(localStorage.getItem("assessment")).topics[id].compiler
+        );
     }
-  }, []);
+  }, [topics, ""]);
 
   // useEffect(
   //   () => {
@@ -56,9 +84,15 @@ const Review = () => {
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header
+        view={view}
         qt={questionType}
-        id={id}
+        id={
+          localStorage.getItem("Topics")
+            ? JSON.parse(localStorage.getItem("Topics"))._id
+            : ""
+        }
         type={type}
+        topicId={searchParams.get("topicId")}
         sectionId={
           localStorage.getItem("Details")
             ? JSON.parse(localStorage.getItem("Details"))._id
@@ -93,7 +127,11 @@ const Review = () => {
               // console.log(question);
               return (
                 <Mcq
+                  view={view}
+                  type={type}
+                  id={id}
                   Number={i}
+                  question={question}
                   Title={question.Title}
                   Options={question.Options}
                   AnswerIndex={question.AnswerIndex}
@@ -106,12 +144,16 @@ const Review = () => {
         ) : questionType === "findAnswer" ? (
           questions?.length > 0 ? (
             questions.map((question, i) => {
-              // console.log(question);
+              console.log(question);
               return (
                 <FindAnswer
+                  view={view}
+                  type={type}
+                  id={id}
                   Number={i}
-                  Title={question.Title}
-                  Options={question.questions}
+                  question={question}
+                  Title={question?.Title || ""}
+                  Options={question?.questions || []}
                 />
               );
             })
@@ -122,15 +164,55 @@ const Review = () => {
           questions?.length > 0 ? (
             questions.map((question, i) => {
               // console.log(question);
-              return <Essay Number={i} Title={question.Title} />;
+              return (
+                <Essay
+                  Number={i}
+                  Title={question?.Title || ""}
+                  id={id}
+                  view={view}
+                  type={type}
+                  question={question}
+                />
+              );
             })
           ) : (
             <></>
           )
-        ) : questionType === "code" ? (
-          <>code</>
+        ) : questionType === "compiler" ? (
+          questions?.length > 0 ? (
+            questions.map((question, i) => {
+              // console.log(question);
+              return (
+                <Code
+                  view={view}
+                  type={type}
+                  id={id}
+                  Number={i}
+                  Title={question?.codeQuestion || ""}
+                  code={question?.code}
+                  question={question}
+                />
+              );
+            })
+          ) : (
+            <></>
+          )
+        ) : questions?.length > 0 ? (
+          questions.map((question, i) => {
+            // console.log(question);
+            return (
+              <Video
+                Number={i}
+                id={id}
+                video={question}
+                view={view}
+                type={type}
+                question={question}
+              />
+            );
+          })
         ) : (
-          <>video</>
+          <></>
         )}
       </div>
     </div>

@@ -17,7 +17,13 @@ const TestPage = lazy(() => import("./TestPage"));
 const AssessmentPage = lazy(() => import("./AssessmentPage"));
 const CreateTopicPage = lazy(() => import("./CreateTopicPage"));
 const AddMcqToTopicPage = lazy(() => import("./AddMcqToTopicPage"));
+const AddVideoPage = lazy(() => import("./AddVideoPage"));
 
+const AddVideoMcqPage = lazy(() => import("./AddVideoMcqPage"));
+
+const AddVideoLongShortPage = lazy(() => import("./AddVideoLongShortPage"));
+
+const AddVideoQuestionsPage = lazy(() => import("./AddVideoQuestionsPage"));
 export default function () {
   return (
     <Route path="collage/test">
@@ -37,7 +43,13 @@ export default function () {
       <Route path="code/:id" element={<AddCodePage />} />
       <Route path="essay/:id" element={<AddEssayPage />} />
       <Route path="find-ans/:id" element={<AddParagraphPage />} />
+      <Route path="video/:id" element={<AddVideoPage />} />
 
+      <Route path="video/:id/addmcq" element={<AddVideoMcqPage />} />
+
+      <Route path="video/shortlong/:id" element={<AddVideoLongShortPage />} />
+
+      <Route path="video/:id/selectType" element={<AddVideoQuestionsPage />} />
       <Route path="final" element={<FinalizePage />} />
       <Route path="invite" element={<InvitePage />} />
     </Route>

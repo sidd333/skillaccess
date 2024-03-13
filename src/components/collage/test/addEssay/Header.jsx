@@ -2,18 +2,52 @@ import React from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
-import { addQuestionToTopic } from "../../../../redux/collage/test/testSlice";
+import {
+  addEssay,
+  addEssayToTopic,
+  addQuestionToTopic,
+} from "../../../../redux/collage/test/testSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const Header = ({ question, setQuestion, id, type }) => {
+const Header = ({ question, setQuestion, id, type, addType }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSave = () => {
-    dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-    setQuestion({ Title: "" });
-
-    navigate("/collage/test/select");
+    console.log(question);
+    if (addType === "topic") {
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      }
+     else if(question.Duration==0){
+        window.alert("Please enter required time");
+        return;
+      }
+      else {
+        dispatch(addEssayToTopic({ data: question, id: id, type: type }));
+        dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+        setQuestion({ Title: "" , Duration : 0 });
+      
+      navigate(-1);
+      }
+      
+    } else {
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      }
+      else if(question.Duration==0){
+        window.alert("Please enter required time");
+        return;
+      }
+      else{
+        dispatch(addEssay({ data: question, id: id, type: type }));
+        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+        setQuestion({ Title: "" , Duration : 0 });
+      
+      navigate(-1);
+      }
+      
+    }
   };
   return (
     <div className="flex w-[98%] mx-auto justify-between mb-2 mt-5">
@@ -36,7 +70,8 @@ const Header = ({ question, setQuestion, id, type }) => {
 
       <div className=" rounded-xl mx-2   h-12 flex my-2 font-dmSans ">
         <div className=" flex gap-2">
-          <button className="self-center w-24  justify-center flex text-blue-800 py-2 px-4 rounded-xl font-bold gap-2 bg-white">
+          <button className="self-center w-24  justify-center flex text-blue-800 py-2 px-4 rounded-xl font-bold gap-2 bg-white"
+            onClick={() => navigate(-1)}>
             Cancel
           </button>
           <button

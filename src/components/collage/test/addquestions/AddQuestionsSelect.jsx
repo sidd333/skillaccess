@@ -30,9 +30,10 @@ const AddQuestionsSelect = () => {
         navigate(`/collage/test/code/${id}?type=compiler&addType=topic`);
         break;
 
-      // case "video":
-      //   navigate("/collage/test/addVideo");
-      //   break;
+      case "video":
+        navigate(`/collage/test/video/${id}?type=video&addType=topic`);
+
+        break;
 
       case "findAnswer":
         navigate(`/collage/test/find-ans/${id}?type=findAnswer&addType=topic`);
@@ -55,8 +56,8 @@ const AddQuestionsSelect = () => {
         {/* larger screens */}
         <div className="   my-2 rounded-lg tracking-wide justify-between  ">
           <h2 className="font-normal text-xs sm:text-sm text-gray-400  mt-8 tracking-wide ">
-            Add up to 10 custom questions to your assessment (optional). You can
-            use five question types: multiple-choice, essay, video and code.
+          Add up to 10 custom questions to your assessment (optional). You can
+          use five question types: multiple-choice, essay, video, code and find answer.
           </h2>
         </div>
 
