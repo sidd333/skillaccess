@@ -104,14 +104,50 @@ export const getTest = createAsyncThunk(
   "test/getTest",
   async (id, { rejectWithValue }) => {
     try {
+      console.log(`get test ${id}`);
       const req = await axios.get(
-        `${process.env.REACT_APP_API_URL}api/assessments/${id}`,
-        { withCredentials: true }
+        `${process.env.REACT_APP_API_URL}/api/assessments/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        }
       );
       const res = req.data;
-      return res.data;
+      // console.log(res);
+      return res;
     } catch (error) {
-      console.log("catch");
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getStudentResponse = createAsyncThunk(
+  "test/studentResponse",
+  async (id, { rejectWithValue }) => {
+    try {
+      const req = await axios.get(
+        `${REACT_APP_API_URL}/api/studentDummy/response/${id}`,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        }
+      );
+
+      const res = req.data;
+
+      console.log(res);
+
+      return res.studentResponses;
+    } catch (error) {
+      console.log("catch", error.response.data);
+
       return rejectWithValue(error.response.data);
     }
   }
@@ -743,6 +779,15 @@ const testSlice = createSlice({
       })
       .addCase(createTopic.rejected, (state, action) => {
         // return action.payload;
+      })
+      .addCase(getStudentResponse.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(getStudentResponse.fulfilled, (state, action) => {
+        state.studentResponses = action.payload;
+      })
+      .addCase(getStudentResponse.rejected, (state, action) => {
+        console.error("Error fetching student responses:", action.payload);
       });
   },
 });
