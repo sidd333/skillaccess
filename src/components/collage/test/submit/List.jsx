@@ -1,12 +1,12 @@
 import { Disclosure, Transition } from "@headlessui/react";
-import React from "react";
+import React, { useState } from "react";
 import { FaCaretDown } from "react-icons/fa";
 import { RiBookmark2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { removeQuestionById } from "../../../../redux/collage/test/testSlice";
 
 const List = ({ question, number }) => {
-  let type;
+  const [type, setType] = useState();
 
   const dispatch = useDispatch();
   const handleDelete = ({ sectionId, questionId }) => {
@@ -14,6 +14,7 @@ const List = ({ question, number }) => {
       removeQuestionById({
         sectionId,
         questionId,
+        questionType: type,
       })
     );
   };
@@ -104,10 +105,18 @@ const List = ({ question, number }) => {
           alt="cross"
           className="self-center "
           onClick={() => {
-            // console.log(question);
+            if (question.AnswerIndex) {
+              setType("mcq");
+            } else if (question.questions) {
+              setType("findAnswer");
+            } else {
+              setType("essay");
+            }
+            console.log(type);
             handleDelete({
               sectionId: question.section,
-              questionId: question._id,
+              questionId: question.id,
+              questionType: type,
             });
           }}
         />

@@ -107,16 +107,47 @@ export const getTest = createAsyncThunk(
       console.log(`get test ${id}`);
       const req = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/assessments/${id}`,
-        {  headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("auth-token"),
-        }, }
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        }
       );
       const res = req.data;
       // console.log(res);
       return res;
     } catch (error) {
       console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const getStudentResponse = createAsyncThunk(
+  "test/studentResponse",
+  async (id, { rejectWithValue }) => {
+    try {
+      const req = await axios.get(
+        `${REACT_APP_API_URL}/api/studentDummy/response/${id}`,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        }
+      );
+
+      const res = req.data;
+
+      console.log(res);
+
+      return res.studentResponses;
+    } catch (error) {
+      console.log("catch", error.response.data);
+
       return rejectWithValue(error.response.data);
     }
   }
@@ -486,21 +517,22 @@ const testSlice = createSlice({
 
     removeQuestionById: (state, action) => {
       //questionType, topicIndex ,selfIndex
-      const { sectionId, questionId } = action.payload;
+      const { sectionId, questionId, questionType } = action.payload;
       let copy = [];
       let topicIndex, selfIndex;
-      state.topics.map((topic, index) => {
-        if (topic._id === sectionId) topicIndex = index;
+      console.log(action.payload);
+      state.topics.forEach((topic, index) => {
+        console.log(topic.Type, questionType);
+        console.log(topic._id === sectionId && topic.Type === questionType);
+        if (topic._id === sectionId && topic.Type === questionType)
+          topicIndex = index;
       });
-
-      console.log(state.topics[topicIndex]);
-      const questionType = state.topics[topicIndex].Type;
 
       switch (questionType) {
         case "mcq":
-          state.topics[topicIndex].questions.map((question, index) => {
-            console.log(question._id, questionId);
-            if (question._id === questionId) {
+          state.topics[topicIndex].questions.forEach((question, index) => {
+            console.log(question.id, questionId);
+            if (question.id === questionId) {
               selfIndex = index;
             }
           });
@@ -513,12 +545,15 @@ const testSlice = createSlice({
           break;
 
         case "essay":
+          localStorage.setItem("bug", JSON.stringify(state.topics[topicIndex]));
           state.topics[topicIndex].essay.map((question, index) => {
-            if (question._id === questionId) {
+            if (question.id === questionId) {
+              console.log(question.id);
               selfIndex = index;
             }
           });
           copy = [...state.topics[topicIndex].essay];
+
           state.topics[topicIndex].essay = copy.filter((ques, index) => {
             return index !== selfIndex;
           });
@@ -526,7 +561,7 @@ const testSlice = createSlice({
 
         case "compiler":
           state.topics[topicIndex].compiler.map((question, index) => {
-            if (question._id === questionId) {
+            if (question.id === questionId) {
               selfIndex = index;
             }
           });
@@ -537,7 +572,7 @@ const testSlice = createSlice({
           break;
         case "findAnswer":
           state.topics[topicIndex].findAnswers.map((question, index) => {
-            if (question._id === questionId) {
+            if (question.id === questionId) {
               selfIndex = index;
             }
           });
@@ -549,7 +584,7 @@ const testSlice = createSlice({
 
         case "video":
           state.topics[topicIndex].video.map((question, index) => {
-            if (question._id === questionId) {
+            if (question.id === questionId) {
               selfIndex = index;
             }
           });
@@ -778,15 +813,15 @@ const testSlice = createSlice({
       .addCase(createTopic.rejected, (state, action) => {
         // return action.payload;
       })
-      // .addCase(getStudentResponse.pending , (state,action)=>{
-      //  state.status = "pending"
-      // })
-      // .addCase(getStudentResponse.fulfilled , (state,action)=>{
-      //   state.studentResponses = action.payload
-      //         })
-      //         .addCase(getStudentResponse.rejected , (state,action)=>{
-      //           console.error("Error fetching student responses:", action.payload);
-      //                 })   
+      .addCase(getStudentResponse.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(getStudentResponse.fulfilled, (state, action) => {
+        state.studentResponses = action.payload;
+      })
+      .addCase(getStudentResponse.rejected, (state, action) => {
+        console.error("Error fetching student responses:", action.payload);
+      });
   },
 });
 

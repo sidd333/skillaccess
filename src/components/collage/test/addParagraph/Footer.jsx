@@ -37,11 +37,8 @@ const Footer = ({ setQues, question, handleSave }) => {
         </div>
         <div className=" flex">
           <button className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 ">
-            <FaPlus
-              className="self-center"
-              onClick={() => console.log(question)}
-            />{" "}
-            Add Next Question
+            <FaPlus className="self-center" onClick={() => handleSave()} /> Add
+            Next Question
           </button>
         </div>
       </div>

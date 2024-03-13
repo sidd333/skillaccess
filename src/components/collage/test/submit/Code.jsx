@@ -12,6 +12,7 @@ const List = ({ Title, number, code, question }) => {
       removeQuestionById({
         sectionId,
         questionId,
+        questionType: "compiler",
       })
     );
   };
@@ -69,7 +70,7 @@ const List = ({ Title, number, code, question }) => {
           console.log(question);
           handleDelete({
             sectionId: question.section,
-            questionId: question._id,
+            questionId: question.id,
           });
         }}
       >

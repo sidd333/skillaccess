@@ -3,7 +3,7 @@ import Selected from "./Selected";
 import Appeared from "./Appeared";
 import Performance from "./Performance";
 
-const Toggle = ({assessment}) => {
+const Toggle = ({ assessment }) => {
   const [toggle, setToggle] = useState(2);
   return (
     <div className="bg-gray-50 p-4 mt-4 rounded-lg ">
@@ -37,7 +37,7 @@ const Toggle = ({assessment}) => {
       {toggle === 1 ? (
         <Selected />
       ) : toggle === 2 ? (
-        <Appeared assessment={assessment}/>
+        <Appeared assessment={assessment} />
       ) : toggle === 3 ? (
         <Performance />
       ) : (

@@ -24,6 +24,8 @@ const VideoEssay = ({
   Index,
 }) => {
   // const dispatch = useDispatch();
+
+  // const [save, setSave] = useState(true);
   const [essay, setEssay] = useState(question);
   // const [search, setSearch] = useSearchParams();
 
@@ -34,42 +36,6 @@ const VideoEssay = ({
       setEssay((prev) => {
         return { ...prev, [name]: [value] };
       });
-    }
-    if (type === "short") {
-      if (videoState.short.length === 0) {
-        setVideoState((prev) => {
-          return { ...prev, short: [essay] };
-        });
-      } else {
-        setVideoState((prev) => {
-          return {
-            ...prev,
-            short: [
-              ...prev.short.slice(0, Number),
-              essay,
-              ...prev.short.slice(Number + 1),
-            ],
-          };
-        });
-      }
-      console.log(videoState, "short");
-    } else if (type === "long") {
-      if (videoState.long.length === 0) {
-        setVideoState((prev) => {
-          return { ...prev, long: [essay] };
-        });
-      } else {
-        setVideoState((prev) => {
-          return {
-            ...prev,
-            long: [
-              ...prev.long.slice(0, Number),
-              essay,
-              ...prev.long.slice(Number + 1),
-            ],
-          };
-        });
-      }
     }
   };
 
@@ -82,11 +48,57 @@ const VideoEssay = ({
           </h2>
         ) : (
           <input
+            // className={`${!save && "border-none"}`}
             onChange={handleChange}
             placeholder="enter new question"
             name="Title"
             value={essay.Title}
           />
+        )}
+
+        {search.get(Number) === "true" && (
+          <button
+            onClick={() => {
+              if (type === "short") {
+                if (videoState.short.length === 0) {
+                  setVideoState((prev) => {
+                    return { ...prev, short: [essay] };
+                  });
+                } else {
+                  setVideoState((prev) => {
+                    return {
+                      ...prev,
+                      short: [
+                        ...prev.short.slice(0, Number),
+                        essay,
+                        ...prev.short.slice(Number + 1),
+                      ],
+                    };
+                  });
+                }
+                console.log(videoState, "short");
+              } else if (type === "long") {
+                if (videoState.long.length === 0) {
+                  setVideoState((prev) => {
+                    return { ...prev, long: [essay] };
+                  });
+                } else {
+                  setVideoState((prev) => {
+                    return {
+                      ...prev,
+                      long: [
+                        ...prev.long.slice(0, Number),
+                        essay,
+                        ...prev.long.slice(Number + 1),
+                      ],
+                    };
+                  });
+                }
+              }
+            }}
+          >
+            save
+          </button>
         )}
       </div>
 

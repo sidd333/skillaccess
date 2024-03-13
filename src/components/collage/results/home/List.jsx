@@ -1,6 +1,6 @@
-import { useSelect } from "@mui/base";
+
 import React, { useEffect } from "react";
-import { useSelector ,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAllTests } from "../../../../redux/collage/test/testSlice";
 
@@ -11,25 +11,21 @@ const List = () => {
   const assessments = useSelector((state) => state.test.assessments);
   const beginner = useSelector((state) => state.test.assessments.beginner);
 
+  // asessments ={beginner: Array(2), intermediate: Array(0), advanced: Array(0)} write in one array
 
-// asessments ={beginner: Array(2), intermediate: Array(0), advanced: Array(0)} write in one array
+  let arr = assessments.beginner.concat(
+    assessments.intermediate,
+    assessments.advanced
+  );
 
-let arr = assessments.beginner.concat(assessments.intermediate, assessments.advanced);
+  let totalStudentsAppeared = 0;
+  let totalStudentsSelected = 0;
+  let overallPerformance = 0;
 
-let totalStudentsAppeared = 0;
-let totalStudentsSelected = 0;
-let overallPerformance = 0;
-
-
-
-
-useEffect(() => {
-  // dispatch(getCollege());
-  dispatch(getAllTests());
-}
-, [dispatch]);
-
-
+  useEffect(() => {
+    // dispatch(getCollege());
+    dispatch(getAllTests());
+  }, [dispatch]);
 
   return (
     <div className="w-full mx-auto">
@@ -60,11 +56,7 @@ useEffect(() => {
           <div className={` flex `}>
             <div className="flex self-center">
               <span>
-                <h2 className="font-dmSans  sm:text-sm">
-                  {
-assessment.name
-                  }
-                </h2>
+                <h2 className="font-dmSans  sm:text-sm">{assessment.name}</h2>
               </span>
             </div>
           </div>
@@ -73,9 +65,7 @@ assessment.name
             <div className=" self-center h-fit">
               <span>
                 <h2 className="font-dmSans  sm:text-sm">
-                  {
-                    assessment.studentResponses.length
-                  }
+                  {assessment.studentResponses.length}
                 </h2>
               </span>
             </div>
@@ -84,10 +74,7 @@ assessment.name
           <div className="flex justify-center">
             <div className=" self-center h-fit">
               <span>
-                <h2 className="font-dmSans  sm:text-sm">{
-                  0
-}
-                </h2>
+                <h2 className="font-dmSans  sm:text-sm">{0}</h2>
               </span>
             </div>
           </div>
@@ -109,7 +96,11 @@ assessment.name
           <div className="flex justify-end mr-3">
             <span
               className="self-center hover:cursor-pointer "
-              onClick={() => navigate(`/collage/results/overview?level=beginner&assessment=${assessment._id}`)}
+              onClick={() =>
+                navigate(
+                  `/collage/results/overview?level=beginner&assessment=${assessment._id}`
+                )
+              }
             >
               <h2 className="font-dmSans  text-sm sm:text-base text-blue-500 ">
                 View Details

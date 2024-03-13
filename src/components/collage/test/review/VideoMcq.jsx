@@ -23,11 +23,12 @@ const VideoMcq = ({
 }) => {
   const dispatch = useDispatch();
 
+  const [save, setSave] = useState(true);
   const [mcq, setMcq] = useState(question);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     if (name === "Title") {
       console.log("name", name, value);
       setMcq((prev) => {
@@ -43,19 +44,25 @@ const VideoMcq = ({
         };
       });
     }
-  
-    setVideoState((prev) => {
-      return {
-        ...prev,
-        questions: [
-          ...prev.questions.slice(0, Number),
-          { ...prev.questions[Number], Options: mcq.Options },
-          ...prev.questions.slice(Number + 1),
-        ],
-      };
-    });
+
+    // setVideoState((prev) => {
+    //   return { ...prev, questions :[...prev.mcq.slice(0, Number), mcq, ...prev.mcq.slice(Number + 1)] };
+    // });
+
+    // setVideoState((prev) => {
+    //   return {
+    //     ...prev,
+    //     questions: [
+    //       ...prev.questions.slice(0, Number),
+    //       { ...prev.questions[Number], Options: mcq.Options },
+    //       ...prev.questions.slice(Number + 1),
+    //     ],
+    //   };
+    // });
+
+    console.log(videoState, "mcq-state");
+    // console.log(mcq, "mcq");
   };
-  
 
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between my-4">
@@ -66,6 +73,7 @@ const VideoMcq = ({
           </h2>
         ) : (
           <input
+            className={`${!save && "border-none"}`}
             onChange={handleChange}
             placeholder="enter new question"
             name="Title"
@@ -73,6 +81,32 @@ const VideoMcq = ({
           />
         )}
         <div className="px-5 pb-4 flex flex-col gap-4">
+          {search.get(Number) === "true" && (
+            <button
+              onClick={() => {
+                setSave(false);
+                console.log(mcq);
+                setVideoState((prev) => {
+                  {
+                    return {
+                      ...prev,
+                      questions: [
+                        ...prev.questions.slice(0, Number),
+                        {
+                          Title: mcq.Title,
+                          Options: mcq.Options,
+                        },
+                        ...prev.questions.slice(Number + 1),
+                      ],
+                    };
+                  }
+                });
+              }}
+            >
+              save
+            </button>
+          )}
+
           {/* <span className="flex gap-2">
             <div className="flex w-5 justify-center">
               <input
@@ -181,6 +215,7 @@ const VideoMcq = ({
                 ) : (
                   <>
                     <input
+                      // className={`${!save && "border-none"}`}
                       name={index}
                       value={mcq.Options[index]}
                       onChange={handleChange}

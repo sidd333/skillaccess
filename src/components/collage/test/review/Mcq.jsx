@@ -106,98 +106,6 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
               )}
             </span>
           ))}
-
-          {/* <span className="flex gap-2">
-            <div className="flex w-5 justify-center">
-              <input
-                type="radio"
-                id="answer"
-                className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-              />{" "}
-            </div>
-            {search.get(`${Number}`) !== "true" ? (
-              <label for="answer" className="self-center">
-                {" "}
-                {console.log("options : ", Options)}
-                {Options[0]}
-              </label>
-            ) : (
-              <input
-                onChange={handleChange}
-                placeholder="enter new option"
-                name={0}
-                value={mcq.Options[0]}
-              />
-            )}
-          </span>
-          <span className="flex gap-2">
-            <div className="flex w-5 justify-center">
-              <input
-                type="radio"
-                name="answer"
-                id="answer"
-                className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-              />{" "}
-            </div>
-            {search.get(`${Number}`) !== "true" ? (
-              <label for="answer" className="self-center">
-                {" "}
-                {Options[1]}
-              </label>
-            ) : (
-              <input
-                onChange={handleChange}
-                placeholder="enter new option"
-                name={1}
-                value={mcq.Options[1]}
-              />
-            )}
-          </span>
-          <span className="flex gap-2">
-            <div className="flex w-5 justify-center">
-              <input
-                type="radio"
-                id="answer"
-                className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-              />{" "}
-            </div>
-            {search.get(`${Number}`) !== "true" ? (
-              <label for="answer" className="self-center">
-                {" "}
-                {Options[2]}
-              </label>
-            ) : (
-              <input
-                onChange={handleChange}
-                name={2}
-                placeholder="enter new option"
-                value={mcq.Options[2]}
-              />
-            )}
-          </span>
-          <span className="flex gap-2">
-            <div className="flex w-5 justify-center">
-              <input
-                type="radio"
-                name="answer"
-                id="answer"
-                className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-              />{" "}
-            </div>
-            {search.get(`${Number}`) !== "true" ? (
-              <label for="answer" className="self-center">
-                {" "}
-                {Options[3]}
-              </label>
-            ) : (
-              <input
-                onChange={handleChange}
-                placeholder="enter new option"
-                name={3}
-                value={mcq.Options[3]}
-              />
-            )}
-          </span> */}
         </div>
       </div>
       {type !== "topic" && view !== "false" && (
@@ -206,9 +114,6 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
             className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
             onClick={handleDelete}
           />
-          {/* <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
-          {/* <IoSwapVerticalSharp className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
-        <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
 
           {search.get(`${Number}`) !== "true" ? (
             <PiPencilSimpleLineBold

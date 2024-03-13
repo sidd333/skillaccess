@@ -19,17 +19,27 @@ type , view}) => {
 
 const [search, setSearch] = useSearchParams();
   const [compiler, setCompiler] = useState(question);
-  const handleChange = (e) => {
-    const { name, value, key } = e.target;
+  console.log(compiler);
+  // const handleChange = (e) => {
+  //   const { name, value, key } = e.target;
     
-      setCompiler((prev) => {
-        return { ...prev, [name]: [value] };
+  //     setCompiler((prev) => {
+  //       return { ...prev, [name]: [value] };
 
-      });
+  //     });
 
+  // };
+
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+    setCompiler((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
-
-
+  
 
 
   const handleDelete = () => {
@@ -116,6 +126,18 @@ const [search, setSearch] = useSearchParams();
             <PiPencilSimpleLineBold
               className=" w-6 h-6 p-1 rounded-lg bg-amber-600 self-center"
               onClick={() => {
+                if (!compiler.codeQuestion || compiler.codeQuestion.some(q => q.trim() === "")) {
+                  window.alert("Please enter the question");
+                  return;
+                }
+              
+                if (!compiler.code || compiler.code.some(c => c.trim() === "")) {
+                  window.alert("Please enter the code");
+                  return;
+                }
+                else{
+
+                
                 search.set(`${Number}`, "false");
                 setSearch(search);
                 dispatch(
@@ -126,7 +148,7 @@ const [search, setSearch] = useSearchParams();
                     question: compiler,
                   })
                 );
-              }}
+              }}}
             />
           )}
         </div>
