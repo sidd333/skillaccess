@@ -13,7 +13,6 @@ const Video = ({ video, Number }) => {
       removeQuestionById({
         sectionId,
         questionId,
-        questionType: "video",
       })
     );
   };
@@ -41,7 +40,7 @@ const Video = ({ video, Number }) => {
                   console.log(video.section, video._id);
                   handleDelete({
                     sectionId: video.section,
-                    questionId: video.id,
+                    questionId: video._id,
                   });
                 }}
               />

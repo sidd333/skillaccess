@@ -1,12 +1,12 @@
 import { Disclosure, Transition } from "@headlessui/react";
-import React, { useState } from "react";
+import React from "react";
 import { FaCaretDown } from "react-icons/fa";
 import { RiBookmark2Fill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { removeQuestionById } from "../../../../redux/collage/test/testSlice";
 
-const List = ({ question, number }) => {
-  const [type, setType] = useState();
+const Essay = ({ question, number }) => {
+  let type;
 
   const dispatch = useDispatch();
   const handleDelete = ({ sectionId, questionId }) => {
@@ -14,7 +14,6 @@ const List = ({ question, number }) => {
       removeQuestionById({
         sectionId,
         questionId,
-        questionType: type,
       })
     );
   };
@@ -75,15 +74,6 @@ const List = ({ question, number }) => {
 
                 {question.questions?.map((question) => (
                   <div className="flex gap-2  z-10 relative rounded-lg p-3">
-                    <div className="w-6">
-                      <input
-                        type="radio"
-                        name="answer"
-                        id="answer"
-                        className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
-                      />
-                    </div>
-
                     <label className="text-blacktext-sm">
                       {question
                         ? question.question
@@ -105,18 +95,10 @@ const List = ({ question, number }) => {
           alt="cross"
           className="self-center "
           onClick={() => {
-            if (question.AnswerIndex) {
-              setType("mcq");
-            } else if (question.questions) {
-              setType("findAnswer");
-            } else {
-              setType("essay");
-            }
-            console.log(type);
+            // console.log(question);
             handleDelete({
               sectionId: question.section,
-              questionId: question.id,
-              questionType: type,
+              questionId: question._id,
             });
           }}
         />
@@ -125,4 +107,4 @@ const List = ({ question, number }) => {
   );
 };
 
-export default List;
+export default Essay;

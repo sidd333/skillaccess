@@ -17,8 +17,6 @@ const collageState = {
   uploadImg: false,
 };
 
-const authToken = localStorage.getItem("auth-token");
-
 export const registerCollage = createAsyncThunk(
   "collageAuth/registerCollage",
   async (data, { rejectWithValue }) => {
@@ -83,7 +81,7 @@ export const updateCollege = createAsyncThunk(
   "collageAuth/updateCollege",
   async (data, { rejectWithValue }) => {
     try {
-      console.log("updating", authToken);
+      console.log("updating", localStorage.getItem("auth-token"));
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/college/update`,
         data,
@@ -91,7 +89,7 @@ export const updateCollege = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -129,7 +127,7 @@ export const updateAvatar = createAsyncThunk(
   "collageAuth/updateAvatar",
   async (data, { rejectWithValue }) => {
     try {
-      console.log("updating", authToken);
+      console.log("updating", localStorage.getItem("auth-token"));
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/college/update/avatar`,
         data,
@@ -137,7 +135,7 @@ export const updateAvatar = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -174,7 +172,7 @@ export const resetPassword = createAsyncThunk(
 
   async (data, { rejectWithValue }) => {
     try {
-      console.log("updating", authToken);
+      console.log("updating", localStorage.getItem("auth-token"));
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/college/password/reset/${data.token}`,
         { password: data.password, confirmPassword: data.confirmPassword },
@@ -182,7 +180,7 @@ export const resetPassword = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -200,7 +198,7 @@ export const updatePassword = createAsyncThunk(
 
   async (data, { rejectWithValue }) => {
     try {
-      console.log("updating", authToken);
+      console.log("updating", localStorage.getItem("auth-token"));
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/college/password/update`,
         data,
@@ -208,7 +206,7 @@ export const updatePassword = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -265,8 +263,7 @@ const collageAuthSlice = createSlice({
         console.log(state.user);
       })
       .addCase(loginCollage.rejected, (state, action) => {
-        state.Error = [...state.Error, action.payload];
-        alert(action.payload);
+        state.Error = [action.payload];
       })
       .addCase(updateCollege.pending, (state, action) => {
         // state.status = "loading";

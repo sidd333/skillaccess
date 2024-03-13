@@ -19,9 +19,13 @@ const AddParagraph = () => {
   const { id } = useParams();
   const type = searchParams.get("type");
   const addType = searchParams.get("addType");
+  let ID;
+  searchParams.get("topicId") !== null
+    ? (ID = searchParams.get("topicId"))
+    : (ID = id);
   const [question, setQuestion] = useState({
     section: searchParams.get("topicId"),
-    id: "aaa",
+    id: ID + Date.now(),
     Title: "",
     Duration: 0,
     questions: [{ question: "" }],
@@ -55,7 +59,13 @@ const AddParagraph = () => {
       } else {
         dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "", questions: [{ question: "" }], Duration: 0 });
+        setQuestion({
+          Title: "",
+          section: ID,
+          questions: [{ question: "" }],
+          Duration: 0,
+          id: ID + Date.now(),
+        });
       }
     } else {
       if (question.Title == "") {
@@ -73,10 +83,11 @@ const AddParagraph = () => {
 
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
+          id: ID + Date.now(),
           Title: "",
           questions: [],
           Duration: 0,
-          section: searchParams.get("topicId"),
+          section: ID,
         });
       }
     }
@@ -85,7 +96,7 @@ const AddParagraph = () => {
   return (
     <div>
       <Header
-        section={searchParams.get("topicId")}
+        section={ID}
         question={question}
         setQuestion={setQuestion}
         id={id}

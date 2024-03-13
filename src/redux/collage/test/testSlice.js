@@ -6,7 +6,6 @@ import { editQuestionFun } from "./reducerFunctions/question";
 import { getAllTestFulfilled } from "./reducerFunctions/test";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
-let authToken = localStorage.getItem("auth-token");
 
 const testState = {
   testName: "",
@@ -174,7 +173,7 @@ export const addQuestionToTopic = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -198,7 +197,7 @@ export const getAllTopics = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -220,7 +219,7 @@ export const getTopicById = createAsyncThunk(
         {
           headers: {
             "Content-Type": "application/json",
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -259,7 +258,7 @@ export const createTopic = createAsyncThunk(
           headers: {
             "Content-Type": "application/json",
 
-            "auth-token": authToken,
+            "auth-token": localStorage.getItem("auth-token"),
           },
         }
       );
@@ -449,21 +448,22 @@ const testSlice = createSlice({
 
     removeQuestionById: (state, action) => {
       //questionType, topicIndex ,selfIndex
-      const { sectionId, questionId } = action.payload;
+      const { sectionId, questionId, questionType } = action.payload;
       let copy = [];
       let topicIndex, selfIndex;
-      state.topics.map((topic, index) => {
-        if (topic._id === sectionId) topicIndex = index;
+      console.log(action.payload);
+      state.topics.forEach((topic, index) => {
+        console.log(topic.Type, questionType);
+        console.log(topic._id === sectionId && topic.Type === questionType);
+        if (topic._id === sectionId && topic.Type === questionType)
+          topicIndex = index;
       });
-
-      console.log(state.topics[topicIndex]);
-      const questionType = state.topics[topicIndex].Type;
 
       switch (questionType) {
         case "mcq":
-          state.topics[topicIndex].questions.map((question, index) => {
-            console.log(question._id, questionId);
-            if (question._id === questionId) {
+          state.topics[topicIndex].questions.forEach((question, index) => {
+            console.log(question.id, questionId);
+            if (question.id === questionId) {
               selfIndex = index;
             }
           });
@@ -476,12 +476,15 @@ const testSlice = createSlice({
           break;
 
         case "essay":
+          localStorage.setItem("bug", JSON.stringify(state.topics[topicIndex]));
           state.topics[topicIndex].essay.map((question, index) => {
-            if (question._id === questionId) {
+            if (question.id === questionId) {
+              console.log(question.id);
               selfIndex = index;
             }
           });
           copy = [...state.topics[topicIndex].essay];
+
           state.topics[topicIndex].essay = copy.filter((ques, index) => {
             return index !== selfIndex;
           });
@@ -489,7 +492,7 @@ const testSlice = createSlice({
 
         case "compiler":
           state.topics[topicIndex].compiler.map((question, index) => {
-            if (question._id === questionId) {
+            if (question.id === questionId) {
               selfIndex = index;
             }
           });
@@ -500,7 +503,7 @@ const testSlice = createSlice({
           break;
         case "findAnswer":
           state.topics[topicIndex].findAnswers.map((question, index) => {
-            if (question._id === questionId) {
+            if (question.id === questionId) {
               selfIndex = index;
             }
           });
@@ -512,7 +515,7 @@ const testSlice = createSlice({
 
         case "video":
           state.topics[topicIndex].video.map((question, index) => {
-            if (question._id === questionId) {
+            if (question.id === questionId) {
               selfIndex = index;
             }
           });
