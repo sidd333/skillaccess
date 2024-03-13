@@ -21,6 +21,11 @@ const AddCode = () => {
   const type = searchParams.get("type");
   const addType = searchParams.get("addType");
   const [toggle, setToggle] = useState(1);
+
+  let ID;
+  searchParams.get("topicId") !== null
+    ? (ID = searchParams.get("topicId"))
+    : (ID = id);
   // Format of the question object
   // "code": "printf('hello world')",
   // "codeQuestion": "Write a program to print 'hello world'",
@@ -40,9 +45,9 @@ const AddCode = () => {
   // "hello world"
   // ]
   const [question, setQuestion] = useState({
-    section: searchParams.get("topicId"),
-    _id: Date.now(),
-    id: "aaa",
+    section: ID,
+    id: ID + Date.now(),
+
     Duration: 0,
     code: "",
     codeQuestion: "",
@@ -100,7 +105,8 @@ const AddCode = () => {
         dispatch(addCompilerToTopic({ data: question, id: id, type: type }));
         dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
-          section: searchParams.get("topicId"),
+          id: ID + Date.now(),
+          section: ID,
           code: "",
           Duration: 0,
           codeQuestion: "",
@@ -142,8 +148,8 @@ const AddCode = () => {
         dispatch(addCompiler({ data: question, id: id, type: type }));
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
         setQuestion({
-          _id: Date.now(),
-          section: searchParams.get("topicId"),
+          id: ID + Date.now(),
+          section: ID,
           code: "",
           Duration: 0,
           codeQuestion: "",

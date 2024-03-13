@@ -33,16 +33,12 @@ const Header = ({ question, setQuestion, section }) => {
     } else if (question.Duration === 0) {
       window.alert("Please enter required time");
       return;
-
-    }
-    else if(question.AnswerIndex===null){
+    } else if (question.AnswerIndex === null) {
       window.alert("Please select correct answer");
       return;
-    }
-    else{
+    } else {
       dispatch(addMcq({ question: question, id: id }));
-      setQuestion({ Title: "", Options: [] , Duration : 0 ,AnswerIndex:null});
-    
+      setQuestion({ Title: "", Options: [], Duration: 0, AnswerIndex: null });
 
       navigate(-1);
     }

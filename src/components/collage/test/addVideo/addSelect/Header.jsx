@@ -16,6 +16,10 @@ const Header = ({ selectQuestionType }) => {
   const { id } = useParams();
   const [searchParam, setSearchParam] = useSearchParams();
   const dispatch = useDispatch();
+  let ID;
+  searchParam.get("topicId") !== null
+    ? (ID = searchParam.get("topicId"))
+    : (ID = id);
   const topicToBeAdded = useSelector((state) => state.test.TopicToBeAdded);
   const submit = () => {
     const updatedTopicToBeAdded = {
@@ -49,6 +53,7 @@ const Header = ({ selectQuestionType }) => {
     const vid = {
       ...topicToBeAdded.video,
       Duration: Duration,
+      id: ID,
       section:
         searchParam.get("section") !== "null" ? searchParam.get("section") : id,
     };

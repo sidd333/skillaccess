@@ -18,7 +18,7 @@ const AddMcqToTopic = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [question, setQuestion] = useState({
     Duration: 0,
-    id: "ddd",
+    id: id + Date.now(),
     Title: "",
     Options: [],
     QuestionType: "",
@@ -155,7 +155,6 @@ const AddMcqToTopic = () => {
                   {/* radio button */}
                   <div className="flex w-5 justify-center">
                     <input
-                      sele
                       type="radio"
                       name="Answer"
                       id="option1"
@@ -328,9 +327,9 @@ const AddMcqToTopic = () => {
                 </span>
                 {/* add button and shuffle container */}
                 <div className="flex justify-between">
-                  {/* <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
+                  <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
                     <FaPlus className="self-center" /> Add
-                  </button> */}
+                  </button>
                   <span className="self-center">
                     <input type="checkbox" className="mr-2" />{" "}
                     <label className="">Shuffle Answers</label>
@@ -372,9 +371,6 @@ const AddMcqToTopic = () => {
                 } else if (question.Duration === 0) {
                   window.alert("Please enter required time");
                   return;
-                } else if (question.AnswerIndex === null) {
-                  window.alert("Please select correct answer");
-                  return;
                 } else {
                   dispatch(
                     addQuestionToTopic({ data: question, id: id, type: type })
@@ -382,9 +378,8 @@ const AddMcqToTopic = () => {
                   setQuestion({
                     Title: "",
                     Options: [],
-                    id: "aaa",
+                    id: id + Date.now(),
                     Duration: 0,
-                    AnswerIndex: null,
                   });
                 }
               }}
