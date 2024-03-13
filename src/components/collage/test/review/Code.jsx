@@ -20,17 +20,26 @@ type , view}) => {
 const [search, setSearch] = useSearchParams();
   const [compiler, setCompiler] = useState(question);
   console.log(compiler);
-  const handleChange = (e) => {
-    const { name, value, key } = e.target;
+  // const handleChange = (e) => {
+  //   const { name, value, key } = e.target;
     
-      setCompiler((prev) => {
-        return { ...prev, [name]: [value] };
+  //     setCompiler((prev) => {
+  //       return { ...prev, [name]: [value] };
 
-      });
+  //     });
 
+  // };
+
+  
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    
+    setCompiler((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
-
-
+  
 
 
   const handleDelete = () => {

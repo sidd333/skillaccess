@@ -2,7 +2,7 @@ import React from 'react'
 
 const PrivacyPolicy = () => {
   return (
-    <div className='bg-[#fff] h-full'>
+    <div className='bg-[#fff] min-h-screen'>
       <div className='px-24 pt-10'>
         <h1 className='font-bold text-[28px]'>Terms & Policies</h1>
         <h2 className="text-lg font-bold pt-20">Terms and Conditions:</h2>
