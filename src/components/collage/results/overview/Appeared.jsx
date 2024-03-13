@@ -1,9 +1,25 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+// import { getStudentResponse } from "../../../../redux/collage/test/testSlice";
 
-const Appeared = () => {
+const Appeared = ({ assessment }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const arr = [2, 1, 1, 1, 1];
+  // let arr = assessment.studentResponses.map((responseId) => {
+  //   // console.log(student);
+  //   dispatch(getStudentResponse(responseId))
+  //   return student;
+  // }
+  // );
+
+  // const responses= assessment.studentResponses.forEach((responseId)=>{
+  // dispatch(getStudentResponse(responseId))
+  //   })
+
+  //   console.log(response)
+
   return (
     <div className="w-full mx-auto">
       {/* legend */}
@@ -26,7 +42,7 @@ const Appeared = () => {
       </div>
 
       {/* list to be iterated */}
-      {arr.map(() => (
+      {arr.map((student) => (
         <div className=" grid-cols-5 rounded-lg my-4 py-2 pl-2   mx-auto  font-dmSans  text-sm hidden md:grid w-11/12">
           {" "}
           {/* row-2 */}
@@ -37,7 +53,7 @@ const Appeared = () => {
               </div>
               <span className="break-words min-w-0 pt-1 self-center">
                 <h2 className="font-dmSans font-semibold text-sm sm:text-base  ">
-                  Jhon Doe
+                  {student.FirstName}
                 </h2>
               </span>
             </div>
