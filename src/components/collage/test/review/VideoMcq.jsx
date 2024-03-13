@@ -43,17 +43,25 @@ const VideoMcq = ({
         };
       });
     }
-  
-    setVideoState((prev) => {
-      return {
-        ...prev,
-        questions: [
-          ...prev.questions.slice(0, Number),
-          { ...prev.questions[Number], Options: mcq.Options },
-          ...prev.questions.slice(Number + 1),
-        ],
-      };
-    });
+
+    // setVideoState((prev) => {
+    //   return { ...prev, questions :[...prev.mcq.slice(0, Number), mcq, ...prev.mcq.slice(Number + 1)] };
+    // });
+
+    // setVideoState((prev) => {
+    //   return {
+    //     ...prev,
+    //     questions: [
+    //       ...prev.questions.slice(0, Number),
+    //       { ...prev.questions[Number], Options: mcq.Options },
+    //       ...prev.questions.slice(Number + 1),
+    //     ],
+    //   };
+    // });
+
+    console.log(videoState, "mcq-state");
+    // console.log(mcq, "mcq");
+
   };
   
 
@@ -73,6 +81,24 @@ const VideoMcq = ({
           />
         )}
         <div className="px-5 pb-4 flex flex-col gap-4">
+          <button
+            onClick={() =>
+              setVideoState((prev) => {
+                {
+                  return {
+                    ...prev,
+                    questions: [
+                      ...prev.questions.slice(0, Number),
+                      { ...prev.questions[Number], Options: mcq.Options },
+                      ...prev.questions.slice(Number + 1),
+                    ],
+                  };
+                }
+              })
+            }
+          >
+            save
+          </button>
           {/* <span className="flex gap-2">
             <div className="flex w-5 justify-center">
               <input
