@@ -128,7 +128,7 @@ console.log(filteredSections, "filtered");
 
     if(sections){
       setFilteredSections(sections);
-      console.log(sections, "sections");
+    
     }
 
     try {
@@ -141,7 +141,7 @@ console.log(filteredSections, "filtered");
   }, []);
 
   useEffect(() => {
-    console.log(sections, "sections");
+   
     if(sections) {
       setFilteredSections(sections);
     }
@@ -153,7 +153,7 @@ console.log(filteredSections, "filtered");
   useEffect(() => {
     // getSelectedSections();
 
-    console.log(selectedSections, "selected");
+   
 
     dispatch(setTestSelectedTopics(selectedSections));
   }, [addSection, removeSection, selectedSections]);

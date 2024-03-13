@@ -17,7 +17,7 @@ const Header = ({ question, setQuestion, id, type, addType, section }) => {
     if (addType === "topic") {
       if (question.Title == "") {
         window.alert("Please enter the question");
-      } else if (question.Duration === 0) {
+      } else if (question.Duration == 0) {
         window.alert("Please enter required time");
         return;
       } else if (question.questions.some((q) => q.question === "")) {
@@ -40,7 +40,12 @@ const Header = ({ question, setQuestion, id, type, addType, section }) => {
       } else if (question.questions.some((q) => q.question === "")) {
         window.alert("Please enter all questions");
         return;
-      } else {
+      } 
+      else if (question.Duration == 0) {
+        window.alert("Please enter required time");
+        return;
+      }
+      else {
         dispatch(
           addFindAns({
             data: question,

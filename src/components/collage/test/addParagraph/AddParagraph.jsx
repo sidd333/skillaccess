@@ -50,7 +50,7 @@ const AddParagraph = () => {
     if (addType === "topic") {
       if (question.Title == "") {
         window.alert("Please enter the question");
-      } else if (question.Duration === 0) {
+      } else if (question.Duration == 0) {
         window.alert("Please enter required time");
         return;
       } else if (question.questions.some((q) => q.question === "")) {
@@ -70,7 +70,15 @@ const AddParagraph = () => {
     } else {
       if (question.Title == "") {
         window.alert("Please enter the question");
-      } else {
+      }
+      else if (question.Duration == 0) {
+        window.alert("Please enter required time");
+        return;
+      } else if (question.questions.some((q) => q.question === "")) {
+        window.alert("Please enter all questions");
+        return;
+      } 
+       else {
         dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
 
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
@@ -143,8 +151,8 @@ const AddParagraph = () => {
         </div>
 
         {/* <Footer question={question}  setQues={setQuestion} handleSave={handleSave} /> */}
-        <div className="pt-20">
-          <div className="absolute bottom-10  left-8">
+        <div className="pt-10 flex justify-between">
+          <div className=" ml-8 mb-10">
             {" "}
             <div className=" flex">
               <button
@@ -167,7 +175,7 @@ const AddParagraph = () => {
             </div>
           </div>
 
-          <div className="absolute bottom-10 flex right-8 gap-2">
+          <div className=" mb-10 flex pr-8 gap-2">
             {" "}
             <div className=" flex gap-2">
               <button

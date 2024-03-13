@@ -89,16 +89,31 @@ const AddCode = () => {
         question.codeQuestion != "" ||
         question.code != "" ||
         question.codeLanguage != "" ||
-        question.code != ""
+        question.code != ""||
+        question.verificationCode!=""
       ) {
         if (question.code === "") {
           alert("Please fill the code");
 
           return;
         }
+        if (question.verificationCode === "") {
+          alert("Please fill the code");
 
+          return;
+        }
         if (question.Duration == 0) {
           alert("Please fill the duration");
+
+          return;
+        }
+        if (question.codeQuestion === "") {
+          alert("Please fill the question");
+
+          return;
+        }
+        if (question.codeLanguage === "") {
+          alert("Please fill the codelanguage");
 
           return;
         }
@@ -120,7 +135,14 @@ const AddCode = () => {
           testcase: [{ input: "", expectedOutput: "" }],
           output: [""],
         });
+    setToggle(1);
+
+        if (component === "save") {
+          navigate(-1);
+        }
+
         setToggle(1);
+
       } else {
         alert("Please fill all the fields");
       }
@@ -129,7 +151,8 @@ const AddCode = () => {
         question.codeQuestion != "" ||
         question.code != "" ||
         question.codeLanguage != "" ||
-        question.code != ""
+        question.code != "" ||
+        question.verificationCode!=""
       ) {
         if (question.code === "") {
           alert("Please fill the code");
@@ -140,9 +163,19 @@ const AddCode = () => {
           alert("Please add the question");
           return;
         }
+        if (question.verificationCode === "") {
+          alert("Please fill the code");
+
+          return;
+        }
 
         if (question.Duration == 0) {
           alert("Please fill the duration");
+          return;
+        }
+        if (question.codeLanguage === "") {
+          alert("Please fill the langugage");
+
           return;
         }
         dispatch(addCompiler({ data: question, id: id, type: type }));
@@ -162,16 +195,21 @@ const AddCode = () => {
           ],
           testcase: [{ input: "", expectedOutput: "" }],
           output: [""],
+
         });
-        setToggle(1);
+     setToggle(1);
+        if (component === "save") {
+          navigate(-1);
+        }
+
+   
+
       } else {
         alert("Please fill all the fields");
       }
     }
     console.log(question);
-    if (component === "save") {
-      navigate(-1);
-    }
+   
   };
 
   return (

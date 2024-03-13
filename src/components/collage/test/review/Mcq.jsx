@@ -17,24 +17,15 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
   const [mcq, setMcq] = useState(question);
   const dispatch = useDispatch();
   const handleChange = (e) => {
-    const { name, value, key } = e.target;
+    const { name, value } = e.target;
+  
     if (name === "Title") {
       console.log("name");
       setMcq((prev) => {
-        return { ...prev, [name]: [value] };
+        return { ...prev, [name]: value };
       });
     } else {
-      console.log(key);
-      // setMcq((prev) => {
-      //   return {
-      //     ...prev,
-      //     Options: [
-      //       ...prev.Options.slice(0, name),
-      //       value,
-      //       ...prev.Options.slice(name + 1),
-      //     ],
-      //   };
-      // });
+      console.log(name);
       setMcq((prev) => {
         return {
           ...prev,
@@ -45,6 +36,7 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
       });
     }
   };
+  
   const handleDelete = () => {
     dispatch(
       removeQuestion({ selfIndex: Number, topicIndex: id, questionType: "mcq" })
@@ -54,7 +46,7 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
   const handleEdit =()=>{
 
     if(mcq.Title === "" || mcq.Options[0] === "" || mcq.Options[1] === "" || mcq.Options[2] === "" || mcq.Options[3] === ""){
-      alert("Please fill all the fields");
+     alert("Please fill all the fields");
  
        return;
      }else{

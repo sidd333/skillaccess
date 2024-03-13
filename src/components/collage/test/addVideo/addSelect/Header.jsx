@@ -37,17 +37,33 @@ const Header = ({ selectQuestionType }) => {
         // Add other properties if needed
       },
     };
-    let mcq = topicToBeAdded.video.questions.reduce((acc, question) => {
+    let mcq;
+    if(topicToBeAdded.video.questions?.length>0){
+       mcq = topicToBeAdded.video.questions.reduce((acc, question) => {
+        return acc + parseInt(question.Duration);
+      }, 0);
+    }
+    else{
+      mcq=0;
+    }
+    let long ;
+    if(topicToBeAdded.video.long?.length>0){
+    long = topicToBeAdded.video?.long?.reduce((acc, question) => {
       return acc + parseInt(question.Duration);
     }, 0);
-    let long = topicToBeAdded.video.long.reduce((acc, question) => {
+  }
+  else{
+    long=0;
+  }
+  let short;
+  if(topicToBeAdded.video.long?.length>0){
+     short = topicToBeAdded.video?.short?.reduce((acc, question) => {
       return acc + parseInt(question.Duration);
     }, 0);
-
-    let short = topicToBeAdded.video.short.reduce((acc, question) => {
-      return acc + parseInt(question.Duration);
-    }, 0);
-    console.log(mcq);
+  }
+  else{
+    short=0;
+  }
     let Duration = mcq + long + short;
 
     const vid = {
@@ -91,7 +107,7 @@ const Header = ({ selectQuestionType }) => {
           alert("Please add questions to the assessment");
           return;
         } else {
-          navigate("/collage/test/select");
+          navigate(`/collage/test/typeOfQuestions/${id}`);
         }
         //           navigate(`/collage/test/select`);
       });
