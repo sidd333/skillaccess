@@ -187,7 +187,7 @@ const Register = () => {
           </div>
 
           {/* checkbox */}
-          <label className=" flex gap-2 cursor-pointer mx-auto w-full max-w-xl">
+          <label className=" flex items-center gap-2 cursor-pointer mx-auto w-full max-w-xl">
             <input
               type="checkbox"
               onChange={(e) => setChecked(!checked)}
@@ -196,10 +196,10 @@ const Register = () => {
             />
             <span className="text-lGray font-bold text-xs">
               By creating an account, you agree to our{" "}
-              <Link className="text-blue-600">
-                Privacy Policy, Term and Conditions{" "}
+              <Link className="text-blue-600" to='/terms&policies' >
+                Terms-Policies.{" "}
               </Link>
-              and, <Link>Notification Settings</Link>
+              {/* and, <Link>Notification Settings</Link> */}
             </span>
           </label>
 
