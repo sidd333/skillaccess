@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Header from "./Header";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { addVideo } from "../../../../../redux/collage/test/testSlice";
 
@@ -14,7 +14,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const LongShortAnswer = () => {
   const navigate = useNavigate();
-
+  const { TopicToBeAdded } = useSelector((state) => state.test);
   const dispatch = useDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,13 +28,35 @@ const LongShortAnswer = () => {
   const LongShort = searchParams.get("length");
 
   const [question, setQuestion] = useState({
-    id:`${Date.now()}`,
+    id: `${Date.now()}`,
 
     Title: "",
 
     Duration: 0,
   });
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (LongShort === "short") {
+      setCount(TopicToBeAdded.video.short.length - 1);
+    } else {
+      setCount(TopicToBeAdded.video.long.length - 1);
+    }
+  }, []);
+  const [isPrev, setIsPrev] = useState(false);
 
+  const handlePrev = () => {
+    setIsPrev(true);
+    if (LongShort === "short") {
+      setQuestion(TopicToBeAdded.video.short[count]);
+    } else {
+      setQuestion(TopicToBeAdded.video.long[count]);
+    }
+
+    setCount((prev) => {
+      if (prev - 1 > 0) return prev - 1;
+      return -1;
+    });
+  };
   const handleChanges = (e) => {
     setQuestion({ ...question, [e.target.name]: e.target.value });
     if (e.target.name === "Duration") {
@@ -47,67 +69,75 @@ const LongShortAnswer = () => {
   const handleSave = () => {
     console.log(question);
 
-    if (addType === "topic") {
-      // dispatch(addEssayToTopic({ data: question, id: id, type: type }));
-
-      // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+    if (LongShort === "short") {
       if (question.Title == "") {
         window.alert("Please enter the question");
-      }
-      if (question.Duration == 0) {
+      } else if (question.Duration == 0) {
         window.alert("Please enter required time");
         return;
-      }else{
-      setQuestion({  id:`${Date.now()}`,
+      } else {
+        if (isPrev) {
+          dispatch(addVideo({ short: question, prev: true, index: count + 1 }));
+          setIsPrev(false);
+          setCount(TopicToBeAdded.video.short.length - 1);
+          setQuestion({
+            id: `${Date.now()}`,
 
-      Title: "",
-  
-      Duration: 0, });
+            Title: "",
+
+            Duration: 0,
+          });
+        } else {
+          dispatch(addVideo({ short: question, prev: false }));
+
+          setQuestion({
+            id: `${Date.now()}`,
+
+            Title: "",
+
+            Duration: 0,
+          });
+        }
       }
     } else {
-      if (LongShort === "short") {
-        if (question.Title == "") {
-          window.alert("Please enter the question");
-        } else if (question.Duration == 0) {
-          window.alert("Please enter required time");
-          return;
-        }
-else{
-        dispatch(addVideo({ short: question }));
-
-        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-
-        setQuestion({  id:`${Date.now()}`,
-
-        Title: "",
-    
-        Duration: 0,});
-}
+      if (question.Title == "") {
+        window.alert("Please enter the question");
+      } else if (question.Duration == 0) {
+        window.alert("Please enter required time");
+        return;
       } else {
-        if (question.Title == "") {
-          window.alert("Please enter the question");
-        } else if (question.Duration == 0) {
-          window.alert("Please enter required time");
-          return;
+        if (isPrev) {
+          dispatch(addVideo({ long: question, prev: true, index: count + 1 }));
+          setIsPrev(false);
+          setCount(TopicToBeAdded.video.long.length - 1);
+          setQuestion({
+            id: `${Date.now()}`,
+
+            Title: "",
+
+            Duration: 0,
+          });
+        } else {
+          dispatch(addVideo({ long: question, prev: false }));
+
+          // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+
+          setQuestion({
+            id: `${Date.now()}`,
+
+            Title: "",
+
+            Duration: 0,
+          });
         }
-else{
-        dispatch(addVideo({ long: question }));
-
-        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-
-        setQuestion({  id:`${Date.now()}`,
-
-        Title: "",
-    
-        Duration: 0, });
       }
-    }
     }
   };
 
   return (
     <div>
       <Header
+        handleSave={handleSave}
         question={question}
         setQuestion={setQuestion}
         id={id}
@@ -149,9 +179,14 @@ else{
         <div className="absolute bottom-10 flex right-8 gap-2">
           {" "}
           <div className=" flex gap-2">
-            <button className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32">
-              <FaChevronLeft className="self-center" /> Prev
-            </button>
+            {count >= 0 && (
+              <button
+                className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32"
+                onClick={handlePrev}
+              >
+                <FaChevronLeft className="self-center" /> Prev
+              </button>
+            )}
           </div>
           <div className=" flex">
             <button

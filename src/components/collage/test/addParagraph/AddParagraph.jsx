@@ -7,9 +7,10 @@ import {
   addFindAns,
   addFindAnsToTopic,
   addQuestionToTopic,
+  editQuestionById,
 } from "../../../../redux/collage/test/testSlice";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddParagraph = () => {
   const MAX_QUESTIONS = 3;
@@ -30,6 +31,41 @@ const AddParagraph = () => {
     Duration: 0,
     questions: [{ question: "" }],
   });
+
+  const { topics, currentTopic } = useSelector((state) => state.test);
+  const [isPrev, setIsPrev] = useState(false);
+
+  const [count, setCount] = useState(topics[id]?.findAnswers.length - 1);
+
+  const [countDetail, setCountDetail] = useState(
+    currentTopic.findAnswers.length - 1
+  );
+
+  const handlePrev = () => {
+    if (addType === "topic") {
+      setIsPrev(true);
+      let current = currentTopic.findAnswers[countDetail];
+      current = JSON.stringify(current);
+      current = JSON.parse(current);
+      setQuestion({
+        ...current,
+        Duration: parseInt(current.Duration),
+        questions: [...current.questions],
+      });
+      setCountDetail((prev) => {
+        if (prev - 1 >= 0) return prev - 1;
+        return -1;
+      });
+    } else {
+      setIsPrev(true);
+      let current = topics[id].findAnswers[count];
+      setQuestion({ ...current, Duration: parseInt(current.Duration) });
+      setCount((prev) => {
+        if (prev - 1 >= 0) return prev - 1;
+        return -1;
+      });
+    }
+  };
 
   const handleChanges = (e) => {
     setQuestion({ ...question, [e.target.name]: e.target.value });
@@ -57,28 +93,48 @@ const AddParagraph = () => {
         window.alert("Please enter all questions");
         return;
       } else {
-        dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
-        dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({
-          Title: "",
-          section: ID,
-          questions: [{ question: "" }],
-          Duration: 0,
-          id: ID + Date.now(),
-        });
+        if (isPrev) {
+          setCountDetail(currentTopic.findAnswers.length - 1);
+          setIsPrev(false);
+          //api call
+          dispatch(
+            editQuestionById({
+              index: countDetail + 1,
+              type: "findAnswer",
+              id: question._id,
+              question: question,
+            })
+          );
+
+          setQuestion({
+            Title: "",
+            section: ID,
+            questions: [{ question: "" }],
+            Duration: 0,
+            id: ID + Date.now(),
+          });
+        } else {
+          dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
+          dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+          setQuestion({
+            Title: "",
+            section: ID,
+            questions: [{ question: "" }],
+            Duration: 0,
+            id: ID + Date.now(),
+          });
+        }
       }
     } else {
       if (question.Title == "") {
         window.alert("Please enter the question");
-      }
-      else if (question.Duration == 0) {
+      } else if (question.Duration == 0) {
         window.alert("Please enter required time");
         return;
       } else if (question.questions.some((q) => q.question === "")) {
         window.alert("Please enter all questions");
         return;
-      } 
-       else {
+      } else {
         dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
 
         // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
@@ -178,12 +234,25 @@ const AddParagraph = () => {
           <div className=" mb-10 flex pr-8 gap-2">
             {" "}
             <div className=" flex gap-2">
-              <button
-                className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32"
-                onClick={() => navigate(-1)}
-              >
-                <FaChevronLeft className="self-center" /> Prev
-              </button>
+              {addType === "topic" ? (
+                <button
+                  className={`self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 ${
+                    countDetail >= 0 ? "" : "hidden"
+                  }`}
+                  onClick={handlePrev}
+                >
+                  <FaChevronLeft className="self-center" /> Prev
+                </button>
+              ) : (
+                <button
+                  className={`self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 ${
+                    count >= 0 ? "" : "hidden"
+                  }`}
+                  onClick={handlePrev}
+                >
+                  <FaChevronLeft className="self-center" /> Prev
+                </button>
+              )}
             </div>
             <div className=" flex">
               <button
