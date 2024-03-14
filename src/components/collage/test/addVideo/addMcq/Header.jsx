@@ -14,7 +14,7 @@ import {
   addVideo,
 } from "../../../../../redux/collage/test/testSlice";
 
-const Header = ({ question, setQuestion }) => {
+const Header = ({ question, setQuestion, handleSave }) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -37,32 +37,9 @@ const Header = ({ question, setQuestion }) => {
     navigate("/collage/test/final");
   };
 
-  const handleSave = () => {
-    
-    if (question.Title === "" ) {
-      window.alert("Please enter question");
-      return;
-    }
-   else if (question.Options &&  question.Options.length < 4) {
-
-      window.alert("Please enter atleast 4 options");
-      return;
-    }
-   else if(question.Duration==0){
-      window.alert("Please enter required time");
-      return;
-    }
-    else if(question.AnswerIndex===null){
-      window.alert("Please enter correct answer");
-      return;
-    }
-    else{
-    dispatch(addVideo({ question: question }));
-
-    setQuestion({ Title: "", Options: [] , AnswerIndex:null });
-
+  const handleSaveHeader = () => {
+    handleSave();
     navigate(-1);
-    }
   };
 
   // useEffect(() => {
@@ -103,7 +80,7 @@ const Header = ({ question, setQuestion }) => {
             className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white"
             // onClick={handleCreateTest}
 
-            onClick={handleSave}
+            onClick={handleSaveHeader}
           >
             Save
           </button>

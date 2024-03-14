@@ -5,7 +5,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addMcq, createTest } from "../../../../redux/collage/test/testSlice";
 
-const Header = ({ question, setQuestion, section }) => {
+const Header = ({
+  search,
+  question,
+  setQuestion,
+  section,
+  count,
+  isPrev,
+  setIsPrev,
+  handleSave,
+}) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,25 +32,9 @@ const Header = ({ question, setQuestion, section }) => {
   //   navigate("/collage/test/final");
   // };
 
-  const handleSave = () => {
-    if (question.Title === "") {
-      window.alert("Please enter question");
-      return;
-    } else if (question.Options && question.Options.length < 4) {
-      window.alert("Please enter atleast 4 options");
-      return;
-    } else if (question.Duration == 0) {
-      window.alert("Please enter required time");
-      return;
-    } else if (question.AnswerIndex === null) {
-      window.alert("Please select correct answer");
-      return;
-    } else {
-      dispatch(addMcq({ question: question, id: id }));
-      setQuestion({ Title: "", Options: [], Duration: 0, AnswerIndex: null });
-
-      navigate(-1);
-    }
+  const handleSaveNext = () => {
+    handleSave();
+    navigate(-1);
   };
   // useEffect(() => {
   //   dispatch(setTest({questions}));
@@ -77,7 +70,7 @@ const Header = ({ question, setQuestion, section }) => {
             className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white"
             // onClick={handleCreateTest}
 
-            onClick={handleSave}
+            onClick={handleSaveNext}
           >
             Save
           </button>

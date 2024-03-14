@@ -8,16 +8,50 @@ import {
   addCompiler,
   addCompilerToTopic,
   addQuestionToTopic,
+  editQuestionById,
 } from "../../../../redux/collage/test/testSlice";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddCode = () => {
+  const { id } = useParams();
+  const { topics, currentTopic } = useSelector((state) => state.test);
+  const [isPrev, setIsPrev] = useState(false);
+
+  const [count, setCount] = useState(topics[id]?.compiler.length - 1);
+
+  const [countDetail, setCountDetail] = useState(
+    currentTopic?.compiler.length - 1
+  );
+
+  const handlePrev = () => {
+    if (addType === "topic") {
+      setIsPrev(true);
+      let current = currentTopic.compiler[countDetail];
+      current = JSON.stringify(current);
+      current = JSON.parse(current);
+      setQuestion({ ...current, Duration: parseInt(current.Duration) || 0 });
+
+      setCountDetail((prev) => {
+        if (prev - 1 >= 0) return prev - 1;
+        return -1;
+      });
+    } else {
+      setIsPrev(true);
+      let current = topics[id].compiler[count];
+      setQuestion({ ...current, Duration: parseInt(current.Duration) });
+      setCount((prev) => {
+        if (prev - 1 >= 0) return prev - 1;
+        return -1;
+      });
+    }
+  };
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [validate, setValidate] = useState(false);
-  const { id } = useParams();
+
   const type = searchParams.get("type");
   const addType = searchParams.get("addType");
   const [toggle, setToggle] = useState(1);
@@ -89,8 +123,8 @@ const AddCode = () => {
         question.codeQuestion != "" ||
         question.code != "" ||
         question.codeLanguage != "" ||
-        question.code != ""||
-        question.verificationCode!=""
+        question.code != "" ||
+        question.verificationCode != ""
       ) {
         if (question.code === "") {
           alert("Please fill the code");
@@ -117,32 +151,62 @@ const AddCode = () => {
 
           return;
         }
-        dispatch(addCompilerToTopic({ data: question, id: id, type: type }));
-        dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({
-          id: ID + Date.now(),
-          section: ID,
-          code: "",
-          Duration: 0,
-          codeQuestion: "",
-          codeLanguage: "",
-          parameters: [
-            {
-              paramName: "",
-              type: "String",
-            },
-          ],
-          testcase: [{ input: "", expectedOutput: "" }],
-          output: [""],
-        });
-    setToggle(1);
+        if (isPrev) {
+          dispatch(
+            editQuestionById({
+              index: countDetail + 1,
+              type: "code",
+              id: question._id,
+              question: question,
+            })
+          );
+          setCountDetail(currentTopic.compiler.length - 1);
+
+          setIsPrev(false);
+          setQuestion({
+            id: ID + Date.now(),
+            section: ID,
+            code: "",
+            Duration: 0,
+            codeQuestion: "",
+            codeLanguage: "",
+            parameters: [
+              {
+                paramName: "",
+                type: "String",
+              },
+            ],
+            testcase: [{ input: "", expectedOutput: "" }],
+            output: [""],
+          });
+          setToggle(1);
+        } else {
+          dispatch(addCompilerToTopic({ data: question, id: id, type: type }));
+          dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+          setQuestion({
+            id: ID + Date.now(),
+            section: ID,
+            code: "",
+            Duration: 0,
+            codeQuestion: "",
+            codeLanguage: "",
+            parameters: [
+              {
+                paramName: "",
+                type: "String",
+              },
+            ],
+            testcase: [{ input: "", expectedOutput: "" }],
+            output: [""],
+          });
+          setToggle(1);
+        }
 
         if (component === "save") {
           navigate(-1);
         }
 
         setToggle(1);
-
       } else {
         alert("Please fill all the fields");
       }
@@ -152,7 +216,7 @@ const AddCode = () => {
         question.code != "" ||
         question.codeLanguage != "" ||
         question.code != "" ||
-        question.verificationCode!=""
+        question.verificationCode != ""
       ) {
         if (question.code === "") {
           alert("Please fill the code");
@@ -178,38 +242,66 @@ const AddCode = () => {
 
           return;
         }
-        dispatch(addCompiler({ data: question, id: id, type: type }));
-        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({
-          id: ID + Date.now(),
-          section: ID,
-          code: "",
-          Duration: 0,
-          codeQuestion: "",
-          codeLanguage: "",
-          parameters: [
-            {
-              paramName: "",
-              type: "String",
-            },
-          ],
-          testcase: [{ input: "", expectedOutput: "" }],
-          output: [""],
+        if (isPrev) {
+          dispatch(
+            addCompiler({
+              data: question,
+              id: id,
+              type: type,
+              prev: true,
+              index: count + 1,
+            })
+          );
+          setCount(topics[id].compiler.length - 1);
+          setIsPrev(false);
+          setQuestion({
+            id: ID + Date.now(),
+            section: ID,
+            code: "",
+            Duration: 0,
+            codeQuestion: "",
+            codeLanguage: "",
+            parameters: [
+              {
+                paramName: "",
+                type: "String",
+              },
+            ],
+            testcase: [{ input: "", expectedOutput: "" }],
+            output: [""],
+          });
+        } else {
+          dispatch(
+            addCompiler({ data: question, id: id, type: type, prev: false })
+          );
+          // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+          setQuestion({
+            id: ID + Date.now(),
+            section: ID,
+            code: "",
+            Duration: 0,
+            codeQuestion: "",
+            codeLanguage: "",
+            parameters: [
+              {
+                paramName: "",
+                type: "String",
+              },
+            ],
+            testcase: [{ input: "", expectedOutput: "" }],
+            output: [""],
+          });
+        }
 
-        });
-     setToggle(1);
+        setToggle(1);
         if (component === "save") {
           navigate(-1);
         }
-
-   
-
       } else {
         alert("Please fill all the fields");
       }
     }
     console.log(question);
-   
   };
 
   return (
@@ -246,12 +338,25 @@ const AddCode = () => {
           <div className="absolute bottom-10 flex right-8 gap-2">
             {" "}
             <div className=" flex gap-2">
-              <button
-                className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32"
-                onClick={() => navigate(-1)}
-              >
-                <FaChevronLeft className="self-center" /> Prev
-              </button>
+              {addType === "topic" ? (
+                <button
+                  className={`self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 ${
+                    countDetail >= 0 ? "" : "hidden"
+                  }`}
+                  onClick={handlePrev}
+                >
+                  <FaChevronLeft className="self-center" /> Prev
+                </button>
+              ) : (
+                <button
+                  className={`self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 ${
+                    count >= 0 ? "" : "hidden"
+                  }`}
+                  onClick={handlePrev}
+                >
+                  <FaChevronLeft className="self-center" /> Prev
+                </button>
+              )}
             </div>
             <div className=" flex">
               <button
