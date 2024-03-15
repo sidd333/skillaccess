@@ -53,6 +53,10 @@ const Login = () => {
       console.log(error);
     }
   };
+  const handleCheckboxChange = () => {
+    setChecked(!checked); // Toggle checkbox status
+  };
+  const isLoginDisabled = !checked || !Credentials.Email || !Credentials.Password;
   return (
     <form action="" className="font-dmSans">
       <div className=" bg-base-100 shadow-xl h-full min-h-[100vh]  font-dmSans grid grid-cols-5 ">
@@ -157,8 +161,9 @@ const Login = () => {
           <label className=" flex  gap-2 cursor-pointer mx-auto w-full max-w-xs">
             <input
               type="checkbox"
-              checked="false"
+              checked={checked}
               className="checkbox checkbox-primary bg-secondary opacity-20 w-6 h-6"
+              onChange={handleCheckboxChange}
             />
             <span className="text-lGray">
               By creating an account, you agree to our{" "}
@@ -167,8 +172,10 @@ const Login = () => {
           </label>
 
           <button
-            className="btn hover:bg-blue-500  rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
+             className={`btn hover:bg-blue-500 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto bg-secondary text-white ${
+              isLoginDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={handleSubmit}
+            disabled={isLoginDisabled}
           >
             Login
           </button>
