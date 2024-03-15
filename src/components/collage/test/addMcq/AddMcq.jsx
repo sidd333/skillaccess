@@ -161,6 +161,7 @@ const AddMcq = () => {
           AnswerIndex: null,
           section: search.get("topicId"),
         });
+        if (type === "save") navigate(-1);
       }
     }
   };

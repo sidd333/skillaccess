@@ -38,8 +38,7 @@ const Header = ({ question, setQuestion, handleSave }) => {
   };
 
   const handleSaveHeader = () => {
-    handleSave();
-    navigate(-1);
+    handleSave("save");
   };
 
   // useEffect(() => {
