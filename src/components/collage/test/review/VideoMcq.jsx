@@ -63,7 +63,47 @@ const VideoMcq = ({
     console.log(videoState, "mcq-state");
     // console.log(mcq, "mcq");
   };
-
+  const handleSubmit = () => {
+    if (mcq.Title.trim() === "" || mcq.Options.some(option => option.trim() === "")) {
+      handleAlertDismiss();
+      alert("Please fill in all fields for the MCQ.");
+      return;
+    }
+  
+    setSave(false);
+    console.log(mcq);
+    setVideoState((prev) => {
+      return {
+        ...prev,
+        questions: [
+          ...prev.questions.slice(0, Number),
+          {
+            Title: mcq.Title,
+            Options: mcq.Options,
+          },
+          ...prev.questions.slice(Number + 1),
+        ],
+      };
+    });
+  };
+  
+  const handleAlertDismiss = () => {
+    // Iterate over each option in the mcq state
+    const updatedMcq = { ...mcq };
+    updatedMcq.Options = mcq.Options.map((option, index) => {
+      // If the option is empty, revert it back to its previous value
+      if (option.trim() === "") {
+        return question.Options[index];
+      } else {
+        return option;
+      }
+    });
+  
+    // Update the mcq state with the modified options
+    setMcq(updatedMcq);
+  };
+  
+  
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between my-4">
       <div className="w-11/12 flex flex-col gap-2">
@@ -83,25 +123,27 @@ const VideoMcq = ({
         <div className="px-5 pb-4 flex flex-col gap-4">
           {search.get(Number) === "true" && (
             <button
-              onClick={() => {
-                setSave(false);
-                console.log(mcq);
-                setVideoState((prev) => {
-                  {
-                    return {
-                      ...prev,
-                      questions: [
-                        ...prev.questions.slice(0, Number),
-                        {
-                          Title: mcq.Title,
-                          Options: mcq.Options,
-                        },
-                        ...prev.questions.slice(Number + 1),
-                      ],
-                    };
-                  }
-                });
-              }}
+              onClick={ handleSubmit
+                // () => {
+              //   setSave(false);
+              //   console.log(mcq);
+              //   setVideoState((prev) => {
+              //     {
+              //       return {
+              //         ...prev,
+              //         questions: [
+              //           ...prev.questions.slice(0, Number),
+              //           {
+              //             Title: mcq.Title,
+              //             Options: mcq.Options,
+              //           },
+              //           ...prev.questions.slice(Number + 1),
+              //         ],
+              //       };
+              //     }
+              //   });
+               //}
+            }
             >
               save
             </button>

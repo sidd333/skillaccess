@@ -31,7 +31,7 @@ const Video = ({ video, Number }) => {
             <Disclosure.Button className="w-full bg-gray-100 mx-2">
               Click to Expand{" "}
             </Disclosure.Button>
-            <div className="bg-gray-100 h-11 flex  rounded-xl px-1">
+            {/* <div className="bg-gray-100 h-11 flex  rounded-xl px-1">
               <img
                 src="../../images/icons/cross.png"
                 alt="cross"
@@ -44,7 +44,7 @@ const Video = ({ video, Number }) => {
                   });
                 }}
               />
-            </div>
+            </div> */}
           </div>
 
           <Disclosure.Panel>

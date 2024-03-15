@@ -26,6 +26,8 @@ const Submit = () => {
     totalAttempts,
     totalQuestions,
     totalDuration,
+    duration_from,
+    duration_to,
   } = useSelector((state) => state.test);
 
   const [questions, setQuestions] = useState();
@@ -198,7 +200,7 @@ const Submit = () => {
     //   totalQuestions,
     //   totalAttempts
     // }
-    if (!name || !description || !totalAttempts || !totalQuestions ||!totalDuration) {
+    if (!name || !description || !totalAttempts || !totalQuestions || !duration_from || !duration_to) {
       const confirmed = window.confirm("Please fill all the details");
 
       if (confirmed) {
@@ -208,8 +210,8 @@ const Submit = () => {
 
       return;
     }
-    if (totalAttempts < 0 || totalDuration < 0 || totalQuestions < 0) {
-      const confirmed= window.confirm("Total attempts, total duration, and total questions must be positive numbers.");
+    if (totalAttempts < 0 || totalQuestions < 0) {
+      const confirmed= window.confirm("Total attempts, and total questions must be positive numbers.");
       if (confirmed) {
         // Navigate to the specified page
         navigate(`/collage/test/name?level=${level}`);
@@ -295,6 +297,7 @@ const Submit = () => {
       <div className="w-4/5 mx-auto">
         <Progress />
       </div>
+      
       <div className="mt-16">
         {console.log(questions)}
         {questions
