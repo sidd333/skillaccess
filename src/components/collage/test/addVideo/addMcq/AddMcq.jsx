@@ -479,10 +479,10 @@ const AddMcq = () => {
                     <FaPlus className="self-center" /> Add
                   </button> */}
 
-                  <span className="self-center">
+                  {/* <span className="self-center">
                     <input type="checkbox" className="mr-2" />{" "}
                     <label className="">Shuffle Answers</label>
-                  </span>
+                  </span> */}
                 </div>
               </div>
             </div>
