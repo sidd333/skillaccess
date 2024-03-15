@@ -74,13 +74,13 @@ const testState = {
   totalQuestions: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).totalQuestions
     : null,
-    duration_from: localStorage.getItem("testDetails")
+  duration_from: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).duration_from
     : "",
-    duration_to: localStorage.getItem("testDetails")
+  duration_to: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).duration_to
     : "",
-    duration_to: localStorage.getItem("testDetails")
+  duration_to: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).isNegativeMarking
     : false,
   topics: localStorage.getItem("topics")
@@ -89,7 +89,28 @@ const testState = {
   status: "",
   currentTopic: localStorage.getItem("currentTopic")
     ? JSON.parse(localStorage.getItem("currentTopic"))
-    : {}, //on edit
+    : {
+        _id: "",
+        Time: 0,
+        Heading: "",
+        Description: "",
+        CreatedByAdmin: false,
+        Student: [],
+        Timeline: "",
+        TotalQuestions: 0,
+        TotalStudentsAttempted: 0,
+        TotalStudentsCorrect: 0,
+        Type: "",
+        assessments: [],
+        college: "",
+        compiler: [],
+        createdByCollege: false,
+        createdByCompany: false,
+        essay: [],
+        findAnswers: [],
+        questions: [],
+        video: [],
+      }, //on edit
   TopicToBeAdded: localStorage.getItem("TopicToBeAdded")
     ? JSON.parse(localStorage.getItem("TopicToBeAdded"))
     : {
@@ -698,7 +719,7 @@ const testSlice = createSlice({
       state.level = action.payload.level;
       state.duration_from = action.payload.duration_from;
       state.duration_to = action.payload.duration_to;
-      state.isNegativeMarking=action.payload.isNegativeMarking;
+      state.isNegativeMarking = action.payload.isNegativeMarking;
       state.status = "active";
       localStorage.setItem(
         "testDetails",
@@ -709,9 +730,9 @@ const testSlice = createSlice({
           totalAttempts: state.totalAttempts,
           totalQuestions: state.totalQuestions,
           totalDuration: state.totalDuration,
-          duration_to:state.duration_to,
-          duration_from:state.duration_from,
-          isNegativeMarking:state.isNegativeMarking,
+          duration_to: state.duration_to,
+          duration_from: state.duration_from,
+          isNegativeMarking: state.isNegativeMarking,
         })
       );
       console.log(action.payload, "action.payload");
