@@ -29,9 +29,6 @@ const List = () => {
     dispatch(getAllTests());
   }, [dispatch]);
 
-
-
-
   return (
     <div className="w-full mx-auto">
       {/* legend */}
@@ -61,12 +58,9 @@ const List = () => {
           <div className={` flex `}>
             <div className="flex self-center">
               <span>
-
                 <h2 className="font-dmSans  sm:text-sm">{assessment.name}</h2>
 
-                <h2 className="font-dmSans  sm:text-sm">
-                  {
-
+                {/* <h2 className="font-dmSans  sm:text-sm"> */}
               </span>
             </div>
           </div>
@@ -75,9 +69,7 @@ const List = () => {
             <div className=" self-center h-fit">
               <span>
                 <h2 className="font-dmSans  sm:text-sm">
-
                   {assessment.studentResponses.length}
-
                 </h2>
               </span>
             </div>
@@ -86,9 +78,7 @@ const List = () => {
           <div className="flex justify-center">
             <div className=" self-center h-fit">
               <span>
-
                 <h2 className="font-dmSans  sm:text-sm">{0}</h2>
-
               </span>
             </div>
           </div>
@@ -110,13 +100,11 @@ const List = () => {
           <div className="flex justify-end mr-3">
             <span
               className="self-center hover:cursor-pointer "
-
               onClick={() =>
                 navigate(
                   `/collage/results/overview?level=beginner&assessment=${assessment._id}`
                 )
               }
-
             >
               <h2 className="font-dmSans  text-sm sm:text-base text-blue-500 ">
                 View Details

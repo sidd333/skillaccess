@@ -1,9 +1,7 @@
-import { response } from "express";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import { getStudentResponse } from "../../../../redux/collage/test/testSlice";
-
 
 const Appeared = ({ assessment }) => {
   const navigate = useNavigate();
@@ -17,13 +15,11 @@ const Appeared = ({ assessment }) => {
   // }
   // );
 
-
   // const responses= assessment.studentResponses.forEach((responseId)=>{
   // dispatch(getStudentResponse(responseId))
   //   })
 
   //   console.log(response)
-
 
   return (
     <div className="w-full mx-auto">
@@ -58,9 +54,7 @@ const Appeared = ({ assessment }) => {
               </div>
               <span className="break-words min-w-0 pt-1 self-center">
                 <h2 className="font-dmSans font-semibold text-sm sm:text-base  ">
-
                   {student.FirstName}
-
                 </h2>
               </span>
             </div>
