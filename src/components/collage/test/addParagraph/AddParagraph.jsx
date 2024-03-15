@@ -80,7 +80,7 @@ const AddParagraph = () => {
   //   console.log(question);
   // }, [question]);
 
-  const handleSave = () => {
+  const handleSave = (type) => {
     if (addType === "topic") {
       if (question.Title == "") {
         window.alert("Please enter the question");
@@ -151,6 +151,7 @@ const AddParagraph = () => {
             Duration: 0,
             section: ID,
           });
+          if (type === "save") navigate(-1);
         } else {
           dispatch(
             addFindAns({
@@ -161,7 +162,7 @@ const AddParagraph = () => {
               index: count + 1,
             })
           );
-
+          if (type === "save") navigate(-1);
           // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
           setQuestion({
             id: ID + Date.now(),
@@ -181,6 +182,7 @@ const AddParagraph = () => {
   return (
     <div>
       <Header
+        save={handleSave}
         section={ID}
         question={question}
         setQuestion={setQuestion}
