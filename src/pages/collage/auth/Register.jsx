@@ -59,6 +59,7 @@ const Register = () => {
       console.log("Reject" + error);
     }
   };
+  const isCreateAccountDisabled = !checked || !Credentials.Email || !Credentials.Password || !Credentials.FirstName || !Credentials.LastName || !Credentials.University || !Credentials.Phone;
   return (
     <form action="" className="font-dmSans">
       <div className=" bg-base-100 shadow-xl h-full   font-dmSans grid grid-cols-5 ">
@@ -190,7 +191,7 @@ const Register = () => {
           <label className=" flex items-center gap-2 cursor-pointer mx-auto w-full max-w-xl">
             <input
               type="checkbox"
-              onChange={(e) => setChecked(!checked)}
+              onChange={(e) => setChecked(e.target.checked)}
               checked={checked}
               className="checkbox checkbox-primary bg-secondary opacity-20 w-6 h-6"
             />
@@ -206,8 +207,9 @@ const Register = () => {
           {/* register button */}
           <></>
           <button
-            className="btn hover:bg-blue-700 bg-blue-600 rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto text-white"
-            onClick={handleSubmit}
+           className={`btn hover:bg-blue-700 bg-blue-600 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto text-white ${isCreateAccountDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+           onClick={handleSubmit}
+           disabled={isCreateAccountDisabled}
           >
             Create Account
           </button>

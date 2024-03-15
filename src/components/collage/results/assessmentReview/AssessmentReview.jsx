@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import Code from "./Code";
 import Video from "./Video";
 import Essay from "./Essay";
+import HeaderMarks from "./HeaderMarks";
 
 const AssessmentReview = () => {
   const navigate = useNavigate();
@@ -243,7 +244,7 @@ const AssessmentReview = () => {
   return (
     <div className="w-11/12 mx-auto relative    min-h-[90vh] pb-20">
       <Header page={"final"} handleSubmit={handleSubmit} />
-
+      <HeaderMarks/>
       <div className="mt-16">
         {questions
           ?.slice((selected - 1) * 10, selected * 10)

@@ -70,6 +70,15 @@ const testState = {
   totalQuestions: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).totalQuestions
     : null,
+    duration_from: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).duration_from
+    : "",
+    duration_to: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).duration_to
+    : "",
+    duration_to: localStorage.getItem("testDetails")
+    ? JSON.parse(localStorage.getItem("testDetails")).isNegativeMarking
+    : false,
   topics: localStorage.getItem("topics")
     ? JSON.parse(localStorage.getItem("topics"))
     : [], //selected topics
@@ -659,6 +668,9 @@ const testSlice = createSlice({
       state.totalQuestions = action.payload.totalQuestions;
       state.totalDuration = action.payload.totalDuration;
       state.level = action.payload.level;
+      state.duration_from = action.payload.duration_from;
+      state.duration_to = action.payload.duration_to;
+      state.isNegativeMarking=action.payload.isNegativeMarking;
       state.status = "active";
       localStorage.setItem(
         "testDetails",
@@ -669,6 +681,9 @@ const testSlice = createSlice({
           totalAttempts: state.totalAttempts,
           totalQuestions: state.totalQuestions,
           totalDuration: state.totalDuration,
+          duration_to:state.duration_to,
+          duration_from:state.duration_from,
+          isNegativeMarking:state.isNegativeMarking,
         })
       );
       console.log(action.payload, "action.payload");
