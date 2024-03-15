@@ -18,7 +18,7 @@ const AddCode = () => {
   const { topics, currentTopic } = useSelector((state) => state.test);
   const [isPrev, setIsPrev] = useState(false);
 
-  const [count, setCount] = useState(topics[id].compiler.length - 1);
+  const [count, setCount] = useState(topics[id]?.compiler.length - 1);
 
   const [countDetail, setCountDetail] = useState(-1);
 
