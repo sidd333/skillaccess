@@ -388,10 +388,10 @@ const AddMcq = () => {
                   {/* <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
                     <FaPlus className="self-center" /> Add
                   </button> */}
-                  <span className="self-center">
+                  {/* <span className="self-center">
                     <input type="checkbox" className="mr-2" />{" "}
                     <label className="">Shuffle Answers</label>
-                  </span>
+                  </span> */}
                 </div>
               </div>
             </div>

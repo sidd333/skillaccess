@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 
 import { FaX } from "react-icons/fa6";
@@ -18,7 +18,7 @@ const AddEssay = () => {
   //prev count
   const { topics, currentTopic } = useSelector((state) => state.test);
   const [isPrev, setIsPrev] = useState(false);
-  const [countDetail, setCountDetail] = useState(currentTopic.essay.length - 1);
+  const [countDetail, setCountDetail] = useState(-1);
   const [count, setCount] = useState(topics[id]?.essay.length - 1);
   const handlePrev = () => {
     if (addType === "topic") {
@@ -128,6 +128,10 @@ const AddEssay = () => {
       }
     }
   };
+
+  useEffect(() => {
+    setCountDetail(currentTopic.essay.length - 1);
+  }, [currentTopic]);
 
   return (
     <div>
