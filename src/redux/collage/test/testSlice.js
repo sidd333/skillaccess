@@ -143,18 +143,21 @@ export const getTest = createAsyncThunk(
       console.log(`get test ${id}`);
       const req = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/assessments/${id}`,
+
         {
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("auth-token"),
           },
         }
+
       );
       const res = req.data;
       // console.log(res);
       return res;
     } catch (error) {
       console.log(error);
+
       return rejectWithValue(error.response.data);
     }
   }
@@ -183,6 +186,7 @@ export const getStudentResponse = createAsyncThunk(
       return res.studentResponses;
     } catch (error) {
       console.log("catch", error.response.data);
+
 
       return rejectWithValue(error.response.data);
     }
@@ -346,6 +350,7 @@ export const createTopic = createAsyncThunk(
   }
 );
 
+
 export const editQuestionById = createAsyncThunk(
   "test/editQuestionById",
   async (data, { rejectWithValue }) => {
@@ -368,6 +373,7 @@ export const editQuestionById = createAsyncThunk(
     }
   }
 );
+
 
 const testSlice = createSlice({
   initialState: testState,
@@ -792,7 +798,7 @@ const testSlice = createSlice({
       .addCase(getTest.fulfilled, (state, action) => {
         state.test = action.payload;
 
-        console.log("fullfilled");
+        console.log("fullfilled",state.test);
       })
       .addCase(getTest.rejected, (state, action) => {
         console.log(action.payload);
@@ -872,6 +878,7 @@ const testSlice = createSlice({
       .addCase(createTopic.rejected, (state, action) => {
         // return action.payload;
       })
+
       .addCase(getStudentResponse.pending, (state, action) => {
         state.status = "pending";
       })
@@ -881,6 +888,7 @@ const testSlice = createSlice({
       .addCase(getStudentResponse.rejected, (state, action) => {
         console.error("Error fetching student responses:", action.payload);
       });
+
   },
 });
 
