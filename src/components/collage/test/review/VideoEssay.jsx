@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { RxCross1 } from "react-icons/rx";
 import { PiFileTextBold } from "react-icons/pi";
@@ -24,52 +24,68 @@ const VideoEssay = ({
   Index,
 }) => {
   // const dispatch = useDispatch();
+
+  // const [save, setSave] = useState(true);
   const [essay, setEssay] = useState(question);
   // const [search, setSearch] = useSearchParams();
 
-  const handleChange = (e) => {
-    const { name, value, key } = e.target;
-    if (name === "Title") {
-      // console.log("name");
-      setEssay((prev) => {
-        return { ...prev, [name]: [value] };
-      });
+  const [previousShortEssay, setPreviousShortEssay] = useState(question);
+  const [previousLongEssay, setPreviousLongEssay] = useState(question);
+  
+  useEffect(() => {
+    if (type === "short") {
+      setPreviousShortEssay(question);
+    } else if (type === "long") {
+      setPreviousLongEssay(question);
     }
+  }, [question, type]);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEssay((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = () => {
+    if (essay.Title.trim() === "") {
+      handleAlertDismiss();
+      alert("Please fill in the Title for the essay.");
+      return;
+    }
+
     if (type === "short") {
       if (videoState.short.length === 0) {
-        setVideoState((prev) => {
-          return { ...prev, short: [essay] };
-        });
+        setVideoState((prev) => ({ ...prev, short: [essay] }));
       } else {
-        setVideoState((prev) => {
-          return {
-            ...prev,
-            short: [
-              ...prev.short.slice(0, Number),
-              essay,
-              ...prev.short.slice(Number + 1),
-            ],
-          };
-        });
+        setVideoState((prev) => ({
+          ...prev,
+          short: [
+            ...prev.short.slice(0, Number),
+            essay,
+            ...prev.short.slice(Number + 1),
+          ],
+        }));
       }
-      console.log(videoState, "short");
     } else if (type === "long") {
       if (videoState.long.length === 0) {
-        setVideoState((prev) => {
-          return { ...prev, long: [essay] };
-        });
+        setVideoState((prev) => ({ ...prev, long: [essay] }));
       } else {
-        setVideoState((prev) => {
-          return {
-            ...prev,
-            long: [
-              ...prev.long.slice(0, Number),
-              essay,
-              ...prev.long.slice(Number + 1),
-            ],
-          };
-        });
+        setVideoState((prev) => ({
+          ...prev,
+          long: [
+            ...prev.long.slice(0, Number),
+            essay,
+            ...prev.long.slice(Number + 1),
+          ],
+        }));
       }
+    }
+  };
+
+  const handleAlertDismiss = () => {
+    // Revert back to the original essay state
+    if (type === "short") {
+      setEssay(previousShortEssay);
+    } else if (type === "long") {
+      setEssay(previousLongEssay);
     }
   };
 
@@ -82,11 +98,57 @@ const VideoEssay = ({
           </h2>
         ) : (
           <input
+            // className={`${!save && "border-none"}`}
             onChange={handleChange}
             placeholder="enter new question"
             name="Title"
             value={essay.Title}
           />
+        )}
+
+        {search.get(Number) === "true" && (
+          <button onClick={handleSubmit}
+            // onClick={() => {
+            //   if (type === "short") {
+            //     if (videoState.short.length === 0) {
+            //       setVideoState((prev) => {
+            //         return { ...prev, short: [essay] };
+            //       });
+            //     } else {
+            //       setVideoState((prev) => {
+            //         return {
+            //           ...prev,
+            //           short: [
+            //             ...prev.short.slice(0, Number),
+            //             essay,
+            //             ...prev.short.slice(Number + 1),
+            //           ],
+            //         };
+            //       });
+            //     }
+            //     console.log(videoState, "short");
+            //   } else if (type === "long") {
+            //     if (videoState.long.length === 0) {
+            //       setVideoState((prev) => {
+            //         return { ...prev, long: [essay] };
+            //       });
+            //     } else {
+            //       setVideoState((prev) => {
+            //         return {
+            //           ...prev,
+            //           long: [
+            //             ...prev.long.slice(0, Number),
+            //             essay,
+            //             ...prev.long.slice(Number + 1),
+            //           ],
+            //         };
+            //       });
+            //     }
+            //   }
+            // }}
+          >
+            save
+          </button>
         )}
       </div>
 

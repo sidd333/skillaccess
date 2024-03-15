@@ -23,11 +23,12 @@ const VideoMcq = ({
 }) => {
   const dispatch = useDispatch();
 
+  const [save, setSave] = useState(true);
   const [mcq, setMcq] = useState(question);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
+
     if (name === "Title") {
       console.log("name", name, value);
       setMcq((prev) => {
@@ -61,10 +62,48 @@ const VideoMcq = ({
 
     console.log(videoState, "mcq-state");
     // console.log(mcq, "mcq");
-
+  };
+  const handleSubmit = () => {
+    if (mcq.Title.trim() === "" || mcq.Options.some(option => option.trim() === "")) {
+      handleAlertDismiss();
+      alert("Please fill in all fields for the MCQ.");
+      return;
+    }
+  
+    setSave(false);
+    console.log(mcq);
+    setVideoState((prev) => {
+      return {
+        ...prev,
+        questions: [
+          ...prev.questions.slice(0, Number),
+          {
+            Title: mcq.Title,
+            Options: mcq.Options,
+          },
+          ...prev.questions.slice(Number + 1),
+        ],
+      };
+    });
   };
   
-
+  const handleAlertDismiss = () => {
+    // Iterate over each option in the mcq state
+    const updatedMcq = { ...mcq };
+    updatedMcq.Options = mcq.Options.map((option, index) => {
+      // If the option is empty, revert it back to its previous value
+      if (option.trim() === "") {
+        return question.Options[index];
+      } else {
+        return option;
+      }
+    });
+  
+    // Update the mcq state with the modified options
+    setMcq(updatedMcq);
+  };
+  
+  
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between my-4">
       <div className="w-11/12 flex flex-col gap-2">
@@ -74,6 +113,7 @@ const VideoMcq = ({
           </h2>
         ) : (
           <input
+            className={`${!save && "border-none"}`}
             onChange={handleChange}
             placeholder="enter new question"
             name="Title"
@@ -81,27 +121,34 @@ const VideoMcq = ({
           />
         )}
         <div className="px-5 pb-4 flex flex-col gap-4">
-
-        
-
-          <button
-            onClick={() =>
-              setVideoState((prev) => {
-                {
-                  return {
-                    ...prev,
-                    questions: [
-                      ...prev.questions.slice(0, Number),
-                      { ...prev.questions[Number], Options: mcq.Options },
-                      ...prev.questions.slice(Number + 1),
-                    ],
-                  };
-                }
-              })
+          {search.get(Number) === "true" && (
+            <button
+              onClick={ handleSubmit
+                // () => {
+              //   setSave(false);
+              //   console.log(mcq);
+              //   setVideoState((prev) => {
+              //     {
+              //       return {
+              //         ...prev,
+              //         questions: [
+              //           ...prev.questions.slice(0, Number),
+              //           {
+              //             Title: mcq.Title,
+              //             Options: mcq.Options,
+              //           },
+              //           ...prev.questions.slice(Number + 1),
+              //         ],
+              //       };
+              //     }
+              //   });
+               //}
             }
-          >
-            save
-          </button>
+            >
+              save
+            </button>
+          )}
+
           {/* <span className="flex gap-2">
             <div className="flex w-5 justify-center">
               <input
@@ -193,7 +240,6 @@ const VideoMcq = ({
             )}
           </span> */}
 
-
           {mcq.Options.map((ques, index) => (
             <span className="flex gap-2">
               <div className="flex w-5 justify-center">
@@ -211,6 +257,7 @@ const VideoMcq = ({
                 ) : (
                   <>
                     <input
+                      // className={`${!save && "border-none"}`}
                       name={index}
                       value={mcq.Options[index]}
                       onChange={handleChange}

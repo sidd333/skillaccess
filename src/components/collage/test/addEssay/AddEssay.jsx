@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 
 import { FaX } from "react-icons/fa6";
@@ -8,15 +8,43 @@ import {
   addQuestionToTopic,
   addEssay,
   addEssayToTopic,
+  editQuestionById,
 } from "../../../../redux/collage/test/testSlice";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddEssay = () => {
+  const { id } = useParams();
+  //prev count
+  const { topics, currentTopic } = useSelector((state) => state.test);
+  const [isPrev, setIsPrev] = useState(false);
+  const [countDetail, setCountDetail] = useState(-1);
+  const [count, setCount] = useState(topics[id]?.essay.length - 1);
+  const handlePrev = () => {
+    if (addType === "topic") {
+      setIsPrev(true);
+      let current = currentTopic.essay[countDetail];
+      setQuestion({ ...current, Duration: parseInt(current.Duration) || 0 });
+      setQuestion({ ...current, Duration: parseInt(current.Duration) } || 0);
+      setCountDetail((prev) => {
+        if (prev - 1 >= 0) return prev - 1;
+        return -1;
+      });
+    } else {
+      setIsPrev(true);
+      let current = topics[id].essay[count];
+      setQuestion({ ...current, Duration: parseInt(current.Duration) });
+      setCount((prev) => {
+        if (prev - 1 >= 0) return prev - 1;
+        return -1;
+      });
+    }
+  };
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { id } = useParams();
+
   const type = searchParams.get("type");
   const addType = searchParams.get("addType");
   let ID;
@@ -42,35 +70,76 @@ const AddEssay = () => {
         window.alert("Please enter required time");
         return;
       } else {
-        dispatch(addEssayToTopic({ data: question, id: id, type: type }));
-        dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "", Duration: 0, id: id + Date.now() });
+        if (isPrev) {
+          //dispatch api call to update by ID
+          dispatch(
+            editQuestionById({
+              index: countDetail + 1,
+              type: "essay",
+              id: question._id,
+              question: question,
+            })
+          );
+          setCountDetail(currentTopic.essay.length - 1);
+          setQuestion({ Title: "", Duration: 0, id: id + Date.now() });
+        } else {
+          dispatch(addEssayToTopic({ data: question, id: id, type: type }));
+          dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+          setQuestion({ Title: "", Duration: 0, id: id + Date.now() });
+        }
       }
     } else {
       if (question.Title == "") {
         window.alert("Please enter the question");
-      }
-      else if (question.Duration == 0) {
+      } else if (question.Duration == 0) {
         window.alert("Please enter required time");
         return;
-      }
-      else {
-        dispatch(addEssay({ data: question, id: id, type: type }));
-        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-
-        setQuestion({
-          id: ID + Date.now(),
-          Title: "",
-          Duration: 0,
-          section: ID,
-        });
+      } else {
+        if (isPrev) {
+          dispatch(
+            addEssay({
+              data: question,
+              id: id,
+              type: type,
+              prev: true,
+              index: count + 1,
+            })
+          );
+          setCount(topics[id].essay.length - 1);
+          setQuestion({
+            id: ID + Date.now(),
+            Title: "",
+            Duration: 0,
+            section: ID,
+          });
+        } else {
+          dispatch(
+            addEssay({ data: question, id: id, type: type, prev: false })
+          );
+          setIsPrev(false);
+          setCount(topics[id].essay.length - 1);
+          setQuestion({
+            id: ID + Date.now(),
+            Title: "",
+            Duration: 0,
+            section: ID,
+          });
+        }
       }
     }
   };
 
+  useEffect(() => {
+    setCountDetail(currentTopic.essay.length - 1);
+  }, [currentTopic]);
+
   return (
     <div>
       <Header
+        handleSave={handleSave}
+        topics={topics}
+        isPrev={isPrev}
+        setIsPrev={setIsPrev}
         question={question}
         setQuestion={setQuestion}
         id={id}
@@ -109,12 +178,25 @@ const AddEssay = () => {
         <div className="absolute bottom-10 flex right-8 gap-2">
           {" "}
           <div className=" flex gap-2">
-            <button
-              className="self-center justify-center flex bg-gray-200 p-2 rounded-lg text-sm font-bold gap-2 w-32"
-              onClick={() => navigate(-1)}
-            >
-              <FaChevronLeft className="self-center" /> Prev
-            </button>
+            {addType === "topic" ? (
+              <button
+                className={`self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 ${
+                  countDetail >= 0 ? "" : "hidden"
+                }`}
+                onClick={handlePrev}
+              >
+                <FaChevronLeft className="self-center" /> Prev
+              </button>
+            ) : (
+              <button
+                className={`self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 ${
+                  count >= 0 ? "" : "hidden"
+                }`}
+                onClick={handlePrev}
+              >
+                <FaChevronLeft className="self-center" /> Prev
+              </button>
+            )}
           </div>
           <div className=" flex">
             <button

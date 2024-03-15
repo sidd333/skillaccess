@@ -27,6 +27,7 @@ const Video = ({ Number, id, video, type, view }) => {
   console.log(video, "video");
 
   const [videoState, setVideoState] = useState(video);
+  console.log(videoState);
 
   // const [mcq, setMcq] = useState(question);
 
