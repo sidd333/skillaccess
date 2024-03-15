@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import { FaX } from "react-icons/fa6";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
@@ -18,7 +18,7 @@ const AddCode = () => {
   const { topics, currentTopic } = useSelector((state) => state.test);
   const [isPrev, setIsPrev] = useState(false);
 
-  const [count, setCount] = useState(topics[id]?.compiler.length - 1);
+  const [count, setCount] = useState(-1);
 
   const [countDetail, setCountDetail] = useState(
     currentTopic?.compiler.length - 1
@@ -303,6 +303,9 @@ const AddCode = () => {
     }
     console.log(question);
   };
+  useEffect(() => {
+    setCountDetail(topics[id]?.compiler.length - 1);
+  }, []);
 
   return (
     <div className="">

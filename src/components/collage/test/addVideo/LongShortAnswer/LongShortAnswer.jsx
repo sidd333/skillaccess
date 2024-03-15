@@ -34,14 +34,14 @@ const LongShortAnswer = () => {
 
     Duration: 0,
   });
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(-1);
   useEffect(() => {
     if (LongShort === "short") {
       setCount(TopicToBeAdded.video.short.length - 1);
     } else {
       setCount(TopicToBeAdded.video.long.length - 1);
     }
-  }, []);
+  }, [TopicToBeAdded]);
   const [isPrev, setIsPrev] = useState(false);
 
   const handlePrev = () => {

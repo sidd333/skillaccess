@@ -15,9 +15,7 @@ import {
 const AddMcqToTopic = () => {
   const { currentTopic } = useSelector((state) => state.test);
   const [isPrev, setIsPrev] = useState(false);
-  const [countDetail, setCountDetail] = useState(
-    currentTopic.questions.length - 1
-  );
+  const [countDetail, setCountDetail] = useState(-1);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -38,7 +36,7 @@ const AddMcqToTopic = () => {
 
   const handlePrev = () => {
     setIsPrev(true);
-    let current = currentTopic.questions[countDetail];
+    let current = currentTopic?.questions[countDetail];
 
     setQuestion({ ...current, Duration: parseInt(current.Duration) || 0 });
 
@@ -120,6 +118,9 @@ const AddMcqToTopic = () => {
     }
   };
 
+  useEffect(() => {
+    setCountDetail(currentTopic.questions.length - 1);
+  }, [currentTopic]);
   console.log(question);
   return (
     <div>
@@ -338,13 +339,13 @@ const AddMcqToTopic = () => {
                 </span>
                 {/* add button and shuffle container */}
                 <div className="flex justify-between">
-                  <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
+                  {/* <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
                     <FaPlus className="self-center" /> Add
                   </button>
                   <span className="self-center">
                     <input type="checkbox" className="mr-2" />{" "}
                     <label className="">Shuffle Answers</label>
-                  </span>
+                  </span> */}
                 </div>
               </div>
             </div>

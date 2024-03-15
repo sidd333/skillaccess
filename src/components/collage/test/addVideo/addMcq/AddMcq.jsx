@@ -49,7 +49,8 @@ const AddMcq = () => {
     Duration: 0,
   });
   const [isPrev, setIsPrev] = useState(false);
-  const [count, setCount] = useState(TopicToBeAdded.video.questions.length - 1);
+
+  const [count, setCount] = useState(-1);
   const handlePrev = () => {
     setIsPrev(true);
     setQuestion(TopicToBeAdded.video.questions[count]);
@@ -200,7 +201,9 @@ const AddMcq = () => {
 
   const [questionsToAdd, setQuestionsToAdd] = useState([]);
 
-  console.log(questionsToAdd);
+  useEffect(() => {
+    setCount(TopicToBeAdded.video.questions.length - 1);
+  }, [TopicToBeAdded]);
 
   return (
     <div>
@@ -476,10 +479,10 @@ const AddMcq = () => {
                     <FaPlus className="self-center" /> Add
                   </button> */}
 
-                  <span className="self-center">
+                  {/* <span className="self-center">
                     <input type="checkbox" className="mr-2" />{" "}
                     <label className="">Shuffle Answers</label>
-                  </span>
+                  </span> */}
                 </div>
               </div>
             </div>

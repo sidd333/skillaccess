@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
@@ -37,9 +37,7 @@ const AddParagraph = () => {
 
   const [count, setCount] = useState(topics[id]?.findAnswers.length - 1);
 
-  const [countDetail, setCountDetail] = useState(
-    currentTopic.findAnswers.length - 1
-  );
+  const [countDetail, setCountDetail] = useState(-1);
 
   const handlePrev = () => {
     if (addType === "topic") {
@@ -149,6 +147,9 @@ const AddParagraph = () => {
     }
   };
 
+  useEffect(() => {
+    setCountDetail(currentTopic.findAnswers.length - 1);
+  }, [currentTopic]);
   return (
     <div>
       <Header
