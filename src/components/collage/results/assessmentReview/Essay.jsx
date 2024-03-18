@@ -17,6 +17,8 @@ const Essay = ({ question, number }) => {
       })
     );
   };
+
+  console.log(question , "questionessay");
   return (
     <div className="flex justify-between gap-2 font-dmSans relative z-10">
       <button className=" bg-blued rounded-xl text-white text-base font-bold py-2 w-12 h-11">
@@ -51,7 +53,7 @@ const Essay = ({ question, number }) => {
                 leaveTo="transform scale-95 opacity-0"
               > */}
               <Disclosure.Panel className="bg-white rounded-b-lg pb-2 mb-2  text-sm text-gray-500 z-10 relative">
-                {question.Options?.map((question) => (
+                {/* {question.Options?.map((question) => (
                   <div className="flex gap-2 z-10 relative rounded-lg p-3">
                     <div className="w-6">
                       <input
@@ -82,14 +84,20 @@ const Essay = ({ question, number }) => {
                         : ""}
                     </label>
                   </div>
-                ))}
+                ))} */}
+
+<div className="flex gap-2  z-10 relative rounded-lg p-3">
+                    <label className="text-blacktext-sm">
+                      {question.studentAnswer}
+                    </label>
+                  </div>
               </Disclosure.Panel>
               {/* </Transition> */}
             </div>
           )}
         </Disclosure>
       </div>
-      <div className="bg-gray-100 h-11 flex  rounded-xl px-1">
+      {/* <div className="bg-gray-100 h-11 flex  rounded-xl px-1">
         <img
           src="../../images/icons/cross.png"
           alt="cross"
@@ -102,7 +110,7 @@ const Essay = ({ question, number }) => {
             });
           }}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

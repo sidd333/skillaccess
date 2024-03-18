@@ -31,7 +31,7 @@ const Video = ({ video, Number }) => {
             <Disclosure.Button className="w-full bg-gray-100 mx-2">
               Click to Expand{" "}
             </Disclosure.Button>
-            <div className="bg-gray-100 h-11 flex  rounded-xl px-1">
+            {/* <div className="bg-gray-100 h-11 flex  rounded-xl px-1">
               <img
                 src="../../images/icons/cross.png"
                 alt="cross"
@@ -44,7 +44,7 @@ const Video = ({ video, Number }) => {
                   });
                 }}
               />
-            </div>
+            </div> */}
           </div>
 
           <Disclosure.Panel>
@@ -89,8 +89,11 @@ const Video = ({ video, Number }) => {
                   return (
                     <VideoMcq
                       //   handleDelete={handleDelete}
+                      key = {mcq._id}
                       mcq={mcq}
                       Number={index}
+                      AnswerIndex={mcq.AnswerIndex}
+                      StudentAnswerIndex={mcq.StudentAnswerIndex}
                     />
                   );
                 })}
@@ -98,12 +101,12 @@ const Video = ({ video, Number }) => {
               <h1>{video?.long.length > 0 && "Long answer questions"}</h1>
               {video?.long?.length > 0 &&
                 video.long.map((question, index) => (
-                  <VideoEssay Title={question.Title} Number={index} />
+                  <VideoEssay Title={question.Title} Number={index} Answer={question.studentAnswer} />
                 ))}
               <h1> {video?.short.length > 0 && "Short answer questions"}</h1>
               {video?.short?.length > 0 &&
                 video.short.map((question, index) => (
-                  <VideoEssay Title={question.Title} Number={index} />
+                  <VideoEssay Title={question.Title} Number={index}  Answer={question.studentAnswer} />
                 ))}
             </div>
           </Disclosure.Panel>

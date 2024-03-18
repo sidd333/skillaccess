@@ -22,6 +22,7 @@ const List = ({ question, number }) => {
       })
     );
   };
+  console.log(question , "questioncode");
 
   return (
     <div className="flex justify-between gap-2 font-dmSans relative z-10">
@@ -104,13 +105,41 @@ const List = ({ question, number }) => {
                     </label>
                   </div>
                 ))}
+
+
+{question.questions?.map((question) => (
+                  <div className="flex gap-2  z-10 relative rounded-lg p-3">
+                    <div className="w-6">
+                      <input
+                        type="radio"
+                        name="answer"
+                        id="answer"
+                        className="w-3 h-3 p-[.4rem] checked:bg-none  checked:border checked:border-blue-700 border-blued checked:p-0 border-2  ring-transparent ring-2 checked:ring-blue-700 ring-offset-2   self-center "
+                      />
+                    </div>
+
+                    <label className="text-blacktext-sm">
+                      {question
+                        ? question.question
+                          ? <> <div><h3>{question.question}</h3>
+                          <p>{question.studentAnswer}</p>
+                          </div></>
+                          : question
+                        : ""}
+                    </label>
+                  </div>
+                ))}
+
+
+
+                
               </Disclosure.Panel>
               {/* </Transition> */}
             </div>
           )}
         </Disclosure>
       </div>
-      <div className="bg-gray-100 h-11 flex  rounded-xl px-1">
+      {/* <div className="bg-gray-100 h-11 flex  rounded-xl px-1">
         <img
           src="../../images/icons/cross.png"
           alt="cross"
@@ -123,7 +152,7 @@ const List = ({ question, number }) => {
             });
           }}
         />
-      </div>
+      </div> */}
     </div>
   );
 };
