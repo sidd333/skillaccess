@@ -26,8 +26,8 @@ const EditHeader = ({
           </button>
 
           <div className="self-center">
-            <h2 className="sm:text-xl  text-left font-bold self-center text-3xl font-dmSans  text-white ">
-              Create Assessment
+            <h2 className="sm:text-xl  text-left font-bold self-center text-3xl font-dmSans   ">
+              Edit Profile
             </h2>
           </div>
         </button>

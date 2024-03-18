@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FiBell } from "react-icons/fi";
 import { FaAngleDown } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+
 const Navbar = (props) => {
   const navigate = useNavigate(); 
   const goToProfile = () => {
@@ -31,7 +32,7 @@ const Navbar = (props) => {
             <img src="../../../images/logo.png" alt="" />
           </div>
         </div>
-
+    
         {/* right */}
         <div className="flex gap-3">
           {/* noifiaction */}

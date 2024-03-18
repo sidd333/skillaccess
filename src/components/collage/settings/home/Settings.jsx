@@ -97,16 +97,16 @@ const Settings = () => {
         {/* Visibility*/}
         <div className="flex flex-col">
           <div
-            className="flex justify-between px-5 py-4 bg-[#DE350B] bg-opacity-5 rounded-2xl sm:w-1/2"
+            className="flex cursor-pointer justify-between px-5 py-4 bg-[#DE350B] bg-opacity-5 rounded-2xl sm:w-1/2"
             onClick={handleLogOut}
           >
             <div className="flex gap-6 ">
               <img src="../../images/icons/del.png" alt="" />
               <p className="text-lg text-[#DE350B]">Log Out</p>
             </div>
-            <div className="flex self-center">
+            {/* <div className="flex self-center">
               <FaChevronRight className="text-gray-500 self-center text-2xl" />
-            </div>
+            </div> */}
           </div>
         </div>
         {/*  */}

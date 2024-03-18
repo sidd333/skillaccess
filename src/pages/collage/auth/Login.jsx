@@ -110,7 +110,11 @@ const Login = () => {
           <h2 className="text-sm font-normal text-center text-lGray">
             Create an account to continue
           </h2>
-
+   
+           {Error.length>0 &&  <p className=" border-l-4 pl-4  rounded-[4px] border-[#dc2626] w-full max-w-xs py-3  mx-auto text-sm text-[#dc2626] bg-[#fee2e2]">
+               Oops! It seems like your email or password is incorrect. Please double-check and try again.
+            </p>}
+        
           <input
             onChange={changeHandler}
             value={Credentials.Email}
@@ -146,7 +150,7 @@ const Login = () => {
             <h1 className="text-blue-700 font-bold">Forgot Password</h1>
           </div>
 
-          {Error.length > 0 &&
+          {/* {Error.length > 0 &&
             Error.map((error) => (
               <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 rounded-xl  ">
                 <input
@@ -161,7 +165,7 @@ const Login = () => {
                   {error.message}
                 </h1>
               </div>
-            ))}
+            ))} */}
 
           <div className=" flex gap-2  p-2 lg:mt-6 md:mt-6 mt-4   w-full max-w-xs  mx-auto ">
             {" "}
