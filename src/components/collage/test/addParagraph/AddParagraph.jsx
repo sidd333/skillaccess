@@ -80,7 +80,7 @@ const AddParagraph = () => {
   //   console.log(question);
   // }, [question]);
 
-  const handleSave = () => {
+  const handleSave = (type) => {
     if (addType === "topic") {
       if (question.Title == "") {
         window.alert("Please enter the question");
@@ -133,16 +133,45 @@ const AddParagraph = () => {
         window.alert("Please enter all questions");
         return;
       } else {
-        dispatch(addFindAns({ data: question, id: id, type: "findAnswer" }));
-
-        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({
-          id: ID + Date.now(),
-          Title: "",
-          questions: [],
-          Duration: 0,
-          section: ID,
-        });
+        if (isPrev) {
+          dispatch(
+            addFindAns({
+              data: question,
+              id: id,
+              type: "findAnswer",
+              prev: true,
+              index: count + 1,
+            })
+          );
+          setCount(topics[id].findAnswers.length - 1);
+          setQuestion({
+            id: ID + Date.now(),
+            Title: "",
+            questions: [],
+            Duration: 0,
+            section: ID,
+          });
+          if (type === "save") navigate(-1);
+        } else {
+          dispatch(
+            addFindAns({
+              data: question,
+              id: id,
+              type: "findAnswer",
+              prev: false,
+              index: count + 1,
+            })
+          );
+          if (type === "save") navigate(-1);
+          // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+          setQuestion({
+            id: ID + Date.now(),
+            Title: "",
+            questions: [],
+            Duration: 0,
+            section: ID,
+          });
+        }
       }
     }
   };
@@ -153,6 +182,7 @@ const AddParagraph = () => {
   return (
     <div>
       <Header
+        save={handleSave}
         section={ID}
         question={question}
         setQuestion={setQuestion}

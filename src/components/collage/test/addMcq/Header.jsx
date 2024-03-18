@@ -33,8 +33,7 @@ const Header = ({
   // };
 
   const handleSaveNext = () => {
-    handleSave();
-    navigate(-1);
+    handleSave("save");
   };
   // useEffect(() => {
   //   dispatch(setTest({questions}));

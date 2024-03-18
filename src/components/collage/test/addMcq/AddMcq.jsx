@@ -119,7 +119,7 @@ const AddMcq = () => {
     }
   };
 
-  const handleAddQuestion = () => {
+  const handleAddQuestion = (type) => {
     if (question.Title === "") {
       window.alert("Please enter question");
       return;
@@ -150,6 +150,7 @@ const AddMcq = () => {
           section: search.get("topicId"),
         });
         setCount(topics[id].questions.length - 1);
+        if (type === "save") navigate(-1);
       } else {
         dispatch(addMcq({ question: question, id: id, prev: false }));
         setQuestion({
@@ -160,6 +161,7 @@ const AddMcq = () => {
           AnswerIndex: null,
           section: search.get("topicId"),
         });
+        if (type === "save") navigate(-1);
       }
     }
   };

@@ -60,7 +60,7 @@ const AddMcq = () => {
     });
   };
 
-  const handleSave = () => {
+  const handleSave = (type) => {
     if (question.Title === "") {
       window.alert("Please enter question");
       return;
@@ -90,6 +90,7 @@ const AddMcq = () => {
           AnswerIndex: null,
         });
         setIsPrev(false);
+        if (type === "save") navigate(-1);
       } else {
         dispatch(addVideo({ question: question, prev: false }));
 
@@ -99,6 +100,7 @@ const AddMcq = () => {
           Duration: 0,
           AnswerIndex: null,
         });
+        if (type === "save") navigate(-1);
       }
     }
   };

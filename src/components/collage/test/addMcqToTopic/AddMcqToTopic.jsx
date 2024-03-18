@@ -119,9 +119,10 @@ const AddMcqToTopic = () => {
   };
 
   useEffect(() => {
+    console.log(currentTopic);
     setCountDetail(currentTopic.questions.length - 1);
   }, [currentTopic]);
-  console.log(question);
+  // console.log(question);
   return (
     <div>
       <Header

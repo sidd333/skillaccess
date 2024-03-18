@@ -74,13 +74,13 @@ const testState = {
   totalQuestions: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).totalQuestions
     : null,
-    duration_from: localStorage.getItem("testDetails")
+  duration_from: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).duration_from
     : "",
-    duration_to: localStorage.getItem("testDetails")
+  duration_to: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).duration_to
     : "",
-    duration_to: localStorage.getItem("testDetails")
+  duration_to: localStorage.getItem("testDetails")
     ? JSON.parse(localStorage.getItem("testDetails")).isNegativeMarking
     : false,
   topics: localStorage.getItem("topics")
@@ -89,7 +89,28 @@ const testState = {
   status: "",
   currentTopic: localStorage.getItem("currentTopic")
     ? JSON.parse(localStorage.getItem("currentTopic"))
-    : {}, //on edit
+    : {
+        _id: "",
+        Time: 0,
+        Heading: "",
+        Description: "",
+        CreatedByAdmin: false,
+        Student: [],
+        Timeline: "",
+        TotalQuestions: 0,
+        TotalStudentsAttempted: 0,
+        TotalStudentsCorrect: 0,
+        Type: "",
+        assessments: [],
+        college: "",
+        compiler: [],
+        createdByCollege: false,
+        createdByCompany: false,
+        essay: [],
+        findAnswers: [],
+        questions: [],
+        video: [],
+      }, //on edit
   TopicToBeAdded: localStorage.getItem("TopicToBeAdded")
     ? JSON.parse(localStorage.getItem("TopicToBeAdded"))
     : {
@@ -122,18 +143,21 @@ export const getTest = createAsyncThunk(
       console.log(`get test ${id}`);
       const req = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/assessments/${id}`,
+
         {
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("auth-token"),
           },
         }
+
       );
       const res = req.data;
       // console.log(res);
       return res;
     } catch (error) {
       console.log(error);
+
       return rejectWithValue(error.response.data);
     }
   }
@@ -162,6 +186,7 @@ export const getStudentResponse = createAsyncThunk(
       return res.studentResponses;
     } catch (error) {
       console.log("catch", error.response.data);
+
 
       return rejectWithValue(error.response.data);
     }
@@ -325,6 +350,7 @@ export const createTopic = createAsyncThunk(
   }
 );
 
+
 export const editQuestionById = createAsyncThunk(
   "test/editQuestionById",
   async (data, { rejectWithValue }) => {
@@ -347,6 +373,7 @@ export const editQuestionById = createAsyncThunk(
     }
   }
 );
+
 
 const testSlice = createSlice({
   initialState: testState,
@@ -698,7 +725,7 @@ const testSlice = createSlice({
       state.level = action.payload.level;
       state.duration_from = action.payload.duration_from;
       state.duration_to = action.payload.duration_to;
-      state.isNegativeMarking=action.payload.isNegativeMarking;
+      state.isNegativeMarking = action.payload.isNegativeMarking;
       state.status = "active";
       localStorage.setItem(
         "testDetails",
@@ -709,9 +736,9 @@ const testSlice = createSlice({
           totalAttempts: state.totalAttempts,
           totalQuestions: state.totalQuestions,
           totalDuration: state.totalDuration,
-          duration_to:state.duration_to,
-          duration_from:state.duration_from,
-          isNegativeMarking:state.isNegativeMarking,
+          duration_to: state.duration_to,
+          duration_from: state.duration_from,
+          isNegativeMarking: state.isNegativeMarking,
         })
       );
       console.log(action.payload, "action.payload");
@@ -771,7 +798,7 @@ const testSlice = createSlice({
       .addCase(getTest.fulfilled, (state, action) => {
         state.test = action.payload;
 
-        console.log("fullfilled");
+        console.log("fullfilled",state.test);
       })
       .addCase(getTest.rejected, (state, action) => {
         console.log(action.payload);
@@ -851,6 +878,7 @@ const testSlice = createSlice({
       .addCase(createTopic.rejected, (state, action) => {
         // return action.payload;
       })
+
       .addCase(getStudentResponse.pending, (state, action) => {
         state.status = "pending";
       })
@@ -860,6 +888,7 @@ const testSlice = createSlice({
       .addCase(getStudentResponse.rejected, (state, action) => {
         console.error("Error fetching student responses:", action.payload);
       });
+
   },
 });
 

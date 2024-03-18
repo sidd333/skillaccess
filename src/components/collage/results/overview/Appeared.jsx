@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Appeared = ({ assessment }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const arr = [2, 1, 1, 1, 1];
   // let arr = assessment.studentResponses.map((responseId) => {
   //   // console.log(student);
