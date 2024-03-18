@@ -132,7 +132,7 @@ const Video = ({ Number, id, video, type, view }) => {
         video.questions.map((question, index) => {
           return (
             <VideoMcq
-              key={index}
+             
               Index={index}
               id={id}
               // handleDelete={handleDelete}

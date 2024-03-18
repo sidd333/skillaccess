@@ -20,7 +20,7 @@ const Info = ({ user, assessment }) => {
 
         <div className="font-dmSans">
 
-          <h2 className="text-lg font-bold mb-1">{user?.CollegeName}</h2>
+          <h2 className="text-lg font-bold mb-1">{assessment?.name}</h2>
 
           <h2 className="text-xs mb-2">{}</h2>
           <h2 className="text-[#7D7D7D] text-xs">Available Jobs</h2>

@@ -12,6 +12,9 @@ import { getAllTestFulfilled } from "./reducerFunctions/test";
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 const testState = {
+  studentResponse: [],
+  response: [],
+  testDataResponse: [],
   testName: "",
   testDescription: "",
   testAttempts: "",
@@ -134,6 +137,9 @@ const testState = {
 
         compiler: [],
       },
+
+
+  
 };
 
 export const getTest = createAsyncThunk(
@@ -183,7 +189,42 @@ export const getStudentResponse = createAsyncThunk(
 
       console.log(res);
 
-      return res.studentResponses;
+      return res.studentResponse;
+    } catch (error) {
+      console.log("catch", error.response.data);
+
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+
+
+export const getTestResultPage = createAsyncThunk(
+  "test/getTestResultPage",
+  async (id, { rejectWithValue }) => {
+    try {
+      const req = await axios.get(
+        `${
+          REACT_APP_API_URL
+        }/api/studentDummy/get/test-details/${id}`,
+      
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+          
+         
+        }
+      );
+
+      const res = req.data;
+
+      console.log(res);
+
+      return res.students;
     } catch (error) {
       console.log("catch", error.response.data);
 
@@ -351,6 +392,47 @@ export const createTopic = createAsyncThunk(
 );
 
 
+
+// export const getStudentResponse = createAsyncThunk("test/studentResponse",
+// async (id, { rejectWithValue }) => {
+
+//   try {
+//     const req = await axios.get(
+//       `${REACT_APP_API_URL}/api/studentDummy/response/${id}`,
+
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+
+//           "auth-token": localStorage.getItem("auth-token"),
+//         },
+//       }
+//     );
+
+//     const res = req.data;
+
+//     console.log(res)
+
+//     return res.studentResponses;
+
+
+//   } catch (error) {
+//     console.log("catch", error.response.data);
+
+//     return rejectWithValue(error.response.data);
+//   }
+// }
+// );
+
+
+
+export const getResponseByTestandStudent = createAsyncThunk(
+  "test/getResponseByTestandStudent",
+  async (data, { rejectWithValue }) => {
+    try {
+      const req = await axios.get(
+        `${REACT_APP_API_URL}/api/studentDummy/test/student?testId=${data.testId}&studentId=${data.studentId}`,
+
 export const editQuestionById = createAsyncThunk(
   "test/editQuestionById",
   async (data, { rejectWithValue }) => {
@@ -358,6 +440,7 @@ export const editQuestionById = createAsyncThunk(
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/assessments/question/${data.id}?type=${data.type}`,
         data.question,
+
         {
           headers: {
             "Content-Type": "application/json",
@@ -365,14 +448,22 @@ export const editQuestionById = createAsyncThunk(
           },
         }
       );
+
+
       const res = req.data;
-      return { res: res, index: data.index, type: data.type };
+
+      console.log(res.studentResponse[0]);
+
+      return res.studentResponse[0];
     } catch (error) {
       console.log("catch", error.response.data);
+
+
       return rejectWithValue(error.response.data);
     }
   }
 );
+
 
 
 const testSlice = createSlice({
@@ -883,10 +974,34 @@ const testSlice = createSlice({
         state.status = "pending";
       })
       .addCase(getStudentResponse.fulfilled, (state, action) => {
-        state.studentResponses = action.payload;
+        // state.studentResponse = action.payload;
+        state.response = action.payload;
+
       })
       .addCase(getStudentResponse.rejected, (state, action) => {
+        state.response = [];
         console.error("Error fetching student responses:", action.payload);
+      })
+      .addCase(getTestResultPage.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(getTestResultPage.fulfilled, (state, action) => {
+        state.testDataResponse = action.payload;
+      })
+      .addCase(getTestResultPage.rejected, (state, action) => {
+        console.error("Error fetching test results:", action.payload);
+        state.testDataResponse = [];
+      })
+      .addCase(getResponseByTestandStudent.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(getResponseByTestandStudent.fulfilled, (state, action) => {
+        state.response = action.payload;
+        console.log(action.payload);
+      })
+      .addCase(getResponseByTestandStudent.rejected, (state, action) => {
+        console.error("Error fetching test results:", action.payload);
+        state.response = [];
       });
 
   },

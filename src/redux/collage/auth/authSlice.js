@@ -3,8 +3,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
+// const REACT_APP_API_URL = "http://localhost:4000";
 
-console.log(process.env);
+// console.log(process.env);
 
 //initial state
 
@@ -219,6 +220,50 @@ export const updatePassword = createAsyncThunk(
   }
 );
 
+
+
+
+
+export const googleLoginCollage = createAsyncThunk( 
+  "collageAuth/googleLoginCollage",
+  async (accessToken, { rejectWithValue }) => {
+    try {
+      console.log("google login");
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/login`,
+        {  googleAccessToken: accessToken }
+      );
+      const res = req.data;
+      localStorage.setItem("auth-token", res.token);
+      return res;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const googleRegisterCollage = createAsyncThunk(
+  "collageAuth/googleRegisterCollage",
+  async (accessToken, { rejectWithValue }) => {
+    try {
+      console.log("google register");
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/register`,
+        {  googleAccessToken: accessToken }
+      );
+      const res = req.data;
+      console.log(res,"res.data");
+      localStorage.setItem("auth-token", res.token);
+      return res;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+
 const collageAuthSlice = createSlice({
   name: "collageAuth",
   initialState: collageState,
@@ -355,7 +400,43 @@ const collageAuthSlice = createSlice({
       })
       .addCase(updatePassword.rejected, (state, action) => {
         alert(action.payload.message);
+      })
+      .addCase(googleLoginCollage.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(googleLoginCollage.fulfilled, (state, action) => {
+        state.status = action.payload;
+        state.isLoggedIn = true;
+        state.user = action.payload.user;
+        localStorage.setItem("auth-token", action.payload.token);
+        // Add any fetched posts to the array
+        console.log("fullfilled");
+      })
+      .addCase(googleLoginCollage.rejected, (state, action) => {
+        console.log(action.payload);
+
+        window.alert(action.payload);
+      })
+      .addCase(googleRegisterCollage.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(googleRegisterCollage.fulfilled, (state, action) => {
+        state.status = action.payload;
+        state.isLoggedIn = true;
+        state.user = action.payload.user;
+        localStorage.setItem("auth-token", action.payload.token);
+        // Add any fetched posts to the array
+        console.log("fullfilled");
+      })
+      .addCase(googleRegisterCollage.rejected, (state, action) => {
+        console.log(action.payload);
+
+        window.alert(action.payload);
       });
+
+
   },
 });
 
