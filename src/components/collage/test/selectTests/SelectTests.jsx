@@ -16,6 +16,7 @@ import {
   removeSections,
   getAllTopics,
   setTestSelectedTopics,
+  setCurrentTopic,
 } from "../../../../redux/collage/test/testSlice";
 
 import { FaPlus } from "react-icons/fa";
@@ -34,26 +35,25 @@ const SelectTests = () => {
 
   const [filteredSections, setFilteredSections] = useState(sections);
 
-   const handleFilterSections = (e) => {
+  const handleFilterSections = (e) => {
     const value = e.target.value;
-     if(value === "" || value.trim() === ""){
-console.log("empty");
-console.log(filteredSections, "filtered");
+    if (value === "" || value.trim() === "") {
+      console.log("empty");
+      console.log(filteredSections, "filtered");
       setFilteredSections(sections);
 
       return;
-     }else{
-      setFilteredSections(sections.filter((section) => {
-        const regex = new RegExp(value, 'i');
-        return regex.test(section.Heading);
-      }));
+    } else {
+      setFilteredSections(
+        sections.filter((section) => {
+          const regex = new RegExp(value, "i");
+          return regex.test(section.Heading);
+        })
+      );
 
-      console.log(filteredSections, "filtered--",value);
-     }
-    
+      console.log(filteredSections, "filtered--", value);
+    }
   };
-
-
 
   let topics = localStorage.getItem("topics")
     ? JSON.parse(localStorage.getItem("topics"))
@@ -69,7 +69,6 @@ console.log(filteredSections, "filtered");
     if (selectedSections?.length < 5 || !selectedSections) {
       for (let i = 0; i < selectedSections.length; i++) {
         if (selectedSections[i]._id === section._id) {
-
           if (selectedSections[i].Type === questionType) {
             return;
           }
@@ -81,7 +80,6 @@ console.log(filteredSections, "filtered");
           //   return;
 
           // }
-
         }
       }
 
@@ -114,11 +112,9 @@ console.log(filteredSections, "filtered");
   const removeSection = (section, index) => {
     const updatedSections = [...selectedSections];
 
-
     updatedSections.splice(index, 1);
 
     setSelectedSections(updatedSections);
-
 
     dispatch(setTestSelectedTopics(updatedSections));
   };
@@ -126,9 +122,8 @@ console.log(filteredSections, "filtered");
   useEffect(() => {
     dispatch(getAllTopics());
 
-    if(sections){
+    if (sections) {
       setFilteredSections(sections);
-    
     }
 
     try {
@@ -141,19 +136,13 @@ console.log(filteredSections, "filtered");
   }, []);
 
   useEffect(() => {
-   
-    if(sections) {
+    if (sections) {
       setFilteredSections(sections);
     }
   }, [sections]);
 
-
-
-
   useEffect(() => {
     // getSelectedSections();
-
-   
 
     dispatch(setTestSelectedTopics(selectedSections));
   }, [addSection, removeSection, selectedSections]);
@@ -177,13 +166,11 @@ console.log(filteredSections, "filtered");
         </div>
 
         <div className=" mx-auto  my-2 rounded-lg grid sm:grid-cols-5 grid-cols-2 gap-6">
-
           {selectedSections?.map((section, index) => (
             <div
               className="w-full h-32 border border-dashed rounded-lg border-blued col-span-1 flex justify-center "
               key={`${section._id + section.Type}`}
             >
-
               {/* {console.log(section, "section")} */}
 
               <span className="self-center">
@@ -217,9 +204,7 @@ console.log(filteredSections, "filtered");
                   <img
                     src="../../images/icons/cross.png"
                     alt=""
-
                     onClick={() => removeSection(section, index)}
-
                   />
                 </div>
               </span>
@@ -258,7 +243,11 @@ console.log(filteredSections, "filtered");
           </div> */}
         </div>
 
-        <Inputs questionType={questionType} setQuestionType={setQuestionType} handleFilter={handleFilterSections} />
+        <Inputs
+          questionType={questionType}
+          setQuestionType={setQuestionType}
+          handleFilter={handleFilterSections}
+        />
 
         <div className="grid grid-cols-4 gap-8 justify-center">
           <div className="w-full h-64 bg-gray-100 rounded-lg flex justify-center">
@@ -347,6 +336,7 @@ console.log(filteredSections, "filtered");
                       <button
                         className="w-[90px] h-[40px] bg-[#8F92A120] rounded-xl"
                         onClick={() => {
+                          dispatch(setCurrentTopic({ topic: section }));
                           localStorage.setItem(
                             "Details",
 

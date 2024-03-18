@@ -10,83 +10,24 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { addVideo } from "../../../../../redux/collage/test/testSlice";
 
-const Header = ({ question, setQuestion, id, type, addType, LongShort }) => {
+const Header = ({
+  question,
+  setQuestion,
+  id,
+  type,
+  addType,
+  LongShort,
+  handleSave,
+}) => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
-  const handleSave = () => {
+  const handleSaveHeader = () => {
     console.log(question);
 
-    if (addType === "topic") {
-     
-
-        // dispatch(addEssayToTopic({ data: question, id: id, type: type }));
-
-        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        if (question.Title == "") {
-          window.alert("Please enter the question");
-        }
-        if (question.Duration == 0) {
-          window.alert("Please enter required time");
-          return;
-        }else{
-
-        
-        setQuestion({  id:`${Date.now()}`,
-
-        Title: "",
-    
-        Duration: 0});
-      }
-      
-
-      navigate(-1);
-    } else {
-     
-        if (LongShort === "short") {
-          if (question.Title == "") {
-            window.alert("Please enter the question");
-          } else if (question.Duration == 0) {
-            window.alert("Please enter required time");
-            return;
-          }
-else{
-          dispatch(addVideo({ short: question }));
-
-          // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-
-          setQuestion({ id:`${Date.now()}`,
-
-          Title: "",
-      
-          Duration: 0,});
-
-          navigate(-1);
-        }
-       } else {
-          if (question.Title == "") {
-            window.alert("Please enter the question");
-          } else if (question.Duration == 0) {
-            window.alert("Please enter required time");
-            return;
-          }
-else{
-          dispatch(addVideo({ long: question }));
-
-          // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-
-          setQuestion({  id:`${Date.now()}`,
-
-          Title: "",
-      
-          Duration: 0,});
-
-          navigate(-1);
-        }
-      }
-      
-    }
+    handleSave();
+    navigate(-1);
   };
 
   return (
@@ -118,7 +59,7 @@ else{
             className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white"
             // onClick={() => navigate("/collage/test/preview")}
 
-            onClick={handleSave}
+            onClick={handleSaveHeader}
           >
             Save
           </button>

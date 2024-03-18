@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { registerCollage } from "../../../redux/collage/auth/authSlice";
+import { useGoogleLogin } from "@react-oauth/google";
+import {
+  googleRegisterCollage,
+  registerCollage,
+} from "../../../redux/collage/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { LuEye } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
@@ -59,7 +63,32 @@ const Register = () => {
       console.log("Reject" + error);
     }
   };
-  const isCreateAccountDisabled = !checked || !Credentials.Email || !Credentials.Password || !Credentials.FirstName || !Credentials.LastName || !Credentials.University || !Credentials.Phone;
+
+  // GOOGLE REGISTER
+
+  function handleGoogleLoginSuccess(tokenResponse) {
+    const accessToken = tokenResponse.access_token;
+
+    dispatch(googleRegisterCollage(accessToken));
+    navigate("/collage/dashboard");
+    // .then((res) => {
+    //   if (res.meta.requestStatus === "fulfilled") {
+    //
+    //   }
+    // });
+  }
+
+  const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
+
+  const isCreateAccountDisabled =
+    !checked ||
+    !Credentials.Email ||
+    !Credentials.Password ||
+    !Credentials.FirstName ||
+    !Credentials.LastName ||
+    !Credentials.University ||
+    !Credentials.Phone;
+
   return (
     <form action="" className="font-dmSans">
       <div className=" bg-base-100 shadow-xl h-full   font-dmSans grid grid-cols-5 ">
@@ -197,7 +226,7 @@ const Register = () => {
             />
             <span className="text-lGray font-bold text-xs">
               By creating an account, you agree to our{" "}
-              <Link className="text-blue-600" to='/terms&policies' >
+              <Link className="text-blue-600" to="/terms&policies">
                 Terms-Policies.{" "}
               </Link>
               {/* and, <Link>Notification Settings</Link> */}
@@ -207,20 +236,25 @@ const Register = () => {
           {/* register button */}
           <></>
           <button
-           className={`btn hover:bg-blue-700 bg-blue-600 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto text-white ${isCreateAccountDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-           onClick={handleSubmit}
-           disabled={isCreateAccountDisabled}
+            className={`btn hover:bg-blue-700 bg-blue-600 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto text-white ${
+              isCreateAccountDisabled ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={isCreateAccountDisabled}
           >
             Create Account
           </button>
-          {/* <h3 className=" text-center text-lGray text-bold text-xs mt-1">OR</h3>
+          <h3 className=" text-center text-lGray text-bold text-xs mt-1">OR</h3>
           <button
             className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  "
             onClick={() => navigate("/collage/dashboard")}
+            // onClick={login}
           >
             <FcGoogle className="text-lg mr-2" />
-            <h3 className="opacity-100">Continue with google</h3>
-          </button> */}
+            <h3 className="opacity-100" onClick={login}>
+              Continue with google
+            </h3>
+          </button>
           <span className="text-lGray text-center text-sm font-semibold">
             Already have an account?{" "}
             <Link to="/" className="text-blue-600 ">

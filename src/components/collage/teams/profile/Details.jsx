@@ -45,8 +45,8 @@ const Details = ({}) => {
 
       {/* second section */}
 
-      <div className="px-6  py-4 bg-gray-50 font-dmSans flex sm:gap-36 text-sm font-medium">
-        <div className="flex gap-2 w-60">
+      <div className="px-6  py-4 bg-gray-50 font-dmSans  text-sm font-medium grid grid-cols-4">
+        <div className="flex gap-2 ">
           <div className="w-10 h-10 rounded-lg bg-gray-200 bg-opacity-50 flex justify-center">
             <MdOutlineEmail className="self-center text-2xl" />
           </div>
@@ -59,16 +59,19 @@ const Details = ({}) => {
           </p> */}
         </div>
 
-        <div className="flex gap-2 w-60">
+        <div className="flex gap-2 w-full ">
           <div className="w-10 h-10 rounded-lg bg-gray-200 bg-opacity-50 flex justify-center px-2">
             <BsPhone className="self-center text-2xl" />
           </div>
-          <p className="self-center opacity-60">
-            011 - 250 847 26, 011 - 456 398 26
-          </p>
+          <div className="w-full">
+            {" "}
+            <p className="self-center opacity-60 ">
+              011 - 250 847 26, 011 - 456 398 26
+            </p>
+          </div>
         </div>
 
-        <div className="flex gap-2 font-dmSans w-60">
+        <div className="flex gap-2 font-dmSans ">
           <div className="w-10 h-10 rounded-lg bg-gray-200 bg-opacity-50 flex justify-center">
             {" "}
             <CgMenuCake className="self-center text-2xl" />
@@ -76,7 +79,7 @@ const Details = ({}) => {
           <p className=" self-center opacity-60">{teacher.Bday}</p>
         </div>
 
-        <div className="flex gap-2 font-dmSans w-60">
+        <div className="flex gap-2 font-dmSans ">
           <div className="w-10 h-10 rounded-lg bg-gray-200 bg-opacity-50 flex justify-center">
             {" "}
             <PiLinkSimple className="self-center text-2xl" />
@@ -85,8 +88,8 @@ const Details = ({}) => {
         </div>
       </div>
 
-      <div className="flex gap-36 pb-4">
-        <div className="pl-6 flex gap-2  w-60 self-center">
+      <div className="grid grid-cols-4 pb-4">
+        <div className="pl-6 flex gap-2  w-full self-center">
           <div className="w-10 h-10 px-2 rounded-lg bg-gray-200 bg-opacity-50 flex justify-center self-center">
             {" "}
             <CgPinAlt className="self-center text-3xl" />
@@ -95,7 +98,7 @@ const Details = ({}) => {
             G - 55-56, Street No.-1, Palam Extension, Near Sector - 7
           </p>
         </div>
-        <div className="flex gap-2 ml-2 font-dmSans w-60 self-center">
+        <div className="flex gap-2 ml-2 font-dmSans w-full self-center">
           <div className="w-10 h-10 rounded-lg bg-gray-200 bg-opacity-50 flex justify-center p-2">
             {" "}
             <img src="../../images/icons/calendar.png" alt="" />

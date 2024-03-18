@@ -1,12 +1,30 @@
-import React from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-// import { getStudentResponse } from "../../../../redux/collage/test/testSlice";
 
-const Appeared = ({ assessment }) => {
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getStudentResponse } from "../../../../redux/collage/test/testSlice";
+import { getTestResultPage } from "../../../../redux/collage/test/testSlice";
+
+const Appeared = ({ assessment  }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const arr = [2, 1, 1, 1, 1];
+
+  const {  testDataResponse ,response} =useSelector((state) => state.test);
+
+
+  useEffect(() => {
+    dispatch(getTestResultPage(assessment._id));
+  }, [dispatch, assessment._id]);
+
+  const getResponse = (responseId) => {
+    dispatch(getStudentResponse(responseId));
+  };
+
+
+
+  
+  // const arr = [2, 1, 1, 1, 1];
+
   // let arr = assessment.studentResponses.map((responseId) => {
   //   // console.log(student);
   //   dispatch(getStudentResponse(responseId))
@@ -18,7 +36,59 @@ const Appeared = ({ assessment }) => {
   // dispatch(getStudentResponse(responseId))
   //   })
 
-  //   console.log(response)
+    // console.log("studentResponses",assessment.studentResponses);
+
+    // const responses = assessment.studentResponses.map((responseId) => {
+    //   // console.log(student);
+    //   dispatch(getStudentResponse(responseId))
+      
+    // }
+    // );
+
+    // let arr = testDataResponse?.map((student) => {
+    //   student.studentResponses.forEach((resId) => {
+    //     console.log("resId", resId);
+    //     const responseId = assessment.studentResponses.find((response) => response._id === resId._id);
+    //     // add the responseId to the student object
+    //     student.responseId = responseId;
+    //     console.log("student", student);
+    //   });
+    //   return student;
+    // });
+    
+
+    console.log(testDataResponse.studentResponses);
+    console.log(assessment.studentResponses);
+    let copy = [...testDataResponse];
+
+
+    // let arr = copy?.map((student) => {
+    //   let updatedStudent = { ...student }; // Create a new object with the same properties as the student object
+    //   student.studentResponses.forEach((resId) => {
+    //     console.log("resId", resId);
+    //     const responseId = assessment?.studentResponses?.find((response) => response._id === resId._id);
+    //     // add the responseId to the updatedStudent object
+    //     updatedStudent.responseId = responseId;
+    //     updatedStudent.response = response;
+    //     console.log("updatedStudent", updatedStudent);
+    //   });
+    //   return updatedStudent;
+    // });
+    let arr = copy?.map((student) => {
+      let updatedStudent = { ...student }; // Create a new object with the same properties as the student object
+      student.studentResponses.forEach((resId) => {
+          console.log("resId", resId);
+          const responseId = assessment?.studentResponses?.find((response) => response._id === resId._id);
+          // add the responseId to the updatedStudent object
+          updatedStudent.responseId = responseId;
+          updatedStudent.response = response;
+          console.log("updatedStudent", updatedStudent);
+      });
+      return updatedStudent;
+  }).filter((student) => student.studentTests.includes(assessment._id.toString()));
+  
+  console.log("arr", arr);
+  
 
   return (
     <div className="w-full mx-auto">
@@ -42,7 +112,12 @@ const Appeared = ({ assessment }) => {
       </div>
 
       {/* list to be iterated */}
-      {arr.map((student) => (
+
+      {
+        
+      
+arr?.map((student, index) => (
+  
         <div className=" grid-cols-5 rounded-lg my-4 py-2 pl-2   mx-auto  font-dmSans  text-sm hidden md:grid w-11/12">
           {" "}
           {/* row-2 */}
@@ -95,7 +170,7 @@ const Appeared = ({ assessment }) => {
                 </div>
                 <h2 className="font-dmSans font-bold text-xs sm:text-xs ">
                   {" "}
-                  70%
+                  {student?.response?.percentage?.toFixed(2)}%
                 </h2>
               </span>
             </div>
@@ -104,7 +179,7 @@ const Appeared = ({ assessment }) => {
           <div className="flex justify-end mr-3">
             <span
               className="self-center cursor-pointer"
-              onClick={() => navigate("/collage/results/assessmentReview/0")}
+              onClick={() => navigate(`/collage/results/assessmentReview?studentId=${student._id}&assessmentId=${assessment._id}&responseId=${student.responseId}`)} 
             >
               <h2 className="font-dmSans  text-sm sm:text-base text-blue-500 ">
                 Assessment Review
@@ -113,6 +188,7 @@ const Appeared = ({ assessment }) => {
           </div>
         </div>
       ))}
+   
     </div>
   );
 };

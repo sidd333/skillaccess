@@ -18,7 +18,7 @@ import {
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const AddMcq = () => {
-  const { currentTopic, topics } = useSelector((state) => state.test);
+  const { TopicToBeAdded } = useSelector((state) => state.test);
 
   const navigate = useNavigate();
 
@@ -48,15 +48,62 @@ const AddMcq = () => {
     AnswerIndex: null,
     Duration: 0,
   });
+  const [isPrev, setIsPrev] = useState(false);
 
+  const [count, setCount] = useState(-1);
   const handlePrev = () => {
-    if (step === 1) {
-      return;
-    } else {
-      setStep((prev) => prev - 1);
-    }
+    setIsPrev(true);
+    setQuestion(TopicToBeAdded.video.questions[count]);
+    setCount((prev) => {
+      if (prev - 1 > 0) return prev - 1;
+      return -1;
+    });
   };
 
+  const handleSave = (type) => {
+    if (question.Title === "") {
+      window.alert("Please enter question");
+      return;
+    } else if (question.Options && question.Options.length < 4) {
+      window.alert("Please enter atleast 4 options");
+      return;
+    } else if (question.Duration == 0) {
+      window.alert("Please enter required time");
+      return;
+    } else if (question.AnswerIndex === null) {
+      window.alert("Please select the correct answer");
+      return;
+    } else {
+      if (isPrev) {
+        dispatch(
+          addVideo({
+            question: question,
+            index: count + 1,
+            prev: true,
+          })
+        );
+        setCount(TopicToBeAdded.video.questions.length - 1);
+        setQuestion({
+          Title: "",
+          Options: [],
+          Duration: 0,
+          AnswerIndex: null,
+        });
+        setIsPrev(false);
+        if (type === "save") navigate(-1);
+      } else {
+        dispatch(addVideo({ question: question, prev: false }));
+
+        setQuestion({
+          Title: "",
+          Options: [],
+          Duration: 0,
+          AnswerIndex: null,
+        });
+        if (type === "save") navigate(-1);
+      }
+    }
+  };
   const handleChanges = (e) => {
     // console.log(question);
 
@@ -156,11 +203,17 @@ const AddMcq = () => {
 
   const [questionsToAdd, setQuestionsToAdd] = useState([]);
 
-  console.log(questionsToAdd);
+  useEffect(() => {
+    setCount(TopicToBeAdded.video.questions.length - 1);
+  }, [TopicToBeAdded]);
 
   return (
     <div>
-      <Header question={question} setQuestion={setQuestion} />
+      <Header
+        question={question}
+        setQuestion={setQuestion}
+        handleSave={handleSave}
+      />
 
       <div className="bg-white min-h-[90vh] w-[98%] mx-auto rounded-xl pt-4">
         <div className="flex flex-wrap gap-2 sm:w-[95.7%] mx-auto ">
@@ -428,10 +481,10 @@ const AddMcq = () => {
                     <FaPlus className="self-center" /> Add
                   </button> */}
 
-                  <span className="self-center">
+                  {/* <span className="self-center">
                     <input type="checkbox" className="mr-2" />{" "}
                     <label className="">Shuffle Answers</label>
-                  </span>
+                  </span> */}
                 </div>
               </div>
             </div>
@@ -441,47 +494,25 @@ const AddMcq = () => {
         <div className="absolute bottom-10 flex right-8 gap-2">
           {" "}
           <div className=" flex gap-2">
-            <button
-              className={`self-center justify-center flex ${
-                step === 1 ? " bg-gray-200" : " bg-blue-200"
-              } p-2 rounded-lg text-sm font-bold gap-2 w-32`}
-              // onClick={handlePrev}
+            {count >= 0 && (
+              <button
+                className={`self-center justify-center flex ${
+                  step === 1 ? " bg-gray-200" : " bg-blue-200"
+                } p-2 rounded-lg text-sm font-bold gap-2 w-32`}
+                onClick={handlePrev}
 
-              onClick={() => navigate(-1)}
-            >
-              <FaChevronLeft className="self-center" /> Prev
-            </button>
+                // onClick={() => navigate(-1)}
+              >
+                <FaChevronLeft className="self-center" /> Prev
+              </button>
+            )}
           </div>
           <div className=" flex">
             <button
               className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
               // onClick={addQuestion}
 
-              onClick={() => {
-                
-                if (question.Title === "" ) {
-                  window.alert("Please enter question");
-                  return;
-                }
-               else if (question.Options &&  question.Options.length < 4) {
-            
-                  window.alert("Please enter atleast 4 options");
-                  return;
-                }
-               else if(question.Duration==0){
-                  window.alert("Please enter required time");
-                  return;
-                }
-                else if(question.AnswerIndex===null){
-                  window.alert("Please select the correct answer");
-                  return;
-                }
-                else{
-                dispatch(addVideo({ question: question }));
-
-                setQuestion({ Title: "", Options: [], Duration: 0, AnswerIndex: null});
-                }
-              }}
+              onClick={handleSave}
             >
               <FaPlus className="self-center" /> Add Next Question
             </button>

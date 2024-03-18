@@ -1,11 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { loginCollage } from "../../../redux/collage/auth/authSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LuEye } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
+import {
+  googleLoginCollage,
+  loginCollage,
+} from "../../../redux/collage/auth/authSlice";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   // cosnt[(error, setError)] = useState();
@@ -53,10 +58,24 @@ const Login = () => {
       console.log(error);
     }
   };
+
   const handleCheckboxChange = () => {
     setChecked(!checked); // Toggle checkbox status
   };
-  const isLoginDisabled = !checked || !Credentials.Email || !Credentials.Password;
+  const isLoginDisabled =
+    !checked || !Credentials.Email || !Credentials.Password;
+  // GOOGlE LOGIN
+
+  function handleGoogleLoginSuccess(tokenResponse) {
+    const accessToken = tokenResponse.access_token;
+
+    dispatch(googleLoginCollage(accessToken));
+
+    navigate("/collage/dashboard");
+  }
+
+  const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
+
   return (
     <form action="" className="font-dmSans">
       <div className=" bg-base-100 shadow-xl h-full min-h-[100vh]  font-dmSans grid grid-cols-5 ">
@@ -171,26 +190,33 @@ const Login = () => {
             />
             <span className="text-lGray">
               By creating an account, you agree to our{" "}
-              <Link className="text-blue-600" to="/terms&policies"> Terms-Policies.</Link>
+              <Link className="text-blue-600" to="/terms&policies">
+                {" "}
+                Terms-Policies.
+              </Link>
             </span>
           </label>
 
           <button
-             className={`btn hover:bg-blue-500 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto bg-secondary text-white ${
-              isLoginDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`btn hover:bg-blue-500 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto bg-secondary text-white ${
+              isLoginDisabled ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
             disabled={isLoginDisabled}
           >
             Login
           </button>
-          {/* <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
+          <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
           <button
             className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  "
             onClick={() => navigate("/collage/dashboard")}
+            // onClick={login}
           >
             <FcGoogle className="text-lg mr-2" />
-            <h3 className="opacity-100">Continue with google</h3>
-          </button> */}
+            <h3 className="opacity-100" onClick={login}>
+              Continue with google
+            </h3>
+          </button>
           <span className="text-lGray text-center">
             Don't have an account?{" "}
             <Link to="/register" className="text-secondary">

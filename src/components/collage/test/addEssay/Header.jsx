@@ -9,46 +9,25 @@ import {
 } from "../../../../redux/collage/test/testSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const Header = ({ question, setQuestion, id, type, addType }) => {
+const Header = ({
+  question,
+  setQuestion,
+  id,
+  type,
+  addType,
+  handleSave,
+  isPrev,
+  setIsPrev,
+  count,
+}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSave = () => {
-    console.log(question);
-    if (addType === "topic") {
-      if (question.Title == "") {
-        window.alert("Please enter the question");
-      }
-     else if(question.Duration==0){
-        window.alert("Please enter required time");
-        return;
-      }
-      else {
-        dispatch(addEssayToTopic({ data: question, id: id, type: type }));
-        dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "" , Duration : 0 });
-      
-      navigate(-1);
-      }
-      
-    } else {
-      if (question.Title == "") {
-        window.alert("Please enter the question");
-      }
-      else if(question.Duration==0){
-        window.alert("Please enter required time");
-        return;
-      }
-      else{
-        dispatch(addEssay({ data: question, id: id, type: type }));
-        // dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
-        setQuestion({ Title: "" , Duration : 0 });
-      
-      navigate(-1);
-      }
-      
-    }
+  const handleSaveNext = () => {
+    handleSave();
+    navigate(-1);
   };
+
   return (
     <div className="flex w-[98%] mx-auto justify-between mb-2 mt-5">
       <div className="h-fit self-center">
@@ -70,14 +49,16 @@ const Header = ({ question, setQuestion, id, type, addType }) => {
 
       <div className=" rounded-xl mx-2   h-12 flex my-2 font-dmSans ">
         <div className=" flex gap-2">
-          <button className="self-center w-24  justify-center flex text-blue-800 py-2 px-4 rounded-xl font-bold gap-2 bg-white"
-            onClick={() => navigate(-1)}>
+          <button
+            className="self-center w-24  justify-center flex text-blue-800 py-2 px-4 rounded-xl font-bold gap-2 bg-white"
+            onClick={() => navigate(-1)}
+          >
             Cancel
           </button>
           <button
             className="self-center w-32 justify-center flex bg-blue-700 py-2 font-bold px-4 rounded-xl gap-2 text-white"
             // onClick={() => navigate("/collage/test/preview")}
-            onClick={handleSave}
+            onClick={handleSaveNext}
           >
             Save
           </button>
