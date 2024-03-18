@@ -70,12 +70,8 @@ const Login = () => {
     const accessToken = tokenResponse.access_token;
 
     dispatch(googleLoginCollage(accessToken));
-    // .then((res) => {
-    //   if (res.meta.requestStatus === "fulfilled") {
-    //     setCredentials({});
-    //     navigate("/collage/dashboard");
-    //   }
-    // });
+
+    navigate("/collage/dashboard");
   }
 
   const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });

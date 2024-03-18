@@ -70,10 +70,10 @@ const Register = () => {
     const accessToken = tokenResponse.access_token;
 
     dispatch(googleRegisterCollage(accessToken));
-
+    navigate("/collage/dashboard");
     // .then((res) => {
     //   if (res.meta.requestStatus === "fulfilled") {
-    //     navigate("/collage/dashboard");
+    //
     //   }
     // });
   }
