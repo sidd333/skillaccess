@@ -137,9 +137,6 @@ const testState = {
 
         compiler: [],
       },
-
-
-  
 };
 
 export const getTest = createAsyncThunk(
@@ -156,7 +153,6 @@ export const getTest = createAsyncThunk(
             "auth-token": localStorage.getItem("auth-token"),
           },
         }
-
       );
       const res = req.data;
       // console.log(res);
@@ -198,25 +194,18 @@ export const getStudentResponse = createAsyncThunk(
   }
 );
 
-
-
-
 export const getTestResultPage = createAsyncThunk(
   "test/getTestResultPage",
   async (id, { rejectWithValue }) => {
     try {
       const req = await axios.get(
-        `${
-          REACT_APP_API_URL
-        }/api/studentDummy/get/test-details/${id}`,
-      
+        `${REACT_APP_API_URL}/api/studentDummy/get/test-details/${id}`,
+
         {
           headers: {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("auth-token"),
           },
-          
-         
         }
       );
 
@@ -227,7 +216,6 @@ export const getTestResultPage = createAsyncThunk(
       return res.students;
     } catch (error) {
       console.log("catch", error.response.data);
-
 
       return rejectWithValue(error.response.data);
     }
@@ -391,8 +379,6 @@ export const createTopic = createAsyncThunk(
   }
 );
 
-
-
 // export const getStudentResponse = createAsyncThunk("test/studentResponse",
 // async (id, { rejectWithValue }) => {
 
@@ -415,7 +401,6 @@ export const createTopic = createAsyncThunk(
 
 //     return res.studentResponses;
 
-
 //   } catch (error) {
 //     console.log("catch", error.response.data);
 
@@ -424,14 +409,28 @@ export const createTopic = createAsyncThunk(
 // }
 // );
 
-
-
 export const getResponseByTestandStudent = createAsyncThunk(
   "test/getResponseByTestandStudent",
   async (data, { rejectWithValue }) => {
     try {
       const req = await axios.get(
         `${REACT_APP_API_URL}/api/studentDummy/test/student?testId=${data.testId}&studentId=${data.studentId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        }
+      );
+      const res = req.data;
+      console.log(res.studentResponse[0]);
+      return res.studentResponse[0];
+    } catch (error) {
+      console.log("catch", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const editQuestionById = createAsyncThunk(
   "test/editQuestionById",
@@ -440,7 +439,6 @@ export const editQuestionById = createAsyncThunk(
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/assessments/question/${data.id}?type=${data.type}`,
         data.question,
-
         {
           headers: {
             "Content-Type": "application/json",
@@ -448,23 +446,14 @@ export const editQuestionById = createAsyncThunk(
           },
         }
       );
-
-
       const res = req.data;
-
-      console.log(res.studentResponse[0]);
-
-      return res.studentResponse[0];
+      return { res: res, index: data.index, type: data.type };
     } catch (error) {
       console.log("catch", error.response.data);
-
-
       return rejectWithValue(error.response.data);
     }
   }
 );
-
-
 
 const testSlice = createSlice({
   initialState: testState,
@@ -889,7 +878,7 @@ const testSlice = createSlice({
       .addCase(getTest.fulfilled, (state, action) => {
         state.test = action.payload;
 
-        console.log("fullfilled",state.test);
+        console.log("fullfilled", state.test);
       })
       .addCase(getTest.rejected, (state, action) => {
         console.log(action.payload);
@@ -976,7 +965,6 @@ const testSlice = createSlice({
       .addCase(getStudentResponse.fulfilled, (state, action) => {
         // state.studentResponse = action.payload;
         state.response = action.payload;
-
       })
       .addCase(getStudentResponse.rejected, (state, action) => {
         state.response = [];
@@ -1003,7 +991,6 @@ const testSlice = createSlice({
         console.error("Error fetching test results:", action.payload);
         state.response = [];
       });
-
   },
 });
 

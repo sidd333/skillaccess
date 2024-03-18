@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
-import {  googleRegisterCollage,registerCollage } from "../../../redux/collage/auth/authSlice";
+import {
+  googleRegisterCollage,
+  registerCollage,
+} from "../../../redux/collage/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { LuEye } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
-
 
 const Register = () => {
   const navigate = useNavigate();
@@ -60,32 +62,32 @@ const Register = () => {
     } catch (error) {
       console.log("Reject" + error);
     }
+  };
 
+  // GOOGLE REGISTER
+
+  function handleGoogleLoginSuccess(tokenResponse) {
+    const accessToken = tokenResponse.access_token;
+
+    dispatch(googleRegisterCollage(accessToken));
+
+    // .then((res) => {
+    //   if (res.meta.requestStatus === "fulfilled") {
+    //     navigate("/collage/dashboard");
+    //   }
+    // });
   }
 
+  const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
 
-
-// GOOGLE REGISTER
-
-function handleGoogleLoginSuccess(tokenResponse) {
-
-  const accessToken = tokenResponse.access_token;
-
-  dispatch(googleRegisterCollage(accessToken))
-  
-  // .then((res) => {
-  //   if (res.meta.requestStatus === "fulfilled") {
-  //     navigate("/collage/dashboard");
-  //   }
-  // });
-
-}
-
-const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
-
-
-  };
-  const isCreateAccountDisabled = !checked || !Credentials.Email || !Credentials.Password || !Credentials.FirstName || !Credentials.LastName || !Credentials.University || !Credentials.Phone;
+  const isCreateAccountDisabled =
+    !checked ||
+    !Credentials.Email ||
+    !Credentials.Password ||
+    !Credentials.FirstName ||
+    !Credentials.LastName ||
+    !Credentials.University ||
+    !Credentials.Phone;
 
   return (
     <form action="" className="font-dmSans">
@@ -224,7 +226,7 @@ const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
             />
             <span className="text-lGray font-bold text-xs">
               By creating an account, you agree to our{" "}
-              <Link className="text-blue-600" to='/terms&policies' >
+              <Link className="text-blue-600" to="/terms&policies">
                 Terms-Policies.{" "}
               </Link>
               {/* and, <Link>Notification Settings</Link> */}
@@ -234,9 +236,11 @@ const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
           {/* register button */}
           <></>
           <button
-           className={`btn hover:bg-blue-700 bg-blue-600 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto text-white ${isCreateAccountDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-           onClick={handleSubmit}
-           disabled={isCreateAccountDisabled}
+            className={`btn hover:bg-blue-700 bg-blue-600 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto text-white ${
+              isCreateAccountDisabled ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={isCreateAccountDisabled}
           >
             Create Account
           </button>
@@ -247,9 +251,9 @@ const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
             // onClick={login}
           >
             <FcGoogle className="text-lg mr-2" />
-            <h3 className="opacity-100"
-             onClick={login}
-            >Continue with google</h3>
+            <h3 className="opacity-100" onClick={login}>
+              Continue with google
+            </h3>
           </button>
           <span className="text-lGray text-center text-sm font-semibold">
             Already have an account?{" "}

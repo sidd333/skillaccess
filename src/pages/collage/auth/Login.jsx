@@ -6,8 +6,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LuEye } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
-import {  googleLoginCollage,loginCollage } from "../../../redux/collage/auth/authSlice";
-import {useGoogleLogin} from '@react-oauth/google';
+import {
+  googleLoginCollage,
+  loginCollage,
+} from "../../../redux/collage/auth/authSlice";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   // cosnt[(error, setError)] = useState();
@@ -56,26 +59,26 @@ const Login = () => {
     }
   };
 
+  const handleCheckboxChange = () => {
+    setChecked(!checked); // Toggle checkbox status
+  };
+  const isLoginDisabled =
+    !checked || !Credentials.Email || !Credentials.Password;
+  // GOOGlE LOGIN
 
-// GOOGlE LOGIN
+  function handleGoogleLoginSuccess(tokenResponse) {
+    const accessToken = tokenResponse.access_token;
 
-function handleGoogleLoginSuccess(tokenResponse) {
+    dispatch(googleLoginCollage(accessToken));
+    // .then((res) => {
+    //   if (res.meta.requestStatus === "fulfilled") {
+    //     setCredentials({});
+    //     navigate("/collage/dashboard");
+    //   }
+    // });
+  }
 
-  const accessToken = tokenResponse.access_token;
-
-  dispatch(googleLoginCollage(accessToken))
-  // .then((res) => {
-  //   if (res.meta.requestStatus === "fulfilled") {
-  //     setCredentials({});
-  //     navigate("/collage/dashboard");
-  //   }
-  // });
-
-}
-
-const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
-
-
+  const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
 
   return (
     <form action="" className="font-dmSans">
@@ -187,13 +190,17 @@ const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
             />
             <span className="text-lGray">
               By creating an account, you agree to our{" "}
-              <Link className="text-blue-600" to="/terms&policies"> Terms-Policies.</Link>
+              <Link className="text-blue-600" to="/terms&policies">
+                {" "}
+                Terms-Policies.
+              </Link>
             </span>
           </label>
 
           <button
-             className={`btn hover:bg-blue-500 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto bg-secondary text-white ${
-              isLoginDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`btn hover:bg-blue-500 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto bg-secondary text-white ${
+              isLoginDisabled ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             onClick={handleSubmit}
             disabled={isLoginDisabled}
           >
@@ -206,7 +213,9 @@ const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
             // onClick={login}
           >
             <FcGoogle className="text-lg mr-2" />
-            <h3 className="opacity-100"  onClick={login} >Continue with google</h3>
+            <h3 className="opacity-100" onClick={login}>
+              Continue with google
+            </h3>
           </button>
           <span className="text-lGray text-center">
             Don't have an account?{" "}

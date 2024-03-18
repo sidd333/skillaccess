@@ -8,17 +8,16 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-
-
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-    <GoogleOAuthProvider
+      <GoogleOAuthProvider
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-        redirectUri="http://localhost:3000/collage/dashboard">
-          {/* redirectUri= "https://skillaccessclient.netlify.app/collage/dashboard" */}
-      <App />
-    </GoogleOAuthProvider>
+        redirectUri="http://localhost:3000/collage/dashboard"
+      >
+        {/* redirectUri= "https://skillaccessclient.netlify.app/collage/dashboard" */}
+        <App />
+      </GoogleOAuthProvider>
     </Provider>
   </React.StrictMode>
 );
