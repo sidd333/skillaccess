@@ -336,11 +336,21 @@ const SelectTests = () => {
                       <button
                         className="w-[90px] h-[40px] bg-[#8F92A120] rounded-xl"
                         onClick={() => {
-                          dispatch(setCurrentTopic({ topic: section }));
+                          dispatch(
+                            setCurrentTopic({
+                              topic: {
+                                ...section,
+                                Type: questionType || "mcq",
+                              },
+                            })
+                          );
                           localStorage.setItem(
                             "Details",
 
-                            JSON.stringify(section)
+                            JSON.stringify({
+                              ...section,
+                              Type: questionType || "mcq",
+                            })
                           );
 
                           Navigate(
