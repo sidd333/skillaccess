@@ -18,8 +18,9 @@ const Review = () => {
   const type = searchParams.get("type");
   const questionType = searchParams.get("question");
   const view = searchParams.get("view");
+
   // console.log(questionType);
-  const { topics } = useSelector((state) => state.test);
+  const { currentTopic, topics } = useSelector((state) => state.test);
   useEffect(() => {
     if (type === "section") {
       // const topics = JSON.parse(localStorage.getItem("topics"));
@@ -30,16 +31,11 @@ const Review = () => {
       questionType === "video" && setQuestions(topics[id].video);
       questionType === "compiler" && setQuestions(topics[id].compiler);
     } else if (type === "topic") {
-      questionType === "mcq" &&
-        setQuestions(JSON.parse(localStorage.getItem("Details")).questions);
-      questionType === "findAnswer" &&
-        setQuestions(JSON.parse(localStorage.getItem("Details")).findAnswers);
-      questionType === "essay" &&
-        setQuestions(JSON.parse(localStorage.getItem("Details")).essay);
-      questionType === "video" &&
-        setQuestions(JSON.parse(localStorage.getItem("Details")).video);
-      questionType === "compiler" &&
-        setQuestions(JSON.parse(localStorage.getItem("Details")).compiler);
+      questionType === "mcq" && setQuestions(currentTopic.questions);
+      questionType === "findAnswer" && setQuestions(currentTopic.findAnswers);
+      questionType === "essay" && setQuestions(currentTopic.essay);
+      questionType === "video" && setQuestions(currentTopic.video);
+      questionType === "compiler" && setQuestions(currentTopic.compiler);
     } else {
       questionType === "mcq" &&
         setQuestions(
@@ -93,11 +89,7 @@ const Review = () => {
         }
         type={type}
         topicId={searchParams.get("topicId")}
-        sectionId={
-          localStorage.getItem("Details")
-            ? JSON.parse(localStorage.getItem("Details"))._id
-            : ""
-        }
+        sectionId={localStorage.getItem("Details") ? currentTopic._id : ""}
       />
 
       <div className="  w-11/12 mx-auto min-h-[90vh] my-2 rounded-lg   bg-gray-100 ">

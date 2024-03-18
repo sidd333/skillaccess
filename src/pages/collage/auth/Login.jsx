@@ -56,6 +56,7 @@ const Login = () => {
     }
   };
 
+
 // GOOGlE LOGIN
 
 function handleGoogleLoginSuccess(tokenResponse) {
@@ -73,6 +74,7 @@ function handleGoogleLoginSuccess(tokenResponse) {
 }
 
 const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
+
 
 
   return (
@@ -179,8 +181,9 @@ const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
           <label className=" flex  gap-2 cursor-pointer mx-auto w-full max-w-xs">
             <input
               type="checkbox"
-              checked="false"
+              checked={checked}
               className="checkbox checkbox-primary bg-secondary opacity-20 w-6 h-6"
+              onChange={handleCheckboxChange}
             />
             <span className="text-lGray">
               By creating an account, you agree to our{" "}
@@ -189,8 +192,10 @@ const login = useGoogleLogin({onSuccess: handleGoogleLoginSuccess});
           </label>
 
           <button
-            className="btn hover:bg-blue-500  rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-secondary text-white"
+             className={`btn hover:bg-blue-500 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto bg-secondary text-white ${
+              isLoginDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
             onClick={handleSubmit}
+            disabled={isLoginDisabled}
           >
             Login
           </button>

@@ -56,8 +56,9 @@ const AddQuestionsSelect = () => {
         {/* larger screens */}
         <div className="   my-2 rounded-lg tracking-wide justify-between  ">
           <h2 className="font-normal text-xs sm:text-sm text-gray-400  mt-8 tracking-wide ">
-          Add up to 10 custom questions to your assessment (optional). You can
-          use five question types: multiple-choice, essay, video, code and find answer.
+            Add up to 10 custom questions to your assessment (optional). You can
+            use five question types: multiple-choice, essay, video, code and
+            find answer.
           </h2>
         </div>
 
@@ -258,14 +259,14 @@ const AddQuestionsSelect = () => {
       <div className=" w-11/12 mx-auto flex justify-end mt-14">
         <div className="flex gap-4">
           <button
-            className="self-center justify-center flex bg-gray-100 py-3 px-8 rounded-xl text-xs gap-2 "
+            className="self-center justify-center flex bg-white border border-blue-500 py-3 px-8 rounded-xl text-xs gap-2 text-blue-500"
             onClick={NavHandler}
           >
             New Question
           </button>
-          <button className="self-center justify-center flex bg-white border border-blue-500 py-3 px-8 rounded-xl text-xs gap-2 text-blue-500">
+          {/* <button className="self-center justify-center flex bg-white border border-blue-500 py-3 px-8 rounded-xl text-xs gap-2 text-blue-500">
             Copy question from another assessment
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

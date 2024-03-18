@@ -12,7 +12,7 @@ import {
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const AddMcq = () => {
-  const { currentTopic, topics } = useSelector((state) => state.test);
+  const { topics } = useSelector((state) => state.test);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,11 +20,11 @@ const AddMcq = () => {
   const { id } = useParams();
 
   const [step, setStep] = useState(1);
-  const [click, setClick] = useState(false);
+  const [isPrev, setIsPrev] = useState(false);
   const [search, setSearch] = useSearchParams();
 
   const section = search.get("topicId");
-  const { test } = useSelector((state) => state.test);
+
   console.log(section);
   const [question, setQuestion] = useState({
     id: search.get("topicId") + Date.now(),
@@ -36,127 +36,15 @@ const AddMcq = () => {
     AnswerIndex: null,
   });
 
-  // const [questions, setQuestions] = useState(
-  //   test.questions || [
-  //     {
-  //       Duration: 0,
-  //       QuestionType: "mcq",
-  //       Title: "",
-  //       Options: {},
-  //       AnswerIndex: 0,
-  //     },
-  //   ]
-  // );
-
-  // useEffect(() => {
-  //   setQuestion({
-  //     Duration: 0,
-  //     QuestionType: "mcq",
-  //     Title: "",
-  //     Options: {},
-  //     AnswerIndex: 0,
-  //   });
-
-  //   setClick(false);
-  // }, [click]);
-
-  // useEffect(() => {
-  //   if (step === 1) {
-  //     console.log("no previous question");
-  //   } else {
-  //     console.log("previous question");
-  //     setQuestion(questions[questions.length - step]);
-  //   }
-  // }, [step]);
-
-  // const addQuestion = () => {
-  //   // Ensure question title is not empty
-  //   if (!question.Title.trim()) {
-  //     alert("Please enter a question title.");
-  //     return;
-  //   }
-
-  //   // Ensure at least two options are provided
-  //   if (
-  //     Object.keys(question.Options).filter(
-  //       (key) => question.Options[key].trim() !== ""
-  //     ).length < 2
-  //   ) {
-  //     alert("Please provide at least two options.");
-  //     return;
-  //   }
-
-  //   // Ensure the correct answer index is within the range of options
-  //   if (
-  //     question.AnswerIndex < 0 ||
-  //     question.AnswerIndex >= Object.keys(question.Options).length
-  //   ) {
-  //     alert("Invalid answer index.");
-  //     return;
-  //   }
-
-  //   // Create a new question object with the current state
-  //   const newQuestion = { ...question };
-
-  //   // Update the questions state by adding the new question
-  //   setQuestions([...questions, newQuestion]);
-
-  //   console.log("id", sectionId);
-
-  //   dispatch(setMcq({ sectionId, questions: questions }));
-
-  //   // Dispatch the updated questions to the Redux store
-  //   // dispatch(setTest({ questions: [...questions, newQuestion] }));
-  //   // dispatch(setTest({sections : test.sections[id]}))
-
-  //   // Clear the question state for the next question
-  //   const clearedOptions = {
-  //     Options0: "",
-  //     Options1: "",
-  //     Options2: "",
-  //     Options3: "",
-  //   };
-
-  //   setQuestion({
-  //     Duration: 0,
-  //     QuestionType: "mcq",
-  //     Title: "",
-  //     Options: clearedOptions,
-  //     AnswerIndex: 0,
-  //   });
-  //   setClick(true);
-
-  //   // Increment the step counter
-  //   setStep((prevStep) => prevStep + 1);
-  // };
-
-  // const handleChanges = (e) => {
-  //   const { name, value } = e.target;
-
-  //   if (name.includes("Options")) {
-  //     setQuestion({
-  //       ...question,
-  //       Options: {
-  //         ...question.Options,
-  //         [name]: value, // Update the specific option based on the input name
-  //       },
-  //     });
-  //   } else {
-  //     setQuestion({
-  //       ...question,
-  //       [name]: value,
-  //     });
-  //   }
-
-  //   console.log(questions, "questions");
-  // };
-
+  const [count, setCount] = useState(topics[id].questions.length - 1);
   const handlePrev = () => {
-    if (step === 1) {
-      return;
-    } else {
-      setStep((prev) => prev - 1);
-    }
+    setIsPrev(true);
+    let current = topics[id].questions[count];
+    setQuestion({ ...current, Duration: parseInt(current.Duration) });
+    setCount((prev) => {
+      if (prev - 1 >= 0) return prev - 1;
+      return -1;
+    });
   };
 
   const handleChanges = (e) => {
@@ -170,7 +58,6 @@ const AddMcq = () => {
       setQuestion((prev) => {
         return { ...prev, Duration: e.target.value };
       });
-      
     } else {
       switch (e.target.name) {
         case "Option1":
@@ -232,9 +119,65 @@ const AddMcq = () => {
     }
   };
 
+  const handleAddQuestion = (type) => {
+    if (question.Title === "") {
+      window.alert("Please enter question");
+      return;
+    } else if (question.Options && question.Options.length < 4) {
+      window.alert("Please enter atleast 4 options");
+      return;
+    } else if (question.Options.some((option) => option.trim() === "")) {
+      window.alert("Please enter all options");
+      return;
+    } else if (question.Duration == 0) {
+      window.alert("Please enter required time");
+      return;
+    } else if (question.AnswerIndex === null) {
+      window.alert("Please select correct answer");
+      return;
+    } else {
+      if (isPrev) {
+        dispatch(
+          addMcq({ question: question, id: id, prev: true, index: count + 1 })
+        );
+        setIsPrev(false);
+        setQuestion({
+          id: search.get("topicId") + Date.now(),
+          Title: "",
+          Options: [],
+          Duration: 0,
+          AnswerIndex: null,
+          section: search.get("topicId"),
+        });
+        setCount(topics[id].questions.length - 1);
+        if (type === "save") navigate(-1);
+      } else {
+        dispatch(addMcq({ question: question, id: id, prev: false }));
+        setQuestion({
+          id: search.get("topicId") + Date.now(),
+          Title: "",
+          Options: [],
+          Duration: 0,
+          AnswerIndex: null,
+          section: search.get("topicId"),
+        });
+        if (type === "save") navigate(-1);
+      }
+    }
+  };
+
   return (
     <div>
-      <Header question={question} setQuestion={setQuestion} section={section} />
+      <Header
+        handleSave={handleAddQuestion}
+        topics={topics}
+        question={question}
+        setQuestion={setQuestion}
+        section={section}
+        search={search}
+        isPrev={isPrev}
+        setIsPrev={setIsPrev}
+      />
       <div className="bg-white min-h-[90vh] w-[98%] mx-auto rounded-xl pt-4">
         <div className="flex flex-wrap gap-2 sm:w-[95.7%] mx-auto ">
           <span className="w-[49%] ">
@@ -447,10 +390,10 @@ const AddMcq = () => {
                   {/* <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
                     <FaPlus className="self-center" /> Add
                   </button> */}
-                  <span className="self-center">
+                  {/* <span className="self-center">
                     <input type="checkbox" className="mr-2" />{" "}
                     <label className="">Shuffle Answers</label>
-                  </span>
+                  </span> */}
                 </div>
               </div>
             </div>
@@ -460,11 +403,13 @@ const AddMcq = () => {
           {" "}
           <div className=" flex gap-2">
             <button
-              className={`self-center justify-center flex ${
+              className={`${
+                count > 0 ? "" : "hidden "
+              } self-center justify-center flex ${
                 step === 1 ? " bg-gray-200" : " bg-blue-200"
               } p-2 rounded-lg text-sm font-bold gap-2 w-32`}
-              // onClick={handlePrev}
-              onClick={() => navigate(-1)}
+              onClick={handlePrev}
+              // onClick={() => navigate(-1)}
             >
               <FaChevronLeft className="self-center" /> Prev
             </button>
@@ -473,39 +418,7 @@ const AddMcq = () => {
             <button
               className="self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 "
               // onClick={addQuestion}
-              onClick={() => {
-                if (question.Title === "") {
-                  window.alert("Please enter question");
-                  return;
-                } 
-                else if (question.Options && question.Options.length < 4) {
-                  window.alert("Please enter atleast 4 options");
-                  return;
-                }
-               
-                else if (question.Options.some((option) => option.trim() === "")) {
-                  window.alert("Please enter all options");
-                  return;
-                }
-                
-                else if (question.Duration == 0) {
-                  window.alert("Please enter required time");
-                  return;
-                } else if (question.AnswerIndex === null) {
-                  window.alert("Please select correct answer");
-                  return;
-                } else {
-                  dispatch(addMcq({ question: question, id: id }));
-                  setQuestion({
-                    id: search.get("topicId") + Date.now(),
-                    Title: "",
-                    Options: [],
-                    Duration: 0,
-                    AnswerIndex: null,
-                    section: search.get("topicId"),
-                  });
-                }
-              }}
+              onClick={handleAddQuestion}
             >
               <FaPlus className="self-center" /> Add Next Question
             </button>

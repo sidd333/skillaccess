@@ -126,12 +126,12 @@ const [search, setSearch] = useSearchParams();
             <PiPencilSimpleLineBold
               className=" w-6 h-6 p-1 rounded-lg bg-amber-600 self-center"
               onClick={() => {
-                if (!compiler.codeQuestion || compiler.codeQuestion.some(q => q.trim() === "")) {
+                if (!compiler.codeQuestion) {
                   window.alert("Please enter the question");
                   return;
                 }
               
-                if (!compiler.code || compiler.code.some(c => c.trim() === "")) {
+                if (!compiler.code) {
                   window.alert("Please enter the code");
                   return;
                 }

@@ -304,7 +304,9 @@ useEffect(() => {
   return (
     <div className="w-11/12 mx-auto relative    min-h-[90vh] pb-20">
       {/* <Header page={"final"} handleSubmit={handleSubmit} /> */}
+
       <HeaderMarks response={response}  totalQuestions={questions?.length}/>
+
 
       <div className="mt-16">
         {questions

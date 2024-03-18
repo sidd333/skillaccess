@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
 const ResultsOverview = () => {
+
   const { user } = useSelector((state) => state.collageAuth);
   const assessment = useSelector((state) => state.test.test);
   // const {studentResponses} = useSelector((state) => state.test);
@@ -44,13 +45,17 @@ const ResultsOverview = () => {
 
 
 
+
   return (
     <div className="w-[95%] mx-auto ">
       <Header />
       <Info user={user} assessment={assessment} />
+
       <About Description={assessment.description} />
       <Description topics={assessment.topics} />
+
       <Toggle assessment={assessment}  />
+
     </div>
   );
 };

@@ -9,9 +9,13 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import {
   addMcqToTopic,
   addQuestionToTopic,
+  editQuestionById,
 } from "../../../../redux/collage/test/testSlice";
 
 const AddMcqToTopic = () => {
+  const { currentTopic } = useSelector((state) => state.test);
+  const [isPrev, setIsPrev] = useState(false);
+  const [countDetail, setCountDetail] = useState(-1);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -31,11 +35,15 @@ const AddMcqToTopic = () => {
   const [step, setStep] = useState(1);
 
   const handlePrev = () => {
-    if (step === 1) {
-      return;
-    } else {
-      setStep((prev) => prev - 1);
-    }
+    setIsPrev(true);
+    let current = currentTopic?.questions[countDetail];
+
+    setQuestion({ ...current, Duration: parseInt(current.Duration) || 0 });
+
+    setCountDetail((prev) => {
+      if (prev - 1 >= 0) return prev - 1;
+      return -1;
+    });
   };
 
   const handleChanges = (e) => {
@@ -109,8 +117,12 @@ const AddMcqToTopic = () => {
       }
     }
   };
-  
-console.log(question);
+
+  useEffect(() => {
+    console.log(currentTopic);
+    setCountDetail(currentTopic.questions.length - 1);
+  }, [currentTopic]);
+  // console.log(question);
   return (
     <div>
       <Header
@@ -328,13 +340,13 @@ console.log(question);
                 </span>
                 {/* add button and shuffle container */}
                 <div className="flex justify-between">
-                  <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
+                  {/* <button className="flex w-1/5 bg-gray-100 rounded-xl  font-boldgap-2 justify-center py-3">
                     <FaPlus className="self-center" /> Add
                   </button>
                   <span className="self-center">
                     <input type="checkbox" className="mr-2" />{" "}
                     <label className="">Shuffle Answers</label>
-                  </span>
+                  </span> */}
                 </div>
               </div>
             </div>
@@ -343,15 +355,16 @@ console.log(question);
         <div className="absolute bottom-10 flex right-8 gap-2">
           {" "}
           <div className=" flex gap-2">
-            <button
-              className={`self-center justify-center flex ${
-                step === 1 ? " bg-gray-200" : " bg-blue-200"
-              } p-2 rounded-lg text-sm font-bold gap-2 w-32`}
-              // onClick={handlePrev}
-              onClick={() => navigate(-1)}
-            >
-              <FaChevronLeft className="self-center" /> Prev
-            </button>
+            {
+              <button
+                className={`self-center justify-center flex bg-blue-700 text-white py-2 px-4 rounded-lg text-sm font-bold gap-2 ${
+                  countDetail >= 0 ? "" : "hidden"
+                }`}
+                onClick={handlePrev}
+              >
+                <FaChevronLeft className="self-center" /> Prev
+              </button>
+            }
           </div>
           <div className=" flex">
             <button
@@ -366,28 +379,49 @@ console.log(question);
                 if (question.Title === "") {
                   window.alert("Please enter question");
                   return;
-                }
-                 else if (question.Options && question.Options.length < 4) {
+                } else if (question.Options && question.Options.length < 4) {
                   window.alert("Please enter atleast 4 options");
                   return;
-                }
-                else if (question.Options.some((option) => option.trim() === "")) {
+                } else if (
+                  question.Options.some((option) => option.trim() === "")
+                ) {
                   window.alert("Please enter all options");
                   return;
-                }
-                else if (question.Duration == 0) {
+                } else if (question.Duration == 0) {
                   window.alert("Please enter required time");
                   return;
                 } else {
-                  dispatch(
-                    addQuestionToTopic({ data: question, id: id, type: type })
-                  );
-                  setQuestion({
-                    Title: "",
-                    Options: [],
-                    id: id + Date.now(),
-                    Duration: 0,
-                  });
+                  if (isPrev) {
+                    //api call
+                    setIsPrev(false);
+                    setCountDetail(currentTopic.questions.length - 1);
+                    dispatch(
+                      editQuestionById({
+                        index: countDetail + 1,
+                        type: "mcq",
+                        id: question._id,
+                        question: question,
+                      })
+                    );
+                    setQuestion({
+                      Title: "",
+                      Options: [],
+                      id: id + Date.now(),
+                      Duration: 0,
+                    });
+                  } else {
+                    setIsPrev(false);
+                    setCountDetail(currentTopic.questions.length - 1);
+                    dispatch(
+                      addQuestionToTopic({ data: question, id: id, type: type })
+                    );
+                    setQuestion({
+                      Title: "",
+                      Options: [],
+                      id: id + Date.now(),
+                      Duration: 0,
+                    });
+                  }
                 }
               }}
             >

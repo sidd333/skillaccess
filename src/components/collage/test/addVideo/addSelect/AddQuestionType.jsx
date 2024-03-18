@@ -192,15 +192,15 @@ const AddQuestionType = () => {
       <div className=" w-11/12 mx-auto flex justify-end mt-14">
         <div className="flex gap-4">
           <button
-            className="self-center justify-center flex bg-gray-100 py-3 px-8 rounded-xl text-xs gap-2 "
+            className="self-center justify-center flex bg-white border border-blue-500 py-3 px-8 rounded-xl text-xs gap-2 text-blue-500"
             onClick={NavHandler}
           >
             New Question
           </button>
-
-          <button className="self-center justify-center flex bg-white border border-blue-500 py-3 px-8 rounded-xl text-xs gap-2 text-blue-500">
+          {/* className="self-center justify-center flex bg-gray-100 py-3 px-8 rounded-xl text-xs gap-2 " */}
+          {/* <button className="self-center justify-center flex bg-white border border-blue-500 py-3 px-8 rounded-xl text-xs gap-2 text-blue-500">
             Copy question from another assessment
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

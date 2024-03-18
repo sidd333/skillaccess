@@ -8,6 +8,7 @@ import { getTestResultPage } from "../../../../redux/collage/test/testSlice";
 const Appeared = ({ assessment  }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const {  testDataResponse ,response} =useSelector((state) => state.test);
 
 
@@ -23,6 +24,7 @@ const Appeared = ({ assessment  }) => {
 
   
   // const arr = [2, 1, 1, 1, 1];
+
   // let arr = assessment.studentResponses.map((responseId) => {
   //   // console.log(student);
   //   dispatch(getStudentResponse(responseId))
