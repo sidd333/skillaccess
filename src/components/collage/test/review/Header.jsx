@@ -8,10 +8,20 @@ import * as XLSX from "xlsx";
 import PopUp from "../../../PopUps/PopUp";
 import { useDispatch, useSelector } from "react-redux";
 import { addQuestionToTopic } from "../../../../redux/collage/test/testSlice";
+import Loader from "../addVideo/Loader";
 
-const Header = ({ type, sectionId, qt, topicId, view }) => {
+const Header = ({
+  type,
+  sectionId,
+  qt,
+  topicId,
+  view,
+  visible,
+  setVisible,
+}) => {
   const dispatch = useDispatch();
-  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [excel, setExcel] = useState("");
   const [excelJSON, setExcelJSON] = useState();
 
@@ -44,6 +54,8 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
 
   const handleUpload = async () => {
     if (excel !== "" && excel !== undefined) {
+      setLoading(true);
+
       const workbook = XLSX.read(excel, { type: "buffer" });
       const worksheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[worksheetName];
@@ -148,7 +160,6 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
             }
           }
           setExcelJSON(jsonData.slice(1));
-
           await dispatch(
             addQuestionToTopic({
               data: jsonData.slice(1),
@@ -249,7 +260,12 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
                     className="hidden"
                     onChange={handleFile}
                   />
-                  <FiUpload className="self-center text-lg " /> Upload Questions
+                  {loading ? (
+                    <Loader />
+                  ) : (
+                    <FiUpload className="self-center text-lg " />
+                  )}{" "}
+                  Upload Questions
                 </button>
               )}
 
