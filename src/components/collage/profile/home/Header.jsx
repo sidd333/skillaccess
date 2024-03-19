@@ -155,6 +155,7 @@ const Header = ({
           <p className="text-sm  font-medium mt-2">
             {editable && college ? (
               <textarea
+              className="mt-2 bg-transparent border-none focus:outline-none w-full max-w-[80vw]"
                 type="text"
                 value={
                   college && college.Description ? college.Description : ""
@@ -162,7 +163,7 @@ const Header = ({
                 onChange={(e) =>
                   setCollege({ ...college, Description: e.target.value })
                 }
-                className="bg-transparent border-none focus:outline-none"
+                
               />
             ) : college && college.Description ? (
               college.Description
@@ -181,7 +182,7 @@ const Header = ({
                 onChange={(e) =>
                   setCollege({ ...college, Description: e.target.value })
                 }
-                className={`border-none focus:outline-none ${
+                className={`border-none focus:outline-none w-full max-w-[80vw] ${
                   !college.Description ? 'bg-gray-200' : 'bg-transparent'
                 }`}
                 placeholder="Add Description"
@@ -234,12 +235,16 @@ const Header = ({
           <p className="self-center">
             {editable && college ? (
               <input
-                type="text"
-                value={college && college.Phone ? college.Phone : ""}
-                onChange={(e) =>
-                  setCollege({ ...college, Phone: e.target.value })
+              type="tel" // Set input type to "tel" for telephone number
+              maxLength={10} // Set maximum length to 10 digits
+              value={college && college.Phone ? college.Phone : ""}
+              onChange={(e) => {
+                // Ensure the entered value doesn't exceed 10 digits
+                if (e.target.value.length <= 10) {
+                  setCollege({ ...college, Phone: e.target.value });
                 }
-                className={`border-none focus:outline-none ${
+              }}
+                className={`border-none focus:outline-none appearance-none ${
                   !college.Phone ? 'bg-gray-200' : 'bg-transparent'
                 }`}
                 placeholder="Add Phone Number"

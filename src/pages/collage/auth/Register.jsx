@@ -29,10 +29,20 @@ const Register = () => {
     e.preventDefault();
     let cred = e.target.name;
     let val = e.target.value;
+    
+    // Check if the length of the value exceeds 15 characters
+    if (cred === "FirstName" && val.length > 15) {
+      return; // Do nothing if the length exceeds 15 characters
+    }
+    if (cred === "LastName" && val.length > 15) {
+      return; // Do nothing if the length exceeds 15 characters
+    }
+  
     setCredentials((prev) => {
       return { ...prev, [cred]: val };
     });
   };
+  
 
   const sel = useSelector((state) => state.collageAuth);
   useEffect(() => {
@@ -70,10 +80,10 @@ const Register = () => {
     const accessToken = tokenResponse.access_token;
 
     dispatch(googleRegisterCollage(accessToken));
-
+    navigate("/collage/dashboard");
     // .then((res) => {
     //   if (res.meta.requestStatus === "fulfilled") {
-    //     navigate("/collage/dashboard");
+    //
     //   }
     // });
   }

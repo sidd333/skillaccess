@@ -1,15 +1,69 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
 import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { FiUpload } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
+import * as XLSX from "xlsx";
+import PopUp from "../../../PopUps/PopUp";
+import { useSelector } from "react-redux";
 
 const Header = ({ type, sectionId, qt, topicId, view }) => {
+  const [visible, setVisible] = useState(false);
+  const [excel, setExcel] = useState("");
+  const [excelJSON, setExcelJSON] = useState();
+
+  const { currentTopic } = useSelector((state) => state.test);
+  const handleFile = (e) => {
+    setVisible(true);
+    const types = [
+      "application/vnd.ms-excel",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+      "application/vnd.ms-excel.sheet.macroEnabled.12",
+      "application/vnd.ms-excel.template.macroEnabled.12",
+      "application/vnd.ms-excel.addin.macroEnabled.12",
+      "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+    ];
+    let file = e.target.files[0];
+    if (file && types.includes(file.type)) {
+      let reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onload = (e) => {
+        setExcel(e.target.result);
+      };
+    } else {
+      window.alert("invalid file type");
+    }
+  };
+  const upload = useRef(null);
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const handleUpload = () => {
+    if (excel !== null && excel !== undefined) {
+      const workbook = XLSX.read(excel, { type: "buffer" });
+      const worksheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[worksheetName];
+      const data = XLSX.utils.sheet_to_json(worksheet);
+      setExcelJSON(data);
+      console.log(data, currentTopic.Type);
+      setVisible(false);
+    }
+  };
   return (
     <div className="flex w-11/12 mx-auto justify-between mb-2 mt-5">
+      {visible && (
+        <PopUp
+          visible={visible}
+          handleSave={handleUpload}
+          handleOverlay={() => {
+            upload.current.value = "";
+            setVisible(false);
+          }}
+        />
+      )}
+
       <div>
         <button className="flex self-center  rounded-lg  gap-2">
           <button
@@ -62,12 +116,22 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
               <FiPlus className="self-center text-lg " /> Add
             </button>
 
-            <button
-              className="self-center justify-center flex bg-blue-700 py-3  rounded-xl w-48 text-white  gap-2 "
-              onClick={() => navigate(`/collage/test/addMcq/${id}`)}
-            >
-              <FiUpload className="self-center text-lg " /> Upload Questions
-            </button>
+            {type === "topic" && (
+              <button
+                className="self-center justify-center flex bg-blue-700 py-3  rounded-xl w-48 text-white  gap-2 "
+                onClick={() => {
+                  upload.current.click();
+                }}
+              >
+                <input
+                  type="file"
+                  ref={upload}
+                  className="hidden"
+                  onChange={handleFile}
+                />
+                <FiUpload className="self-center text-lg " /> Upload Questions
+              </button>
+            )}
 
             <button className="bg-[#F8F8F9] self-center  rounded-lg  w-10 sm:h-11 sm:w-14">
               <PiSlidersHorizontalLight className="mx-auto sm:h-8 sm:w-8 h-6 w-6" />

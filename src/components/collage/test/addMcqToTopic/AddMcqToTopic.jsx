@@ -382,7 +382,13 @@ const AddMcqToTopic = () => {
                 } else if (question.Options && question.Options.length < 4) {
                   window.alert("Please enter atleast 4 options");
                   return;
-                } else if (
+                } 
+                else if (question.AnswerIndex === null) {
+                  window.alert("Please select correct answer");
+                  return;
+                }
+                
+                else if (
                   question.Options.some((option) => option.trim() === "")
                 ) {
                   window.alert("Please enter all options");
