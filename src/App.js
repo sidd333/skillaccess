@@ -2,8 +2,9 @@ import "./App.css";
 import React, { Suspense, lazy } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCollege, logoutCollage } from "./redux/collage/auth/authSlice";
+import { clearLogoutError, getCollege, logoutCollage } from "./redux/collage/auth/authSlice";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //----------------------------------------------collage pages----------------------------------------------------------------------------//
 
@@ -56,6 +57,7 @@ const TermsPolicies = lazy(() => import("./pages/collage/auth/TermsPolicies"));
 export default function App() {
   //  AnkitaMalik22-ankita-dev
   const dispatch = useDispatch();
+  let navigate = useNavigate();
 
   // =======
   //   const dispatch = useDispatch();
@@ -64,14 +66,29 @@ export default function App() {
   //   }, [dispatch]);
   // >>>>>>> saveMain
 
-  const { user, isLoggedIn } = useSelector((state) => state.collageAuth);
+  const { user, isLoggedIn ,logoutError} = useSelector((state) => state.collageAuth);
 
   useEffect(() => {
-    dispatch(getCollege());
+
+  dispatch(getCollege());
+
   }, []);
 
+  useEffect(() => {
+    console.log(logoutError);
+    if (logoutError) {
+
+      navigate("/");
+      // dispatch(clearLogoutError());
+      
+    }
+
+  }, [logoutError]);
+ 
+  
+
   return (
-    <BrowserRouter>
+
       <Suspense fallback={<Loader />}>
         <Routes>
           {/* ----------------------------------------collage-------------------------------------------------------------- */}
@@ -121,6 +138,6 @@ export default function App() {
           {/* .......................................................................................................................... */}
         </Routes>
       </Suspense>
-    </BrowserRouter>
+
   );
 }

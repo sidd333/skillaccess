@@ -272,16 +272,31 @@ export const addQuestionToTopic = createAsyncThunk(
   "test/addQuestionToTopic",
   async (data, { rejectWithValue, dispatch }) => {
     try {
-      const req = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/college/add-questions/${data.id}/${data.type}`,
-        { questions: [data.data] },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("auth-token"),
-          },
-        }
-      );
+      let req;
+      if (data.isMultiple === true) {
+        req = await axios.post(
+          `${process.env.REACT_APP_API_URL}/api/college/add-questions/${data.id}/${data.type}`,
+          { questions: data.data },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("auth-token"),
+            },
+          }
+        );
+      } else {
+        req = await axios.post(
+          `${process.env.REACT_APP_API_URL}/api/college/add-questions/${data.id}/${data.type}`,
+          { questions: [data.data] },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("auth-token"),
+            },
+          }
+        );
+      }
+
       const res = req.data;
 
       // if (data.index) return { question: res.questions[0] };

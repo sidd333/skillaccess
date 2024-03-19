@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import getIp from "./getIp";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 // const REACT_APP_API_URL = "http://localhost:4000";
@@ -9,6 +10,8 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 //initial state
 
+
+
 const collageState = {
   status: "",
   error: "",
@@ -16,17 +19,21 @@ const collageState = {
   isLoggedIn: false,
   user: null,
   uploadImg: false,
+  loggedInUsers: null,
+  logoutError: null,
+ 
 };
 
 export const registerCollage = createAsyncThunk(
   "collageAuth/registerCollage",
   async (data, { rejectWithValue }) => {
     try {
-      console.log("registering");
-      console.log(process.env);
+      const ip = getIp();
+      console.log("registering" , ip);
+      // console.log(process.env);
       const req = await axios.post(
         `${REACT_APP_API_URL}/api/college/register`,
-        data,
+        { ...data, ip },
         { withCredentials: true }
       );
       const res = req.data;
@@ -42,10 +49,11 @@ export const loginCollage = createAsyncThunk(
   "collageAuth/loginCollage",
   async (data, { rejectWithValue }) => {
     try {
-      console.log("login");
+      const ip = await getIp();
+      console.log("login" , ip);
       const req = await axios.post(
         `${REACT_APP_API_URL}/api/college/login`,
-        data,
+        { ...data, ip },
         { withCredentials: true }
       );
       const res = req.data;
@@ -156,6 +164,9 @@ export const logoutCollage = createAsyncThunk(
     try {
       console.log("logout");
       const req = await axios.get(`${REACT_APP_API_URL}/api/college/logout`, {
+        headers: {
+          "auth-token": localStorage.getItem("auth-token"),
+        },
         withCredentials: true,
       });
       const res = req.data;
@@ -228,10 +239,11 @@ export const googleLoginCollage = createAsyncThunk(
   "collageAuth/googleLoginCollage",
   async (accessToken, { rejectWithValue }) => {
     try {
+      const ip = await getIp();
       console.log("google login");
       const req = await axios.post(
         `${REACT_APP_API_URL}/api/college/login`,
-        {  googleAccessToken: accessToken }
+        {  googleAccessToken: accessToken , ip}
       );
       const res = req.data;
       localStorage.setItem("auth-token", res.token);
@@ -247,10 +259,11 @@ export const googleRegisterCollage = createAsyncThunk(
   "collageAuth/googleRegisterCollage",
   async (accessToken, { rejectWithValue }) => {
     try {
+      const ip = await getIp();
       console.log("google register");
       const req = await axios.post(
         `${REACT_APP_API_URL}/api/college/register`,
-        {  googleAccessToken: accessToken }
+        {  googleAccessToken: accessToken , ip: ip}
       );
       const res = req.data;
       console.log(res,"res.data");
@@ -264,6 +277,79 @@ export const googleRegisterCollage = createAsyncThunk(
 );
 
 
+export const getLoggedInUsers = createAsyncThunk(
+  "collageAuth/getLoggedInUsers",
+  async (data, { rejectWithValue }) => {
+    try {
+      const req = await axios.get(
+        `${REACT_APP_API_URL}/api/college/loggedin/users`,
+        {
+          headers: {
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+          withCredentials: true,
+        }
+      );
+      const res = req.data;
+      return res.loggedInUsers;
+    } catch (error) {
+      console.log("catch");
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const logoutAUser = createAsyncThunk(
+  "collageAuth/logoutAUser",
+  async (token, { rejectWithValue }) => {
+    try {
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/logout/user/${token}`,
+        {},
+        {
+          headers: {
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+          withCredentials: true,
+        }
+      );
+      const res = req.data;
+      return res.loggedInUsers;
+    } catch (error) {
+      console.log("catch");
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+export const removeLoggedOutUser = createAsyncThunk(
+  "collageAuth/removeLoggedOutUser",
+  async (token, { rejectWithValue }) => {
+    try {
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/remove/logout/user/${token}`,
+        {},
+        {
+          headers: {
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+          withCredentials: true,
+        }
+      );
+      const res = req.data;
+      return res.loggedInUsers;
+    } catch (error) {
+      console.log("catch");
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+
+
+
 const collageAuthSlice = createSlice({
   name: "collageAuth",
   initialState: collageState,
@@ -271,6 +357,10 @@ const collageAuthSlice = createSlice({
     setUploadImg: (state, action) => {
       state.uploadImg = action.payload;
     },
+    clearLogoutError: (state, action) => {
+      state.logoutError = null;
+    }
+
   },
   extraReducers: (builder) => {
     builder
@@ -338,6 +428,11 @@ const collageAuthSlice = createSlice({
         console.log("fullfilled get college");
       })
       .addCase(getCollege.rejected, (state, action) => {
+
+        state.logoutError = action.payload;
+        state.isLoggedIn = false;
+        // alert("You are logged out! Please login again");
+       
         console.log(action.payload);
 
         // window.alert(action.payload);
@@ -434,12 +529,67 @@ const collageAuthSlice = createSlice({
         console.log(action.payload);
 
         window.alert(action.payload);
-      });
+      })
+      .addCase(getLoggedInUsers.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(getLoggedInUsers.fulfilled, (state, action) => {
+        state.status = "success";
+       state.loggedInUsers = action.payload;
+        // Add any fetched posts to the array
+        console.log("fullfilled");
+      })
+      .addCase(getLoggedInUsers.rejected, (state, action) => {
+        console.log(action.payload);
+
+        window.alert(action.payload);
+      })
+      .addCase(logoutAUser.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(logoutAUser.fulfilled, (state, action) => {
+        state.status = "success";
+        // state.user = action.payload;
+        state.loggedInUsers = action.payload;
+        console.log("fullfilled");
+
+      })
+      .addCase(logoutAUser.rejected, (state, action) => {
+        console.log(action.payload);
+
+        window.alert(action.payload);
+      })
+      .addCase(removeLoggedOutUser.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(removeLoggedOutUser.fulfilled, (state, action) => {
+        state.status = "success";
+        // state.user = action.payload;
+        state.loggedInUsers = action.payload;
+        console.log("fullfilled");
+
+      })
+      .addCase(removeLoggedOutUser.rejected, (state, action) => {
+        console.log(action.payload);
+        if(state.loggedInUsers.length == 0){
+          state.loggedInUsers = null;
+          state.logoutError = "No user is logged in";
+          window.redirect("/");
+        }
+
+        // window.alert(action.payload);
+      })
+      
+
+    
 
 
   },
 });
 
 //
-export const { setUploadImg } = collageAuthSlice.actions;
+export const { setUploadImg ,clearLogoutError} = collageAuthSlice.actions;
 export default collageAuthSlice.reducer;
