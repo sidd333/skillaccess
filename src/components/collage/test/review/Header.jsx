@@ -6,9 +6,11 @@ import { FiUpload } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
 import * as XLSX from "xlsx";
 import PopUp from "../../../PopUps/PopUp";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addQuestionToTopic } from "../../../../redux/collage/test/testSlice";
 
 const Header = ({ type, sectionId, qt, topicId, view }) => {
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [excel, setExcel] = useState("");
   const [excelJSON, setExcelJSON] = useState();
@@ -40,14 +42,130 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const handleUpload = () => {
-    if (excel !== null && excel !== undefined) {
+  const handleUpload = async () => {
+    if (excel !== "" && excel !== undefined) {
       const workbook = XLSX.read(excel, { type: "buffer" });
       const worksheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[worksheetName];
-      const data = XLSX.utils.sheet_to_json(worksheet);
-      setExcelJSON(data);
-      console.log(data, currentTopic.Type);
+
+      // const data = XLSX.utils.sheet_to_json(worksheet);
+      const range = XLSX.utils.decode_range(worksheet["!ref"]);
+      let data = [];
+      let jsonData = [];
+      switch (currentTopic.Type) {
+        case "mcq":
+          console.log(range);
+
+          for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+            for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+              const row =
+                worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+
+              let header =
+                worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
+              if (header.v === "option") {
+                let OpArr = jsonData[rowNum].Options || [];
+                jsonData[rowNum] = {
+                  ...jsonData[rowNum],
+                  Options: [...OpArr, row.v],
+                };
+              } else {
+                jsonData[rowNum] = {
+                  ...jsonData[rowNum],
+                  [header.v]: row.v,
+                  section: currentTopic._id,
+
+                  id: Date.now() + currentTopic._id,
+                };
+              }
+            }
+          }
+          setExcelJSON(jsonData.slice(1));
+
+          await dispatch(
+            addQuestionToTopic({
+              data: jsonData.slice(1),
+              type: "mcq",
+              isMultiple: true,
+              id: currentTopic._id,
+            })
+          );
+          navigate(-1);
+          break;
+
+        case "findAnswer":
+          for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+            for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+              const row =
+                worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+
+              let header =
+                worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
+              if (header.v === "option") {
+                let OpArr = jsonData[rowNum].Options || [];
+                jsonData[rowNum] = {
+                  ...jsonData[rowNum],
+                  questions: [...OpArr, row.v],
+                };
+              } else {
+                jsonData[rowNum] = {
+                  ...jsonData[rowNum],
+                  [header.v]: row.v,
+                  id: Date.now() + currentTopic._id,
+                  section: currentTopic._id,
+                };
+              }
+            }
+          }
+          setExcelJSON(jsonData.slice(1));
+
+          await dispatch(
+            addQuestionToTopic({
+              data: jsonData.slice(1),
+              type: "findAnswer",
+              isMultiple: true,
+              id: currentTopic._id,
+            })
+          );
+          navigate(-1);
+          break;
+
+        case "essay":
+          for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+            for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+              const row =
+                worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+
+              let header =
+                worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
+
+              jsonData[rowNum] = {
+                ...jsonData[rowNum],
+                [header.v]: row.v,
+                id: Date.now() + currentTopic._id,
+                section: currentTopic._id,
+              };
+            }
+          }
+          setExcelJSON(jsonData.slice(1));
+
+          await dispatch(
+            addQuestionToTopic({
+              data: jsonData.slice(1),
+              type: "essay",
+              isMultiple: true,
+              id: currentTopic._id,
+            })
+          );
+          navigate(-1);
+          break;
+
+        default:
+          break;
+      }
+
+      setVisible(false);
+    } else {
       setVisible(false);
     }
   };
@@ -116,22 +234,24 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
               <FiPlus className="self-center text-lg " /> Add
             </button>
 
-            {type === "topic" && (
-              <button
-                className="self-center justify-center flex bg-blue-700 py-3  rounded-xl w-48 text-white  gap-2 "
-                onClick={() => {
-                  upload.current.click();
-                }}
-              >
-                <input
-                  type="file"
-                  ref={upload}
-                  className="hidden"
-                  onChange={handleFile}
-                />
-                <FiUpload className="self-center text-lg " /> Upload Questions
-              </button>
-            )}
+            {type === "topic" &&
+              currentTopic.Type !== "compiler" &&
+              currentTopic.Type !== "video" && (
+                <button
+                  className="self-center justify-center flex bg-blue-700 py-3  rounded-xl w-48 text-white  gap-2 "
+                  onClick={() => {
+                    upload.current.click();
+                  }}
+                >
+                  <input
+                    type="file"
+                    ref={upload}
+                    className="hidden"
+                    onChange={handleFile}
+                  />
+                  <FiUpload className="self-center text-lg " /> Upload Questions
+                </button>
+              )}
 
             <button className="bg-[#F8F8F9] self-center  rounded-lg  w-10 sm:h-11 sm:w-14">
               <PiSlidersHorizontalLight className="mx-auto sm:h-8 sm:w-8 h-6 w-6" />
