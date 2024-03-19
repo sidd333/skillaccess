@@ -20,6 +20,8 @@ const collageState = {
   user: null,
   uploadImg: false,
   loggedInUsers: null,
+  logoutError: null,
+ 
 };
 
 export const registerCollage = createAsyncThunk(
@@ -237,7 +239,7 @@ export const googleLoginCollage = createAsyncThunk(
   "collageAuth/googleLoginCollage",
   async (accessToken, { rejectWithValue }) => {
     try {
-      const ip = getIp();
+      const ip = await getIp();
       console.log("google login");
       const req = await axios.post(
         `${REACT_APP_API_URL}/api/college/login`,
@@ -257,11 +259,11 @@ export const googleRegisterCollage = createAsyncThunk(
   "collageAuth/googleRegisterCollage",
   async (accessToken, { rejectWithValue }) => {
     try {
-      const ip = getIp();
+      const ip = await getIp();
       console.log("google register");
       const req = await axios.post(
         `${REACT_APP_API_URL}/api/college/register`,
-        {  googleAccessToken: accessToken , ip}
+        {  googleAccessToken: accessToken , ip: ip}
       );
       const res = req.data;
       console.log(res,"res.data");
@@ -301,8 +303,33 @@ export const logoutAUser = createAsyncThunk(
   "collageAuth/logoutAUser",
   async (token, { rejectWithValue }) => {
     try {
-      const req = await axios.get(
-        `${REACT_APP_API_URL}/api/college/logout/${token}`,
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/logout/user/${token}`,
+        {},
+        {
+          headers: {
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+          withCredentials: true,
+        }
+      );
+      const res = req.data;
+      return res.loggedInUsers;
+    } catch (error) {
+      console.log("catch");
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+
+export const removeLoggedOutUser = createAsyncThunk(
+  "collageAuth/removeLoggedOutUser",
+  async (token, { rejectWithValue }) => {
+    try {
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/remove/logout/user/${token}`,
+        {},
         {
           headers: {
             "auth-token": localStorage.getItem("auth-token"),
@@ -322,6 +349,7 @@ export const logoutAUser = createAsyncThunk(
 
 
 
+
 const collageAuthSlice = createSlice({
   name: "collageAuth",
   initialState: collageState,
@@ -329,6 +357,10 @@ const collageAuthSlice = createSlice({
     setUploadImg: (state, action) => {
       state.uploadImg = action.payload;
     },
+    clearLogoutError: (state, action) => {
+      state.logoutError = null;
+    }
+
   },
   extraReducers: (builder) => {
     builder
@@ -396,6 +428,11 @@ const collageAuthSlice = createSlice({
         console.log("fullfilled get college");
       })
       .addCase(getCollege.rejected, (state, action) => {
+
+        state.logoutError = action.payload;
+        state.isLoggedIn = false;
+        // alert("You are logged out! Please login again");
+       
         console.log(action.payload);
 
         // window.alert(action.payload);
@@ -523,7 +560,29 @@ const collageAuthSlice = createSlice({
         console.log(action.payload);
 
         window.alert(action.payload);
-      });
+      })
+      .addCase(removeLoggedOutUser.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(removeLoggedOutUser.fulfilled, (state, action) => {
+        state.status = "success";
+        // state.user = action.payload;
+        state.loggedInUsers = action.payload;
+        console.log("fullfilled");
+
+      })
+      .addCase(removeLoggedOutUser.rejected, (state, action) => {
+        console.log(action.payload);
+        if(state.loggedInUsers.length == 0){
+          state.loggedInUsers = null;
+          state.logoutError = "No user is logged in";
+          window.redirect("/");
+        }
+
+        // window.alert(action.payload);
+      })
+      
 
     
 
@@ -532,5 +591,5 @@ const collageAuthSlice = createSlice({
 });
 
 //
-export const { setUploadImg } = collageAuthSlice.actions;
+export const { setUploadImg ,clearLogoutError} = collageAuthSlice.actions;
 export default collageAuthSlice.reducer;

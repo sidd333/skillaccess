@@ -4,6 +4,7 @@ import Header from "./Header";
 import {
   getLoggedInUsers,
   logoutAUser,
+  removeLoggedOutUser,
 } from "../../../../redux/collage/auth/authSlice";
 
 const Activity = () => {
@@ -17,6 +18,10 @@ const Activity = () => {
     fetchUserLocations();
   }, []);
 
+  useEffect(() => {
+    fetchUserLocations();
+  }, [loggedInUsers]);
+
   const fetchUserLocations = async () => {
     if (loggedInUsers) {
       const locations = await Promise.all(
@@ -29,7 +34,9 @@ const Activity = () => {
     }
     // setUserLocations(locations);
   };
-  const handleDelete = (id) => {};
+  const handleDelete = (token) => {
+    dispatch(removeLoggedOutUser(token));
+   };
 
   const handleLogout = (token) => {
     dispatch(logoutAUser(token));
@@ -65,23 +72,32 @@ const Activity = () => {
                     {user.token_deleted ? "Inactive" : "Active now"}
                   </p>
 
-                  <p className="text-gray-400">{user.device}</p>
+                  <p className="text-gray-400">This is {user.device.toString().substring(0, 20)}) </p>
                 </span>
               </div>
             </div>
 
             <div className="self-center">
-              <button
-                className="bg-[#DE350B33] bg-opacity-20 text-[#DE350B] py-1 px-2 rounded-lg text-sm font-medium"
-                onClick={() => handleLogout(user.token_id)}
-              >
-                Log Out
-              </button>
-            </div>
+              {
+                !user.token_deleted ?
+                  (<button
+                    className="bg-[#DE350B33] bg-opacity-20 text-[#DE350B] py-1 px-2 rounded-lg text-sm font-medium"
+                    onClick={() => handleLogout(user.token_id)}
+                  >
+                    Logout
+                  </button>)
+                  :
+                  (<button className="bg-lGray bg-opacity-20 text-gray-700 py-1 px-2 rounded-lg text-sm font-medium"
+                    onClick={() => handleDelete(user.token_id)}>
+                    Delete
+                  </button>)
+}
+          </div>
+
           </div>
         ))}
 
-        {/* <div className="w-1/2 bg-lGray bg-opacity-5 py-3 px-4 flex justify-between rounded-2xl mb-4">
+      {/* <div className="w-1/2 bg-lGray bg-opacity-5 py-3 px-4 flex justify-between rounded-2xl mb-4">
           <div className="flex gap-4">
             <div className="w-10 h-10 object-contain p-2">
               <img src="../../images/icons/location.png" alt="" />
@@ -102,8 +118,8 @@ const Activity = () => {
             </button>
           </div>
         </div> */}
-      </div>
     </div>
+    </div >
   );
 };
 
