@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import store from "./redux/store";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -11,6 +12,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+    <BrowserRouter>
       <GoogleOAuthProvider
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         redirectUri="http://localhost:3000/collage/dashboard"
@@ -18,6 +20,7 @@ root.render(
         {/* redirectUri= "https://skillaccessclient.netlify.app/collage/dashboard" */}
         <App />
       </GoogleOAuthProvider>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
