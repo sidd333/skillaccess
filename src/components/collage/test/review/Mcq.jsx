@@ -64,7 +64,13 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
   
   }
 
-
+  if (!question || Object.keys(question).length === 0) {
+    return (
+      <div className="mx-6 flex bg-white rounded-lg justify-between my-4">
+        <p className="px-4 py-2 text-base text-black">There is no question</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between my-4">

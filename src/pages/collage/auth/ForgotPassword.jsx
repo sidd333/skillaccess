@@ -1,4 +1,8 @@
 import React from "react";
+import toast, { Toaster } from 'react-hot-toast';
+
+
+import { notify } from "../../../helpers/notify";
 import { Link } from "react-router-dom";
 import {
   forgotPassword,
@@ -41,16 +45,19 @@ const ForgotPassword = () => {
     try {
       const ch = await dispatch(forgotPassword(data));
       if (ch.meta.requestStatus === "fulfilled") {
-        window.alert("mail sent");
+        notify.success("Password reset link has been sent to your email.");
+        console.log( notify.success("Password reset link has been sent to your email."));
         setCredentials({});
       } else setError(true);
     } catch (error) {
       setError(true);
+      toast.error('Invalid Email');
       console.log(error);
     }
   };
   return (
     <form action="" className="font-dmSans">
+      <Toaster />
       <div className=" bg-base-100 shadow-xl h-full min-h-[100vh]  font-dmSans grid grid-cols-5 ">
         <figure className="w-full h-full bg-login bg-no-repeat bg-cover bg-center !hidden  lg:!block col-span-2 ">
           {/* <img src="./images/loginBg.jpg" alt="" className="w-full h-full" /> */}
