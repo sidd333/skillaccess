@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
+import { getLoggedInUsers, logoutAUser } from "../../../../redux/collage/auth/authSlice";
 
 const Activity = () => {
+  const { loggedInUsers } = useSelector((state) => state.collageAuth);
+  const dispatch = useDispatch();
+  const [place, setPlace] = useState("");
+  const [userLocations, setUserLocations] = useState([]);
+
+  useEffect(() => {
+    dispatch(getLoggedInUsers());
+    fetchUserLocations();
+  }, []);
+
+  const fetchUserLocations = async () => {
+    const locations = await Promise.all(
+      loggedInUsers.map((user) => getPlaceFromIp(user.ip))
+    );
+    setUserLocations(locations);
+  };
+
+  const handleDelete = (id) => {};
+
+  const handleLogout = (token) => {
+    dispatch(logoutAUser(token));
+  };
+
+  const getPlaceFromIp = async (ip) => {
+    const res = await fetch(`https://ipapi.co/${ip}/json/`);
+    const data = await res.json();
+    return data.city;
+  };
+
   return (
     <div className="pt-4 mx-auto w-11/12 font-dmSans">
       <Header />
@@ -9,7 +40,40 @@ const Activity = () => {
       <div className="mt-20">
         <h1 className="text-lg font-bold mb-7">Where You’re Logged in</h1>
 
-        <div className="w-1/2 bg-lGray bg-opacity-5 py-3 px-4 flex justify-between rounded-2xl mb-4">
+        {loggedInUsers?.map((user, index) => (
+          <div
+            key={index}
+            className="w-1/2 bg-lGray bg-opacity-5 py-3 px-4 flex justify-between rounded-2xl mb-4"
+          >
+            <div className="flex gap-4">
+              <div className="w-10 h-10 object-contain p-2">
+                <img src="../../images/icons/location.png" alt="" />
+              </div>
+
+              <div>
+                <h1 className="text-lg font-bold">{userLocations[index]}</h1>
+                <span className="flex gap-2">
+                  <p className="text-green-500">
+                    {user.token_deleted ? "Inactive" : "Active now"}
+                  </p>
+
+                  <p className="text-gray-400">{user.device}</p>
+                </span>
+              </div>
+            </div>
+
+            <div className="self-center">
+              <button
+                className="bg-[#DE350B33] bg-opacity-20 text-[#DE350B] py-1 px-2 rounded-lg text-sm font-medium"
+                onClick={() => handleLogout(user.token_id)}
+              >
+                Log Out
+              </button>
+            </div>
+          </div>
+        ))}
+
+        {/* <div className="w-1/2 bg-lGray bg-opacity-5 py-3 px-4 flex justify-between rounded-2xl mb-4">
           <div className="flex gap-4">
             <div className="w-10 h-10 object-contain p-2">
               <img src="../../images/icons/location.png" alt="" />
@@ -18,86 +82,18 @@ const Activity = () => {
             <div>
               <h1 className="text-lg font-bold">Jaipur Rajasthan</h1>
               <span className="flex gap-2">
-                {" "}
                 <p className="text-green-500">Active now</p>
                 <p className="text-gray-400">This is Mac OS</p>
               </span>
             </div>
           </div>
 
-          {/*  */}
           <div className="self-center">
             <button className="bg-[#DE350B33] bg-opacity-20 text-[#DE350B] py-1 px-2 rounded-lg text-sm font-medium">
               Log Out
             </button>
           </div>
-
-          {/*           
-          <div className="self-center">
-            <button className="bg-lGray bg-opacity-20 text-gray-700 py-1 px-2 rounded-lg text-sm font-medium">
-              Delete
-            </button>
-          </div> */}
-        </div>
-        <div className="w-1/2 bg-lGray bg-opacity-5 py-3 px-4 flex justify-between rounded-2xl mb-4">
-          <div className="flex gap-4">
-            <div className="w-10 h-10 object-contain p-2">
-              <img src="../../images/icons/location.png" alt="" />
-            </div>
-
-            <div>
-              <h1 className="text-lg font-bold">Jaipur Rajasthan</h1>
-              <span className="flex gap-2">
-                {" "}
-                <p className="text-green-500">Active now</p>
-                <p className="text-gray-400">This is Mac OS</p>
-              </span>
-            </div>
-          </div>
-
-          {/*  */}
-          <div className="self-center">
-            <button className="bg-[#DE350B33] bg-opacity-20 text-[#DE350B] py-1 px-2 rounded-lg text-sm font-medium">
-              Log Out
-            </button>
-          </div>
-
-          {/*           
-          <div className="self-center">
-            <button className="bg-lGray bg-opacity-20 text-gray-700 py-1 px-2 rounded-lg text-sm font-medium">
-              Delete
-            </button>
-          </div> */}
-        </div>
-        <div className="w-1/2 bg-lGray bg-opacity-5 py-3 px-4 flex justify-between rounded-2xl mb-4">
-          <div className="flex gap-4">
-            <div className="w-10 h-10 object-contain p-2">
-              <img src="../../images/icons/location.png" alt="" />
-            </div>
-
-            <div>
-              <h1 className="text-lg font-bold">Jaipur Rajasthan</h1>
-              <span className="flex gap-2">
-                {" "}
-                <p className="text-green-500">Active now</p>
-                <p className="text-gray-400">This is Mac OS</p>
-              </span>
-            </div>
-          </div>
-
-          {/*  */}
-          {/* <div className="self-center">
-            <button className="bg-[#DE350B33] bg-opacity-20 text-[#DE350B] py-1 px-2 rounded-lg text-sm font-medium">
-              Log Out
-            </button>
-          </div> */}
-
-          <div className="self-center">
-            <button className="bg-lGray bg-opacity-20 text-gray-700 py-1 px-2 rounded-lg text-sm font-medium">
-              Delete
-            </button>
-          </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
