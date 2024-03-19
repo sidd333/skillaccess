@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
-import { getLoggedInUsers, logoutAUser } from "../../../../redux/collage/auth/authSlice";
+import {
+  getLoggedInUsers,
+  logoutAUser,
+} from "../../../../redux/collage/auth/authSlice";
 
 const Activity = () => {
   const { loggedInUsers } = useSelector((state) => state.collageAuth);
@@ -15,12 +18,17 @@ const Activity = () => {
   }, []);
 
   const fetchUserLocations = async () => {
-    const locations = await Promise.all(
-      loggedInUsers.map((user) => getPlaceFromIp(user.ip))
-    );
-    setUserLocations(locations);
+    if (loggedInUsers) {
+      const locations = await Promise.all(
+        loggedInUsers.map(async (user) => {
+          const place = await getPlaceFromIp(user.ip);
+          return place;
+        })
+      );
+      setUserLocations(locations);
+    }
+    // setUserLocations(locations);
   };
-
   const handleDelete = (id) => {};
 
   const handleLogout = (token) => {
