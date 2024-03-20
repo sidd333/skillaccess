@@ -251,7 +251,7 @@ const Header = ({
                     let OpArr = jsonData[rowNum].questions || [];
                     jsonData[rowNum] = {
                       ...jsonData[rowNum],
-                      questions: [...OpArr, row.v],
+                      questions: [...OpArr, { question: row.v }],
                     };
                   } else if (header.v === "Duration" || header.v === "Title") {
                     if (row) {
