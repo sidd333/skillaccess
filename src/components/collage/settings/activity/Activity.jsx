@@ -72,7 +72,7 @@ const Activity = () => {
                     {user.token_deleted ? "Inactive" : "Active now"}
                   </p>
 
-                  <p className="text-gray-400">This is {user.device.toString().substring(0, 20)}) </p>
+                  <p className="text-gray-400">This is {user.ip} </p>
                 </span>
               </div>
             </div>
