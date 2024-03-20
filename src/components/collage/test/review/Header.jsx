@@ -157,7 +157,9 @@ const Header = ({
                         id: Date.now() + currentTopic._id,
                       };
                     } else {
-                      window.alert("row:" + rowNum - 1 + "col:" + colNum);
+                      window.alert(
+                        "Invalid value! row:" + (rowNum + 1) + "col:" + colNum
+                      );
                       setLoading(false);
                       return;
                     }
@@ -263,7 +265,7 @@ const Header = ({
                       };
                     } else {
                       window.alert(
-                        "Invalid Value! row:" + rowNum - 1 + "col:" + colNum
+                        "Invalid Value! row:" + (rowNum + 1) + "col:" + colNum
                       );
                       setLoading(false);
                       return;
@@ -350,7 +352,7 @@ const Header = ({
                     };
                   } else {
                     window.alert(
-                      "Invalid Value! row:" + rowNum + "col:" + colNum
+                      "Invalid Value! row:" + (rowNum + 1) + "col:" + colNum
                     );
                     setLoading(false);
                     return;
