@@ -1,4 +1,5 @@
 import React from "react";
+import toast from "react-hot-toast";
 
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -15,11 +16,12 @@ const Footer = ({ setStudents }) => {
             onClick={() => { 
               localStorage.removeItem("testDetails");
               localStorage.removeItem("totalTime"); 
+              toast.success('Invite sent');
               navigate("/collage/test");
             }}
           >
             <FaPlus className="text-white text-lg" />
-            <p className="self-center text-white">Invite</p>
+            <p className="self-center text-white">Send Invite</p>
           </button>
         </div>
       </div>

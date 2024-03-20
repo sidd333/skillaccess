@@ -48,6 +48,7 @@ import CompaniesRoute from "./pages/collage/companies";
 import Loader from "./Loader";
 import ForgotPassword from "./pages/collage/auth/ForgotPassword";
 import ResetPassword from "./pages/collage/auth/ResetPassword";
+import { Toaster } from "react-hot-toast";
 
 const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
@@ -90,6 +91,7 @@ export default function App() {
   return (
 
       <Suspense fallback={<Loader />}>
+       
         <Routes>
           {/* ----------------------------------------collage-------------------------------------------------------------- */}
           <Route path="" element={<Login />} />
@@ -137,6 +139,7 @@ export default function App() {
 
           {/* .......................................................................................................................... */}
         </Routes>
+        
       </Suspense>
 
   );
