@@ -11,6 +11,7 @@ import {
   loginCollage,
 } from "../../../redux/collage/auth/authSlice";
 import { useGoogleLogin } from "@react-oauth/google";
+import toast from "react-hot-toast";
 
 const Login = () => {
   // cosnt[(error, setError)] = useState();
@@ -51,6 +52,7 @@ const Login = () => {
     try {
       const ch = await dispatch(loginCollage(data));
       if (ch.meta.requestStatus === "fulfilled") {
+        toast.success('Logged in successfully');
         setCredentials({});
         navigate("/collage/dashboard");
       }

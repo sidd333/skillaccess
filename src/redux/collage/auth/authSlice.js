@@ -184,10 +184,11 @@ export const resetPassword = createAsyncThunk(
 
   async (data, { rejectWithValue }) => {
     try {
+      const ip = await getIp();
       console.log("updating", localStorage.getItem("auth-token"));
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/college/password/reset/${data.token}`,
-        { password: data.password, confirmPassword: data.confirmPassword },
+        { password: data.password, confirmPassword: data.confirmPassword , ip},
 
         {
           headers: {
@@ -210,10 +211,12 @@ export const updatePassword = createAsyncThunk(
 
   async (data, { rejectWithValue }) => {
     try {
+      const ip = await getIp();
+
       console.log("updating", localStorage.getItem("auth-token"));
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/college/password/update`,
-        data,
+       { ...data, ip},
 
         {
           headers: {
@@ -429,11 +432,17 @@ const collageAuthSlice = createSlice({
       })
       .addCase(getCollege.rejected, (state, action) => {
 
-        state.logoutError = action.payload;
+        // state.logoutError = action.payload;
         state.isLoggedIn = false;
         // alert("You are logged out! Please login again");
+
+        if (action.payload.message == "Token is blacklisted. Please login again") {
+          localStorage.removeItem("auth-token");
+          state.loggedInUsers = null;
+          state.logoutError = action.payload;
+        }
        
-        console.log(action.payload);
+        console.log(action.payload.message);
 
         // window.alert(action.payload);
       })
@@ -574,6 +583,7 @@ const collageAuthSlice = createSlice({
       })
       .addCase(removeLoggedOutUser.rejected, (state, action) => {
         console.log(action.payload);
+        // getLoggedInUsers();
         if(state.loggedInUsers.length == 0){
           state.loggedInUsers = null;
           state.logoutError = "No user is logged in";

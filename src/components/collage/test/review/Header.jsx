@@ -3,7 +3,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
 import { PiSlidersHorizontalLight } from "react-icons/pi";
 import { FiUpload } from "react-icons/fi";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import * as XLSX from "xlsx";
 import PopUp from "../../../PopUps/PopUp";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +24,9 @@ const Header = ({
 
   const [excel, setExcel] = useState("");
   const [excelJSON, setExcelJSON] = useState();
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const ques = searchParams.get("question");
+  console.log(ques);
   const { currentTopic } = useSelector((state) => state.test);
   const handleFile = (e) => {
     setVisible(true);
@@ -218,7 +220,7 @@ const Header = ({
 
           <div className="">
             <h2 className="sm:text-xl  text-left font-bold self-center text-3xl font-dmSans ">
-              Create Assessment
+              {ques?ques:'Create Assessment'}
             </h2>
             <h2 className="text-xs font-bold text-gray-400 text-left">
               Edit Screen
