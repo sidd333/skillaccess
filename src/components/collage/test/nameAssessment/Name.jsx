@@ -8,6 +8,7 @@ import {
   setTest,
   setTestBasicDetails,
 } from "../../../../redux/collage/test/testSlice";
+import toast from "react-hot-toast";
 
 const Name = () => {
   const dispatch = useDispatch();
@@ -106,13 +107,22 @@ const Name = () => {
   const handleSubmit = () => {
     let flag = "false";
     if (testDetails.name === "") {
-      window.alert("Please enter Name");
+      toast.error('Please enter Name', {
+        icon: '⚠️' 
+      });
+      
       flag = "true";
     } else if (testDetails.duration_from === "") {
-      window.alert("Please enter Duration from");
+      toast.error('Please enter Duration from', {
+        icon: '⚠️'
+      }
+      )
       return;
     } else if (testDetails.duration_to === "") {
-      window.alert("Please enter Duration to");
+      toast.error('Please enter Duration to', {
+        icon: '⚠️' 
+      });
+      
     } else if (testDetails.totalAttempts === "") {
       window.alert("Please enter Total Attempts");
       return;
@@ -120,7 +130,9 @@ const Name = () => {
       window.alert("Please enter Description");
       return;
     } else if (testDetails.duration_from >= testDetails.duration_to) {
-      window.alert("Duration To must be greater than Duration From");
+      toast.error('Duration To must be greater than Duration From', {
+        icon: '⚠️' // You can use any Unicode character or an image URL here
+      });
       return;
     }
 
@@ -138,7 +150,8 @@ const Name = () => {
 
       navigate("/collage/test/select");
     } else {
-      window.alert("duplicate name");
+      
+      toast.error("duplicate name");
     }
   };
 
@@ -198,7 +211,7 @@ const Name = () => {
             <input
               type="datetime-local"
               name="duration_from"
-              value={testDetails.duration_from.slice(0, 16)}
+              value={testDetails?.duration_from?.slice(0, 16)}
               onChange={handleChange}
               className="border-none"
               required
@@ -212,7 +225,7 @@ const Name = () => {
             <input
               type="datetime-local"
               name="duration_to"
-              value={testDetails.duration_to.slice(0, 16)}
+              value={testDetails?.duration_to?.slice(0, 16)}
               onChange={handleChange}
               className="border-none"
               required

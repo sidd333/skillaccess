@@ -159,7 +159,10 @@ const stripHtml = (html) => {
 
             <ReactQuill
               value={question.Title}
-              onChange={(value) => setQuestion({ ...question, Title: value })}
+              onChange={(value) =>   setQuestion((prev) => {
+                // console.log({ ...prev, Title: e.target.value });
+                return { ...prev, Title:value };
+              })}
               className="bg-gray-100 border-none focus:outline-none rounded-lg focus:ring-0 placeholder-gray-400"
               placeholder="Enter Question Here"
               name="Title"

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { PiFileTextBold } from "react-icons/pi";
 import { IoSwapVerticalSharp } from "react-icons/io5";
 import { PiPencilSimpleLineBold } from "react-icons/pi";
 import { CiBookmarkMinus } from "react-icons/ci";
 import { useDispatch } from "react-redux";
+import ReactQuill from "react-quill"; // Import ReactQuill
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import {
   editQuestion,
   removeQuestion,
@@ -64,30 +66,27 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
   
   }
 
-  if (!question || Object.keys(question).length === 0) {
-    return (
-      <div className="mx-6 flex bg-white rounded-lg justify-between my-4">
-        <p className="px-4 py-2 text-base text-black">There is no question</p>
-      </div>
-    );
-  }
 
   return (
     <div className="mx-6 flex bg-white rounded-lg justify-between my-4">
       <div className="w-11/12 flex flex-col gap-2">
         {search.get(`${Number}`) !== "true" ? (
-          <h2 className="px-4 font-semibold pt-3 text-base">
-            {Number + 1} &nbsp; {Title}
+         <h2 className="flex px-4 gap-3 font-semibold pt-3 text-base "   >
+            <div className="" >{Number + 1}. </div>
+            <div className="" dangerouslySetInnerHTML={{ __html: Title}}></div>
           </h2>
+        
         ) : (
-          <input
-            onChange={handleChange}
-            placeholder="enter new question"
-            name="Title"
-            value={mcq.Title}
-          />
+          <ReactQuill
+          value={mcq.Title}
+          onChange={(value) => setMcq({ ...mcq, Title: value })}
+          className="border-none focus:outline-none rounded-lg focus:ring-0 placeholder-gray-400"
+          placeholder="Enter Question Here"
+          name="Title"
+        
+        />
         )}
-        <div className="px-5 pb-4 flex flex-col gap-4">
+        <div className="px-5 pb-4 flex flex-col gap-4 pt-10">
           {mcq.Options.map((ques, index) => (
             <span className="flex gap-2">
               <div className="flex w-5 justify-center">

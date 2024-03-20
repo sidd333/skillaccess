@@ -6,6 +6,7 @@ import store from "./redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { Toaster } from "react-hot-toast";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -21,6 +22,7 @@ root.render(
         <App />
       </GoogleOAuthProvider>
       </BrowserRouter>
+      <Toaster position="top-center" /> 
     </Provider>
   </React.StrictMode>
 );

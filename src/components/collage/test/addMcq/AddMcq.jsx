@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
-
+import ReactQuill from "react-quill"; // Import ReactQuill
+import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import { FaX } from "react-icons/fa6";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -197,13 +198,17 @@ const AddMcq = () => {
               <option value={4}>4 minutes</option>
             </select>
 
-            <textarea
-              className="resize-none w-full h-full bg-gray-100 border-none focus:outline-none rounded-lg focus:ring-0 placeholder-gray-400"
+            <ReactQuill
+              value={question.Title}
+              onChange={(value) =>   setQuestion((prev) => {
+                // console.log({ ...prev, Title: e.target.value });
+                return { ...prev, Title:value };
+              })}
+              className="bg-gray-100 border-none focus:outline-none rounded-lg focus:ring-0 placeholder-gray-400"
               placeholder="Enter Question Here"
               name="Title"
-              onChange={handleChanges}
-              value={question.Title}
-            ></textarea>
+            
+            />
           </span>
           <span className="w-[49%]">
             <h2 className="font-bold">Test Description</h2>

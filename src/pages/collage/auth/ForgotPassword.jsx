@@ -1,8 +1,8 @@
 import React from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 
-import { notify } from "../../../helpers/notify";
+
 import { Link } from "react-router-dom";
 import {
   forgotPassword,
@@ -45,19 +45,22 @@ const ForgotPassword = () => {
     try {
       const ch = await dispatch(forgotPassword(data));
       if (ch.meta.requestStatus === "fulfilled") {
-        notify.success("Password reset link has been sent to your email.");
-        console.log( notify.success("Password reset link has been sent to your email."));
+       toast.success("Password reset link has been sent to your email.");
+       
         setCredentials({});
-      } else setError(true);
+      } else{
+        setError(true);
+        toast.error('Invalid Email');
+      } 
     } catch (error) {
       setError(true);
-      toast.error('Invalid Email');
+      
       console.log(error);
     }
   };
   return (
     <form action="" className="font-dmSans">
-      <Toaster />
+      
       <div className=" bg-base-100 shadow-xl h-full min-h-[100vh]  font-dmSans grid grid-cols-5 ">
         <figure className="w-full h-full bg-login bg-no-repeat bg-cover bg-center !hidden  lg:!block col-span-2 ">
           {/* <img src="./images/loginBg.jpg" alt="" className="w-full h-full" /> */}
@@ -100,7 +103,7 @@ const ForgotPassword = () => {
             placeholder="Email Address"
             className="input rounded-xl border-none  md:mt-6 mt-4 focus:outline-none input-md w-full max-w-xs  mx-auto bg-snow "
           />
-          {error && (
+          {/* {error && (
             <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 rounded-xl  ">
               <input
                 type="checkbox"
@@ -114,7 +117,7 @@ const ForgotPassword = () => {
                 Invalid Email
               </h1>
             </div>
-          )}
+          )} */}
           <button
             className="py-2 bg-blue-700 hover:bg-blue-700  rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto  text-white"
             onClick={handleSubmit}

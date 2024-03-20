@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutCollage } from "../../../../redux/collage/auth/authSlice";
 import { setAssessments } from "../../../../redux/collage/test/testSlice";
+import toast from "react-hot-toast";
 
 const Settings = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const Settings = () => {
     try {
       const ch = await dispatch(logoutCollage());
       if (ch.meta.requestStatus === "fulfilled") {
+        toast.success("Logged out successfully");
         dispatch(setAssessments());
         navigate("/");
       }
