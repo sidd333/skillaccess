@@ -8,10 +8,20 @@ import * as XLSX from "xlsx";
 import PopUp from "../../../PopUps/PopUp";
 import { useDispatch, useSelector } from "react-redux";
 import { addQuestionToTopic } from "../../../../redux/collage/test/testSlice";
+import Loader from "../addVideo/Loader";
 
-const Header = ({ type, sectionId, qt, topicId, view }) => {
+const Header = ({
+  type,
+  sectionId,
+  qt,
+  topicId,
+  view,
+  visible,
+  setVisible,
+}) => {
   const dispatch = useDispatch();
-  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [excel, setExcel] = useState("");
   const [excelJSON, setExcelJSON] = useState();
 
@@ -44,6 +54,8 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
 
   const handleUpload = async () => {
     if (excel !== "" && excel !== undefined) {
+      setLoading(true);
+
       const workbook = XLSX.read(excel, { type: "buffer" });
       const worksheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[worksheetName];
@@ -56,30 +68,34 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
         case "mcq":
           console.log(range);
 
-          for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-            for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
-              const row =
-                worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+          try {
+            for (let colNum = range.s.c; colNum < range.e.c; colNum++) {
+              for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+                const row =
+                  worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
 
-              let header =
-                worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
-              if (header.v === "option") {
-                let OpArr = jsonData[rowNum].Options || [];
-                jsonData[rowNum] = {
-                  ...jsonData[rowNum],
-                  Options: [...OpArr, row.v],
-                };
-              } else {
-                jsonData[rowNum] = {
-                  ...jsonData[rowNum],
-                  [header.v]: row.v,
-                  section: currentTopic._id,
+                let header =
+                  worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
+                console.log(header);
+                if (header.v === "option") {
+                  let OpArr = jsonData[rowNum].Options || [];
+                  jsonData[rowNum] = {
+                    ...jsonData[rowNum],
+                    Options: [...OpArr, row.v],
+                  };
+                } else {
+                  jsonData[rowNum] = {
+                    ...jsonData[rowNum],
+                    [header.v]: row.v,
+                    section: currentTopic._id,
 
-                  id: Date.now() + currentTopic._id,
-                };
+                    id: Date.now() + currentTopic._id,
+                  };
+                }
               }
             }
-          }
+          } catch (error) {}
+
           setExcelJSON(jsonData.slice(1));
 
           await dispatch(
@@ -94,29 +110,32 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
           break;
 
         case "findAnswer":
-          for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-            for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
-              const row =
-                worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+          try {
+            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+              for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+                const row =
+                  worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
 
-              let header =
-                worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
-              if (header.v === "option") {
-                let OpArr = jsonData[rowNum].Options || [];
-                jsonData[rowNum] = {
-                  ...jsonData[rowNum],
-                  questions: [...OpArr, row.v],
-                };
-              } else {
-                jsonData[rowNum] = {
-                  ...jsonData[rowNum],
-                  [header.v]: row.v,
-                  id: Date.now() + currentTopic._id,
-                  section: currentTopic._id,
-                };
+                let header =
+                  worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
+                if (header.v === "option") {
+                  let OpArr = jsonData[rowNum].Options || [];
+                  jsonData[rowNum] = {
+                    ...jsonData[rowNum],
+                    questions: [...OpArr, row.v],
+                  };
+                } else {
+                  jsonData[rowNum] = {
+                    ...jsonData[rowNum],
+                    [header.v]: row.v,
+                    id: Date.now() + currentTopic._id,
+                    section: currentTopic._id,
+                  };
+                }
               }
             }
-          }
+          } catch (error) {}
+
           setExcelJSON(jsonData.slice(1));
 
           await dispatch(
@@ -131,24 +150,26 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
           break;
 
         case "essay":
-          for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-            for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
-              const row =
-                worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+          try {
+            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+              for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+                const row =
+                  worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
 
-              let header =
-                worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
+                let header =
+                  worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
 
-              jsonData[rowNum] = {
-                ...jsonData[rowNum],
-                [header.v]: row.v,
-                id: Date.now() + currentTopic._id,
-                section: currentTopic._id,
-              };
+                jsonData[rowNum] = {
+                  ...jsonData[rowNum],
+                  [header.v]: row.v,
+                  id: Date.now() + currentTopic._id,
+                  section: currentTopic._id,
+                };
+              }
             }
-          }
-          setExcelJSON(jsonData.slice(1));
+          } catch (error) {}
 
+          setExcelJSON(jsonData.slice(1));
           await dispatch(
             addQuestionToTopic({
               data: jsonData.slice(1),
@@ -249,7 +270,12 @@ const Header = ({ type, sectionId, qt, topicId, view }) => {
                     className="hidden"
                     onChange={handleFile}
                   />
-                  <FiUpload className="self-center text-lg " /> Upload Questions
+                  {loading ? (
+                    <Loader />
+                  ) : (
+                    <FiUpload className="self-center text-lg " />
+                  )}{" "}
+                  Upload Questions
                 </button>
               )}
 

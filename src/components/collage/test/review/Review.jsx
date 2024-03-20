@@ -18,7 +18,7 @@ const Review = () => {
   const type = searchParams.get("type");
   const questionType = searchParams.get("question");
   const view = searchParams.get("view");
-
+  const [visible, setVisible] = useState(false);
   // console.log(questionType);
   const { currentTopic, topics } = useSelector((state) => state.test);
   useEffect(() => {
@@ -87,12 +87,18 @@ const Review = () => {
             ? JSON.parse(localStorage.getItem("Topics"))._id
             : ""
         }
+        visible={visible}
+        setVisible={setVisible}
         type={type}
         topicId={searchParams.get("topicId")}
         sectionId={localStorage.getItem("Details") ? currentTopic._id : ""}
       />
 
-      <div className="  w-11/12 mx-auto min-h-[90vh] my-2 rounded-lg   bg-gray-100 ">
+      <div
+        className={` w-11/12 mx-auto min-h-[80vh] my-2 rounded-lg   bg-gray-100  ${
+          visible && "h-[80vh] overflow-hidden"
+        }`}
+      >
         <div className="flex justify-between p-4">
           <span className="flex gap-2 pl-2">
             <h2>{questionType}</h2>

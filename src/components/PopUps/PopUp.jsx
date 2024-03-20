@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const PopUp = ({ handleSave, handleOverlay }) => {
   return (
     <div
-      className="w-full h-full min-w-full min-h-[100vh] bg-black absolute z-[9999] flex left-0 top-0 bg-opacity-30"
+      className="w-full  min-w-full h-full min-h-[100vh] bg-black absolute z-[9999] flex left-0 top-0 bg-opacity-30 "
       onClick={handleOverlay}
     >
       <div className="bg-white shadow-md w-80 h-44 mx-auto self-center rounded-lg bg-opactiy-10  px-12 flex flex-col justify-center gap-4">
