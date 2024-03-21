@@ -26,4 +26,25 @@ b,strong{
     border-width: 0.1rem;
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
+    width: 10rem !important;
 }
+
+body{
+    position: static !important;
+    top: 0px !important;
+
+}
+.skiptranslate {
+    display: none;
+
+}
+.goog-te-gadget > span {
+    display: none;
+}
+.goog-te-gadget{
+    display : block !important;
+}
+/* 
+.VIpgJd-ZVi9od-ORHb-OEVmcd{
+    display: none;
+} */
