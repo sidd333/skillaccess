@@ -13,6 +13,7 @@ const { getTopicById } = require("../../../../redux/collage/test/testSlice");
 const Review = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [name, setName] = useState();
   const [questions, setQuestions] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
   const type = searchParams.get("type");
@@ -24,19 +25,23 @@ const Review = () => {
   useEffect(() => {
     if (type === "section") {
       // const topics = JSON.parse(localStorage.getItem("topics"));
-
+      setName(topics[id].Heading);
       questionType === "mcq" && setQuestions(topics[id].questions);
       questionType === "findAnswer" && setQuestions(topics[id].findAnswers);
       questionType === "essay" && setQuestions(topics[id].essay);
       questionType === "video" && setQuestions(topics[id].video);
       questionType === "compiler" && setQuestions(topics[id].compiler);
     } else if (type === "topic") {
+      setName(currentTopic.Heading);
       questionType === "mcq" && setQuestions(currentTopic.questions);
       questionType === "findAnswer" && setQuestions(currentTopic.findAnswers);
       questionType === "essay" && setQuestions(currentTopic.essay);
       questionType === "video" && setQuestions(currentTopic.video);
       questionType === "compiler" && setQuestions(currentTopic.compiler);
     } else {
+      setName(
+        JSON.parse(localStorage.getItem("assessment")).topics[id].Heading
+      );
       questionType === "mcq" &&
         setQuestions(
           JSON.parse(localStorage.getItem("assessment")).topics[id].questions
@@ -80,6 +85,7 @@ const Review = () => {
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header
+        name={name}
         view={view}
         qt={questionType}
         id={

@@ -12,6 +12,7 @@ import Loader from "../addVideo/Loader";
 import toast, { Toaster } from "react-hot-toast";
 
 const Header = ({
+  name,
   type,
   sectionId,
   qt,
@@ -163,12 +164,9 @@ const Header = ({
                     ) {
                       if (header.v === "AnswerIndex") {
                         if (row) {
-                          if (row.v > 3) {
+                          if (row.v > 3 && typeof row.v === "number") {
                             toast.error(
-                              "Value must be between 0&3 row:" +
-                                (rowNum + 1) +
-                                "col:" +
-                                colNum
+                              "Invalid value" + (rowNum + 1) + "col:" + colNum
                             );
                             setLoading(false);
                             return;
@@ -193,6 +191,34 @@ const Header = ({
                         }
                       }
 
+                      if (header.v === "Duration") {
+                        if (row) {
+                          if (row.v > 3 && typeof row.v === "number") {
+                            toast.error(
+                              "Invalid value" + (rowNum + 1) + "col:" + colNum
+                            );
+                            setLoading(false);
+                            return;
+                          } else {
+                            jsonData[rowNum] = {
+                              ...jsonData[rowNum],
+                              [header.v]: row.v,
+                              section: currentTopic._id,
+
+                              id: Date.now() + currentTopic._id,
+                            };
+                          }
+                        } else {
+                          toast.error(
+                            "Invalid value! row:" +
+                              (rowNum + 1) +
+                              "col:" +
+                              colNum
+                          );
+                          setLoading(false);
+                          return;
+                        }
+                      }
                       if (row) {
                         jsonData[rowNum] = {
                           ...jsonData[rowNum],
@@ -322,6 +348,37 @@ const Header = ({
                       header.v === "Duration" ||
                       header.v === "Title"
                     ) {
+                      if (header.v === "Duration") {
+                        if (row) {
+                          if (row.v > 3 && typeof row.v === "number") {
+                            toast.error(
+                              "Invalid value row:" +
+                                rowNum +
+                                "col:" +
+                                (colNum + 1)
+                            );
+                            setLoading(false);
+                            return;
+                          } else {
+                            jsonData[rowNum] = {
+                              ...jsonData[rowNum],
+                              [header.v]: row.v,
+                              section: currentTopic._id,
+
+                              id: Date.now() + currentTopic._id,
+                            };
+                          }
+                        } else {
+                          toast.error(
+                            "Invalid value! row:" +
+                              (rowNum + 1) +
+                              "col:" +
+                              colNum
+                          );
+                          setLoading(false);
+                          return;
+                        }
+                      }
                       if (row) {
                         console.log(row.v);
                         jsonData[rowNum] = {
@@ -486,12 +543,9 @@ const Header = ({
             <FaChevronLeft className=" p-3 rounded-lg h-10 w-10 self-center bg-gray-200" />
           </button>
 
-          <div className="">
-            <h2 className="sm:text-xl  text-left font-bold self-center text-3xl font-dmSans ">
-              {ques ? ques : "Create Assessment"}
-            </h2>
-            <h2 className="text-xs font-bold text-gray-400 text-left">
-              Edit Screen
+          <div className="flex self-center">
+            <h2 className="sm:text-xl  text-left font-bold  text-3xl font-dmSans self-center">
+              {name ? name : "Create Assessment"}
             </h2>
           </div>
         </button>
