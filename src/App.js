@@ -2,7 +2,11 @@ import "./App.css";
 import React, { Suspense, lazy } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearLogoutError, getCollege, logoutCollage } from "./redux/collage/auth/authSlice";
+import {
+  clearLogoutError,
+  getCollege,
+  logoutCollage,
+} from "./redux/collage/auth/authSlice";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -54,7 +58,6 @@ const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
 const TermsPolicies = lazy(() => import("./pages/collage/auth/TermsPolicies"));
 
-
 export default function App() {
   //  AnkitaMalik22-ankita-dev
   const dispatch = useDispatch();
@@ -67,36 +70,68 @@ export default function App() {
   //   }, [dispatch]);
   // >>>>>>> saveMain
 
-  const { user, isLoggedIn ,logoutError} = useSelector((state) => state.collageAuth);
+  const { user, isLoggedIn, logoutError } = useSelector(
+    (state) => state.collageAuth
+  );
 
   useEffect(() => {
-
-  dispatch(getCollege());
-
+    dispatch(getCollege());
   }, []);
 
   useEffect(() => {
     console.log(logoutError);
     if (logoutError) {
-
       navigate("/");
       // dispatch(clearLogoutError());
-      
     }
-
   }, [logoutError]);
- 
-  
+
+  useEffect(() => {
+    try {
+      let scriptLoaded = false;
+
+      let script = document.createElement("script");
+      const loadGoogleTranslateScript = () => {
+        if (!scriptLoaded) {
+          script.src =
+            "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+          script.async = true;
+          script.onload = () => {
+            window.googleTranslateElementInit = () => {
+              new window.google.translate.TranslateElement(
+                {
+                  pageLanguage: "en",
+                  includedLanguages: "en,hi,bn,ta,te,mr,gu,kn,ur,pa,ml,or", // Add more languages as needed
+                },
+                "google_translate_element"
+              );
+            };
+          };
+
+          document.body.appendChild(script);
+          scriptLoaded = true;
+        }
+      };
+      loadGoogleTranslateScript();
+    } catch (error) {}
+
+    // return () => {
+    //   // Clean up script when component unmounts
+    //   if (scriptLoaded) {
+    //     document.body.removeChild(script);
+    //     scriptLoaded = false;
+    //   }
+    // };
+  }, [window.googleTranslateElementInit]);
 
   return (
-
+    <React.Fragment>
       <Suspense fallback={<Loader />}>
-       
         <Routes>
           {/* ----------------------------------------collage-------------------------------------------------------------- */}
           <Route path="" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/terms&policies" element={<TermsPolicies/>}/>
+          <Route path="/terms&policies" element={<TermsPolicies />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
           <Route path="/password/reset/:id" element={<ResetPassword />} />
           {/* <Route path="loader" element={<Loader />} /> */}
@@ -139,8 +174,7 @@ export default function App() {
 
           {/* .......................................................................................................................... */}
         </Routes>
-        
       </Suspense>
-
+    </React.Fragment>
   );
 }
