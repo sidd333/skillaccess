@@ -7,6 +7,8 @@ const UploadPage = lazy(() => import("./UploadPage"));
 const QuesBankPage = lazy(() => import("./QuesBankPage"));
 
 function QuesRoute() {
+
+  
   return (
     <Route path="collage/quesBank">
       <Route path="" element={<QuesBankPage />} />

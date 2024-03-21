@@ -325,6 +325,7 @@ const CollageLayout = ({ children }) => {
       setDown(11);
     }
   }, []);
+  
 
   return (
     <>
