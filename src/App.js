@@ -55,6 +55,8 @@ const Login = lazy(() => import("./pages/collage/auth/Login"));
 const TermsPolicies = lazy(() => import("./pages/collage/auth/TermsPolicies"));
 
 
+
+
 export default function App() {
   //  AnkitaMalik22-ankita-dev
   const dispatch = useDispatch();
@@ -85,11 +87,53 @@ export default function App() {
     }
 
   }, [logoutError]);
- 
+
+  useEffect(() => {
+    let scriptLoaded = false;
+    
+    let script = document.createElement('script');
+    const loadGoogleTranslateScript = () => {
+      if (!scriptLoaded) {
+   
+        script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        script.async = true;
+        script.onload = () => {
+          window.googleTranslateElementInit = () => {
+            new window.google.translate.TranslateElement(
+              {
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,bn,ta,te,mr,gu,kn,ur,pa,ml,or', // Add more languages as needed
+              },
+              'google_translate_element'
+            );
+          };
+        };
+  
+        document.body.appendChild(script);
+        scriptLoaded = true;
+      }
+    };
+  
+    loadGoogleTranslateScript();
+  
+    // return () => {
+    //   // Clean up script when component unmounts
+    //   if (scriptLoaded) {
+    //     document.body.removeChild(script);
+    //     scriptLoaded = false;
+    //   }
+    // };
+  }, [window.googleTranslateElementInit]);
+  
+
+
+
+
   
 
   return (
-
+    <React.Fragment>
+             
       <Suspense fallback={<Loader />}>
        
         <Routes>
@@ -141,6 +185,7 @@ export default function App() {
         </Routes>
         
       </Suspense>
+      </React.Fragment>
 
   );
 }

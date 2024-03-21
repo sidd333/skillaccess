@@ -8,10 +8,13 @@ import { BrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Toaster } from "react-hot-toast";
 
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
+
+
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
     <BrowserRouter>
       <GoogleOAuthProvider
@@ -24,5 +27,5 @@ root.render(
       </BrowserRouter>
       <Toaster position="top-center" /> 
     </Provider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

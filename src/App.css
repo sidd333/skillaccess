@@ -11,3 +11,19 @@ ul{
 b,strong{
     font-weight: bold;
 }
+
+
+.google-div{
+
+    position: absolute;
+    top: 0.5rem;
+    right: 0.6rem;
+}
+
+.goog-te-combo{
+    border-color: #9ca3af;
+    border-radius: 0.4rem;
+    border-width: 0.1rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
