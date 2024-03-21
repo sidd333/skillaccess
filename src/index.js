@@ -8,14 +8,11 @@ import { BrowserRouter } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Toaster } from "react-hot-toast";
 
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
-
 
 root.render(
   // <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
     <BrowserRouter>
       <GoogleOAuthProvider
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
@@ -24,8 +21,8 @@ root.render(
         {/* redirectUri= "https://skillaccessclient.netlify.app/collage/dashboard" */}
         <App />
       </GoogleOAuthProvider>
-      </BrowserRouter>
-      <Toaster position="top-center" /> 
-    </Provider>
+    </BrowserRouter>
+    <Toaster position="top-center" />
+  </Provider>
   // </React.StrictMode>
 );
