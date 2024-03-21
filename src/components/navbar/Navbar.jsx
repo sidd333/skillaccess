@@ -1,8 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FiBell } from "react-icons/fi";
-import { FaAngleDown } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import {useSelector } from "react-redux";
 
 const Navbar = (props) => {
   const navigate = useNavigate(); 
@@ -13,9 +12,47 @@ const Navbar = (props) => {
   const userDetails = useSelector(
     (state) => state.collageAuth
   );
+ 
+  //   let scriptLoaded = false;
+  
+  //   const loadGoogleTranslateScript = () => {
+  //     if (!scriptLoaded) {
+  //       const script = document.createElement('script');
+  //       script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+  //       script.async = true;
+  
+  //       // Use a closure to maintain access to the script variable
+  //       script.onload = () => {
+  //         window.googleTranslateElementInit = () => {
+  //           new window.google.translate.TranslateElement(
+  //             {
+  //               pageLanguage: 'en',
+  //               includedLanguages: 'en,hi,bn,ta,te,mr,gu,kn,ur,pa,ml,or', // Add more languages as needed
+  //             },
+  //             'google_translate_element'
+  //           );
+  //         };
+  //       };
+  
+  //       document.body.appendChild(script);
+  //       scriptLoaded = true;
+  //     }
+  //   };
+  
+  //   loadGoogleTranslateScript();
+  
+  //   return () => {
+  //     // Clean up script when component unmounts
+  //     if (scriptLoaded) {
+  //       // document.body.removeChild(script);
+  //       scriptLoaded = false;
+  //     }
+  //   };
+  // }, []);
+  
   
   return (
-    <div className="border border-y-1 sorder border-gray-500 bg-white w-full z-[9999] m-0 fixed top-0">
+    <div className="border border-y-1 sorder border-gray-500 bg-white w-full z-[9999] m-0 fixed top-0"   >
       <div className="navbar flex justify-between ">
         {/* left */}
         <div>
@@ -42,7 +79,8 @@ const Navbar = (props) => {
           </button>
 
           {/* noifiaction */}
-          <button className="border-2 border-gray-400  rounded-lg p-1 relative flex gap-2"
+          <button className="border-2 border-gray-400  rounded-lg p-1 relative flex gap-2 "
+          style={{marginRight :'10.5rem'}}
           onClick={goToProfile}
           >
             <img src={userDetails?.user?.avatar?.url} alt="" className="h-7 w-7" />{" "}
@@ -52,14 +90,33 @@ const Navbar = (props) => {
           </button>
 
           {/* noifiaction */}
-          <button className="border-2 border-gray-400  text-gray-400 rounded-lg p-1 relative">
-            <div className="rounded-full h-7 w-7 bg-gradient-to-b from-red-600 to-slate-800 "></div>
-          </button>
-
+         
           {/* noifiaction */}
-          <button className="border-none   rounded-lg p-2 relative">
-            <FaAngleDown className="" />
-          </button>
+          {/* <button className="border-none   rounded-lg p-2 relative"> */}
+          {/* <div className="border-2 border-gray-400  text-gray-400 rounded-lg p-1 relative">
+            <div className="rounded-full h-7 w-7 bg-gradient-to-b from-red-600 to-slate-800 "
+            style={{backgroundImage: `url(${languages[language].image})`}}
+            >
+              <img src={languages[language].image} alt="" className="h-7 w-7" />
+            </div>
+          </div> */}
+
+            {/* <FaAngleDown className="" /> */}
+            <div id="google_translate_element" className="google-div"></div>
+            {/* <select
+            
+              className="border-none bg-transparent"
+              onChange={(e) => changeLanguage(e.target.value)}
+            >
+              {languages.map((lang, index) => (
+                <option key={index} value={index}>
+                  <img src={lang.image} alt="" className="w-6 h-6" />
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+
+          </button> */}
         </div>
       </div>
     </div>
