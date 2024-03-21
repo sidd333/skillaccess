@@ -122,7 +122,7 @@ export default function App() {
     //     scriptLoaded = false;
     //   }
     // };
-  }, [window.googleTranslateElementInit]);
+  }, []);
 
   return (
     <React.Fragment>
