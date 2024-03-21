@@ -9,6 +9,7 @@ import PopUp from "../../../PopUps/PopUp";
 import { useDispatch, useSelector } from "react-redux";
 import { addQuestionToTopic } from "../../../../redux/collage/test/testSlice";
 import Loader from "../addVideo/Loader";
+import toast, { Toaster } from "react-hot-toast";
 
 const Header = ({
   type,
@@ -47,7 +48,7 @@ const Header = ({
         setExcel(e.target.result);
       };
     } else {
-      window.alert("invalid file type");
+      toast.error("invalid file type");
     }
   };
   const upload = useRef(null);
@@ -101,18 +102,20 @@ const Header = ({
               }
             }
 
-            if (
-              !["Title", "Duration", "option", "AnswerIndex"].every((header) =>
-                headers.includes(header)
-              )
-            ) {
-              window.alert("Missing/Incorrect header(s)");
-              setLoading(false);
-              return;
-            }
+            headers.forEach((header) => {
+              if (
+                !["Title", "Duration", "option", "AnswerIndex"].includes(header)
+              ) {
+                setLoading(false);
+                toast.error(header + " is incorrect");
+                return;
+              }
+            });
 
             if (count !== 7) {
-              window.alert("invalid no. of fields");
+              setLoading(false);
+              toast.error("invalid no. of fields");
+              return;
             }
             for (let colNum = range.s.c; colNum <= count; colNum++) {
               for (let rowNum = range.s.r + 1; rowNum <= rowCount; rowNum++) {
@@ -129,7 +132,7 @@ const Header = ({
                     header.v !== "Duration" &&
                     header.v !== "Title"
                   ) {
-                    window.alert("Invalid Headers");
+                    toast.error("Invalid Headers");
                     setLoading(false);
                     setError(true);
                     return;
@@ -157,7 +160,7 @@ const Header = ({
                         id: Date.now() + currentTopic._id,
                       };
                     } else {
-                      window.alert(
+                      toast.error(
                         "Invalid value! row:" + (rowNum + 1) + "col:" + colNum
                       );
                       setLoading(false);
@@ -219,15 +222,28 @@ const Header = ({
               }
             }
 
-            if (
-              !["Title", "Duration", "question"].every((header) =>
-                headers.includes(header)
-              )
-            ) {
-              window.alert("Missing/Incorrect header(s)");
+            if (count > 5) {
               setLoading(false);
+              toast.error("invalid no. of fields");
               return;
             }
+            headers.forEach((header) => {
+              if (!["Title", "Duration", "question"].includes(header)) {
+                setLoading(false);
+
+                toast.error(header + " is incorrect");
+                return;
+              }
+            });
+            // if (
+            //   !["Title", "Duration", "question"].every((header) =>
+            //     headers.includes(header)
+            //   )
+            // ) {
+            //   toast.error("Missing/Incorrect header(s)");
+            //   setLoading(false);
+            //   return;
+            // }
             for (let colNum = range.s.c; colNum <= count; colNum++) {
               for (let rowNum = range.s.r + 1; rowNum <= rowCount; rowNum++) {
                 const row =
@@ -249,10 +265,12 @@ const Header = ({
 
                   if (header.v === "question") {
                     let OpArr = jsonData[rowNum].questions || [];
-                    jsonData[rowNum] = {
-                      ...jsonData[rowNum],
-                      questions: [...OpArr, { question: row.v }],
-                    };
+                    if (row) {
+                      jsonData[rowNum] = {
+                        ...jsonData[rowNum],
+                        questions: [...OpArr, { question: row.v }],
+                      };
+                    }
                   } else if (header.v === "Duration" || header.v === "Title") {
                     if (row) {
                       console.log(row.v);
@@ -264,7 +282,7 @@ const Header = ({
                         id: Date.now() + currentTopic._id,
                       };
                     } else {
-                      window.alert(
+                      toast.error(
                         "Invalid Value! row:" + (rowNum + 1) + "col:" + colNum
                       );
                       setLoading(false);
@@ -326,7 +344,7 @@ const Header = ({
             if (
               !["Title", "Duration"].every((header) => headers.includes(header))
             ) {
-              window.alert("Missing/Incorrect header(s)");
+              toast.error("Missing/Incorrect header(s)");
               setLoading(false);
               return;
             }
@@ -340,7 +358,7 @@ const Header = ({
 
                 if (header.v !== "Duration" && header.v !== "Title") {
                   setLoading(false);
-                  window.alert("invalid header");
+                  toast.error("invalid header");
                   return;
                 } else {
                   if (row) {
@@ -351,7 +369,7 @@ const Header = ({
                       section: currentTopic._id,
                     };
                   } else {
-                    window.alert(
+                    toast.error(
                       "Invalid Value! row:" + (rowNum + 1) + "col:" + colNum
                     );
                     setLoading(false);
