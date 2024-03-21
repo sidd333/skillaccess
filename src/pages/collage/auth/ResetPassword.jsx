@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LuEye } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
+import toast from "react-hot-toast";
 
 const ResetPassword = () => {
   const [error, setError] = useState(false);
@@ -42,7 +43,7 @@ const ResetPassword = () => {
     const { Password, confirmPassword } = Credentials;
 
     if (Password !== confirmPassword) {
-      setError(true);
+      toast.error("Password does not match");
       return;
     }
     const data = {
@@ -53,11 +54,15 @@ const ResetPassword = () => {
     try {
       const ch = await dispatch(resetPassword(data));
       if (ch.meta.requestStatus === "fulfilled") {
+        toast.success('Password changed');
         setCredentials({});
         navigate("/");
+        
       }
-    } catch (error) {
-      console.log(error);
+     
+    }
+    catch(error){
+       
     }
   };
   return (
@@ -133,7 +138,7 @@ const ResetPassword = () => {
             </button>
           </div>
 
-          {error && (
+          {/* {error && (
             <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 rounded-xl  ">
               <input
                 type="checkbox"
@@ -147,7 +152,7 @@ const ResetPassword = () => {
                 Passwords don't match
               </h1>
             </div>
-          )}
+          )} */}
 
           <button
             className="btn hover:bg-blue-500  rounded-xl border-none  md:mt-6 mt-4 focus:outline-none  w-full max-w-xs  mx-auto bg-blue-700 text-white"
