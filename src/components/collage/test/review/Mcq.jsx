@@ -45,6 +45,11 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
     );
   };
 
+  const handleBookmark = () => {
+   console.log("bookmark");
+  };
+
+
   const handleEdit =()=>{
 
     if(mcq.Title === "" || mcq.Options[0] === "" || mcq.Options[1] === "" || mcq.Options[2] === "" || mcq.Options[3] === ""){
@@ -119,6 +124,10 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
             className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
             onClick={handleDelete}
           />
+          <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" 
+          onClick={handleBookmark}
+          /> 
+
 
           {search.get(`${Number}`) !== "true" ? (
             <PiPencilSimpleLineBold

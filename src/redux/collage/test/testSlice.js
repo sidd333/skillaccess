@@ -12,6 +12,8 @@ import { getAllTestFulfilled } from "./reducerFunctions/test";
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 const testState = {
+  bookmarks: [],
+  localBookmarks: [],
   studentResponse: [],
   response: [],
   testDataResponse: [],
@@ -856,6 +858,33 @@ const testSlice = createSlice({
       // );
       localStorage.setItem("topics", JSON.stringify(action.payload));
     },
+
+    // =============================== BOOKMARKS START ===============================
+
+    addBookmark: (state, action) => {
+      // state.bookmarks = [...state.bookmarks, action.payload];
+      state.bookmarks = action.payload;
+    },
+
+    removeBookmark: (state, action) => {
+      state.bookmarks = state.bookmarks.filter(
+        (bookmark) => bookmark.id !== action.payload
+      );
+    },
+
+    addLocalBookmark: (state, action) => {
+      state.localBookmarks = [...state.localBookmarks, action.payload];
+    },
+
+    removeLocalBookmark: (state, action) => {
+      state.localBookmarks = state.localBookmarks.filter(
+        (bookmark) => bookmark.id !== action.payload
+      );
+    },
+
+
+
+    // ===============================  BOOKMARKS END   ===============================
   },
   extraReducers: (builder) => {
     builder
