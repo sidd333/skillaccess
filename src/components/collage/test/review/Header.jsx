@@ -56,230 +56,372 @@ const Header = ({
   const navigate = useNavigate();
 
   const handleUpload = async () => {
-    if (excel !== "" && excel !== undefined) {
-      setLoading(true);
+    try {
+      if (excel !== "" && excel !== undefined) {
+        setLoading(true);
 
-      const workbook = XLSX.read(excel, { type: "buffer" });
-      const worksheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[worksheetName];
+        const workbook = XLSX.read(excel, { type: "buffer" });
+        const worksheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[worksheetName];
 
-      // const data = XLSX.utils.sheet_to_json(worksheet);
-      const range = XLSX.utils.decode_range(worksheet["!ref"]);
-      let count = 0;
-      let rowCount = 0;
-      let jsonData = [];
-      let headers = [];
-      switch (currentTopic.Type) {
-        case "mcq":
-          try {
-            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-              const cellAddress = XLSX.utils.encode_cell({
-                r: range.s.r,
-                c: colNum,
-              });
-              const cell = worksheet[cellAddress];
-              if (cell && cell.v) {
-                // Check if the cell is not empty
-                headers.push(cell.v);
-                count++;
-              } else {
-                // Break the loop if an empty cell is encountered
-                break;
+        // const data = XLSX.utils.sheet_to_json(worksheet);
+        const range = XLSX.utils.decode_range(worksheet["!ref"]);
+        let count = 0;
+        let rowCount = 0;
+        let jsonData = [];
+        let headers = [];
+        switch (currentTopic.Type) {
+          case "mcq":
+            try {
+              for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+                const cellAddress = XLSX.utils.encode_cell({
+                  r: range.s.r,
+                  c: colNum,
+                });
+                const cell = worksheet[cellAddress];
+                if (cell && cell.v) {
+                  // Check if the cell is not empty
+                  headers.push(cell.v);
+                  count++;
+                } else {
+                  // Break the loop if an empty cell is encountered
+                  break;
+                }
               }
-            }
-            for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
-              const cellAddress = XLSX.utils.encode_cell({
-                r: rowNum,
-                c: 0,
-              });
-              const cell = worksheet[cellAddress];
-              if (cell && cell.v) {
-                // Check if the cell is not empty
-                rowCount++;
-              } else {
-                // Break the loop if an empty cell is encountered
-                break;
+              for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+                const cellAddress = XLSX.utils.encode_cell({
+                  r: rowNum,
+                  c: 0,
+                });
+                const cell = worksheet[cellAddress];
+                if (cell && cell.v) {
+                  // Check if the cell is not empty
+                  rowCount++;
+                } else {
+                  // Break the loop if an empty cell is encountered
+                  break;
+                }
               }
-            }
 
-            headers.forEach((header) => {
-              if (
-                !["Title", "Duration", "option", "AnswerIndex"].includes(header)
-              ) {
+              headers.forEach((header) => {
+                if (
+                  !["Title", "Duration", "option", "AnswerIndex"].includes(
+                    header
+                  )
+                ) {
+                  setLoading(false);
+                  toast.error(header + " is incorrect");
+                  return;
+                }
+              });
+
+              if (count !== 7) {
                 setLoading(false);
-                toast.error(header + " is incorrect");
+                toast.error("invalid no. of fields");
                 return;
               }
-            });
+              for (let colNum = range.s.c; colNum <= count; colNum++) {
+                for (let rowNum = range.s.r + 1; rowNum <= rowCount; rowNum++) {
+                  const row =
+                    worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
 
-            if (count !== 7) {
-              setLoading(false);
-              toast.error("invalid no. of fields");
-              return;
-            }
-            for (let colNum = range.s.c; colNum <= count; colNum++) {
-              for (let rowNum = range.s.r + 1; rowNum <= rowCount; rowNum++) {
-                const row =
-                  worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+                  let header =
+                    worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
 
-                let header =
-                  worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
-
-                if (header) {
-                  if (
-                    header.v !== "option" &&
-                    header.v !== "AnswerIndex" &&
-                    header.v !== "Duration" &&
-                    header.v !== "Title"
-                  ) {
-                    toast.error("Invalid Headers");
-                    setLoading(false);
-                    setError(true);
-                    return;
-                  }
-
-                  // console.log(header);
-                  if (header.v === "option") {
-                    let OpArr = jsonData[rowNum].Options || [];
-                    jsonData[rowNum] = {
-                      ...jsonData[rowNum],
-                      Options: [...OpArr, row.v],
-                    };
-                  } else if (
-                    header.v === "AnswerIndex" ||
-                    header.v === "Duration" ||
-                    header.v === "Title"
-                  ) {
-                    if (row) {
-                      console.log(row.v);
-                      jsonData[rowNum] = {
-                        ...jsonData[rowNum],
-                        [header.v]: row.v,
-                        section: currentTopic._id,
-
-                        id: Date.now() + currentTopic._id,
-                      };
-                    } else {
-                      toast.error(
-                        "Invalid value! row:" + (rowNum + 1) + "col:" + colNum
-                      );
+                  if (header) {
+                    if (
+                      header.v !== "option" &&
+                      header.v !== "AnswerIndex" &&
+                      header.v !== "Duration" &&
+                      header.v !== "Title"
+                    ) {
+                      toast.error("Invalid Headers");
                       setLoading(false);
+                      setError(true);
                       return;
+                    }
+
+                    console.log(header);
+                    if (header.v === "option") {
+                      if (row) {
+                        let OpArr = jsonData[rowNum].Options || [];
+                        jsonData[rowNum] = {
+                          ...jsonData[rowNum],
+                          Options: [...OpArr, row.v],
+                        };
+                      } else {
+                        toast.error(
+                          "Invalid value! row:" + (rowNum + 1) + "col:" + colNum
+                        );
+                        setLoading(false);
+                        return;
+                      }
+                    } else if (
+                      header.v === "AnswerIndex" ||
+                      header.v === "Duration" ||
+                      header.v === "Title"
+                    ) {
+                      if (header.v === "AnswerIndex") {
+                        if (row) {
+                          if (row.v > 3) {
+                            toast.error(
+                              "Value must be between 0&3 row:" +
+                                (rowNum + 1) +
+                                "col:" +
+                                colNum
+                            );
+                            setLoading(false);
+                            return;
+                          } else {
+                            jsonData[rowNum] = {
+                              ...jsonData[rowNum],
+                              [header.v]: row.v,
+                              section: currentTopic._id,
+
+                              id: Date.now() + currentTopic._id,
+                            };
+                          }
+                        } else {
+                          toast.error(
+                            "Invalid value! row:" +
+                              (rowNum + 1) +
+                              "col:" +
+                              colNum
+                          );
+                          setLoading(false);
+                          return;
+                        }
+                      }
+
+                      if (row) {
+                        jsonData[rowNum] = {
+                          ...jsonData[rowNum],
+                          [header.v]: row.v,
+                          section: currentTopic._id,
+
+                          id: Date.now() + currentTopic._id,
+                        };
+                      } else {
+                        toast.error(
+                          "Invalid value! row:" + (rowNum + 1) + "col:" + colNum
+                        );
+                        setLoading(false);
+                        return;
+                      }
                     }
                   }
                 }
               }
-            }
-          } catch (error) {}
+            } catch (error) {}
 
-          setExcelJSON(jsonData.slice(1));
+            setExcelJSON(jsonData.slice(1));
 
-          if (error === false) {
-            await dispatch(
-              addQuestionToTopic({
-                data: jsonData.slice(1),
-                type: "mcq",
-                isMultiple: true,
-                id: currentTopic._id,
-              })
-            );
-            setLoading(false);
-            // navigate(-1);
-          } else {
-          }
-          break;
-
-        case "findAnswer":
-          try {
-            for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
-              const cellAddress = XLSX.utils.encode_cell({
-                r: rowNum,
-                c: 0,
-              });
-              const cell = worksheet[cellAddress];
-              if (cell && cell.v) {
-                // Check if the cell is not empty
-                rowCount++;
-              } else {
-                // Break the loop if an empty cell is encountered
-                break;
-              }
-            }
-
-            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-              const cellAddress = XLSX.utils.encode_cell({
-                r: range.s.r,
-                c: colNum,
-              });
-              const cell = worksheet[cellAddress];
-              if (cell && cell.v) {
-                // Check if the cell is not empty
-                headers.push(cell.v);
-                count++;
-              } else {
-                // Break the loop if an empty cell is encountered
-                break;
-              }
-            }
-
-            if (count > 5) {
+            if (error === false) {
+              await dispatch(
+                addQuestionToTopic({
+                  data: jsonData.slice(1),
+                  type: "mcq",
+                  isMultiple: true,
+                  id: currentTopic._id,
+                })
+              );
               setLoading(false);
-              toast.error("invalid no. of fields");
-              return;
+              // navigate(-1);
+            } else {
+              setLoading(false);
+              toast.error("unknown error, reloading page");
+              setTimeout(() => {
+                window.location.reload(true);
+              }, 3000);
             }
-            headers.forEach((header) => {
-              if (!["Title", "Duration", "question"].includes(header)) {
-                setLoading(false);
+            break;
 
-                toast.error(header + " is incorrect");
+          case "findAnswer":
+            try {
+              for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+                const cellAddress = XLSX.utils.encode_cell({
+                  r: rowNum,
+                  c: 0,
+                });
+                const cell = worksheet[cellAddress];
+                if (cell && cell.v) {
+                  // Check if the cell is not empty
+                  rowCount++;
+                } else {
+                  // Break the loop if an empty cell is encountered
+                  break;
+                }
+              }
+
+              for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+                const cellAddress = XLSX.utils.encode_cell({
+                  r: range.s.r,
+                  c: colNum,
+                });
+                const cell = worksheet[cellAddress];
+                if (cell && cell.v) {
+                  // Check if the cell is not empty
+                  headers.push(cell.v);
+                  count++;
+                } else {
+                  // Break the loop if an empty cell is encountered
+                  break;
+                }
+              }
+
+              if (count > 5) {
+                setLoading(false);
+                toast.error("invalid no. of fields");
                 return;
               }
-            });
-            // if (
-            //   !["Title", "Duration", "question"].every((header) =>
-            //     headers.includes(header)
-            //   )
-            // ) {
-            //   toast.error("Missing/Incorrect header(s)");
-            //   setLoading(false);
-            //   return;
-            // }
-            for (let colNum = range.s.c; colNum <= count; colNum++) {
-              for (let rowNum = range.s.r + 1; rowNum <= rowCount; rowNum++) {
-                const row =
-                  worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+              headers.forEach((header) => {
+                if (!["Title", "Duration", "question"].includes(header)) {
+                  setLoading(false);
 
-                let header =
-                  worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
+                  toast.error(header + " is incorrect");
+                  return;
+                }
+              });
+              // if (
+              //   !["Title", "Duration", "question"].every((header) =>
+              //     headers.includes(header)
+              //   )
+              // ) {
+              //   toast.error("Missing/Incorrect header(s)");
+              //   setLoading(false);
+              //   return;
+              // }
+              for (let colNum = range.s.c; colNum <= count; colNum++) {
+                for (let rowNum = range.s.r + 1; rowNum <= rowCount; rowNum++) {
+                  const row =
+                    worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
 
-                if (header) {
-                  if (
-                    header.v !== "question" &&
-                    header.v !== "Duration" &&
-                    header.v !== "Title"
-                  ) {
-                    setLoading(false);
-                    setError(true);
-                    return;
-                  }
+                  let header =
+                    worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
 
-                  if (header.v === "question") {
-                    let OpArr = jsonData[rowNum].questions || [];
-                    if (row) {
-                      jsonData[rowNum] = {
-                        ...jsonData[rowNum],
-                        questions: [...OpArr, { question: row.v }],
-                      };
+                  if (header) {
+                    if (
+                      header.v !== "question" &&
+                      header.v !== "Duration" &&
+                      header.v !== "Title"
+                    ) {
+                      setLoading(false);
+                      setError(true);
+                      return;
                     }
-                  } else if (header.v === "Duration" || header.v === "Title") {
+
+                    if (header.v === "question") {
+                      let OpArr = jsonData[rowNum].questions || [];
+                      if (row) {
+                        jsonData[rowNum] = {
+                          ...jsonData[rowNum],
+                          questions: [...OpArr, { question: row.v }],
+                        };
+                      }
+                    } else if (
+                      header.v === "Duration" ||
+                      header.v === "Title"
+                    ) {
+                      if (row) {
+                        console.log(row.v);
+                        jsonData[rowNum] = {
+                          ...jsonData[rowNum],
+                          [header.v]: row.v,
+                          section: currentTopic._id,
+
+                          id: Date.now() + currentTopic._id,
+                        };
+                      } else {
+                        toast.error(
+                          "Invalid Value! row:" + (rowNum + 1) + "col:" + colNum
+                        );
+                        setLoading(false);
+                        return;
+                      }
+                    }
+                  }
+                }
+              }
+            } catch (error) {
+              window.location.reload(true);
+            }
+
+            setExcelJSON(jsonData.slice(1));
+
+            if (error === false) {
+              await dispatch(
+                addQuestionToTopic({
+                  data: jsonData.slice(1),
+                  type: "findAnswer",
+                  isMultiple: true,
+                  id: currentTopic._id,
+                })
+              );
+              setLoading(false);
+              // navigate(-1);
+            }
+            break;
+
+          case "essay":
+            try {
+              for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
+                const cellAddress = XLSX.utils.encode_cell({
+                  r: range.s.r,
+                  c: colNum,
+                });
+                const cell = worksheet[cellAddress];
+                if (cell && cell.v) {
+                  // Check if the cell is not empty
+                  headers.push(cell.v);
+                  count++;
+                } else {
+                  // Break the loop if an empty cell is encountered
+                  break;
+                }
+              }
+              for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
+                const cellAddress = XLSX.utils.encode_cell({
+                  r: rowNum,
+                  c: 0,
+                });
+                const cell = worksheet[cellAddress];
+                if (cell && cell.v) {
+                  // Check if the cell is not empty
+                  rowCount++;
+                } else {
+                  // Break the loop if an empty cell is encountered
+                  break;
+                }
+              }
+
+              if (
+                !["Title", "Duration"].every((header) =>
+                  headers.includes(header)
+                )
+              ) {
+                toast.error("Missing/Incorrect header(s)");
+                setLoading(false);
+                return;
+              }
+              for (let colNum = range.s.c; colNum <= count; colNum++) {
+                for (let rowNum = range.s.r + 1; rowNum <= rowCount; rowNum++) {
+                  const row =
+                    worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
+
+                  let header =
+                    worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
+
+                  if (header.v !== "Duration" && header.v !== "Title") {
+                    setLoading(false);
+                    toast.error("invalid header");
+                    return;
+                  } else {
                     if (row) {
-                      console.log(row.v);
                       jsonData[rowNum] = {
                         ...jsonData[rowNum],
                         [header.v]: row.v,
-                        section: currentTopic._id,
-
                         id: Date.now() + currentTopic._id,
+                        section: currentTopic._id,
                       };
                     } else {
                       toast.error(
@@ -291,114 +433,31 @@ const Header = ({
                   }
                 }
               }
-            }
-          } catch (error) {}
+            } catch (error) {}
 
-          setExcelJSON(jsonData.slice(1));
-
-          if (error === false) {
+            setExcelJSON(jsonData.slice(1));
             await dispatch(
               addQuestionToTopic({
                 data: jsonData.slice(1),
-                type: "findAnswer",
+                type: "essay",
                 isMultiple: true,
                 id: currentTopic._id,
               })
             );
+            setLoading(false);
             // navigate(-1);
-          }
-          break;
+            break;
 
-        case "essay":
-          try {
-            for (let colNum = range.s.c; colNum <= range.e.c; colNum++) {
-              const cellAddress = XLSX.utils.encode_cell({
-                r: range.s.r,
-                c: colNum,
-              });
-              const cell = worksheet[cellAddress];
-              if (cell && cell.v) {
-                // Check if the cell is not empty
-                headers.push(cell.v);
-                count++;
-              } else {
-                // Break the loop if an empty cell is encountered
-                break;
-              }
-            }
-            for (let rowNum = range.s.r + 1; rowNum <= range.e.r; rowNum++) {
-              const cellAddress = XLSX.utils.encode_cell({
-                r: rowNum,
-                c: 0,
-              });
-              const cell = worksheet[cellAddress];
-              if (cell && cell.v) {
-                // Check if the cell is not empty
-                rowCount++;
-              } else {
-                // Break the loop if an empty cell is encountered
-                break;
-              }
-            }
+          default:
+            break;
+        }
 
-            if (
-              !["Title", "Duration"].every((header) => headers.includes(header))
-            ) {
-              toast.error("Missing/Incorrect header(s)");
-              setLoading(false);
-              return;
-            }
-            for (let colNum = range.s.c; colNum <= count; colNum++) {
-              for (let rowNum = range.s.r + 1; rowNum <= rowCount; rowNum++) {
-                const row =
-                  worksheet[XLSX.utils.encode_cell({ r: rowNum, c: colNum })];
-
-                let header =
-                  worksheet[XLSX.utils.encode_cell({ r: 0, c: colNum })];
-
-                if (header.v !== "Duration" && header.v !== "Title") {
-                  setLoading(false);
-                  toast.error("invalid header");
-                  return;
-                } else {
-                  if (row) {
-                    jsonData[rowNum] = {
-                      ...jsonData[rowNum],
-                      [header.v]: row.v,
-                      id: Date.now() + currentTopic._id,
-                      section: currentTopic._id,
-                    };
-                  } else {
-                    toast.error(
-                      "Invalid Value! row:" + (rowNum + 1) + "col:" + colNum
-                    );
-                    setLoading(false);
-                    return;
-                  }
-                }
-              }
-            }
-          } catch (error) {}
-
-          setExcelJSON(jsonData.slice(1));
-          await dispatch(
-            addQuestionToTopic({
-              data: jsonData.slice(1),
-              type: "essay",
-              isMultiple: true,
-              id: currentTopic._id,
-            })
-          );
-          // navigate(-1);
-          break;
-
-        default:
-          break;
+        setVisible(false);
+      } else {
+        setVisible(false);
       }
-
-      setVisible(false);
-    } else {
-      setVisible(false);
+    } catch (error) {
+      window.location.reload(true);
     }
   };
   return (

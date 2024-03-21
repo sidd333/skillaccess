@@ -58,7 +58,7 @@ const Review = () => {
           JSON.parse(localStorage.getItem("assessment")).topics[id].compiler
         );
     }
-  }, [topics, ""]);
+  }, [topics, "", currentTopic]);
 
   // useEffect(
   //   () => {
@@ -142,7 +142,6 @@ const Review = () => {
         ) : questionType === "findAnswer" ? (
           questions?.length > 0 ? (
             questions.map((question, i) => {
-              console.log(question);
               return (
                 <FindAnswer
                   view={view}

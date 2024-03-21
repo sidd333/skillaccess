@@ -300,7 +300,11 @@ export const addQuestionToTopic = createAsyncThunk(
       const res = req.data;
 
       // if (data.index) return { question: res.questions[0] };
-      return { questions: res.questions, type: data.type };
+      return {
+        questions: res.questions,
+        type: data.type,
+        isMultiple: data.isMultiple,
+      };
     } catch (error) {
       console.log("catch");
       return rejectWithValue(error?.response?.data?.message || "");
@@ -884,6 +888,7 @@ const testSlice = createSlice({
         );
       })
       .addCase(addQuestionToTopic.fulfilled, (state, action) => {
+        console.log("fulf");
         addQuesFunc(state, action);
       })
       .addCase(getTest.pending, (state, action) => {
