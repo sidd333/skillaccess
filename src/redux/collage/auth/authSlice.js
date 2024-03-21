@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import getIp from "./getIp";
+import toast from "react-hot-toast";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 // const REACT_APP_API_URL = "http://localhost:4000";
@@ -180,7 +181,7 @@ export const logoutCollage = createAsyncThunk(
 );
 
 export const resetPassword = createAsyncThunk(
-  "collageAuth/updatePassword",
+  "collageAuth/resetPassword",
 
   async (data, { rejectWithValue }) => {
     try {
@@ -201,7 +202,7 @@ export const resetPassword = createAsyncThunk(
       return res;
     } catch (error) {
       console.log("catch", error.response.data);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -229,7 +230,7 @@ export const updatePassword = createAsyncThunk(
       return res.data;
     } catch (error) {
       console.log("catch", error.response.data);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -592,10 +593,27 @@ const collageAuthSlice = createSlice({
 
         // window.alert(action.payload);
       })
-      
+      .addCase(resetPassword.pending, (state, action) => {
+        state.status = "loading";
+        console.log("pending");
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.status = "success";
+        // state.user = action.payload;
+        // state.loggedInUsers = action.payload;
+        console.log("fullfilled");
 
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.error = action.payload;
+        toast.error(action.payload);
+        console.log(action.payload);
+        // getLoggedInUsers();
+        // window.alert(action.payload);
+      })
     
-
+     
+    
 
   },
 });
