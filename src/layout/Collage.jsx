@@ -337,7 +337,7 @@ const CollageLayout = ({ children }) => {
             }`}
           >
             {" "}
-            <ul>
+            <ul className="list-none">
               {arr.map((el, i) => {
                 return (
                   <>

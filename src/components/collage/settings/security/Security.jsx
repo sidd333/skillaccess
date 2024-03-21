@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import Header from "./Header";
 import { useSelector ,useDispatch} from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { updatePassword } from "../../../../redux/collage/auth/authSlice";
 
@@ -9,14 +10,18 @@ const Security = () => {
 const dispatch = useDispatch();
 const { user, isLoggedIn } = useSelector((state) => state.collageAuth);
 
-
+const navigate=useNavigate();
 const [password, setPassword] = useState({
   oldPassword: "",
   newPassword: "",
   confirmPassword: "",
 });
+const [selectedOption, setSelectedOption] = useState(null);
 
-
+const handleOptionChange = (option) => {
+  setSelectedOption(option);
+};
+console.log(selectedOption);
 const handleChnage = (e) => {
   setPassword({ ...password, [e.target.name]: e.target.value });
 };
@@ -30,10 +35,13 @@ const handleUpdatePassword = (password) => {
 
 };
 
-
-
-
-
+const handleVerificationClick = () => {
+  if (selectedOption === 'securityApp') {
+    navigate("/collage/settings/security/securityApp");
+  } else if (selectedOption === 'textMessage') {
+    navigate("/collage/settings/security/secondFA");
+  }
+};
 
   return (
     <div className="w-11/12 mx-auto pt-4">
@@ -48,38 +56,43 @@ const handleUpdatePassword = (password) => {
           </p>
         </div>
         <div>
-          {/* toggle 1 */}
-          <div className="flex gap-4 mb-4">
-            <input
-              type="checkbox"
-              name=""
-              id=""
-              className="bg-[#DEEBFF] rounded border-none outline-none focus:outline-0 focus:ring-0 h-6 self-center w-6 "
-            />
-            <div>
-              <h1 className="text-lg font-bold">Text Message</h1>
-              <p className="text-gray-400 whitespace-pre-wrap">
-                Will send code to {"  "}******982
-              </p>
-            </div>
-          </div>
-
-          {/* toggle 1 */}
-          <div className="flex gap-4 mb-4">
-            <input
-              type="checkbox"
-              name=""
-              id=""
-              className="bg-[#DEEBFF] rounded border-none outline-none focus:outline-0 focus:ring-0 h-6 self-center w-6 "
-            />
-            <div>
-              <h1 className="text-lg font-bold">Security app</h1>
-              <p className="text-gray-400 whitespace-pre-wrap">
-                You'll get a code from your security app.
-              </p>
-            </div>
-          </div>
+      {/* toggle 1 */}
+      <div className="flex items-center gap-4 mb-4">
+        <input
+          type="radio"
+          name="option"
+          id="textMessage"
+          className="bg-[#DEEBFF] rounded-full border-none outline-none focus:outline-0 focus:ring-0 h-6 self-center w-6"
+          checked={selectedOption === 'textMessage'}
+          onChange={() => handleOptionChange('textMessage')}
+        />
+        <div>
+          <h1 className="text-lg font-bold">Text Message</h1>
+          <p className="text-gray-400 whitespace-pre-wrap">
+            Will send code to {"  "}******982
+          </p>
         </div>
+        {selectedOption === 'textMessage' && <button onClick={handleVerificationClick} className="ml-2 px-2 py-2 bg-blue-700 text-[#fff] font-semibold rounded-[4px]">Verify By TOTP</button>}      </div>
+
+      {/* toggle 2 */}
+      <div className="flex items-center gap-4 mb-4">
+        <input
+          type="radio"
+          name="option"
+          id="securityApp"
+          className="bg-[#DEEBFF] rounded-full border-none outline-none focus:outline-0 focus:ring-0 h-6 self-center w-6"
+          checked={selectedOption === 'securityApp'}
+          onChange={() => handleOptionChange('securityApp')}
+        />
+        <div>
+          <h1 className="text-lg font-bold">Security app</h1>
+          <p className="text-gray-400 whitespace-pre-wrap">
+            You'll get a code from your<br></br> security app.
+          </p>
+        </div>
+        {selectedOption==='securityApp' && <button onClick={handleVerificationClick} className=" ml-2 px-2 py-2 text-[#fff] font-semibold rounded-[4px] bg-blue-700">Verify By SecurityApp</button>}
+      </div>
+    </div>
       </div>
 
       <div className="flex gap-40 mt-10">
