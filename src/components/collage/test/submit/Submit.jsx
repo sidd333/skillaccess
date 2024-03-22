@@ -342,69 +342,34 @@ const Submit = () => {
       </div>
 
       <div className="absolute bottom-2 mt-20 flex gap-2 w-full justify-center">
-        <div className="rounded-lg bg-gray-100 h-10 w-10 flex justify-center">
-          <FaChevronLeft
-            className={`rotate-45 text-lg self-center ${
-              selected === max && "disabled"
-            }`}
-            onClick={() => selected !== 1 && setSelected(selected - 1)}
-          />
-        </div>
+  <div className="rounded-lg bg-gray-100 h-10 w-10 flex justify-center">
+    <FaChevronLeft
+      className={`rotate-45 text-lg self-center ${selected === 1 && "disabled"}`}
+      onClick={() => selected !== 1 && setSelected(selected - 1)}
+    />
+  </div>
 
-        <div
-          className={`rounded-lg h-10 w-10 flex justify-center ${
-            selected === 1 ? "bg-blue-700 text-white" : "bg-gray-100 "
-          }`}
-          onClick={() => setSelected(1)}
-        >
-          <p className="self-center">1</p>
-        </div>
-        <div
-          className={`rounded-lg h-10 w-10 flex justify-center ${
-            selected === 2 ? "bg-blue-700 text-white" : "bg-gray-100 "
-          }`}
-          onClick={() => setSelected(2)}
-        >
-          <p className="self-center">2</p>
-        </div>
-        <div
-          className={`rounded-lg h-10 w-10 flex justify-center ${
-            selected > 2 && selected < max
-              ? "bg-blue-700 text-white"
-              : "bg-gray-100 "
-          }`}
-          onClick={() => {
-            selected !== 3 && setSelected(3);
-          }}
-        >
-          <p className="self-center">
-            {selected >= 3 && selected < max ? selected : 3}
-          </p>
-        </div>
-        <div className="rounded-lg bg-gray-100 h-10 w-10 flex justify-center">
-          <p className="self-center">...</p>
-        </div>
+  {Array.from({ length: max > 0 ? max : 1 }).map((_, index) => (
+    <div
+      key={index + 1}
+      className={`rounded-lg h-10 w-10 flex justify-center ${
+        selected === index + 1 ? "bg-blue-700 text-white" : "bg-gray-100"
+      }`}
+      onClick={() => setSelected(index + 1)}
+    >
+      <p className="self-center">{index + 1}</p>
+    </div>
+  ))}
 
-        {max > 3 && (
-          <div
-            className={`rounded-lg h-10 w-10 flex justify-center ${
-              selected === max ? "bg-blue-700 text-white" : "bg-gray-100 "
-            }`}
-            onClick={() => setSelected(max)}
-          >
-            <p className="self-center">{max}</p>
-          </div>
-        )}
+  <div className="rounded-lg bg-gray-100 h-10 w-10 flex justify-center">
+    <FaChevronRight
+      className={`rotate-45 text-lg self-center ${selected === max && "disabled"}`}
+      onClick={() => selected !== max && setSelected(selected + 1)}
+    />
+  </div>
+</div>
 
-        <div className="rounded-lg bg-gray-100 h-10 w-10 flex justify-center">
-          <FaChevronRight
-            className={`rotate-45 text-lg self-center ${
-              selected === max && "disabled"
-            }`}
-            onClick={() => selected !== max && setSelected(selected + 1)}
-          />
-        </div>
-      </div>
+
     </div>
   );
 };
