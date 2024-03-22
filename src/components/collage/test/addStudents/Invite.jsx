@@ -24,13 +24,13 @@ const Invite = () => {
 
           <div className="resize-none w-full h-full text-lg bg-gray-100 border-none focus:outline-none rounded-lg  px-7 pt-3 pb-8 focus:ring-0placeholder-gray-400 mb-6">
             <Header />
-            <List />
+            <List setStudents={setStudents} />
           </div>
         </div>
 
         <div className="w-[95.7%] mx-auto">
           {" "}
-          <Footer />
+          <Footer students={students} />
         </div>
       </div>
     </div>

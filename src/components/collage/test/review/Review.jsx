@@ -81,7 +81,57 @@ const Review = () => {
   //   topics[i].questions = newQuestions;
   //   }
   // }
+  const handleCalculateTime = () => {
+    let totalMcq = 0,
+      totalEssay = 0,
+      totalVideo = 0,
+      totalCompiler = 0,
+      totalFindAnswer = 0;
+    // const totalTimeCal = topics.forEach((topic) => {
+      if (currentTopic=== "essay") {
+        totalEssay += currentTopic.essay?.reduce((acc, curr) => {
+          console.log(parseInt(curr.Duration));
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (currentTopic.Type === "video") {
+        totalVideo += currentTopic.video?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (currentTopic.Type === "compiler") {
+        totalCompiler += currentTopic.compiler?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (currentTopic.Type === "findAnswer") {
+        totalFindAnswer += currentTopic.findAnswers?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
 
+      if (currentTopic.Type === "mcq") {
+        totalMcq += currentTopic.questions?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+    ;
+
+    const total =
+      totalMcq + totalEssay + totalVideo + totalCompiler + totalFindAnswer;
+
+    console.log(
+      total,
+      "total",
+      totalMcq,
+      totalEssay,
+      totalVideo,
+      totalCompiler,
+      totalFindAnswer
+    );
+    return total;
+  };
+  const totalTime=handleCalculateTime();
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header
@@ -110,7 +160,7 @@ const Review = () => {
             <h2>{questionType}</h2>
             <div className="flex gap-1 ">
               <LiaStopwatchSolid className="self-center text-gray-500 w-5 h-5" />
-              <p className="text-gray-400 text-xs self-center">10 mins</p>
+              <p className="text-gray-400 text-xs self-center">{totalTime} mins</p>
             </div>
           </span>
           {/* <span className="flex">

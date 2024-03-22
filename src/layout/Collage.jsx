@@ -18,6 +18,7 @@ const CollageLayout = ({ children }) => {
   const [down, setDown] = useState(0);
 
   const location = useLocation();
+  const bottom = useRef(null);
 
   const arr = [
     {
@@ -260,11 +261,10 @@ const CollageLayout = ({ children }) => {
       ),
     },
   ];
-
-  const bottom = useRef(null);
+ 
 
   useEffect(() => {
-    bottom.current.scrollIntoView();
+    // bottom.current.scrollIntoView();
     if (location.pathname.match(/\/collage\/dashboard*/)) {
       dispatch(setSelected(0));
       setDown(0);
@@ -355,7 +355,8 @@ const CollageLayout = ({ children }) => {
                     <li
                       onMouseOver={() => dispatch(setSelected(i))}
                       onMouseOut={() => dispatch(setSelected(down))}
-                      onMouseDown={() => {
+                      onMouseDown={(e) => {
+                        e.preventDefault();
                         dispatch(setSelected(i));
                         dispatch(
                           setTestBasicDetails({
@@ -368,6 +369,10 @@ const CollageLayout = ({ children }) => {
                         dispatch(setTestSelectedTopics([]));
                         setOpen(false);
                         setDown(i);
+    window.scrollTo({
+      top: window.scrollY + bottom.current.getBoundingClientRect().top,
+      behavior: "smooth",
+    });
                         return navigate(el.path);
                       }}
                     >

@@ -17,6 +17,7 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
   const [search, setSearch] = useSearchParams();
 
   const [mcq, setMcq] = useState(question);
+  console.log(question);
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const { name, value } = e.target;
