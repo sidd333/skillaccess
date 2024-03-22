@@ -3,9 +3,11 @@ import ResultsOverview from "../../../components/collage/results/overview/Result
 import CollageLayout from "../../../layout/Collage";
 
 const ResultsOverviewPage = () => {
-  React.useEffect(() => {
+   React.useEffect(() => {
    
     let scriptLoaded = false;
+    const currentPageLanguage = document.documentElement.lang;
+    console.log(currentPageLanguage + " " + navigator.language);
 
     let script = document.createElement("script");
     const loadGoogleTranslateScript = () => {
@@ -17,8 +19,8 @@ const ResultsOverviewPage = () => {
           window.googleTranslateElementInit = () => {
             new window.google.translate.TranslateElement(
               {
-                pageLanguage: "en",
-                includedLanguages: "en,hi,bn,ta,te,mr,gu,kn,ur,pa,ml,or", // Add more languages as needed
+                pageLanguage: currentPageLanguage,
+                includedLanguages: "en-US,en,hi,bn,ta,te,mr,gu,kn,ur,pa,ml,or", // Add more languages as needed
               },
               "google_translate_element"
             );
@@ -29,7 +31,14 @@ const ResultsOverviewPage = () => {
         scriptLoaded = true;
       }
     };
-    loadGoogleTranslateScript();
+
+
+if(navigator.language !== navigator.currentPageLanguage) {
+  console.log("Language is different");
+  loadGoogleTranslateScript();
+}
+
+// loadGoogleTranslateScript();
 
 
   return () => {
