@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { PiPencilSimpleLineBold } from "react-icons/pi";
+import { CiBookmarkMinus } from "react-icons/ci";
 import {
   editQuestion,
   removeQuestion,
+  addBookmark
 } from "../../../../redux/collage/test/testSlice";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -43,6 +45,17 @@ const Essay = ({ Title, Number, id , question ,type,view}) => {
   //   );
   // };
 
+  const handleBookmark = () => {
+    console.log("bookmark");
+    // console.log(question);
+dispatch(addBookmark({
+  Title: question.Title,
+  Number: question.Number,
+  id: question.id,
+  questionId : question._id,
+  Type: "essay"
+}));
+  };
 
 
 
@@ -124,6 +137,9 @@ const Essay = ({ Title, Number, id , question ,type,view}) => {
             className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
             onClick={handleDelete}
           />
+            <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" 
+          onClick={handleBookmark}
+          /> 
           {/* <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
           {/* <IoSwapVerticalSharp className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
         <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
