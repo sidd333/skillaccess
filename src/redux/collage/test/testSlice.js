@@ -8,6 +8,7 @@ import {
   removeQfunc,
 } from "./reducerFunctions/question";
 import { getAllTestFulfilled } from "./reducerFunctions/test";
+import toast from "react-hot-toast";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
@@ -485,7 +486,7 @@ export const addBookmark = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const req = await axios.post(
-        `${REACT_APP_API_URL}/api/college/bookmark/add`,
+        `${REACT_APP_API_URL}/api/assessments/bookmarks/add`,
         data,
         {
           headers: {
@@ -508,7 +509,7 @@ export const removeBookmark = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const req = await axios.delete(
-        `${REACT_APP_API_URL}/api/college/bookmark/remove/${id}`,
+        `${REACT_APP_API_URL}/api/assessments/bookmarks/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -517,7 +518,7 @@ export const removeBookmark = createAsyncThunk(
         }
       );
       const res = req.data;
-      return id;
+      return res.bookmarks;
     } catch (error) {
       console.log("catch", error.response.data);
       return rejectWithValue(error.response.data);
@@ -530,7 +531,7 @@ export const getAllBookmarks = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const req = await axios.get(
-        `${REACT_APP_API_URL}/api/college/bookmark/all`,
+        `${REACT_APP_API_URL}/api/assessments/get/bookmarks`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -553,7 +554,7 @@ export const getBookmarkById = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const req = await axios.get(
-        `${REACT_APP_API_URL}/api/college/bookmark/${id}`,
+        `${REACT_APP_API_URL}/api/college/bookmarks/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -964,26 +965,26 @@ const testSlice = createSlice({
 
     // =============================== BOOKMARKS START ===============================
 
-    addBookmark: (state, action) => {
-      // state.bookmarks = [...state.bookmarks, action.payload];
-      state.bookmarks = action.payload;
-    },
+    // addBookmark: (state, action) => {
+    //   // state.bookmarks = [...state.bookmarks, action.payload];
+    //   state.bookmarks = action.payload;
+    // },
 
-    removeBookmark: (state, action) => {
-      state.bookmarks = state.bookmarks.filter(
-        (bookmark) => bookmark.id !== action.payload
-      );
-    },
+    // removeBookmark: (state, action) => {
+    //   state.bookmarks = state.bookmarks.filter(
+    //     (bookmark) => bookmark.id !== action.payload
+    //   );
+    // },
 
-    addLocalBookmark: (state, action) => {
-      state.localBookmarks = [...state.localBookmarks, action.payload];
-    },
+    // addLocalBookmark: (state, action) => {
+    //   state.localBookmarks = [...state.localBookmarks, action.payload];
+    // },
 
-    removeLocalBookmark: (state, action) => {
-      state.localBookmarks = state.localBookmarks.filter(
-        (bookmark) => bookmark.id !== action.payload
-      );
-    },
+    // removeLocalBookmark: (state, action) => {
+    //   state.localBookmarks = state.localBookmarks.filter(
+    //     (bookmark) => bookmark.id !== action.payload
+    //   );
+    // },
 
 
 
@@ -1143,13 +1144,31 @@ const testSlice = createSlice({
         console.error("Error fetching test results:", action.payload);
         state.response = [];
       })
+      .addCase(addBookmark.pending, (state, action) => {
+        state.status = "pending";
+      })
+
       .addCase(addBookmark.fulfilled, (state, action) => {
         state.bookmarks = action.payload;
+
+        toast.success("Bookmark added successfully");
+
+      })
+      .addCase(addBookmark.rejected, (state, action) => {
+        console.error("Error fetching test results:", action.payload);
+        toast.error("Error adding bookmark");
+        // state.bookmarks = [];
+      })
+      .addCase(removeBookmark.pending, (state, action) => {
+        state.status = "pending";
       })
       .addCase(removeBookmark.fulfilled, (state, action) => {
-        state.bookmarks = state.bookmarks.filter(
-          (bookmark) => bookmark.id !== action.payload
-        );
+      toast.success("Bookmark removed successfully");
+      state.bookmarks = action.payload;
+      })
+      .addCase(removeBookmark.rejected, (state, action) => {
+        console.error("Error fetching test results:", action.payload);
+        // state.bookmarks = [];
       })
       .addCase(getBookmarkById.pending, (state, action) => {
         state.status = "pending";

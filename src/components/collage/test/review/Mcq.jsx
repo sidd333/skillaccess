@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import ReactQuill from "react-quill"; // Import ReactQuill
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import {
+  addBookmark,
   editQuestion,
   removeQuestion,
 } from "../../../../redux/collage/test/testSlice";
@@ -46,7 +47,17 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
   };
 
   const handleBookmark = () => {
-   console.log("bookmark");
+    console.log("bookmark");
+    // console.log(question);
+dispatch(addBookmark({
+  Title: question.Title,
+  Options: question.Options,
+  Number: question.Number,
+  id: question.id,
+  AnswerIndex : question.AnswerIndex,
+  questionId : question._id,
+  Type: "mcq"
+}));
   };
 
 
