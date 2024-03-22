@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import {
   editQuestion,
   removeQuestion,
+  addBookmark,
 } from "../../../../redux/collage/test/testSlice";
 
 const FindAnswer = ({ Title, Options, Number, id, type, view, question }) => {
@@ -46,6 +47,23 @@ const FindAnswer = ({ Title, Options, Number, id, type, view, question }) => {
       });
     }
   };
+
+
+const handleBookmark = () => {
+    console.log("bookmark");
+    // console.log(question);
+dispatch(addBookmark({
+  Title: question.Title,
+  questions: question.questions,
+  Options: question.Options,
+  Number: question.Number,
+  id: question.id,
+  AnswerIndex : question.AnswerIndex,
+  questionId : question._id,
+  Type: "findAnswer"
+}));
+  };
+
 
   const handleDelete = () => {
     dispatch(
@@ -141,6 +159,9 @@ const FindAnswer = ({ Title, Options, Number, id, type, view, question }) => {
             className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
             onClick={handleDelete}
           />
+            <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" 
+          onClick={handleBookmark}
+          /> 
           {/* <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
           {/* <IoSwapVerticalSharp className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
         <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}

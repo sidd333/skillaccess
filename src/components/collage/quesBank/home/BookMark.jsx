@@ -45,7 +45,7 @@ console.log(bookmarks);
       ))}
 
       {
-        bookmarks.length === 0 &&   <div className="flex gap-2  rounded-lg p-3">
+        bookmarks?.length === 0 &&   <div className="flex gap-2  rounded-lg p-3">
         <div className="w-full">
           <h2 className="p-4">No Bookmarks!</h2>
       </div>

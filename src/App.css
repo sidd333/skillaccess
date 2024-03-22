@@ -38,6 +38,9 @@ body{
     display: none;
 
 }
+.goog-gt-vt {
+    display: none;
+}
 .goog-te-gadget > span {
     display: none;
 }
