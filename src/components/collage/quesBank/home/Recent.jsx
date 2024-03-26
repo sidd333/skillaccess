@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getRecentUsedQuestions } from "../../../../redux/collage/test/testSlice";
+
 
 const Recent = () => {
   const arr = [2, 1, 1, 1, 1];
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { recentUsedQuestions } = useSelector((state) => state.test);
+
+  useEffect(() => {
+    dispatch(getRecentUsedQuestions());
+    console.log(recentUsedQuestions);
+
+  }, []);
+
   return (
     <div className="w-full mx-auto bg-[#F8F8F9] lg:px-8 lg:pt-7 pb-4 rounded-3xl">
       <span className="flex justify-between ">
@@ -30,7 +42,7 @@ const Recent = () => {
       </div>
 
       {/* list to be iterated */}
-      {arr.map(() => (
+      {recentUsedQuestions?.map((topic) => (
         <div className=" grid-cols-3  text-center  mx-auto  font-dmSans font-bold text-base hidden md:grid bg-white py-3 mb-3 rounded-xl">
           {" "}
           {/* row-2 */}
@@ -38,7 +50,9 @@ const Recent = () => {
             <div className="flex self-center ">
               <span>
                 <h2 className="font-dmSans text-center  sm:text-sm">
-                  UX Study basics
+                 {
+                    topic?.Heading
+                 }
                 </h2>
               </span>
             </div>
@@ -48,7 +62,9 @@ const Recent = () => {
             <div className=" self-center h-fit">
               <span>
                 <h2 className="font-dmSans font-normal sm:text-sm">
-                  Multiple Choice Questions
+                {
+                  topic?.Type
+                }
                 </h2>
               </span>
             </div>
