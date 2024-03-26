@@ -64,6 +64,7 @@ const Review = () => {
         );
     }
   }, [topics, "", currentTopic]);
+  console.log(currentTopic);
 
   // useEffect(
   //   () => {
@@ -81,7 +82,89 @@ const Review = () => {
   //   topics[i].questions = newQuestions;
   //   }
   // }
+  const handleCalculateTime = () => {
+    let totalMcq = 0,
+      totalEssay = 0,
+      totalVideo = 0,
+      totalCompiler = 0,
+      totalFindAnswer = 0;
+  
+    if (type === "topic") {
+      if (currentTopic.Type === "essay") {
+        totalEssay += currentTopic.essay?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (currentTopic.Type === "video") {
+        totalVideo += currentTopic.video?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (currentTopic.Type === "compiler") {
+        totalCompiler += currentTopic.compiler?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (currentTopic.Type === "findAnswer") {
+        totalFindAnswer += currentTopic.findAnswers?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+  
+      if (currentTopic.Type === "mcq") {
+        totalMcq += currentTopic.questions?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+    } else if (type === "section") {
+      const section = topics[id];
+  
+      if (section.Type === "essay") {
+        totalEssay += section.essay?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (section.Type === "video") {
+        totalVideo += section.video?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (section.Type === "compiler") {
+        totalCompiler += section.compiler?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+      if (section.Type === "findAnswer") {
+        totalFindAnswer += section.findAnswers?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+  
+      if (section.Type === "mcq") {
+        totalMcq += section.questions?.reduce((acc, curr) => {
+          return acc + parseInt(curr.Duration);
+        }, 0);
+      }
+    }
+  
+    const total =
+      totalMcq + totalEssay + totalVideo + totalCompiler + totalFindAnswer;
+  
+    return total;
+  };
+  const [noQuestionsMessage, setNoQuestionsMessage] = useState("");
 
+  useEffect(() => {
+    // Other code...
+
+    // Set message if no questions are present for the type
+    if (questions?.length === 0) {
+      setNoQuestionsMessage(`No ${questionType} questions found.`);
+    } else {
+      setNoQuestionsMessage("");
+    }
+  }, [questions]);
+  const totalTime=handleCalculateTime();
   return (
     <div className="font-dmSans text-sm font-bold">
       <Header
@@ -110,7 +193,7 @@ const Review = () => {
             <h2>{questionType}</h2>
             <div className="flex gap-1 ">
               <LiaStopwatchSolid className="self-center text-gray-500 w-5 h-5" />
-              <p className="text-gray-400 text-xs self-center">10 mins</p>
+              <p className="text-gray-400 text-xs self-center">{totalTime} mins</p>
             </div>
           </span>
           {/* <span className="flex">
@@ -124,7 +207,9 @@ const Review = () => {
             </label>
           </span> */}
         </div>
-
+        {noQuestionsMessage && (
+          <div className="text-red-500 text-center">{noQuestionsMessage}</div>
+        )}
         {questionType === "mcq" ? (
           questions?.length > 0 ? (
             questions.map((question, i) => {

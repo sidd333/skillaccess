@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import ReactQuill from "react-quill"; // Import ReactQuill
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import {
+  addBookmark,
   editQuestion,
   removeQuestion,
 } from "../../../../redux/collage/test/testSlice";
@@ -17,6 +18,7 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
   const [search, setSearch] = useSearchParams();
 
   const [mcq, setMcq] = useState(question);
+  console.log(question);
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +46,21 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
       removeQuestion({ selfIndex: Number, topicIndex: id, questionType: "mcq" })
     );
   };
+
+  const handleBookmark = () => {
+    console.log("bookmark");
+    // console.log(question);
+dispatch(addBookmark({
+  Title: question.Title,
+  Options: question.Options,
+  Number: question.Number,
+  id: question.id,
+  AnswerIndex : question.AnswerIndex,
+  questionId : question._id,
+  Type: "mcq"
+}));
+  };
+
 
   const handleEdit =()=>{
 
@@ -119,6 +136,10 @@ const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
             className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
             onClick={handleDelete}
           />
+          <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" 
+          onClick={handleBookmark}
+          /> 
+
 
           {search.get(`${Number}`) !== "true" ? (
             <PiPencilSimpleLineBold

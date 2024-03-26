@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import toast from "react-hot-toast"
 import Header from "./Header";
 
 import { Progress } from "./Progress";
@@ -63,7 +63,7 @@ const SelectTests = () => {
 
   const addSection = (section) => {
     if (!questionType) {
-      window.alert("Please select a question type first.");
+      toast.error("Please select a question type first.");
       return;
     }
     if (selectedSections?.length < 5 || !selectedSections) {
@@ -322,7 +322,7 @@ const SelectTests = () => {
                 <div>
                   <div className="flex justify-between absolute bottom-0 w-3/4 mb-2">
                     <div>
-                      <span className="flex gap-1 mb-1">
+                      {/* <span className="flex gap-1 mb-1">
                         <img
                           src="./../../images/icons/stopwatch.png"
                           alt=""
@@ -331,11 +331,15 @@ const SelectTests = () => {
                         <p className="text-gray-400 self-center">
                           {section.Time}
                         </p>
-                      </span>
+                      </span> */}
 
                       <button
                         className="w-[90px] h-[40px] bg-[#8F92A120] rounded-xl"
                         onClick={() => {
+                          if (!questionType) {
+                          toast.error("Please select a question type first.");
+                            return;
+                          }
                           dispatch(
                             setCurrentTopic({
                               topic: {
@@ -363,7 +367,7 @@ const SelectTests = () => {
                     </div>
 
                     <button
-                      className=" bg-[#00875A85] h-[40px] w-[72px] rounded-xl text-white mt-8"
+                      className=" bg-[#00875A85] h-[40px] w-[72px] rounded-xl text-white "
                       onClick={() => addSection(section)}
                     >
                       Add

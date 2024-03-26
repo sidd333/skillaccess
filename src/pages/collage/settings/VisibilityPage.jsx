@@ -1,9 +1,9 @@
 import React from "react";
 import CollageLayout from "../../../layout/Collage";
-import ProfileTeacher from "../../../components/collage/teams/profile/ProfileTeacher";
+import Visibility from "../../../components/collage/settings/Visibility/Visibility";
 
-const ProfileTeacherPage = () => {
-   React.useEffect(() => {
+const VisibilityPage = () => {
+  React.useEffect(() => {
    
     let scriptLoaded = false;
     const currentPageLanguage = document.documentElement.lang;
@@ -51,9 +51,9 @@ if(navigator.language !== navigator.currentPageLanguage) {
 }, []);
   return (
     <CollageLayout>
-      <ProfileTeacher />
+      <Visibility />
     </CollageLayout>
   );
 };
 
-export default ProfileTeacherPage;
+export default VisibilityPage;

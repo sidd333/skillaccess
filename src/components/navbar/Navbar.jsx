@@ -80,7 +80,7 @@ const Navbar = (props) => {
 
           {/* noifiaction */}
           <button className="border-2 border-gray-400  rounded-lg p-1 relative flex gap-2 "
-          style={{marginRight :'10.5rem'}}
+          style={{marginRight :'12rem'}}
           onClick={goToProfile}
           >
             <img src={userDetails?.user?.avatar?.url} alt="" className="h-7 w-7" />{" "}

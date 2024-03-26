@@ -65,7 +65,7 @@ const Header = ({ selectQuestionType }) => {
     short=0;
   }
     let Duration = mcq + long + short;
-
+console.log(Duration);
     const vid = {
       ...topicToBeAdded.video,
       Duration: Duration,

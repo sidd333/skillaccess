@@ -26,4 +26,49 @@ b,strong{
     border-width: 0.1rem;
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
+    width: 11rem !important;
+}
+
+body{
+    position: static !important;
+    top: 0px !important;
+
+}
+.skiptranslate {
+    display: none;
+
+}
+.goog-gt-vt {
+    display: none;
+}
+.goog-te-gadget > span {
+    display: none;
+}
+.goog-te-gadget{
+    display : block !important;
+    color: transparent !important;
+}
+
+.goog-te-gadget .goog-te-combo{
+    margin: 4px 0;
+    font-weight: bold;
+    font-family: DM Sans, sans-serif;
+    font-style: italic;
+    color: #161616;
+    font-size: 0.9rem;
+}
+
+iframe
+{
+display: none;
+}
+iframe#webpack-dev-server-client-overlay {
+    display: none;
+  }
+/* 
+.VIpgJd-ZVi9od-ORHb-OEVmcd{
+    display: none;
+} */
+iframe{
+    display: none;
 }
