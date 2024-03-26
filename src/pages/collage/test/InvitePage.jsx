@@ -3,9 +3,11 @@ import Invite from "../../../components/collage/test/addStudents/Invite";
 import CollageLayout from "../../../layout/Collage";
 
 const InvitePage = () => {
-  React.useEffect(() => {
+   React.useEffect(() => {
    
     let scriptLoaded = false;
+    const currentPageLanguage = document.documentElement.lang;
+    console.log(currentPageLanguage + " " + navigator.language);
 
     let script = document.createElement("script");
     const loadGoogleTranslateScript = () => {
@@ -17,8 +19,8 @@ const InvitePage = () => {
           window.googleTranslateElementInit = () => {
             new window.google.translate.TranslateElement(
               {
-                pageLanguage: "en",
-                includedLanguages: "en,hi,bn,ta,te,mr,gu,kn,ur,pa,ml,or", // Add more languages as needed
+                pageLanguage: currentPageLanguage,
+                includedLanguages: "en-US,en,hi,bn,ta,te,mr,gu,kn,ur,pa,ml,or", // Add more languages as needed
               },
               "google_translate_element"
             );
@@ -29,7 +31,14 @@ const InvitePage = () => {
         scriptLoaded = true;
       }
     };
-    loadGoogleTranslateScript();
+
+
+if(navigator.language !== navigator.currentPageLanguage) {
+  console.log("Language is different");
+  loadGoogleTranslateScript();
+}
+
+// loadGoogleTranslateScript();
 
 
   return () => {

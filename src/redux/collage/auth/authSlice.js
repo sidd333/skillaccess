@@ -508,20 +508,23 @@ const collageAuthSlice = createSlice({
       })
       .addCase(googleLoginCollage.pending, (state, action) => {
         state.status = "loading";
-        console.log("pending");
+        console.log("pending google login");
       })
       .addCase(googleLoginCollage.fulfilled, (state, action) => {
+        console.log("fuillfilled google login");
         state.status = action.payload;
         state.isLoggedIn = true;
         state.user = action.payload.user;
         localStorage.setItem("auth-token", action.payload.token);
+        window.location.href = "/collage/dashboard";
         // Add any fetched posts to the array
         console.log("fullfilled");
       })
       .addCase(googleLoginCollage.rejected, (state, action) => {
-        console.log(action.payload);
-
-        window.alert(action.payload);
+        // console.log(action.payload);
+        toast.error(action.payload);
+        // window.alert(action.payload);
+        window.location.href = "/";
       })
       .addCase(googleRegisterCollage.pending, (state, action) => {
         state.status = "loading";
@@ -532,13 +535,18 @@ const collageAuthSlice = createSlice({
         state.isLoggedIn = true;
         state.user = action.payload.user;
         localStorage.setItem("auth-token", action.payload.token);
+        window.location.href = "/collage/dashboard";
         // Add any fetched posts to the array
         console.log("fullfilled");
       })
       .addCase(googleRegisterCollage.rejected, (state, action) => {
-        console.log(action.payload);
+        // console.log(action.payload);
 
-        window.alert(action.payload);
+        state.error = action.payload;
+        toast.error(action.payload);
+
+        // window.alert(action.payload);
+        window.location.href = "/";
       })
       .addCase(getLoggedInUsers.pending, (state, action) => {
         state.status = "loading";

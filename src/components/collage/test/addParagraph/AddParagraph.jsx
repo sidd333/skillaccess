@@ -25,7 +25,7 @@ const AddParagraph = () => {
     ? (ID = searchParams.get("topicId"))
     : (ID = id);
   const [question, setQuestion] = useState({
-    section: searchParams.get("topicId"),
+    section: ID,
     id: ID + Date.now(),
     Title: "",
     Duration: 0,
@@ -112,8 +112,8 @@ const AddParagraph = () => {
             id: ID + Date.now(),
           });
         } else {
-          dispatch(addFindAnsToTopic({ data: question, id: id, type: type }));
-          dispatch(addQuestionToTopic({ data: question, id: id, type: type }));
+          dispatch(addFindAnsToTopic({ data: question, id: id, type: 'findAnswer' }));
+          dispatch(addQuestionToTopic({ data: question, id: id, type: 'findAnswer' }));
           setQuestion({
             Title: "",
             section: ID,

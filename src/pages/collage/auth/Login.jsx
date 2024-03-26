@@ -216,11 +216,13 @@ const Login = () => {
               <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
               <button
                 className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  "
-                onClick={() => navigate("/collage/dashboard")}
-              // onClick={login}
+                // onClick={() => navigate("/collage/dashboard")}
+              onClick={login} type="button"
               >
                 <FcGoogle className="text-lg mr-2" />
-                <h3 className="opacity-100" onClick={login}>
+                <h3 className="opacity-100" 
+                // onClick={login}
+                >
                   Continue with google
                 </h3>
               </button>

@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import {
   editQuestion,
   removeQuestion,
+  addBookmark
 } from "../../../../redux/collage/test/testSlice";
 import { useSearchParams } from "react-router-dom";
 
@@ -39,7 +40,15 @@ const [search, setSearch] = useSearchParams();
       [name]: value,
     }));
   };
-  
+  const handleBookmark = () => {
+    console.log("bookmark");
+    // console.log(question);
+dispatch(addBookmark({
+ ...question,
+  questionId : question._id,
+  Type: "code"
+}));
+  };
 
 
   const handleDelete = () => {
@@ -110,6 +119,9 @@ const [search, setSearch] = useSearchParams();
             className="text-red-500 w-6 h-6 p-1 rounded-lg self-center bg-gray-100"
             onClick={handleDelete}
           />
+                <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" 
+          onClick={handleBookmark}
+          /> 
           {/* <PiFileTextBold className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
           {/* <IoSwapVerticalSharp className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" />
         <CiBookmarkMinus className=" w-6 h-6 p-1 rounded-lg bg-gray-100 self-center" /> */}
