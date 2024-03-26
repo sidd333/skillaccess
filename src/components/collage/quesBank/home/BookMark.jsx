@@ -33,7 +33,7 @@ console.log(bookmarks);
 
         <button
           className="rounded-xl bg-[#95ACFA] text-xs font-bold text-white py-2 px-3"
-          onClick={() => window.alert("design not available")}
+          onClick={() => navigate("/collage/quesBank/bookmarks")}
         >
           View All
         </button>
