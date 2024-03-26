@@ -3,6 +3,7 @@ import Header from "./Header";
 import { createTopic } from "../../../../redux/collage/test/testSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const CreateTopic = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const CreateTopic = () => {
       if (res.payload._id) {
         navigate(`/collage/test/typeOfQuestions/${res.payload._id}`);
       } else {
-        window.alert("invalid or duplicate values");
+        toast.error("invalid or duplicate values");
       }
     });
   };

@@ -12,6 +12,7 @@ import {
 } from "../../../../redux/collage/test/testSlice";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const AddCode = () => {
   const { id } = useParams();
@@ -125,27 +126,27 @@ const AddCode = () => {
         question.verificationCode != ""
       ) {
         if (question.code === "") {
-          alert("Please fill the code");
+          toast.error("Please fill the code");
 
           return;
         }
         if (question.verificationCode === "") {
-          alert("Please fill the code");
+          toast.error("Please fill the code");
 
           return;
         }
         if (question.Duration == 0) {
-          alert("Please fill the duration");
+          toast.error("Please fill the duration");
 
           return;
         }
         if (question.codeQuestion === "") {
-          alert("Please fill the question");
+          toast.error("Please fill the question");
 
           return;
         }
         if (question.codeLanguage === "") {
-          alert("Please fill the codelanguage");
+          toast.error("Please fill the codelanguage");
 
           return;
         }
@@ -206,7 +207,7 @@ const AddCode = () => {
 
         setToggle(1);
       } else {
-        alert("Please fill all the fields");
+        toast.error("Please fill all the fields");
       }
     } else {
       if (
@@ -217,26 +218,26 @@ const AddCode = () => {
         question.verificationCode != ""
       ) {
         if (question.code === "") {
-          alert("Please fill the code");
+          toast.error("Please fill the code");
 
           return;
         }
         if (question.codeQuestion === "") {
-          alert("Please add the question");
+          toast.error("Please add the question");
           return;
         }
         if (question.verificationCode === "") {
-          alert("Please fill the code");
+          toast.error("Please fill the code");
 
           return;
         }
 
         if (question.Duration == 0) {
-          alert("Please fill the duration");
+          toast.error("Please fill the duration");
           return;
         }
         if (question.codeLanguage === "") {
-          alert("Please fill the langugage");
+          toast.error("Please fill the langugage");
 
           return;
         }
@@ -296,7 +297,7 @@ const AddCode = () => {
           navigate(-1);
         }
       } else {
-        alert("Please fill all the fields");
+        toast.error("Please fill all the fields");
       }
     }
     console.log(question);

@@ -9,6 +9,7 @@ import {
 } from "../../../../redux/collage/test/testSlice";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 
 
@@ -62,7 +63,7 @@ dispatch(addBookmark({
   const handleEdit =()=>{
     console.log(essay);
     if(essay.Title[0] === ""){
-     alert("Please fill all the fields");
+      toast.error("Please fill all the fields");
 
       return;
     }else{

@@ -30,6 +30,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { addVideo } from "../../../../redux/collage/test/testSlice";
 import Loader from "./Loader";
+import toast from "react-hot-toast";
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
@@ -118,11 +119,11 @@ const AddVideo = () => {
 
           setFile(droppedFile);
         } else {
-          alert("Video duration exceeds the allowed limit (3 minutes).");
+          toast.error("Video duration exceeds the allowed limit (3 minutes).");
         }
       };
     } else {
-      alert(
+      toast.error(
         "Unsupported file format. Please upload a MOV, MP4, MPEG, MKV, WEBM, or GIF file."
       );
     }
@@ -264,7 +265,7 @@ const AddVideo = () => {
 
       // navigate(`/collage/test/video/${id}/selectType`);
     } else {
-      alert("No file available for upload.");
+      toast.error("No file available for upload.");
     }
   };
 

@@ -13,6 +13,7 @@ import {
   removeQuestion,
 } from "../../../../redux/collage/test/testSlice";
 import { useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Mcq = ({ Title, Options, Number, id, type, view, question }) => {
   const [search, setSearch] = useSearchParams();
@@ -65,7 +66,7 @@ dispatch(addBookmark({
   const handleEdit =()=>{
 
     if(mcq.Title === "" || mcq.Options[0] === "" || mcq.Options[1] === "" || mcq.Options[2] === "" || mcq.Options[3] === ""){
-     alert("Please fill all the fields");
+      toast.error("Please fill all the fields");
  
        return;
      }else{

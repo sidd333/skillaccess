@@ -11,6 +11,7 @@ import {
   addVideoToSection,
   clearTopicToBeAdded,
 } from "../../../../../redux/collage/test/testSlice";
+import toast from "react-hot-toast";
 
 const Header = ({ selectQuestionType }) => {
   const { id } = useParams();
@@ -82,7 +83,7 @@ console.log(Duration);
     if (searchParam.get("section") !== "null") {
       dispatch(addVideoToSection({ data: vid, index: id }));
       if (totalLength === 0) {
-        window.alert("no questions");
+        toast.error("no questions");
       } else {
         navigate(
           `/collage/test/details/${id}?type=section&question=video&topicId=${searchParam.get(
@@ -104,7 +105,7 @@ console.log(Duration);
         );
         console.log(res);
         if (totalLength === 0) {
-          alert("Please add questions to the assessment");
+          toast.error("Please add questions to the assessment");
           return;
         } else {
           navigate(`/collage/test/typeOfQuestions/${id}`);

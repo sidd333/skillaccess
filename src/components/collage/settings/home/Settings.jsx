@@ -23,7 +23,7 @@ const Settings = () => {
         navigate("/");
       }
     } catch (error) {
-      window.alert("logging out failed");
+      toast.error("logging out failed");
     }
   };
   const Navigate = useNavigate();

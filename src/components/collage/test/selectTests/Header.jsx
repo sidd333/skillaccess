@@ -1,4 +1,5 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +10,7 @@ const Header = () => {
 
   const handleSubmit = () => {
     if (topics.length === 0) {
-      window.alert("Please select atleast one topic to proceed");
+      toast.error("Please select atleast one topic to proceed");
       return;
     }
     navigate("/collage/test/questions");

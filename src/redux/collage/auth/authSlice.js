@@ -387,7 +387,7 @@ const collageAuthSlice = createSlice({
         //   alert(action.payload);
         // =======
 
-        window.alert(action.payload || "invalid credentials");
+        toast.error(action.payload || "invalid credentials");
       })
       .addCase(loginCollage.pending, (state, action) => {
         state.status = "loading";
@@ -494,7 +494,7 @@ const collageAuthSlice = createSlice({
       })
       .addCase(updatePassword.fulfilled, (state, action) => {
         state.status = action.payload;
-        alert("Password Updated");
+        toast.success("Password Updated");
         // state.status = action.payload
         // state.isLoggedIn = false;
         // state.user = action.payload.user;

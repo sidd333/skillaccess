@@ -11,6 +11,7 @@ import {
 } from "../../../../redux/collage/test/testSlice";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const AddParagraph = () => {
   const MAX_QUESTIONS = 3;
@@ -83,12 +84,12 @@ const AddParagraph = () => {
   const handleSave = (type) => {
     if (addType === "topic") {
       if (question.Title == "") {
-        window.alert("Please enter the question");
+        toast.error("Please enter the question");
       } else if (question.Duration == 0) {
-        window.alert("Please enter required time");
+        toast.error("Please enter required time");
         return;
       } else if (question.questions.some((q) => q.question === "")) {
-        window.alert("Please enter all questions");
+        toast.error("Please enter all questions");
         return;
       } else {
         if (isPrev) {
@@ -125,12 +126,12 @@ const AddParagraph = () => {
       }
     } else {
       if (question.Title == "") {
-        window.alert("Please enter the question");
+        toast.error("Please enter the question");
       } else if (question.Duration == 0) {
-        window.alert("Please enter required time");
+        toast.error("Please enter required time");
         return;
       } else if (question.questions.some((q) => q.question === "")) {
-        window.alert("Please enter all questions");
+        toast.error("Please enter all questions");
         return;
       } else {
         if (isPrev) {
@@ -246,9 +247,9 @@ const AddParagraph = () => {
                 className="self-center justify-center flex bg-[#8F92A1] bg-opacity-10  py-3 px-4 rounded-xl text-sm font-bold gap-2 "
                 onClick={() => {
                   if (question.questions.some((q) => q.question === "")) {
-                    window.alert("Please enter all questions");
+                    toast.error("Please enter all questions");
                   } else if (question.questions.length >= MAX_QUESTIONS) {
-                    window.alert("You can't add more than 3 questions");
+                    toast.error("You can't add more than 3 questions");
                   } else {
                     setQuestion({
                       ...question,

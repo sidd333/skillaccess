@@ -11,6 +11,7 @@ import { FaX } from "react-icons/fa6";
 import { FaChevronLeft, FaPlus } from "react-icons/fa";
 
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const LongShortAnswer = () => {
   const navigate = useNavigate();
@@ -71,9 +72,9 @@ const LongShortAnswer = () => {
 
     if (LongShort === "short") {
       if (question.Title == "") {
-        window.alert("Please enter the question");
+        toast.error("Please enter the question");
       } else if (question.Duration == 0) {
-        window.alert("Please enter required time");
+        toast.error("Please enter required time");
         return;
       } else {
         if (isPrev) {
@@ -101,9 +102,9 @@ const LongShortAnswer = () => {
       }
     } else {
       if (question.Title == "") {
-        window.alert("Please enter the question");
+        toast.error("Please enter the question");
       } else if (question.Duration == 0) {
-        window.alert("Please enter required time");
+        toast.error("Please enter required time");
         return;
       } else {
         if (isPrev) {

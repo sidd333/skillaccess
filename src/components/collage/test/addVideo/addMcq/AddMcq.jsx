@@ -17,6 +17,7 @@ import {
 } from "../../../../../redux/collage/test/testSlice";
 
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AddMcq = () => {
   const { TopicToBeAdded } = useSelector((state) => state.test);
@@ -63,16 +64,16 @@ const AddMcq = () => {
 
   const handleSave = (type) => {
     if (question.Title === "") {
-      window.alert("Please enter question");
+      toast.error("Please enter question");
       return;
     } else if (question.Options && question.Options.length < 4) {
-      window.alert("Please enter atleast 4 options");
+      toast.error("Please enter atleast 4 options");
       return;
     } else if (question.Duration == 0) {
-      window.alert("Please enter required time");
+      toast.error("Please enter required time");
       return;
     } else if (question.AnswerIndex === null) {
-      window.alert("Please select the correct answer");
+      toast.error("Please select the correct answer");
       return;
     } else {
       if (isPrev) {

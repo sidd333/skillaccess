@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Code from "./Code";
 import Video from "./Video";
+import toast from "react-hot-toast";
 
 const Submit = () => {
   const navigate = useNavigate();
@@ -228,13 +229,13 @@ const Submit = () => {
       return;
     }
     if (!topics[0]) {
-      window.alert("Please select atleast one topic");
+      toast.error("Please select atleast one topic");
       return;
     }
 
     if (totalQuestions > questions.length) {
       console.log(totalQuestions, questions.length);
-      window.alert(
+      toast.error(
         `Add ${
           totalQuestions - questions.length
         } more questions to complete the test`

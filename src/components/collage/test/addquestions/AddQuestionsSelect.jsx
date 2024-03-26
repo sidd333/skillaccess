@@ -8,6 +8,7 @@ import { ImFileText } from "react-icons/im";
 import { setTest } from "../../../../redux/collage/test/testSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const AddQuestionsSelect = () => {
   const { id } = useParams();
@@ -44,7 +45,7 @@ const AddQuestionsSelect = () => {
         break;
 
       default:
-        window.alert("please select field");
+        toast.error("please select field");
         break;
     }
   };

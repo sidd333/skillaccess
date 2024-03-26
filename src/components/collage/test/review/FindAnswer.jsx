@@ -11,6 +11,7 @@ import {
   removeQuestion,
   addBookmark,
 } from "../../../../redux/collage/test/testSlice";
+import toast from "react-hot-toast";
 
 const FindAnswer = ({ Title, Options, Number, id, type, view, question }) => {
   const dispatch = useDispatch();
@@ -86,7 +87,7 @@ dispatch(addBookmark({
       findAnswer.Title === "" ||
       findAnswer.questions.some((ques) => ques.question === "")
     ) {
-      alert("Please fill all the fields");
+      toast.error("Please fill all the fields");
 
       return;
     } else {
