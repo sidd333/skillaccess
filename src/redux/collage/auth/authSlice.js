@@ -11,9 +11,11 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 //initial state
 
-
-
 const collageState = {
+  qr: {
+    secret: "",
+    code: "",
+  },
   status: "",
   error: "",
   Error: [],
@@ -22,15 +24,85 @@ const collageState = {
   uploadImg: false,
   loggedInUsers: null,
   logoutError: null,
- 
 };
+
+export const getSecretQr = createAsyncThunk(
+  "collageAuth/getSecretQr",
+  async (data, { rejectWithValue }) => {
+    try {
+      const req = await axios.get(
+        `${REACT_APP_API_URL}/api/college/2fa/getSecretQr`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        }
+      );
+      const res = req.data;
+
+      console.log(res);
+      return res;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const selectAuth = createAsyncThunk(
+  "collageAuth/selectAuth",
+  async (data, { rejectWithValue }) => {
+    try {
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/selectAuth`,
+        { type: data.type },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        }
+      );
+      const res = req.data;
+
+      return res;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const verifyQr = createAsyncThunk(
+  "collageAuth/verifyQr",
+  async (data, { rejectWithValue }) => {
+    try {
+      const req = await axios.post(
+        `${REACT_APP_API_URL}/api/college/2fa/verifyQr`,
+        { secret: data.secret, token: data.token },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        }
+      );
+      const res = req.data;
+
+      return res;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
 
 export const registerCollage = createAsyncThunk(
   "collageAuth/registerCollage",
   async (data, { rejectWithValue }) => {
     try {
       const ip = getIp();
-      console.log("registering" , ip);
+      console.log("registering", ip);
       // console.log(process.env);
       const req = await axios.post(
         `${REACT_APP_API_URL}/api/college/register`,
@@ -51,7 +123,7 @@ export const loginCollage = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const ip = await getIp();
-      console.log("login" , ip);
+      console.log("login", ip);
       const req = await axios.post(
         `${REACT_APP_API_URL}/api/college/login`,
         { ...data, ip },
@@ -189,7 +261,7 @@ export const resetPassword = createAsyncThunk(
       console.log("updating", localStorage.getItem("auth-token"));
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/college/password/reset/${data.token}`,
-        { password: data.password, confirmPassword: data.confirmPassword , ip},
+        { password: data.password, confirmPassword: data.confirmPassword, ip },
 
         {
           headers: {
@@ -217,7 +289,7 @@ export const updatePassword = createAsyncThunk(
       console.log("updating", localStorage.getItem("auth-token"));
       const req = await axios.put(
         `${REACT_APP_API_URL}/api/college/password/update`,
-       { ...data, ip},
+        { ...data, ip },
 
         {
           headers: {
@@ -235,20 +307,16 @@ export const updatePassword = createAsyncThunk(
   }
 );
 
-
-
-
-
-export const googleLoginCollage = createAsyncThunk( 
+export const googleLoginCollage = createAsyncThunk(
   "collageAuth/googleLoginCollage",
   async (accessToken, { rejectWithValue }) => {
     try {
       const ip = await getIp();
       console.log("google login");
-      const req = await axios.post(
-        `${REACT_APP_API_URL}/api/college/login`,
-        {  googleAccessToken: accessToken , ip}
-      );
+      const req = await axios.post(`${REACT_APP_API_URL}/api/college/login`, {
+        googleAccessToken: accessToken,
+        ip,
+      });
       const res = req.data;
       localStorage.setItem("auth-token", res.token);
       return res;
@@ -267,10 +335,10 @@ export const googleRegisterCollage = createAsyncThunk(
       console.log("google register");
       const req = await axios.post(
         `${REACT_APP_API_URL}/api/college/register`,
-        {  googleAccessToken: accessToken , ip: ip}
+        { googleAccessToken: accessToken, ip: ip }
       );
       const res = req.data;
-      console.log(res,"res.data");
+      console.log(res, "res.data");
       localStorage.setItem("auth-token", res.token);
       return res;
     } catch (error) {
@@ -279,7 +347,6 @@ export const googleRegisterCollage = createAsyncThunk(
     }
   }
 );
-
 
 export const getLoggedInUsers = createAsyncThunk(
   "collageAuth/getLoggedInUsers",
@@ -326,7 +393,6 @@ export const logoutAUser = createAsyncThunk(
   }
 );
 
-
 export const removeLoggedOutUser = createAsyncThunk(
   "collageAuth/removeLoggedOutUser",
   async (token, { rejectWithValue }) => {
@@ -350,10 +416,6 @@ export const removeLoggedOutUser = createAsyncThunk(
   }
 );
 
-
-
-
-
 const collageAuthSlice = createSlice({
   name: "collageAuth",
   initialState: collageState,
@@ -363,11 +425,34 @@ const collageAuthSlice = createSlice({
     },
     clearLogoutError: (state, action) => {
       state.logoutError = null;
-    }
-
+    },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(selectAuth.fulfilled, (state, action) => {
+        switch (action.payload.college.authType) {
+          case "otp":
+            toast.success("authentication switched to text message");
+            break;
+          case "qr":
+            toast.success("authentication switched to auth-app");
+            break;
+          default:
+            toast.success("authentication switched to default");
+            break;
+        }
+      })
+      .addCase(verifyQr.fulfilled, (state, action) => {
+        toast.success("verified");
+        window.location.href = "/collage/dashboard";
+      })
+      .addCase(verifyQr.rejected, (state, action) => {
+        toast.error("invalid token");
+      })
+      .addCase(getSecretQr.fulfilled, (state, action) => {
+        state.qr.secret = action.payload.secret.ascii;
+        state.qr.code = action.payload.qr;
+      })
       .addCase(forgotPassword.fulfilled, (state, action) => {})
       .addCase(registerCollage.pending, (state, action) => {
         state.status = "loading";
@@ -395,11 +480,21 @@ const collageAuthSlice = createSlice({
       })
       .addCase(loginCollage.fulfilled, (state, action) => {
         // state.status = action.payload
-        state.status = "done";
-        state.isLoggedIn = true;
-        state.user = action.payload;
-
-        console.log(state.user);
+        const { user } = action.payload;
+        state.user = user;
+        switch (user.authType) {
+          case "qr":
+            window.location.href = "/collage/settings/security/securityApp";
+            break;
+          case "otp":
+            window.location.href = "/collage/settings/security/secondFA";
+            break;
+          default:
+            state.status = "done";
+            state.isLoggedIn = true;
+            window.location.href = "/collage/dashboard";
+            break;
+        }
       })
       .addCase(loginCollage.rejected, (state, action) => {
         state.Error = [action.payload];
@@ -432,17 +527,18 @@ const collageAuthSlice = createSlice({
         console.log("fullfilled get college");
       })
       .addCase(getCollege.rejected, (state, action) => {
-
         // state.logoutError = action.payload;
         state.isLoggedIn = false;
         // alert("You are logged out! Please login again");
 
-        if (action.payload.message == "Token is blacklisted. Please login again") {
+        if (
+          action.payload.message == "Token is blacklisted. Please login again"
+        ) {
           localStorage.removeItem("auth-token");
           state.loggedInUsers = null;
           state.logoutError = action.payload;
         }
-       
+
         console.log(action.payload.message);
 
         // window.alert(action.payload);
@@ -512,13 +608,22 @@ const collageAuthSlice = createSlice({
       })
       .addCase(googleLoginCollage.fulfilled, (state, action) => {
         console.log("fuillfilled google login");
-        state.status = action.payload;
-        state.isLoggedIn = true;
         state.user = action.payload.user;
+        state.status = action.payload;
         localStorage.setItem("auth-token", action.payload.token);
-        window.location.href = "/collage/dashboard";
-        // Add any fetched posts to the array
-        console.log("fullfilled");
+        switch (state.user.authType) {
+          case "qr":
+            window.location.href = "/collage/settings/security/securityApp";
+            break;
+          case "otp":
+            window.location.href = "/collage/settings/security/secondFA";
+            break;
+          default:
+            state.status = "done";
+            state.isLoggedIn = true;
+            window.location.href = "/collage/dashboard";
+            break;
+        }
       })
       .addCase(googleLoginCollage.rejected, (state, action) => {
         // console.log(action.payload);
@@ -554,13 +659,12 @@ const collageAuthSlice = createSlice({
       })
       .addCase(getLoggedInUsers.fulfilled, (state, action) => {
         state.status = "success";
-       state.loggedInUsers = action.payload;
+        state.loggedInUsers = action.payload;
         // Add any fetched posts to the array
         console.log("fullfilled");
       })
       .addCase(getLoggedInUsers.rejected, (state, action) => {
         console.log(action.payload);
-
         window.alert(action.payload);
       })
       .addCase(logoutAUser.pending, (state, action) => {
@@ -572,7 +676,6 @@ const collageAuthSlice = createSlice({
         // state.user = action.payload;
         state.loggedInUsers = action.payload;
         console.log("fullfilled");
-
       })
       .addCase(logoutAUser.rejected, (state, action) => {
         console.log(action.payload);
@@ -588,12 +691,11 @@ const collageAuthSlice = createSlice({
         // state.user = action.payload;
         state.loggedInUsers = action.payload;
         console.log("fullfilled");
-
       })
       .addCase(removeLoggedOutUser.rejected, (state, action) => {
         console.log(action.payload);
         // getLoggedInUsers();
-        if(state.loggedInUsers.length == 0){
+        if (state.loggedInUsers.length == 0) {
           state.loggedInUsers = null;
           state.logoutError = "No user is logged in";
           window.redirect("/");
@@ -610,7 +712,6 @@ const collageAuthSlice = createSlice({
         // state.user = action.payload;
         // state.loggedInUsers = action.payload;
         console.log("fullfilled");
-
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.error = action.payload;
@@ -618,14 +719,10 @@ const collageAuthSlice = createSlice({
         console.log(action.payload);
         // getLoggedInUsers();
         // window.alert(action.payload);
-      })
-    
-     
-    
-
+      });
   },
 });
 
 //
-export const { setUploadImg ,clearLogoutError} = collageAuthSlice.actions;
+export const { setUploadImg, clearLogoutError } = collageAuthSlice.actions;
 export default collageAuthSlice.reducer;

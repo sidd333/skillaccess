@@ -52,9 +52,8 @@ const Login = () => {
     try {
       const ch = await dispatch(loginCollage(data));
       if (ch.meta.requestStatus === "fulfilled") {
-        toast.success('Logged in successfully');
+        toast.success("Logged in successfully");
         setCredentials({});
-        navigate("/collage/dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -112,53 +111,55 @@ const Login = () => {
           <h2 className="text-sm font-normal text-center text-lGray">
             Create an account to continue
           </h2>
-          {
-            logoutError && <p className=" border-l-4 pl-4  rounded-[4px] border-[#dc2626] w-full max-w-xs py-3  mx-auto text-sm text-[#dc2626] bg-[#fee2e2]">
+          {logoutError && (
+            <p className=" border-l-4 pl-4  rounded-[4px] border-[#dc2626] w-full max-w-xs py-3  mx-auto text-sm text-[#dc2626] bg-[#fee2e2]">
               Oops!You're logged out. Please login again.
             </p>
-            }
+          )}
 
-              {Error.length > 0 && <p className=" border-l-4 pl-4  rounded-[4px] border-[#dc2626] w-full max-w-xs py-3  mx-auto text-sm text-[#dc2626] bg-[#fee2e2]">
-                Oops! It seems like your email or password is incorrect. Please double-check and try again.
-              </p>}
+          {Error.length > 0 && (
+            <p className=" border-l-4 pl-4  rounded-[4px] border-[#dc2626] w-full max-w-xs py-3  mx-auto text-sm text-[#dc2626] bg-[#fee2e2]">
+              Oops! It seems like your email or password is incorrect. Please
+              double-check and try again.
+            </p>
+          )}
 
+          <input
+            onChange={changeHandler}
+            value={Credentials.Email}
+            name="Email"
+            type="email"
+            placeholder="Email Address"
+            className="input rounded-xl border-none  md:mt-6 mt-4 focus:outline-none input-md w-full max-w-xs  mx-auto bg-snow "
+          />
+          <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 rounded-xl  bg-snow ">
+            <input
+              name="Password"
+              onChange={changeHandler}
+              value={Credentials.Password}
+              type={type}
+              placeholder="Password"
+              className="input  border-none  focus:outline-none input-md w-full max-w-xs  bg-snow  mx-auto "
+            />
+            <button
+              className="btn !shadow-none bg-snow border-none"
+              onClick={(e) => {
+                e.preventDefault();
+                type === "text" ? setType("password") : setType("text");
+              }}
+            >
+              <LuEye className="text-gray-400 text-2xl" />
+            </button>
+          </div>
 
-              <input
-                onChange={changeHandler}
-                value={Credentials.Email}
-                name="Email"
-                type="email"
-                placeholder="Email Address"
-                className="input rounded-xl border-none  md:mt-6 mt-4 focus:outline-none input-md w-full max-w-xs  mx-auto bg-snow "
-              />
-              <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 rounded-xl  bg-snow ">
-                <input
-                  name="Password"
-                  onChange={changeHandler}
-                  value={Credentials.Password}
-                  type={type}
-                  placeholder="Password"
-                  className="input  border-none  focus:outline-none input-md w-full max-w-xs  bg-snow  mx-auto "
-                />
-                <button
-                  className="btn !shadow-none bg-snow border-none"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    type === "text" ? setType("password") : setType("text");
-                  }}
-                >
-                  <LuEye className="text-gray-400 text-2xl" />
-                </button>
-              </div>
+          <div
+            className=" flex gap-2  px-2 lg:mt-6 md:mt-6 mt-4   w-full max-w-xs  mx-auto justify-end cursor-pointer"
+            onClick={() => navigate("/forgotPassword")}
+          >
+            <h1 className="text-blue-700 font-bold">Forgot Password</h1>
+          </div>
 
-              <div
-                className=" flex gap-2  px-2 lg:mt-6 md:mt-6 mt-4   w-full max-w-xs  mx-auto justify-end cursor-pointer"
-                onClick={() => navigate("/forgotPassword")}
-              >
-                <h1 className="text-blue-700 font-bold">Forgot Password</h1>
-              </div>
-
-              {/* {Error.length > 0 &&
+          {/* {Error.length > 0 &&
             Error.map((error) => (
               <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 rounded-xl  ">
                 <input
@@ -175,65 +176,68 @@ const Login = () => {
               </div>
             ))} */}
 
-              <div className=" flex gap-2  p-2 lg:mt-6 md:mt-6 mt-4   w-full max-w-xs  mx-auto ">
+          <div className=" flex gap-2  p-2 lg:mt-6 md:mt-6 mt-4   w-full max-w-xs  mx-auto ">
+            {" "}
+            <hr className="w-1/12 border-2 border-lGray opacity-20" />
+            <hr className="w-1/12 border-2 border-lGray opacity-20" />
+            <hr className="w-1/12 border-2 border-lGray opacity-20" />
+            <hr className="w-1/12 border-2 border-lGray opacity-20" />
+            <hr className="w-1/12 border-2 border-lGray opacity-20" />
+            <hr className="w-1/12 border-2 border-lGray opacity-20" />
+            <hr className="w-1/12 border-2 border-lGray opacity-20" />
+            <hr className="w-1/12 border-2 border-lGray opacity-20" />
+            <hr className="w-1/12 border-2 border-lGray opacity-20" />
+            <hr className="w-1/12 border-2 border-lGray opacity-20" />
+          </div>
+
+          <label className=" flex  gap-2 cursor-pointer mx-auto w-full max-w-xs">
+            <input
+              type="checkbox"
+              checked={checked}
+              className="checkbox checkbox-primary bg-secondary opacity-20 w-6 h-6"
+              onChange={handleCheckboxChange}
+            />
+            <span className="text-lGray">
+              By creating an account, you agree to our{" "}
+              <Link className="text-blue-600" to="/terms&policies">
                 {" "}
-                <hr className="w-1/12 border-2 border-lGray opacity-20" />
-                <hr className="w-1/12 border-2 border-lGray opacity-20" />
-                <hr className="w-1/12 border-2 border-lGray opacity-20" />
-                <hr className="w-1/12 border-2 border-lGray opacity-20" />
-                <hr className="w-1/12 border-2 border-lGray opacity-20" />
-                <hr className="w-1/12 border-2 border-lGray opacity-20" />
-                <hr className="w-1/12 border-2 border-lGray opacity-20" />
-                <hr className="w-1/12 border-2 border-lGray opacity-20" />
-                <hr className="w-1/12 border-2 border-lGray opacity-20" />
-                <hr className="w-1/12 border-2 border-lGray opacity-20" />
-              </div>
+                Terms-Policies.
+              </Link>
+            </span>
+          </label>
 
-              <label className=" flex  gap-2 cursor-pointer mx-auto w-full max-w-xs">
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  className="checkbox checkbox-primary bg-secondary opacity-20 w-6 h-6"
-                  onChange={handleCheckboxChange}
-                />
-                <span className="text-lGray">
-                  By creating an account, you agree to our{" "}
-                  <Link className="text-blue-600" to="/terms&policies">
-                    {" "}
-                    Terms-Policies.
-                  </Link>
-                </span>
-              </label>
-
-              <button
-                className={`btn hover:bg-blue-500 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto bg-secondary text-white ${isLoginDisabled ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                onClick={handleSubmit}
-                disabled={isLoginDisabled}
-              >
-                Login
-              </button>
-              <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
-              <button
-                className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  "
-                // onClick={() => navigate("/collage/dashboard")}
-              onClick={login} type="button"
-              >
-                <FcGoogle className="text-lg mr-2" />
-                <h3 className="opacity-100" 
-                // onClick={login}
-                >
-                  Continue with google
-                </h3>
-              </button>
-              <span className="text-lGray text-center">
-                Don't have an account?{" "}
-                <Link to="/register" className="text-secondary">
-                  {" "}
-                  SignUp
-                </Link>
-              </span>
-            </div>
+          <button
+            className={`btn hover:bg-blue-500 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto bg-secondary text-white ${
+              isLoginDisabled ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            onClick={handleSubmit}
+            disabled={isLoginDisabled}
+          >
+            Login
+          </button>
+          <h3 className="text-lGray text-center text-bold text-xs mt-1">OR</h3>
+          <button
+            className="btn btn-primary rounded-xl border-none  mt-2 focus:outline-none  w-full max-w-xs  mx-auto bg-snow  "
+            // onClick={() => navigate("/collage/dashboard")}
+            onClick={login}
+            type="button"
+          >
+            <FcGoogle className="text-lg mr-2" />
+            <h3
+              className="opacity-100"
+              // onClick={login}
+            >
+              Continue with google
+            </h3>
+          </button>
+          <span className="text-lGray text-center">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-secondary">
+              {" "}
+              SignUp
+            </Link>
+          </span>
+        </div>
       </div>
     </form>
   );
