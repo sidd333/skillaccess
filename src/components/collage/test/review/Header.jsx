@@ -164,7 +164,7 @@ const Header = ({
                     ) {
                       if (header.v === "AnswerIndex") {
                         if (row) {
-                          if (row.v > 3 && typeof row.v === "number") {
+                          if (row.v > 3 && typeof row.v !== "number") {
                             toast.error(
                               "Invalid value" + (rowNum + 1) + "col:" + colNum
                             );
@@ -193,7 +193,7 @@ const Header = ({
 
                       if (header.v === "Duration") {
                         if (row) {
-                          if (row.v > 3 && typeof row.v === "number") {
+                          if (typeof row.v !== "number") {
                             toast.error(
                               "Invalid value" + (rowNum + 1) + "col:" + colNum
                             );
@@ -350,12 +350,14 @@ const Header = ({
                     ) {
                       if (header.v === "Duration") {
                         if (row) {
-                          if (row.v > 3 && typeof row.v === "number") {
+                          if (typeof row.v !== "number") {
                             toast.error(
                               "Invalid value row:" +
-                                rowNum +
+                                (rowNum + 1) +
                                 "col:" +
-                                (colNum + 1)
+                                (colNum + 1) +
+                                "-->" +
+                                row.v
                             );
                             setLoading(false);
                             return;
