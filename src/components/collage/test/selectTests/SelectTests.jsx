@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import toast from "react-hot-toast"
 import Header from "./Header";
 
 import { Progress } from "./Progress";
@@ -63,7 +63,7 @@ const SelectTests = () => {
 
   const addSection = (section) => {
     if (!questionType) {
-      window.alert("Please select a question type first.");
+      toast.error("Please select a question type first.");
       return;
     }
     if (selectedSections?.length < 5 || !selectedSections) {
@@ -336,6 +336,10 @@ const SelectTests = () => {
                       <button
                         className="w-[90px] h-[40px] bg-[#8F92A120] rounded-xl"
                         onClick={() => {
+                          if (!questionType) {
+                          toast.error("Please select a question type first.");
+                            return;
+                          }
                           dispatch(
                             setCurrentTopic({
                               topic: {
