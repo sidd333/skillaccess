@@ -8,6 +8,7 @@ import { PiPencilSimpleLineBold } from "react-icons/pi";
 import { CiBookmarkMinus } from "react-icons/ci";
 import ReactQuill from "react-quill"; // Import ReactQuill
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
+import toast from "react-hot-toast";
 
 const VideoMcq = ({
   Number,
@@ -68,7 +69,7 @@ const VideoMcq = ({
   const handleSubmit = () => {
     if (mcq.Title.trim() === "" || mcq.Options.some(option => option.trim() === "")) {
       handleAlertDismiss();
-      alert("Please fill in all fields for the MCQ.");
+      toast.error("Please fill in all fields for the MCQ.");
       return;
     }
   

@@ -13,6 +13,7 @@ import {
   addQuestionToTopic,
   editQuestionById,
 } from "../../../../redux/collage/test/testSlice";
+import toast from "react-hot-toast";
 
 const AddMcqToTopic = () => {
   const { currentTopic } = useSelector((state) => state.test);
@@ -388,24 +389,24 @@ const stripHtml = (html) => {
                 // setQuestion({ Title: "", Options: [], id: "aaa" , Duration: 0 });
 
                 if (question.Title === "") {
-                  window.alert("Please enter question");
+                  toast.error("Please enter question");
                   return;
                 } else if (question.Options && question.Options.length < 4) {
-                  window.alert("Please enter atleast 4 options");
+                  toast.error("Please enter atleast 4 options");
                   return;
                 } 
                 else if (question.AnswerIndex === null) {
-                  window.alert("Please select correct answer");
+                  toast.error("Please select correct answer");
                   return;
                 }
                 
                 else if (
                   question.Options.some((option) => option.trim() === "")
                 ) {
-                  window.alert("Please enter all options");
+                  toast.error("Please enter all options");
                   return;
                 } else if (question.Duration == 0) {
-                  window.alert("Please enter required time");
+                  toast.error("Please enter required time");
                   return;
                 } else {
                   if (isPrev) {

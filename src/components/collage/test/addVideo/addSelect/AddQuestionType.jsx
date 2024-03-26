@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import Header from "./Header";
+import toast from "react-hot-toast";
 
 const AddQuestionType = () => {
   const { id } = useParams();
@@ -49,7 +50,7 @@ const AddQuestionType = () => {
         break;
 
       default:
-        window.alert("please select field");
+        toast.error("please select field");
 
         break;
     }

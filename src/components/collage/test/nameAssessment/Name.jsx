@@ -62,7 +62,107 @@ const Name = () => {
   //   console.log("hello tests");
   // };
 
-  const handleChange = (e) => {
+  // const handleChange = (e) => {
+  //   const { name, value, checked } = e.target;
+
+  //   // Check if the selected time is before the current time and date
+  //   const currentTime = new Date().toISOString().slice(0, 16); // Get current time and date
+  //   if (
+  //     (name === "duration_from" || name === "duration_to") &&
+  //     value < currentTime
+  //   ) {
+  //     toast.error("Please select a time and date after the current time and date.");
+  //     return; // Prevent updating state if the selected time is before the current time and date
+  //   }
+
+  //   setTestDetails({
+  //     ...testDetails,
+  //     [name]: name === "isNegativeMarking" ? checked : value,
+  //   });
+  // };
+  // console.log(testDetails);
+  // // const handleChange = (e) => {
+  // //   const { name, value } = e.target;
+
+  // //   // For duration_from and duration_to fields, update both formData and testDetails
+  // //   if (name === 'duration_from' || name === 'duration_to') {
+  // //     setFormData({
+  // //       ...formData,
+  // //       [name]: value,
+  // //     });
+
+  // //     setTestDetails({
+  // //       ...testDetails,
+  // //       [name]: value,
+  // //     });
+  // //   } else {
+  // //     // For other fields, update testDetails
+  // //     setTestDetails({
+  // //       ...testDetails,
+  // //       [name]: value,
+  // //     });
+  // //   }
+  // // };
+
+  // const handleSubmit = () => {
+  //   let flag = "false";
+  //   if (testDetails.name === "") {
+  //     toast.error('Please enter Name', {
+  //       icon: '⚠️' 
+  //     });
+      
+  //     flag = "true";
+  //   } else if (testDetails.duration_from === "") {
+  //     toast.error('Please enter Duration from', {
+  //       icon: '⚠️'
+  //     }
+  //     )
+  //     return;
+  //   } else if (testDetails.duration_to === "") {
+  //     toast.error('Please enter Duration to', {
+  //       icon: '⚠️' 
+  //     });
+      
+  //   } else if (testDetails.totalAttempts === "") {
+  //     window.alert("Please enter Total Attempts");
+  //     return;
+  //   } else if (testDetails.description === "") {
+  //     window.alert("Please enter Description");
+  //     return;
+  //   } else if (testDetails.duration_from >= testDetails.duration_to) {
+  //     toast.error('Duration To must be greater than Duration From', {
+  //       icon: '⚠️' // You can use any Unicode character or an image URL here
+  //     });
+  //     return;
+  //   }
+
+  //   if (assessments.beginner.length > 0) {
+  //     assessments.beginner.forEach((assessment) => {
+  //       if (assessment.name === testDetails.name) {
+  //         flag = "true";
+  //       }
+  //     });
+
+  //     // console.log(testDetails, name, description, totalAttempts);
+  //   }
+  //   if (flag === "false") {
+  //     dispatch(setTestBasicDetails(testDetails));
+
+  //     navigate("/collage/test/select");
+  //   } else {
+      
+  //     toast.error("duplicate name");
+  //   }
+  // };
+  const [errors, setErrors] = useState({
+    name: "",
+    totalAttempts: "",
+    totalQuestions: "",
+    description: "",
+    duration: "",
+  });
+
+    const handleChange = (e) => {
     const { name, value, checked } = e.target;
 
     // Check if the selected time is before the current time and date
@@ -71,7 +171,7 @@ const Name = () => {
       (name === "duration_from" || name === "duration_to") &&
       value < currentTime
     ) {
-      alert("Please select a time and date after the current time and date.");
+      toast.error("Please select a time and date after the current time and date.");
       return; // Prevent updating state if the selected time is before the current time and date
     }
 
@@ -80,79 +180,93 @@ const Name = () => {
       [name]: name === "isNegativeMarking" ? checked : value,
     });
   };
-  console.log(testDetails);
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-
-  //   // For duration_from and duration_to fields, update both formData and testDetails
-  //   if (name === 'duration_from' || name === 'duration_to') {
-  //     setFormData({
-  //       ...formData,
-  //       [name]: value,
-  //     });
-
-  //     setTestDetails({
-  //       ...testDetails,
-  //       [name]: value,
-  //     });
-  //   } else {
-  //     // For other fields, update testDetails
-  //     setTestDetails({
-  //       ...testDetails,
-  //       [name]: value,
-  //     });
-  //   }
-  // };
 
   const handleSubmit = () => {
-    let flag = "false";
-    if (testDetails.name === "") {
-      toast.error('Please enter Name', {
-        icon: '⚠️' 
-      });
-      
-      flag = "true";
-    } else if (testDetails.duration_from === "") {
-      toast.error('Please enter Duration from', {
+    let flag = false;
+    if (testDetails.name === "" || testDetails.totalAttempts === "" || testDetails.totalQuestions === null || testDetails.description === "" || testDetails.duration_from === "" || testDetails.duration_to === "") {
+      toast.error('Please Add All Fields', {
         icon: '⚠️'
-      }
-      )
-      return;
-    } else if (testDetails.duration_to === "") {
-      toast.error('Please enter Duration to', {
-        icon: '⚠️' 
       });
-      
-    } else if (testDetails.totalAttempts === "") {
-      window.alert("Please enter Total Attempts");
-      return;
-    } else if (testDetails.description === "") {
-      window.alert("Please enter Description");
-      return;
-    } else if (testDetails.duration_from >= testDetails.duration_to) {
-      toast.error('Duration To must be greater than Duration From', {
-        icon: '⚠️' // You can use any Unicode character or an image URL here
-      });
-      return;
+      flag = true;
     }
 
+    if (testDetails.name === "") {
+    
+      setErrors((prevErrors) => ({ ...prevErrors, name: "Please enter Name" }));
+      flag = true;
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, name: "" }));
+    }
+
+    if (testDetails.totalAttempts === "") {
+     setErrors((prevErrors) => ({
+        ...prevErrors,
+        totalAttempts: "Please enter Total Attempts",
+      }));
+      flag = true;
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, totalAttempts: "" }));
+    }
+
+    if (testDetails.totalQuestions === null) {
+
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        totalQuestions: "Please enter Total Questions",
+      }));
+      flag = true;
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, totalQuestions: "" }));
+    }
+
+    if (testDetails.description === "") {
+     
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        description: "Please enter Description",
+      }));
+      flag = true;
+    } else {
+      setErrors((prevErrors) => ({ ...prevErrors, description: "" }));
+    }
+
+  
+    
+    if (testDetails.duration_from === "") {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        duration: "Please Enter Duration From",
+      }));
+    } else if (testDetails.duration_to === "") {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        duration: "Please Enter Duration To",
+      }));
+    }
+    else if (testDetails.duration_from >= testDetails.duration_to) {
+          toast.error('Duration To must be greater than Duration From', {
+            icon: '⚠️' // You can use any Unicode character or an image URL here
+          });
+          return;
+        } 
+      else {
+      setErrors((prevErrors) => ({ ...prevErrors, duration: "" }));
+    }
+    
     if (assessments.beginner.length > 0) {
       assessments.beginner.forEach((assessment) => {
         if (assessment.name === testDetails.name) {
           flag = "true";
+          toast.error("Duplicate name");
         }
       });
-
-      // console.log(testDetails, name, description, totalAttempts);
     }
-    if (flag === "false") {
+    if (!flag) {
       dispatch(setTestBasicDetails(testDetails));
-
       navigate("/collage/test/select");
-    } else {
-      
-      toast.error("duplicate name");
+     
     }
+  
   };
 
   return (
@@ -178,7 +292,7 @@ const Name = () => {
           value={testDetails.name}
           onChange={handleChange}
         />
-
+{errors.name && <span className="text-red-500 ml-5 pt-2">{errors.name}</span>}
         <input
           type="number"
           name="totalAttempts"
@@ -187,6 +301,7 @@ const Name = () => {
           value={testDetails.totalAttempts}
           onChange={handleChange}
         />
+         {errors.totalAttempts && <span className="text-red-500 ml-5 pt-2">{errors.totalAttempts}</span>}
         <input
           name="totalQuestions"
           type="number"
@@ -195,6 +310,7 @@ const Name = () => {
           value={testDetails.totalQuestions}
           onChange={handleChange}
         />
+        {errors.totalQuestions && <span className="text-red-500 ml-5 pt-2">{errors.totalQuestions}</span>}
         {/* <input
           name="totalDuration"
           type="number"
@@ -218,7 +334,7 @@ const Name = () => {
               fullWidth
             />
           </div>
-
+          
           {/* Duration To */}
           <div className=" bg-gray-100 h-16 px-6 text-lg font-bold py-2 mt-6 rounded-lg focus:outline-0">
             <label className="text-gray-400">Duration To *</label>
@@ -231,8 +347,11 @@ const Name = () => {
               required
               fullWidth
             />
+           
           </div>
+          
         </div>
+        {errors.duration && <span className="text-red-500 ml-5 pt-2">{errors.duration}</span>}
         <div className="mt-3 flex items-center gap-2 text-lg pl-4">
           <label
             htmlFor="isNegativeMarking"
@@ -256,6 +375,7 @@ const Name = () => {
           value={testDetails.description}
           onChange={handleChange}
         />
+        {errors.description && <span className="text-red-500 ml-5 pt-2">{errors.description}</span>}
       </div>
     </div>
   );

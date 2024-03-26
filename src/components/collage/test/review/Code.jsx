@@ -11,6 +11,7 @@ import {
   addBookmark
 } from "../../../../redux/collage/test/testSlice";
 import { useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 const Code = ({ Title, code, Number, id ,question ,
@@ -139,12 +140,12 @@ dispatch(addBookmark({
               className=" w-6 h-6 p-1 rounded-lg bg-amber-600 self-center"
               onClick={() => {
                 if (!compiler.codeQuestion) {
-                  window.alert("Please enter the question");
+                  toast.error("Please enter the question");
                   return;
                 }
               
                 if (!compiler.code) {
-                  window.alert("Please enter the code");
+                  toast.error("Please enter the code");
                   return;
                 }
                 else{

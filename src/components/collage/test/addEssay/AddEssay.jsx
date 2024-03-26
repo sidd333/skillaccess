@@ -12,6 +12,7 @@ import {
 } from "../../../../redux/collage/test/testSlice";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const AddEssay = () => {
   const { id } = useParams();
@@ -65,9 +66,9 @@ const AddEssay = () => {
   const handleSave = () => {
     if (addType === "topic") {
       if (question.Title == "") {
-        window.alert("Please enter the question");
+        toast.error("Please enter the question");
       } else if (question.Duration == 0) {
-        window.alert("Please enter required time");
+        toast.error("Please enter required time");
         return;
       } else {
         if (isPrev) {
@@ -90,9 +91,9 @@ const AddEssay = () => {
       }
     } else {
       if (question.Title == "") {
-        window.alert("Please enter the question");
+        toast.error("Please enter the question");
       } else if (question.Duration == 0) {
-        window.alert("Please enter required time");
+        toast.error("Please enter required time");
         return;
       } else {
         if (isPrev) {
