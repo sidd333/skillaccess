@@ -85,7 +85,7 @@ const Appeared = ({ assessment  }) => {
           console.log("updatedStudent", updatedStudent);
       });
       return updatedStudent;
-  }).filter((student) => student.studentTests.includes(assessment._id.toString()));
+  }).filter((student) => student?.studentTests?.includes(assessment._id.toString()));
   
   console.log("arr", arr);
   

@@ -4,13 +4,8 @@ import { Progress } from "./Progress";
 import List from "./List";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createTest,
-  setTestBasicDetails,
-  setTestSelectedTopics,
-} from "../../../../redux/collage/test/testSlice";
+
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import Code from "./Code";
 import Video from "./Video";
 
@@ -78,8 +73,8 @@ const Bookmarks = () => {
   {Array.from({ length: Math.ceil(max) }).map((_, index) => {
     const pageNumber = index + 1;
     const hasbookmarks = (pageNumber - 1) * 10 < bookmarks.length;
-console.log(bookmarks.length)
-console.log(Math.ceil(max));
+   console.log(bookmarks.length)
+  console.log(Math.ceil(max));
     return (
       hasbookmarks && (
         <div

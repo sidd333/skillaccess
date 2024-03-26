@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL;
 
 const testState = {
+  recentUsedQuestions: [],
   bookmarks: [],
   currentBookmark: {},
   localBookmarks: [],
@@ -34,16 +35,7 @@ const testState = {
 
   selectedSections: [],
 
-  questions: [
-    {
-      question: "question 1",
-      options: ["option 1", "option 2", "option 3", "option 4"],
-    },
-    {
-      question: "question 2",
-      options: ["option 1", "option 2", "option 3", "option 4"],
-    },
-  ],
+
   test: {
     testName: "",
     questionType: "",
@@ -572,6 +564,30 @@ export const getBookmarkById = createAsyncThunk(
 
 );
 
+
+
+export const getRecentUsedQuestions = createAsyncThunk(
+  "test/recentUsedQuestions",
+  async (data, { rejectWithValue }) => {
+    try {
+      const req = await axios.get(
+        `${REACT_APP_API_URL}/api/assessments/recent/questions`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+        } 
+      );
+      const res = req.data;
+      console.log(res);
+      return res.topics;
+    } catch (error) {
+      console.log("catch", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 
 
 
@@ -1189,7 +1205,18 @@ const testSlice = createSlice({
       .addCase(getAllBookmarks.rejected, (state, action) => {
         console.error("Error fetching test results:", action.payload);
         state.bookmarks = [];
+      })
+      .addCase(getRecentUsedQuestions.pending, (state, action) => {
+        state.status = "pending";
+      })
+      .addCase(getRecentUsedQuestions.fulfilled, (state, action) => {
+        state.recentUsedQuestions = action.payload;
+      })
+      .addCase(getRecentUsedQuestions.rejected, (state, action) => {
+        console.error("Error fetching test results:", action.payload);
+        state.recentUsedQuestions = [];
       });
+
 
 
      
