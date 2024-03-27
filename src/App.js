@@ -53,6 +53,7 @@ import Loader from "./Loader";
 import ForgotPassword from "./pages/collage/auth/ForgotPassword";
 import ResetPassword from "./pages/collage/auth/ResetPassword";
 import { Toaster } from "react-hot-toast";
+import ProfileRoutes from "./pages/student/profile";
 
 const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
@@ -173,6 +174,12 @@ export default function App() {
               <Route path="" element={<ProfilePage />} />
             </Route>
           )}
+
+          {/* =============================== student routes ============================== */}
+
+    {
+      ProfileRoutes()
+    }
 
           {/* .......................................................................................................................... */}
         </Routes>
