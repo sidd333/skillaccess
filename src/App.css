@@ -2,69 +2,65 @@
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
 
-ol{
-    list-style: decimal;
+ol {
+  list-style: decimal;
 }
-ul{
-   list-style: disc;
+ul {
+  list-style: disc;
 }
-b,strong{
-    font-weight: bold;
-}
-
-
-.google-div{
-
-    position: absolute;
-    top: 0.5rem;
-    right: 0.6rem;
+b,
+strong {
+  font-weight: bold;
 }
 
-.goog-te-combo{
-    border-color: #9ca3af;
-    border-radius: 0.4rem;
-    border-width: 0.1rem;
-    padding-top: 0.4rem;
-    padding-bottom: 0.4rem;
-    width: 11rem !important;
+.google-div {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
 }
 
-body{
-    position: static !important;
-    top: 0px !important;
+.goog-te-combo {
+  border-color: #9ca3af;
+  border-radius: 0.4rem;
+  border-width: 0.1rem;
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  width: 11rem !important;
+}
 
+body {
+  position: static !important;
+  top: 0px !important;
 }
 .skiptranslate {
-    display: none;
-
+  display: none;
 }
 .goog-gt-vt {
-    display: none;
+  display: none;
 }
 .goog-te-gadget > span {
-    display: none;
+  display: none;
 }
-.goog-te-gadget{
-    display : block !important;
-    color: transparent !important;
-}
-
-.goog-te-gadget .goog-te-combo{
-    margin: 4px 0;
-    font-weight: bold;
-    font-family: DM Sans, sans-serif;
-    font-style: italic;
-    color: #161616;
-    font-size: 0.9rem;
+.goog-te-gadget {
+  display: block !important;
+  color: transparent !important;
 }
 
-/* iframe
-{
-display: none;
+.goog-te-gadget .goog-te-combo {
+  margin: 4px 0;
+  font-weight: bold;
+  font-family: DM Sans, sans-serif;
+  font-style: italic;
+  color: #161616;
+  font-size: 0.9rem;
+}
+
+iframe {
+  display: none;
 }
 iframe#webpack-dev-server-client-overlay {
-    display: none;
-  } */
+  display: none;
+}
 /* 
 .VIpgJd-ZVi9od-ORHb-OEVmcd{
     display: none;

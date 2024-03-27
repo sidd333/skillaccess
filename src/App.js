@@ -87,7 +87,6 @@ export default function App() {
     }
   }, [logoutError]);
 
-
   useEffect(() => {
     try {
       let scriptLoaded = false;
@@ -125,7 +124,6 @@ export default function App() {
     //   }
     // };
   }, []);
-
 
   return (
     <React.Fragment>
@@ -177,13 +175,8 @@ export default function App() {
 
           {/* =============================== student routes ============================== */}
 
-    {
- StudentProfileRoutes()
-
-    }
-    {
-      StudentTestRoute()
-    }
+          {StudentProfileRoutes()}
+          {StudentTestRoute()}
 
           {/* .......................................................................................................................... */}
         </Routes>
