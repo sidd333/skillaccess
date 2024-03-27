@@ -1,9 +1,11 @@
 import React from "react";
-import Profile from "../../../components/collage/profile/home/Profile";
-import CollageLayout from "../../../layout/Collage";
 
-const ProfilePage = () => {
+import Test  from "../../../components/student/test/home/Test";
+import StudentLayout from "../../../layout/Student";
+
+const TestPage = () => {
   React.useEffect(() => {
+   
     let scriptLoaded = false;
     const currentPageLanguage = document.documentElement.lang;
     console.log(currentPageLanguage + " " + navigator.language);
@@ -31,26 +33,28 @@ const ProfilePage = () => {
       }
     };
 
-    if (navigator.language !== navigator.currentPageLanguage) {
-      console.log("Language is different");
-      loadGoogleTranslateScript();
+
+if(navigator.language !== navigator.currentPageLanguage) {
+  console.log("Language is different");
+  loadGoogleTranslateScript();
+}
+
+// loadGoogleTranslateScript();
+
+
+  return () => {
+    // Clean up script when component unmounts
+    if (scriptLoaded) {
+      document.body.removeChild(script);
+      scriptLoaded = false;
     }
-
-    // loadGoogleTranslateScript();
-
-    return () => {
-      // Clean up script when component unmounts
-      if (scriptLoaded) {
-        document.body.removeChild(script);
-        scriptLoaded = false;
-      }
-    };
-  }, []);
+  };
+}, []);
   return (
-    <CollageLayout>
-      <Profile />
-    </CollageLayout>
+    <StudentLayout>
+      <Test />
+      </StudentLayout>
   );
 };
 
-export default ProfilePage;
+export default TestPage;
