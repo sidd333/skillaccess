@@ -5,15 +5,17 @@ const Profile=lazy(() => import("./ProfilePage.jsx"));
 const ProfilePersonalPage=lazy(() => import("./ProfilePersonalPage.jsx")); 
 const ProfileEducationPage=lazy(() => import("./ProfileEducationPage.jsx"));
 
+const ProfileFinal = lazy(() => import("./ProfileFinalPage"));
 const ProfileRoutes = () => {
   return (
+
     <Route>
       <Route path="student/profile" >
       <Route path="" element={<Profile/>}></Route>
         <Route path="personal" element={<ProfilePersonalPage/>}></Route>
         <Route path="education" element={<ProfileEducationPage/>}></Route>
       </Route>
-       
+
     </Route>
   );
 };

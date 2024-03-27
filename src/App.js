@@ -168,7 +168,7 @@ export default function App() {
           </Route>
 
           {isLoggedIn && (
-            <Route path="collage/profile">
+            <Route path="/collage/profile">
               <Route path="" element={<ProfilePage />} />
             </Route>
           )}
