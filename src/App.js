@@ -53,8 +53,8 @@ import Loader from "./Loader";
 import ForgotPassword from "./pages/collage/auth/ForgotPassword";
 import ResetPassword from "./pages/collage/auth/ResetPassword";
 import { Toaster } from "react-hot-toast";
-import ProfileRoutes from "./pages/student/profile";
-
+import StudentProfileRoutes from "./pages/student/profile";
+import StudentTestRoute from "./pages/student/test";
 const Register = lazy(() => import("./pages/collage/auth/Register"));
 const Login = lazy(() => import("./pages/collage/auth/Login"));
 const TermsPolicies = lazy(() => import("./pages/collage/auth/TermsPolicies"));
@@ -178,7 +178,11 @@ export default function App() {
           {/* =============================== student routes ============================== */}
 
     {
-      ProfileRoutes()
+ StudentProfileRoutes()
+
+    }
+    {
+      StudentTestRoute()
     }
 
           {/* .......................................................................................................................... */}

@@ -8,7 +8,7 @@ const ProfileRoutes = () => {
         <Suspense fallback={<div>Loading...</div>}>
         <Routes>
             <Route
-            path="/"
+            path="/student/profile"
             element={<Profile />}
             />
 
