@@ -1,23 +1,21 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-import Profile from "./ProfilePage";
-import ProfilePersonal from "./ProfilePersonal";
+const Profile=lazy(() => import("./ProfilePage.jsx"));
+
+const ProfilePersonalPage=lazy(() => import("./ProfilePersonalPage.jsx")); 
+const ProfileEducationPage=lazy(() => import("./ProfileEducationPage.jsx"));
 
 const ProfileRoutes = () => {
-    return (
-        <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-            <Route
-            path="/student/profile"
-            element={<Profile />}
-            >
-            <Route path="/ProfilePersonal" element={<ProfilePersonal/>}/>
-            </Route>
-          
+  return (
+    <Route>
+      <Route path="student/profile" >
+      <Route path="" element={<Profile/>}></Route>
+        <Route path="personal" element={<ProfilePersonalPage/>}></Route>
+        <Route path="education" element={<ProfileEducationPage/>}></Route>
+      </Route>
+       
+    </Route>
+  );
+};
 
-        </Routes>
-        </Suspense>
-    );
-    }
-
-export default ProfileRoutes
+export default ProfileRoutes;

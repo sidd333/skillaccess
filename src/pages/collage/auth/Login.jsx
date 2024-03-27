@@ -25,7 +25,7 @@ const Login = () => {
     Password: "",
     confirmPassword: "",
   });
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
 
   const changeHandler = (e) => {
     let cred = e.target.name;
@@ -60,11 +60,12 @@ const Login = () => {
     }
   };
 
-  const handleCheckboxChange = () => {
-    setChecked(!checked); // Toggle checkbox status
-  };
+  // const handleCheckboxChange = () => {
+  //   setChecked(!checked); // Toggle checkbox status
+  // };
   const isLoginDisabled =
-    !checked || !Credentials.Email || !Credentials.Password;
+    // !checked || 
+    !Credentials.Email || !Credentials.Password;
   // GOOGlE LOGIN
 
   function handleGoogleLoginSuccess(tokenResponse) {
@@ -76,7 +77,7 @@ const Login = () => {
   }
 
   const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
-
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <form action="" className="font-dmSans">
       <div className=" bg-base-100 shadow-xl h-full min-h-[100vh]  font-dmSans grid grid-cols-5 ">
@@ -132,7 +133,7 @@ const Login = () => {
             placeholder="Email Address"
             className="input rounded-xl border-none  md:mt-6 mt-4 focus:outline-none input-md w-full max-w-xs  mx-auto bg-snow "
           />
-          <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 rounded-xl  bg-snow ">
+          <div className="w-full max-w-xs  mx-auto flex md:mt-6 mt-4 rounded-xl  bg-snow relative">
             <input
               name="Password"
               onChange={changeHandler}
@@ -141,7 +142,7 @@ const Login = () => {
               placeholder="Password"
               className="input  border-none  focus:outline-none input-md w-full max-w-xs  bg-snow  mx-auto "
             />
-            <button
+            {/* <button
               className="btn !shadow-none bg-snow border-none"
               onClick={(e) => {
                 e.preventDefault();
@@ -149,7 +150,17 @@ const Login = () => {
               }}
             >
               <LuEye className="text-gray-400 text-2xl" />
+            </button> */}
+               <button
+              className="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none"
+              onClick={(e) => {
+                e.preventDefault();
+                type === "text" ? setType("password") : setType("text");
+              }}
+            >
+              <LuEye className="text-gray-400 text-2xl" />
             </button>
+          
           </div>
 
           <div
@@ -176,7 +187,7 @@ const Login = () => {
               </div>
             ))} */}
 
-          <div className=" flex gap-2  p-2 lg:mt-6 md:mt-6 mt-4   w-full max-w-xs  mx-auto ">
+       <div className=" flex gap-2  p-2 lg:mt-6 md:mt-6 mt-4   w-full max-w-xs  mx-auto ">
             {" "}
             <hr className="w-1/12 border-2 border-lGray opacity-20" />
             <hr className="w-1/12 border-2 border-lGray opacity-20" />
@@ -189,7 +200,7 @@ const Login = () => {
             <hr className="w-1/12 border-2 border-lGray opacity-20" />
             <hr className="w-1/12 border-2 border-lGray opacity-20" />
           </div>
-
+   {/* 
           <label className=" flex  gap-2 cursor-pointer mx-auto w-full max-w-xs">
             <input
               type="checkbox"
@@ -204,14 +215,14 @@ const Login = () => {
                 Terms-Policies.
               </Link>
             </span>
-          </label>
+          </label> */}
 
           <button
             className={`btn hover:bg-blue-500 rounded-xl border-none md:mt-6 mt-4 focus:outline-none w-full max-w-xs mx-auto bg-secondary text-white ${
               isLoginDisabled ? "opacity-50 cursor-not-allowed" : ""
             }`}
             onClick={handleSubmit}
-            disabled={isLoginDisabled}
+            // disabled={isLoginDisabled}
           >
             Login
           </button>
@@ -230,11 +241,11 @@ const Login = () => {
               Continue with google
             </h3>
           </button>
-          <span className="text-lGray text-center">
+          <span className="text-lGray text-center text-sm font-semibold">
             Don't have an account?{" "}
-            <Link to="/register" className="text-secondary">
+            <Link to="/register" className=" text-blue-600">
               {" "}
-              SignUp
+              Sign Up
             </Link>
           </span>
         </div>
