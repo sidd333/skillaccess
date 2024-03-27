@@ -1,6 +1,7 @@
 import React from "react";
 import Profile from "../../../components/collage/profile/home/Profile";
 import CollageLayout from "../../../layout/Collage";
+import StudentLayout from "../../../layout/Student";
 
 const ProfilePage = () => {
   React.useEffect(() => {
@@ -50,9 +51,9 @@ if(navigator.language !== navigator.currentPageLanguage) {
   };
 }, []);
   return (
-    <CollageLayout>
+ <StudentLayout>
       <Profile />
-    </CollageLayout>
+      </StudentLayout>
   );
 };
 
