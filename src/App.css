@@ -68,3 +68,11 @@ iframe#webpack-dev-server-client-overlay {
 /* iframe{
     display: none;
 } */
+
+
+/* hide the side bar scorllbar */
+
+::-webkit-scrollbar {
+  display: none;
+}
+

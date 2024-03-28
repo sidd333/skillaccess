@@ -209,6 +209,32 @@ console.log(phone);
             </span>
           </div>
 
+
+{/* 
+          <div className="w-full max-w-xl  mx-auto flex md:mt-6 mt-4 ">
+            <span className="w-full flex gap-4 ">
+              <select
+                name="CountryCode"
+                value={Credentials.CountryCode}
+                onChange={changeHandler}
+                className="input rounded-xl border-none focus:outline-none input-md w-1/4 max-w-xs mx-auto bg-snow"
+              >
+                <option value="+1">+1</option>
+                <option value="+91">+91</option>
+                {/* Add more country codes here */}
+              {/* </select>
+              <input
+                name="Phone"
+                value={Credentials.Phone}
+                onChange={changeHandler}
+                type="number"
+                placeholder="Mobile Number"
+                className="input rounded-xl border-none focus:outline-none input-md w-3/4 max-w-xl mx-auto bg-snow"
+              />
+            </span>
+          </div>     */}
+        
+
           {/* password */}
           <div className="w-full max-w-xl  mx-auto flex  md:mt-6 mt-4 rounded-xl relative">
             <input

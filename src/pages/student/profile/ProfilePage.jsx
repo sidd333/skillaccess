@@ -1,6 +1,7 @@
 import React from "react";
 import Profile from "../../../components/student/profile/profile";
 import CollageLayout from "../../../layout/Collage";
+import StudentLayout from "../../../layout/Student";
 
 const ProfilePage = () => {
 
@@ -49,9 +50,9 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <CollageLayout>
+ <StudentLayout>
       <Profile />
-    </CollageLayout>
+      </StudentLayout>
   );
 };
 
