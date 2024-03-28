@@ -153,7 +153,7 @@ export default function Dashboard() {
               </h2>
               <span
                 className="flex my-4 gap-2 justify-center hover:cursor-pointer"
-                onClick={() => navigate("/collage/test/name")}
+                onClick={() => navigate("/collage/test")}
               >
                 <h2 className="text-blue-700 font-medium text-center  text-base  ">
                   Create New

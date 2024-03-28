@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
-const List = () => {
+const List = ({ setStudents }) => {
+  const [isChecked, setIsChecked] = useState(false);
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    setStudents((prevStudents) => !isChecked ? [...prevStudents, ""] : prevStudents.filter((student) => student !== ""));
+  };
   return (
     <div className=" grid-cols-5 rounded-lg my-4 py-2 px-6    mx-auto  font-dmSans  text-sm hidden md:grid w-[98.9%] bg-white">
       {" "}
@@ -10,7 +15,7 @@ const List = () => {
           <div className=" min-w-[2.5rem]  h-10 self-center bg-red-600 mr-2 rounded-lg "></div>
 
           <h2 className="font-dmSans font-bold text-sm sm:text-lg self-center ">
-            Name
+            Jhon Doe
           </h2>
         </div>
       </div>
@@ -44,8 +49,13 @@ const List = () => {
       {/*  */}
       {/*  */}
       <div className="flex justify-end mr-3">
-        <span className="self-center ">
-          <input type="checkbox" name="" id="" className="p-1 rounded" />
+        <span className="self-center ">  <input
+            type="checkbox"
+            name=""
+            id=""
+            className="p-1 rounded"
+            onChange={handleCheckboxChange}
+          />
         </span>
       </div>
     </div>

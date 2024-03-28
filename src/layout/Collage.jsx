@@ -3,6 +3,10 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 import { setSelected, selected } from "../redux/collage/sidebar/sideSlice";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  setTestBasicDetails,
+  setTestSelectedTopics,
+} from "../redux/collage/test/testSlice";
 
 const CollageLayout = ({ children }) => {
   const navigate = useNavigate();
@@ -14,6 +18,7 @@ const CollageLayout = ({ children }) => {
   const [down, setDown] = useState(0);
 
   const location = useLocation();
+  const bottom = useRef(null);
 
   const arr = [
     {
@@ -257,10 +262,8 @@ const CollageLayout = ({ children }) => {
     },
   ];
 
-  const bottom = useRef(null);
-
   useEffect(() => {
-    bottom.current.scrollIntoView();
+    // bottom.current.scrollIntoView();
     if (location.pathname.match(/\/collage\/dashboard*/)) {
       dispatch(setSelected(0));
       setDown(0);
@@ -292,26 +295,31 @@ const CollageLayout = ({ children }) => {
     }
 
     if (location.pathname.match(/\/collage\/profile*/)) {
+      bottom.current.scrollIntoView();
       dispatch(setSelected(7));
       setDown(7);
     }
 
     if (location.pathname.match(/\/collage\/inbox*/)) {
+      bottom.current.scrollIntoView();
       dispatch(setSelected(8));
       setDown(8);
     }
 
     if (location.pathname.match(/\/collage\/teams*/)) {
+      bottom.current.scrollIntoView();
       dispatch(setSelected(9));
       setDown(9);
     }
 
     if (location.pathname.match(/\/collage\/accounting*/)) {
+      bottom.current.scrollIntoView();
       dispatch(setSelected(10));
       setDown(10);
     }
 
     if (location.pathname.match(/\/collage\/settings*/)) {
+      bottom.current.scrollIntoView();
       dispatch(setSelected(11));
       setDown(11);
     }
@@ -328,7 +336,7 @@ const CollageLayout = ({ children }) => {
             }`}
           >
             {" "}
-            <ul>
+            <ul className="list-none">
               {arr.map((el, i) => {
                 return (
                   <>
@@ -345,11 +353,26 @@ const CollageLayout = ({ children }) => {
                     <li
                       onMouseOver={() => dispatch(setSelected(i))}
                       onMouseOut={() => dispatch(setSelected(down))}
-                      onMouseDown={() => {
+                      onMouseDown={(e) => {
+                        e.preventDefault();
                         dispatch(setSelected(i));
-
+                        dispatch(
+                          setTestBasicDetails({
+                            name: "",
+                            description: "",
+                            totalAttempts: null,
+                            totalQuestions: 0,
+                          })
+                        );
+                        dispatch(setTestSelectedTopics([]));
                         setOpen(false);
                         setDown(i);
+                        window.scrollTo({
+                          top:
+                            window.scrollY +
+                            bottom.current.getBoundingClientRect().top,
+                          behavior: "smooth",
+                        });
                         return navigate(el.path);
                       }}
                     >
@@ -386,7 +409,7 @@ const CollageLayout = ({ children }) => {
             </ul>
           </aside>
 
-          <div className="bg-white rounded-3xl h-full min-h-[95vh] w-full p-4 mx-4 ml-14 lg:ml-60 mt-9">
+          <div className="bg-white rounded-3xl h-full min-h-[95vh] w-full p-4 mx-4 ml-14 lg:ml-60 mt-9 font-dmSans">
             {children}
           </div>
         </div>
