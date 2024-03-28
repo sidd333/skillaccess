@@ -102,7 +102,7 @@ console.log(phone);
     !Credentials.FirstName ||
     !Credentials.LastName ||
     !Credentials.University ||
-    !Credentials.Phone;
+    !(phone.length>5);
 
   return (
     <form action="" className="font-dmSans">
