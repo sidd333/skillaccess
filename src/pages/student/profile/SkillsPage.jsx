@@ -1,10 +1,9 @@
 import React from "react";
-import Profile from "../../../components/student/profile/profile";
+
 import CollageLayout from "../../../layout/Collage";
-import StudentLayout from "../../../layout/Student";
+import Skills from "../../../components/student/profile/Skills/Skills";
 
-const ProfilePage = () => {
-
+const SkillsPage = () => {
   React.useEffect(() => {
     let scriptLoaded = false;
     const currentPageLanguage = document.documentElement.lang;
@@ -48,12 +47,11 @@ const ProfilePage = () => {
       }
     };
   }, []);
-
   return (
- <StudentLayout>
-      <Profile />
-      </StudentLayout>
+    <CollageLayout>
+      <Skills />
+    </CollageLayout>
   );
 };
 
-export default ProfilePage;
+export default SkillsPage;

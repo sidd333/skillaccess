@@ -1,19 +1,23 @@
 import { Suspense, lazy } from "react";
 import { Route, Routes } from "react-router-dom";
-const Profile=lazy(() => import("./ProfilePage.jsx"));
+const Profile = lazy(() => import("./ProfilePage.jsx"));
 
-const ProfilePersonalPage=lazy(() => import("./ProfilePersonalPage.jsx")); 
-const ProfileEducationPage=lazy(() => import("./ProfileEducationPage.jsx"));
+const ProfilePersonalPage = lazy(() => import("./ProfilePersonalPage.jsx"));
+const ProfileEducationPage = lazy(() => import("./ProfileEducationPage.jsx"));
+
+const ProfileFinal = lazy(() => import("./ProfileFinalPage"));
+const Skills = lazy(() => import("./SkillsPage"));
+const Portfolio = lazy(() => import("./Portfolio"));
 
 const ProfileRoutes = () => {
   return (
-    <Route>
-      <Route path="student/profile" >
-      <Route path="" element={<Profile/>}></Route>
-        <Route path="personal" element={<ProfilePersonalPage/>}></Route>
-        <Route path="education" element={<ProfileEducationPage/>}></Route>
-      </Route>
-       
+    <Route path="student/profile">
+      <Route path="final" element={<ProfileFinal />} />
+      <Route path="skills" element={<Skills />} />
+      <Route path="portfolio" element={<Portfolio />} />
+      <Route path="" element={<Profile />}></Route>
+      <Route path="personal" element={<ProfilePersonalPage />}></Route>
+      <Route path="education" element={<ProfileEducationPage />}></Route>
     </Route>
   );
 };
