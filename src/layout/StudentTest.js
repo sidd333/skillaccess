@@ -7,8 +7,10 @@ import {
   setTestBasicDetails,
   setTestSelectedTopics,
 } from "../redux/collage/test/testSlice";
+import TestHeader from "../components/student/test/start/TestHeader";
 
-const StudentLayout = ({ children }) => {
+
+const StudentTestLayout = ({ children }) => {
   const navigate = useNavigate();
 
   const selection = useSelector(selected);
@@ -22,8 +24,8 @@ const StudentLayout = ({ children }) => {
 
   const arr = [
     {
-      name: "Test",
-      path: "/student/test",
+      name: "UX Test - Basics",
+      path: "/StudentTest/1",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -43,8 +45,8 @@ const StudentLayout = ({ children }) => {
     },
 
     {
-        name: "Profile",
-        path: "/student/profile",
+        name: "UX Test - Basics",
+        path: "/StudentTest/2",
         icon: (
           <svg
             width="18"
@@ -106,8 +108,8 @@ const StudentLayout = ({ children }) => {
     //   ),
     // },
     // {
-    //   name: "Students",
-    //   path: "/collage/students",
+    //   name: "StudentTests",
+    //   path: "/collage/StudentTests",
     //   icon: (
     //     <svg
     //       width="20"
@@ -304,7 +306,7 @@ const StudentLayout = ({ children }) => {
       setDown(2);
     }
 
-    if (location.pathname.match(/\/collage\/students*/)) {
+    if (location.pathname.match(/\/collage\/StudentTests*/)) {
       dispatch(setSelected(3));
       setDown(3);
     }
@@ -354,12 +356,16 @@ const StudentLayout = ({ children }) => {
   return (
     <>
       <Navbar open={open} setOpen={setOpen} />
+      <TestHeader />
       <div className=" h-full bg-blued relative">
-        <div className="flex  justify-start pt-20 ">
+        
+        <div className="flex  justify-start ">
           <aside
+   
             className={` px-4 h-[90vh] transition-width max-w-[15rem] overflow-x-hidden bg-secondary fixed left-0 z-30  scrollbar overflow-y-scroll ${
               open ? "w-1/2" : "w-14 lg:w-full "
             }`}
+            style={{marginTop :"1rem"}}
           >
             {" "}
             <ul className="list-none">
@@ -407,10 +413,11 @@ const StudentLayout = ({ children }) => {
                             : "btn "
                         }
                      ${
-                       open ? "w-full " : "w-1 sm:w-full"
-                     }   shadow-none text-white rounded-xl border-none  mt-2 focus:outline-none  max-w-xs hover:bg-white hover:text-black mx-auto 
-                     ${selection === i ? "bg-white !text-black" : "bg-blued"}
-                       `}
+                       open ? "w-full " : " "
+                     }   shadow-none text-white rounded-xl  border-none  mt-2 focus:outline-none  max-w-xs hover:bg-white hover:text-black mx-auto 
+                     ${selection === i ? "bg-white !text-black w-[15rem]" : "bg-blued" }
+                     hover:w-[15rem]  `}
+                    
                       >
                         <div className="w-4 ml-[-10px] ">{el.icon}</div>
 
@@ -432,14 +439,17 @@ const StudentLayout = ({ children }) => {
               </li>
             </ul>
           </aside>
-
-          <div className="bg-white rounded-3xl h-full min-h-[95vh] w-full p-4 mx-4 ml-14 lg:ml-60 mt-9">
+          {/* rounded-3xl */}
+          <div className="bg-white  h-full min-h-[95vh] w-full p-4 mx-4 ml-14 lg:ml-60 mt-6"
+           style={{borderTopLeftRadius : "0rem !important", borderBottomLeftRadius : "0rem"}}
+          >
             {children}
           </div>
         </div>
       </div>
+      
     </>
   );
 };
 
-export default StudentLayout;
+export default StudentTestLayout;

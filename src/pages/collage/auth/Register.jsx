@@ -8,10 +8,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { LuEye } from "react-icons/lu";
 import { FcGoogle } from "react-icons/fc";
-
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+// import 'react-phone-input-2/lib/bootstrap.css'
 const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [phone,setPhone]=useState('+91');
   const [Credentials, setCredentials] = useState({
     Email: "",
     Password: "",
@@ -43,6 +46,7 @@ const Register = () => {
     });
   };
   
+console.log(phone);
 
   const sel = useSelector((state) => state.collageAuth);
   useEffect(() => {
@@ -52,10 +56,11 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { Email, Password, FirstName, LastName, University, Phone } =
+    const { Email, Password, FirstName, LastName, University } =
       Credentials;
+      
     const data = {
-      Phone,
+      Phone:phone,
       Email,
       Password,
       FirstName,
@@ -177,29 +182,80 @@ const Register = () => {
           {/* dates */}
           <div className="w-full max-w-xl  mx-auto flex md:mt-6 mt-4 ">
             <span className="w-full flex gap-4 ">
+            <PhoneInput
+            defaultCountry="IN"
+      name="Phone"
+      value={phone}
+      onChange={setPhone}
+      type="number"
+      placeholder="Mobile Number"
+      inputStyle={{
+        width: "100%",
+        height:"48px",
+        maxWidth: "100%",
+        padding: "0.75rem",
+        borderRadius: "0.5rem",
+        border: "none",
+        paddingLeft:"70px",
+        outline: "none",
+        backgroundColor: "rgb(243 246 248 / var(--tw-bg-opacity))",
+      }}
+      containerStyle={{
+        width: "100%",
+      
+      }}
+      
+    />
+            </span>
+          </div>
+
+
+{/* 
+          <div className="w-full max-w-xl  mx-auto flex md:mt-6 mt-4 ">
+            <span className="w-full flex gap-4 ">
+              <select
+                name="CountryCode"
+                value={Credentials.CountryCode}
+                onChange={changeHandler}
+                className="input rounded-xl border-none focus:outline-none input-md w-1/4 max-w-xs mx-auto bg-snow"
+              >
+                <option value="+1">+1</option>
+                <option value="+91">+91</option>
+                {/* Add more country codes here */}
+              {/* </select>
               <input
                 name="Phone"
                 value={Credentials.Phone}
                 onChange={changeHandler}
                 type="number"
                 placeholder="Mobile Number"
-                className="input rounded-xl border-none  focus:outline-none input-md w-full  mx-auto bg-snow"
+                className="input rounded-xl border-none focus:outline-none input-md w-3/4 max-w-xl mx-auto bg-snow"
               />
             </span>
-          </div>
+          </div>     */}
+        
 
           {/* password */}
-          <div className="w-full max-w-xl  mx-auto flex md:mt-6 mt-4 ">
+          <div className="w-full max-w-xl  mx-auto flex  md:mt-6 mt-4 rounded-xl relative">
             <input
               name="Password"
               onChange={changeHandler}
               value={Credentials.Password}
               type={type}
               placeholder="Password"
-              className=" rounded-s-lg border-none  focus:outline-none input-md w-full max-w-xl focus:ring-0 mx-auto bg-snow  "
+              className="  border-none rounded-xl focus:outline-none input-md w-full max-w-xl focus:ring-0 mx-auto bg-snow  "
             />
-            <button
+            {/* <button
               className="rounded-e-lg btn-primary bg-snow text-center p-2"
+              onClick={(e) => {
+                e.preventDefault();
+                type === "text" ? setType("password") : setType("text");
+              }}
+            >
+              <LuEye className="text-gray-400 text-2xl" />
+            </button> */}
+             <button
+              className="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none"
               onClick={(e) => {
                 e.preventDefault();
                 type === "text" ? setType("password") : setType("text");
@@ -270,7 +326,7 @@ const Register = () => {
             Already have an account?{" "}
             <Link to="/" className="text-blue-600 ">
               {" "}
-              SignIn
+              Sign In
             </Link>
           </span>
         </div>
